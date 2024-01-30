@@ -5,7 +5,7 @@
  factory 대신에 class 사용 가능한데 factory 있으면 사용하는게 더 좋음-->
  <!-- class="org.apache.tomcat.dbcp.dbcp2.BasicDataSource"  -->
 <Context>
-	<Resource name="jdbc/oracle" auth="Container" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory"
+	<Resource name="jdbc/oracle" auth="Container" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" 
 	type="javax.sql.DataSource" driverClassName="oracle.jdbc.driver.OracleDriver" url ="jdbc:oracle:thin:@localhost:1521:xe" 
 	username="scott" password="tiger" initialSize="10" maxIdle="10" maxTotal="15" />
 </Context>

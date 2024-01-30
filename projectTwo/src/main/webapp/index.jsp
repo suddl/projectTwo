@@ -16,7 +16,7 @@
 	
 	String contentFilePath="/"+group+"/"+worker+".jsp";
 %>
-
+ 
 <!DOCTYPE html>
 <html>
 <head>
