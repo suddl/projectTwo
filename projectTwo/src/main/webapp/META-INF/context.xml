@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Context>
-<<<<<<< HEAD
 	<Resource name="jdbc/oracle" auth="Container" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory"
 	type="javax.sql.DataSource" driverClassName="oracle.jdbc.driver.OracleDriver" url ="jdbc:oracle:thin:@www.itwill.xyz:1521:xe" 
 	username="nailro" password="nailro" initialSize="10" maxIdle="10" maxTotal="15" />
-=======
-	<Resource name="jdbc/oracle" auth="Container" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" 
-	type="javax.sql.DataSource" driverClassName="oracle.jdbc.driver.OracleDriver" url ="jdbc:oracle:thin:@localhost:1521:xe" 
-	username="scott" password="tiger" initialSize="10" maxIdle="10" maxTotal="15" />
->>>>>>> branch 'master' of https://github.com/suddl/projectTwo.git
 </Context>
