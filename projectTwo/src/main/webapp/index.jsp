@@ -15,6 +15,11 @@
 	}
 	
 	String contentFilePath="/"+group+"/"+worker+".jsp";
+	
+	String headerFilePath="/header_main.jsp";
+	if(group.equals("admin")) {
+		headerFilePath="/header_admin.jsp";
+	}
 %>
  
 <!DOCTYPE html>
@@ -29,7 +34,7 @@
 </head>
 <body>
 	<div id="header">
-		<jsp:include page="/header_main.jsp"></jsp:include>
+		<jsp:include page="<%=headerFilePath %>"/>
 	</div>
 	
 	<div id="content">
