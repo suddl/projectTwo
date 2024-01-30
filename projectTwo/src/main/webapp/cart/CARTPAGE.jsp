@@ -157,9 +157,9 @@ border: 1px solid #DCDCDC;
       <td>이미지&nbsp;&nbsp; 상품명</td>
       <td>
       <div>
-      <button id="MinBtn" onclick="countZero2();">-</button><%-- 메소드명끝에 상품no 넣기 --%>
+      <button type="button" id="MinBtn" onclick="countZero2();">-</button><%-- 메소드명끝에 상품no 넣기 --%>
   	<p id="count2" style="display: inline-block;">1</p>
-      <button id="PlusBtn" onclick="countUp2();">+</button>
+      <button type="button" id="PlusBtn" onclick="countUp2();">+</button>
   	</div>
   	
       <script type="text/javascript">
