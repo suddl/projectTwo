@@ -52,7 +52,7 @@ legend {
 	color: white;
 }
 </style>
-<form id="join" action="<%=request.getContextPath() %>/index.jsp?group=member&worker=member_join_action" method="post">
+<form id="join" action="<%=request.getContextPath() %>/index.jsp?group=client&worker=client_join_action" method="post">
 <%-- [아이디 중복 검사] 기능 실행 여부를 저장하기 위한 입력태그 --%>
 <%-- => 0 : [아이디 중복 검사] 기능 미실행, 1 : [아이디 중복 검사] 기능 실행 --%>
 <input type="hidden" id="idCheckResult" value="0">
@@ -226,7 +226,7 @@ $("#idCheck").click(function() {
 	}
 	
 	//새창(팝업창)을 실행하여 [/client/id_check.jsp] 문서 요청
-	window.open("<%=request.getContextPath()%>/member/id_check.jsp?id="+$("#id").val()
+	window.open("<%=request.getContextPath()%>/client/id_check.jsp?id="+$("#id").val()
 			,"idCheck", "width=450, height=130, left=700, top=400");
 });
 
