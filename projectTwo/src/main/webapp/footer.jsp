@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <footer class="footer">
 	<div id="inner">
-		<div id="moon"><a href="#">1:1문의하기</a></div>
+		<div id="moon"><a href="<%=request.getContextPath() %>/index.jsp?group=moon&worker=moon_list">1:1문의하기</a></div>
 		<div id ="info">
 			<ol>
 				<li>대표 : 오창중 | 회사 : 네일로</li>
