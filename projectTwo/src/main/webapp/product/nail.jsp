@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Nailro - Nail</title>
-    <link href="<%=request.getContextPath()%>/css/style.css" type="text/css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Hahmlet', serif;
+           font-family: 'Hahmlet', serif;
             margin: 0;
             padding: 0;
         }
@@ -17,7 +17,21 @@
             margin: 0 auto;
             padding: 20px;
         }
-
+		.buttons	{
+			text-align: left;
+			margin: 20px 0;
+		}
+		
+		.button	{
+			padding:10px 20px;
+			margin: 0 20px;
+			font-size: 16px;
+			color: gray;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		
         .product-list {
             display: flex;
             flex-wrap: wrap;
@@ -66,6 +80,12 @@
 </head>
 <body>
     <div class="container">
+    	<div class="buttons">
+    		<button class="button">숏</button>
+    		<button class="button">롱</button>
+    		<button class="button">파츠</button>
+    		<button class="button">풀컬러</button>
+    	</div>
         <div class="product-list">
             <div class="product">
                 <a href="<%=request.getContextPath() %>/index.jsp?group=detail&worker=detail">
