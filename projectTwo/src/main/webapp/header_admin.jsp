@@ -10,10 +10,10 @@
 	<div id="logo">
 		<a href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=admin_main"><img src="<%=request.getContextPath() %>/images/logo.jpg" style="width: 200px; vertical-align:middle;" /></a>
 	</div>		
-	<div id="menu">
+	<div class="menu">
 		<ul>
 			<li><a href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_list">상품관리</a></li>
-			<li><a href="#">주문관리</a></li>
+			<li><a href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=order_list">주문관리</a></li>
 			<li><a href="#">1:1문의관리</a></li>
 			<li><a href="#">FAQ관리</a></li>
 		</ul>

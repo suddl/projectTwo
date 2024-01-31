@@ -5,14 +5,14 @@
 fieldset {
 	text-align: center;
 	margin: 10px auto;
-	width: 1100px;
+	width: 900px;
 	border: 1px solid lightgray;
 }
 
 h1{
-text-align : center; 
-margin-bottom: 30px;
-font-size: 35px;
+	text-align : center; 
+	margin-bottom: 30px;
+	font-size: 35px;
 }
 
 table {
@@ -21,14 +21,36 @@ table {
 
 th {
 	text-align: left;
-	width: 100px;
+	width: 120px;
 	font-weight: bold;
-	margin-top: 30px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 td {
 	text-align: left;
-	
+	word-spacing: 5px;
+}
+
+button {
+	margin: 10px auto;
+	padding: 5px;
+	width: 70px;
+	background-color: lightgray;
+	color: black;
+	font-size: 15px;
+	cursor: pointer;
+	font-weight: bold;
+	border-width: thin;
+}
+
+button + button {
+	margin-left: 10px;
+}
+
+button:hover {
+	color: white;
+	background-color: black;
 }
 </style>
 
@@ -54,20 +76,19 @@ td {
 			<th>카테고리</th>
 			<td>
 			<select name="productCategory">
-				<option value=""></option>
 				<option value="nail">네일</option>
 				<option value="pedi">페디</option>
-				<option value="careTool">케어&툴</option>
+				<option value="careTool">케어앤툴</option>
 			</select>
 			</td>
 		</tr>			
 		<tr>
 			<th>세부사항</th>
 			<td>
-				롱<input type='radio' name='productType' value="long">
-				숏<input type='radio' name='productType' value="short">
-				파츠<input type='radio' name='productType' value="parts">
-				풀컬러<input type='radio' name='productType' value="fullColor">
+				<input type='radio' name='productType' value="long"> 롱
+				<input type='radio' name='productType' value="short"> 숏
+				<input type='radio' name='productType' value="parts"> 파츠
+				<input type='radio' name='productType' value="fullColor"> 풀컬러
 			</td>
 		</tr>			
 		<tr>
@@ -93,11 +114,9 @@ td {
 		</tr>
 	</table>
 </fieldset>	
-<div>
 	<button type="button" id="listBtn">목록</button>
-	<button type="button" onclick="location.href='<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_list';">취소</button>
+	<button type="button" id="cancelBtn">취소</button>
 	<button type="submit">등록</button>
-</div>
 </form>
 <div id="message" style="color: red;"></div>
 
@@ -137,6 +156,10 @@ $("#productForm").submit(function() {
 });
 
 $("#listBtn").click(function() {
-	location.href="<%=request.getContextPath()%>/index.jsp?group=review&worker=review_list"
+	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_list"
+});
+
+$("#cancelBtn").click(function() {
+	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_list"
 });
 </script>
