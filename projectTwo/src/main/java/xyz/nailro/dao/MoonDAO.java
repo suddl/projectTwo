@@ -27,7 +27,7 @@ public class MoonDAO extends JdbcDAO {
 	// 검색정보(검색대상과 검색단어)를 전달받아 moon 테이블에 저장된 게시글 중 검색대상의 컬럼에 검색단어가
 	// 포함된 게시글의 갯수를 검색하여 반환하는 메소드
 	// => 검색 기능을 사용하지 않을 경우 moon 테이블에 저장된 모든 게시글의 갯수를 검색해 반환
-	public int selectTotalMoon(String search, String keyword, String moonName) {
+	public int selectTotalMoon(String search, String keyword, int moonClientNum) {
 		Connection con= null;
 		PreparedStatement pstmt= null;
 		ResultSet rs= null;
@@ -36,13 +36,15 @@ public class MoonDAO extends JdbcDAO {
 			con=getConnection();
 			
 			if(keyword.equals("")) {	// 검색기능을 사용하지 않은 경우
-				String sql="select count(*) from moon where";
+				String sql="select count(*) from moon where moon_client_name=?";
 				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, moonClientNum);
 			} else {
 				String sql = "select count(*) from moon join member on moon_client_num=member_num"
-						+ "where " + search + "like '%'||?||'%' ";
+						+ "where moon_client_name=? " + search + "like '%'||?||'%' ";
 				pstmt=con.prepareStatement(sql);
-				pstmt.setString(1, keyword);
+				pstmt.setInt(1, moonClientNum);
+				pstmt.setString(2, keyword);
 			}
 			
 			rs=pstmt.executeQuery();
@@ -59,7 +61,7 @@ public class MoonDAO extends JdbcDAO {
 		return totalCount;
 	}
 	
-	// 페이징 처지 관련 정보와 게시글 검색 기능 관련 정보를 전달받아 moon 테이블에 저장된 행을 검색하여 게시글 목록 반환
+	// 페이징 처리 관련 정보와 게시글 검색 기능 관련 정보를 전달받아 moon 테이블에 저장된 행을 검색하여 게시글 목록 반환
 	public List<MoonDTO> selectMoonList(int startRow, int endRow, String search, String keyword) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
