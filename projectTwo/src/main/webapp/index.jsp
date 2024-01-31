@@ -40,7 +40,7 @@
 	<div id="content">
 		<jsp:include page="<%=contentFilePath %>"/>
 	</div>
-	
+	 
 	<div id="footer">
 		<jsp:include page="/footer.jsp"></jsp:include>
 	</div> 
