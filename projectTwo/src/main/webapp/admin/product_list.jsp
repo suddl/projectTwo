@@ -59,8 +59,8 @@ border: 1px solid #DCDCDC;
     </tr>
   </thead>
 
-  <form action="<%=request.getContextPath() %>/index.jsp?group=order&worker=order_main"
-   method="post" id="orderForm" name="orderForm" >
+  <form action="<%=request.getContextPath() %>/index.jsp?group=admin&worker=product_add"
+   method="post" id="productForm" name="productForm" >
   <tbody>
     <tr>
       <th scope="row">
