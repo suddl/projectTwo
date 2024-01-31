@@ -106,6 +106,8 @@ padding: 5px;
 
 </style>
 <fieldset>
+<form action="<%=request.getContextPath() %>/index.jsp?group=order&worker=order_main"
+   method="post" id="orderForm" name="orderForm" >
 	<h3 style="text-align: center;">주문 고객 정보</h3>
 	<ul>
 		<li>

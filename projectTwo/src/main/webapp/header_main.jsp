@@ -18,7 +18,7 @@
 			<li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=care">careAndtool</a></li>
 			<li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=faq">FAQ</a></li>
 			<li><a href="#"><img src="<%=request.getContextPath() %>/images/ham_search.png" style="width: 20px; margin-left: 10px"/></a>
-			<li><a href="<%=request.getContextPath()%>/index.jsp?group=cart&worker=CARTPAGE"><img src="<%=request.getContextPath() %>/images/shopping_cart.png" style="width: 20px; margin-left: 20px"/></a>
+			<li><a href="<%=request.getContextPath()%>/index.jsp?group=cart&worker=cart_page"><img src="<%=request.getContextPath() %>/images/shopping_cart.png" style="width: 20px; margin-left: 20px"/></a>
 			<li><a href="#"><img src="<%=request.getContextPath() %>/images/mypage.png" style="width: 20px; margin-left: 20px"/></a>
 		</ul>
 	</div>
