@@ -9,21 +9,49 @@ import java.util.List;
 
 import org.apache.jasper.tagplugins.jstl.core.Catch;
 
-import xyz.nailro.dto.reviewDTO;
+import xyz.nailro.dto.ReviewDTO;
 
-public class reviewDAO extends JdbcDAO{
-		private static reviewDAO _dao;
+public class ReviewDAO extends JdbcDAO{
+		private static ReviewDAO _dao;
 		
-		private reviewDAO() {
+		private ReviewDAO() {
 			// TODO Auto-generated constructor stub
 		}
 		
 		static {
-			_dao=new reviewDAO();		
+			_dao=new ReviewDAO();		
 		}
 		
-		public static reviewDAO getDAO() {
+		public static ReviewDAO getDAO() {
 			return _dao;
+		}
+		//detail.jsp하단에 review를 출력하는 메소드
+		public List<ReviewDTO> selectProductReviews(int productId) {
+		    Connection con = null;
+		    PreparedStatement pstmt = null;
+		    ResultSet rs = null;
+		    List<ReviewDTO> reviews = new ArrayList<>();
+
+		    try {
+		        con = getConnection();
+		        String sql = "SELECT review_subject, review_content, review_image FROM review WHERE review_order_num = ?";
+		        pstmt = con.prepareStatement(sql);
+		        pstmt.setInt(1, productId);
+
+		        rs = pstmt.executeQuery();
+		        while (rs.next()) {
+		            ReviewDTO review = new ReviewDTO();
+		            review.setReview_subject(rs.getString("review_subject"));
+		            review.setReview_content(rs.getString("review_content"));
+		            review.setReview_image(rs.getString("review_image"));
+		            reviews.add(review);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("[에러] selectProductReviews() 메소드의 SQL 오류 = " + e.getMessage());
+		    } finally {
+		        close(con, pstmt, rs);
+		    }
+		    return reviews;
 		}
 		
 		//검색정보(검색대상과 검색단어)를 전달받아 REVIEW 테이블에 저장된 게시글 중 검색대상의 
@@ -52,11 +80,11 @@ public class reviewDAO extends JdbcDAO{
 		
 		//페이징 처리 관련 정보(시작 행번호와 종료 행번호)와 게시글 검색 기능 관련 정보(검색대상과
 		//검색단어)를 전달받아 REVIEW 테이블에 저장된 행을 검색하여 게시글 목록을 반환하는 메소드
-		public List<reviewDTO> selectReviewList(int startRow, int endRow, String search, String keyword) {
+		public List<ReviewDTO> selectReviewList(int startRow, int endRow, String search, String keyword) {
 			Connection con=null;
 			PreparedStatement pstmt=null;
 			ResultSet rs=null;
-			List<reviewDTO> reviewList=new ArrayList<reviewDTO>();
+			List<ReviewDTO> reviewList=new ArrayList<ReviewDTO>();
 			try {
 				con=getConnection();
 				
@@ -85,7 +113,7 @@ public class reviewDAO extends JdbcDAO{
 				rs=pstmt.executeQuery();
 				
 				while(rs.next()) {
-					reviewDTO review=new reviewDTO();
+					ReviewDTO review=new ReviewDTO();
 					review.setReview_num(rs.getInt("review_num"));
 					review.setReview_client_num(rs.getInt("review_client_num"));
 					review.setReview_name(rs.getString("review_name"));
@@ -132,7 +160,7 @@ public class reviewDAO extends JdbcDAO{
 		}
 		
 		//게시글을 전달받아 REVIEW 테이블에 행으로 삽입하고 삽입행의 갯수를 반환하는 메소드
-		public int insertReview(reviewDTO review) {
+		public int insertReview(ReviewDTO review) {
 			Connection con=null;
 			PreparedStatement pstmt=null;
 			int rows=0;
@@ -187,25 +215,25 @@ public class reviewDAO extends JdbcDAO{
 		*/
 		
 		//글번호를 전달받아 REVIEW 테이블의 단일행을 검색하여 게시글(ReviewDTO 객체)을 반환하는 메소드
-		public reviewDTO selectReviewByNum(int reviewNum) {
+		public ReviewDTO selectReviewByNum(int reviewNum) {
 			Connection con=null;
 			PreparedStatement pstmt=null;
 			ResultSet rs=null;
-			reviewDTO review=null;
+			ReviewDTO review=null;
 			try {
 				con=getConnection();
 				
 				String sql="select review_num,review_client_num,review_name,review_subject"
 				+",review_content,review_order_num,review_date,review_image,review_re"
 				+" from review join client on review.review_client_num=client.client_num" 
-				+" where review_num=?";
+				+" where review_num=? and review_client_num <>0";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setInt(1, reviewNum);
 				
 				rs=pstmt.executeQuery();
 				
 				if(rs.next()) {
-					review=new reviewDTO();
+					review=new ReviewDTO();
 					review.setReview_num(rs.getInt("review_num"));
 					review.setReview_client_num(rs.getInt("review_client_num"));
 					review.setReview_name(rs.getString("review_name"));
@@ -248,7 +276,7 @@ public class reviewDAO extends JdbcDAO{
 		}
 		
 		//게시글을 전달받아 REVIEW 테이블의 저장된 행의 컬럼값을 변경하고 변경행의 갯수를 반환하는 메소드
-		public int updateReview(reviewDTO review) {
+		public int updateReview(ReviewDTO review) {
 			Connection con=null;
 			PreparedStatement pstmt=null;
 			int rows=0;

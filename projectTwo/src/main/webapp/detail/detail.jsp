@@ -1,38 +1,48 @@
+<%-- <%@page import="xyz.nailro.dto.ReviewDTO"%> --%>
+<%@page import="java.util.List"%>
+<%@page import="xyz.nailro.dao.ReviewDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head> 
+<head>
 <style>
 .custom-center {
 	display: flex;
 	justify-content: center; /* 중앙 정렬 */
 }
+
 .custom-card {
 	width: 20rem; /* 카드의 폭 조절 */
 	margin-left: 15px; /* 이미지와 카드 사이의 간격 조절 */
 	display: flex;
 }
+
 .carousel .carousel-item img {
 	max-width: 100%; /* 이미지 크기 조절 */
 	height: auto; /* 이미지 높이 자동 조절 */
 }
+
 .custom-nav .nav-link {
 	color: white; /* 기본 글자색 */
 	background-color: black; /* 기본 배경색 */
 }
+
 .custom-nav .nav-link.active {
 	background-color: gray; /* 활성 탭의 배경색 */
 	color: black; /* 활성 탭의 글자색 */
 }
+
 div {
 	text-align: center;
 }
+
 .di-line {
 	border-top: 1px solid #444444;
 	margin: 30px auto;
 	width: auto;
 }
+
 #cart {
 	margin-left: auto;
 	text-align: center;
@@ -40,12 +50,14 @@ div {
 	color: white;
 	border: none;
 }
+
 #purchase {
 	text-align: center;
 	background-color: black;
 	color: white;
 	border: none;
 }
+
 #topBtn {
 	position: fixed;
 	right: 0%;
@@ -54,8 +66,8 @@ div {
 	z-index: 999;
 	width: 50px; /* 버튼의 너비 */
 	background-size: cover; /* 이미지가 버튼 크기에 맞게 조정됨 */
-	
 }
+
 .button a {
 	font-size: 20px;
 	display: inline-block;
@@ -68,27 +80,33 @@ div {
 	margin: 0px;
 	border-radius: 5px;
 }
+
 .button a:hover {
 	/* 마우스 호버 시 배경색 변경 */
 	
 }
+
 .custom-nav .col-auto {
 	margin: 0 auto;
 	margin-right: 5px;
 	margin-left: 20px;
 }
+
 .totalPrice {
 	text-align: left;
 }
+
 .di-line {
 	border-top: 1px dotted #444444;
 	margin: 30px auto;
 	width: auto;
 }
+
 .delivery {
 	font-size: 1em;
 	background-color: #f0f0f0; /* 배경색 추가 */
 }
+
 #reviwImage {
 	margin: 132px;
 }
@@ -109,10 +127,8 @@ div {
 	<form
 		action="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail"
 		method="post" id="detail" name="detail">
-		<a id="topBtn" href="#">
-		<img src="../images/topBtn.jpg">
-	</a>
-		</a>
+		<a id="topBtn" href="#"> <img src="../images/topBtn.jpg">
+		</a> </a>
 		<div class="container">
 			<div class="row custom-center">
 				<div class="col-md-4">
@@ -194,8 +210,11 @@ div {
 </script>
 							&nbsp;
 							<div class="button">
-								<a href="<%=request.getContextPath()%>/index.jsp?group=cart&worker=cart_page" id="cart">장바구니</a> 
-								<a href="<%=request.getContextPath()%>/index.jsp?group=order&worker=order_main" id="purchase">바로구매</a>
+								<a
+									href="<%=request.getContextPath()%>/index.jsp?group=cart&worker=cart_page"
+									id="cart">장바구니</a> <a
+									href="<%=request.getContextPath()%>/index.jsp?group=order&worker=order_main"
+									id="purchase">바로구매</a>
 							</div>
 							&nbsp;&nbsp;
 							<ul>
@@ -215,7 +234,7 @@ div {
 			&nbsp;&nbsp;
 			<ul class="nav nav-pills nav-justified custom-nav">
 				<li class="nav-item"><a class="nav-link active"
-					aria-current="page" href="#reviewSection" id="pd">제품리뷰</a></li>
+					aria-current="page" href="#review" id="pd">제품리뷰</a></li>
 				<li class="nav-item"><a class="nav-link" href="#d_img1" id="pd">제품상세</a></li>
 				<li class="nav-item"><a class="nav-link" href="#info" id="pd">상품설명</a></li>
 			</ul>
@@ -229,17 +248,36 @@ div {
 			</div>
 			<ul class="nav nav-pills nav-justified custom-nav">
 				<li class="nav-item"><a class="nav-link active"
-					aria-current="page" href="#reviewSection" id="pd">제품리뷰</a></li>
+					aria-current="page" href="#review" id="pd">제품리뷰</a></li>
 				<li class="nav-item"><a class="nav-link" href="#d_img1" id="pd">제품상세</a></li>
 				<li class="nav-item"><a class="nav-link" href="#info" id="pd">상품설명</a></li>
 			</ul>
-			<p>REVIEW</p>
+			<p id="review"></p>
+		<%@include file="/review/review_write.jsp"%>
+			<%--
+			<h2>" + review.getReview_subject() + "</h2>");
+        out.println("<p>" ++ "</p>");
+        out.println("<img src='" + review.getReview_image() + "' alt='Review Image'/>");
 			
-			<jsp:include page="../review/review_imsi.jsp" />
-			<div id="reviewSection">
-				<%-- 데이터베이스에서 리뷰 데이터 가져오기 --%>
-				<%--리뷰를 3개까지만 출력하는 용도--%>
-				<%-- 
+			
+			
+    // 상품 ID 설정 (예시로 1번 상품)
+    int productId = 1;
+
+    ReviewDAO dao = ReviewDAO.getDAO();
+    List<ReviewDTO> reviewList = dao.selectProductReviews(productId);
+
+    for (ReviewDTO review : reviewList) {
+        // 리뷰 정보를 출력합니다. 
+        out.println("<h2>" + review.getReview_subject() + "</h2>");
+        out.println("<p>" + review.getReview_content() + "</p>");
+        out.println("<img src='" + review.getReview_image() + "' alt='ReviewImage'/>");
+    }
+--%>
+
+			<%-- 데이터베이스에서 리뷰 데이터 가져오기 --%>
+			<%--리뷰를 3개까지만 출력하는 용도--%>
+			<%-- 
 				<% for (int i = 0; i < 3; i++) { %>
 				
 				<div id=>
@@ -260,7 +298,7 @@ div {
     <p>리뷰 내용: <%= review.reviewImage %></p>
 </div>
 --%>
-		
+
 			<%-- 버튼 선택에 따라 글씨 색 변경--%>
 			<script>
     // 모든 nav-link 요소를 가져옵니다.
@@ -291,7 +329,7 @@ div {
 		});
 	});
 </script>
-<script type="text/javascript">
+			<script type="text/javascript">
     window.onload = function() { //새로고침시 제일 위로가는 코드
         window.scrollTo(0, 0);
     }

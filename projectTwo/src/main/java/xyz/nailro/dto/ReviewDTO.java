@@ -1,6 +1,6 @@
 package xyz.nailro.dto;
 
-public class reviewDTO {
+public class ReviewDTO {
 
 /*
 	이름                널?       유형             
@@ -24,7 +24,7 @@ REVIEW_RE                  VARCHAR2(4000)
 		private String review_image;
 		private String review_re; //답글
 
-		public reviewDTO() {
+		public ReviewDTO() {
 			// TODO Auto-generated constructor stub
 		}
 
