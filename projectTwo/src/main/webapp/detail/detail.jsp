@@ -227,10 +227,15 @@ div {
 					src="<%=request.getContextPath()%>/images/info.jpg"
 					class="img-fluid" id="info">
 			</div>
-			
+			<ul class="nav nav-pills nav-justified custom-nav">
+				<li class="nav-item"><a class="nav-link active"
+					aria-current="page" href="#reviewSection" id="pd">제품리뷰</a></li>
+				<li class="nav-item"><a class="nav-link" href="#d_img1" id="pd">제품상세</a></li>
+				<li class="nav-item"><a class="nav-link" href="#info" id="pd">상품설명</a></li>
+			</ul>
 			<p>REVIEW</p>
 			
-			<jsp:include page="../review/review.jsp" />
+			<jsp:include page="../review/review_imsi.jsp" />
 			<div id="reviewSection">
 				<%-- 데이터베이스에서 리뷰 데이터 가져오기 --%>
 				<%--리뷰를 3개까지만 출력하는 용도--%>
