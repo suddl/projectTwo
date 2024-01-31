@@ -3,7 +3,7 @@
 <style type="text/css">
 table {
 	margin: 5px auto;
-	border: 1px solid black;
+	border: 1px solid lightgray;
 	border-collapse: collapse;
 }
 
@@ -14,14 +14,16 @@ h1{
 }
 
 th {
-	border: 1px solid black;
-	background: black;
-	color: white;
+	border: 1px solid lightgray;
+	background: lightgray;
+	color: black;
+	height: 40px;
 }
 
 td {
-	border: 1px solid black;
+	border: 1px solid lightgray;
 	text-align: center;	
+	height: 40px;
 }
 
 button {
@@ -34,12 +36,29 @@ button {
 	cursor: pointer;
 	font-weight: bold;
 	border-width: thin;
-	
+}
+
+#modifyBtn {
+	margin: 10px auto;
+	padding: 5px;
+	width: 50px;
+	height: 35px;
+	background-color: lightgray;
+	color: black;
+	font-size: 15px;
+	cursor: pointer;
+	font-weight: bold;
+	border-width: thin;
 }
 
 #page_list {
 	font-size: 1.1em;
 	margin: 10px;
+}
+
+button + button {
+	margin-left: 10px;
+	margin-bottom: 50px;
 }
 
 #page_list a:hover {
@@ -121,9 +140,12 @@ button {
 	<input type="text" name="keyword" value="" >
 	<button type="submit">검색</button>
 </form>
-</div>
 
 <script type="text/javascript">
+$("#modifyBtn").click(function() {
+	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_modify"
+});
+
 $("#addBtn").click(function() {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_add"
 });

@@ -63,9 +63,9 @@ button:hover {
 </style>
 
 <%-- 파일(리뷰 이미지)을 입력받아 전달하기 위해 form 태그의 enctype 속성값을 반드시 [multipart/form-date]로 설정 --%>
-<form action="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_add_action"
+<form action="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_modify_action"
 	method="post" enctype="multipart/form-data" id="productForm">
-<h1>상품등록</h1>
+<h1>상품수정</h1>
 <fieldset>
 	<table>
 		<tr>
@@ -121,7 +121,7 @@ button:hover {
 </fieldset>	
 	<button type="button" id="listBtn">목록</button>
 	<button type="button" id="cancelBtn">취소</button>
-	<button type="submit">등록</button>
+	<button type="submit">수정</button>
 </form>
 <div id="message" style="color: red;"></div>
 

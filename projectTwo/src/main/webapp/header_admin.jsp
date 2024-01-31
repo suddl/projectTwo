@@ -18,7 +18,5 @@
 			<li><a href="#">FAQ관리</a></li>
 		</ul>
 	</div>
-	
-	
 </div>
 

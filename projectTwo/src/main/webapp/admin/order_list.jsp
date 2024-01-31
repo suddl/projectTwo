@@ -14,14 +14,16 @@ h1{
 }
 
 th {
-	border: 1px solid black;
-	background: black;
-	color: white;
+	border: 1px solid lightgray;
+	background: lightgray;
+	color: black;
+	height: 40px;
 }
 
 td {
-	border: 1px solid black;
+	border: 1px solid lightgray;
 	text-align: center;	
+	height: 40px;
 }
 
 button {

@@ -17,6 +17,7 @@
 	width: auto;
 	padding: 120px 90px 480px;
 	margin-top: 150px;
+	font-size: 15px;
 }
 </style>
 <body>
