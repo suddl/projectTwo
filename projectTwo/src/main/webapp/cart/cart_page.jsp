@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@include file="/security/login_url.jspf"%>
+
 <%
 
 request.setCharacterEncoding("utf-8");

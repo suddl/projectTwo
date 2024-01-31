@@ -15,10 +15,11 @@
 	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_mypage">내정보</a>&nbsp;&nbsp;
 	<% if(loginClient.getClientStatus()==9) {//로그인 사용자가 관리자인 경우 %>
 		<a href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=admin_main">관리자</a>&nbsp;&nbsp;
+		<% } %>
 	<% } %>
-		
-	<% } %>
+	
 </div>
+
 <div id ="par">
 	<div id="logo">
 		<a href="<%=request.getContextPath()%>/index.jsp"><img src="<%=request.getContextPath() %>/images/logo.jpg" style="width: 200px; vertical-align:middle;" /></a>
@@ -42,7 +43,7 @@
 					</button>
 				</form>
 			</li>
-			<li><a href="#"><img src="<%=request.getContextPath() %>/images/shopping_cart.png" style="width: 20px; margin-left: 50px"/></a>
+			<li><a href="<%=request.getContextPath()%>/index.jsp?group=cart&worker=cart_page""><img src="<%=request.getContextPath() %>/images/shopping_cart.png" style="width: 20px; margin-left: 50px"/></a>
 			<li><a href="#"><img src="<%=request.getContextPath() %>/images/mypage.png" style="width: 20px; margin-left: 20px"/></a>
 		</ul>
 	</div>	

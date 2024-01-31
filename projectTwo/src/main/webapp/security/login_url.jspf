@@ -1,0 +1,38 @@
+<%@page import="xyz.nailro.dto.ClientDTO"%>
+<%@page import="java.net.URLEncoder"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%-- 비로그인 상태의 사용자가 JSP 문서를 요청한 경우 로그인 입력페이지를 요청하기 위한 URL 
+주소를 전달하여 응답하는 코드가 작성된 JSPF 파일 - 요청 URL 주소 전달 --%> 
+<%-- => include Directive의 page 속성값으로 사용하기 위한 파일 --%>    
+<%
+	//session 객체에 저장된 권한 관련 속성값을 MemberDTO 객체로 반환받아 저장
+	ClientDTO loginClient = (ClientDTO)session.getAttribute("loginClient");
+	
+	if(loginClient==null){
+		//request.getRequestURI() : 요청 URL 주소에서 JSP 문서의 경로를 반환하는 메소드
+		String requestURI = request.getRequestURI();	
+		//System.out.println(requestURI);//requestURI = /shop/index.jsp
+				
+		//request.getQueryString() : 요청 URL 주소에서 질의문자열 반환하는 메소드
+		String queryString=request.getQueryString();
+		//System.out.println(queryString);//group=cart&worker=cart_list
+		
+				
+		//페이지를 요청한 URL 주소를 생성하여 저장
+		String url = "";
+		if(queryString!=null){
+			url=requestURI+"?"+queryString;
+		}else{
+			url=requestURI;
+		}
+		//System.out.println(url);///shop/index.jsp?group=cart&worker=cart_list
+		
+		//JSP 문서의 URL 주소를 부호화 처리하여 저장
+		url = URLEncoder.encode(url, "utf-8");
+		
+		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=client&worker=client_login&url="+url);
+		return;
+	}
+
+%>
