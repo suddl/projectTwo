@@ -194,8 +194,8 @@ div {
 </script>
 							&nbsp;
 							<div class="button">
-								<a href="<%=request.getContextPath()%>/cart/CARTPAGE.jsp" id="cart">장바구니</a> 
-								<a href="<%=request.getContextPath()%>/order/order_main.jsp" id="purchase">바로구매</a>
+								<a href="<%=request.getContextPath()%>/index.jsp?group=cart&worker=cart_page" id="cart">장바구니</a> 
+								<a href="<%=request.getContextPath()%>/index.jsp?group=order&worker=order_main" id="purchase">바로구매</a>
 							</div>
 							&nbsp;&nbsp;
 							<ul>
@@ -242,7 +242,7 @@ div {
 					 id="reviwImage">
 				</div>
 				
-				<% } %>--%>
+				<% } %>
 			<%-- 	
 		<% String reviewTitle = (String) request.getAttribute("reviewTitle");
     	String reviewContent = (String) request.getAttribute("reviewContent");
