@@ -7,7 +7,7 @@
     <link href="<%=request.getContextPath()%>/css/style.css" type="text/css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Hahmlet', serif;
             margin: 0;
             padding: 0;
         }
