@@ -24,7 +24,7 @@
 		if(queryString!=null){
 			url=requestURI+"?"+queryString;
 		}else{
-			url=requestURI;
+			url=requestURI; 
 		}
 		//System.out.println(url);///shop/index.jsp?group=cart&worker=cart_list
 		
