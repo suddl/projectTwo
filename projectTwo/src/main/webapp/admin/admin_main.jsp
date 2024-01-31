@@ -12,4 +12,15 @@
 	}
 --%>    
 <%-- <%@include file="/security/admin_check.jspf" %>  --%>
-<h1>관리자 메인 페이지</h1>
+<style type="text/css">
+.area {
+	width: auto;
+	padding: 120px 90px 480px;
+	margin-top: 150px;
+}
+</style>
+<body>
+	<div class="area">
+		<p>안녕하세요, &lt;관리자&gt;님!</p>	
+	</div>
+</body>
