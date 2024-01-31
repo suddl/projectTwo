@@ -12,11 +12,11 @@
 	</div>		
 	<div id="menu">
 		<ul>
-			<li><a href="#">new</a></li>
-			<li><a href="#">nail</a></li>
-			<li><a href="#">pedi</a></li>
-			<li><a href="#">care&tool</a></li>
-			<li><a href="#">FAQ</a></li>
+<li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=new">new</a></li>
+			<li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=nail">nail</a></li>
+			<li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=pedi">pedi</a></li>
+			<li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=care">careAndtool</a></li>
+			<li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=faq">FAQ</a></li>
 			<li><a href="#"><img src="<%=request.getContextPath() %>/images/ham_search.png" style="width: 20px; margin-left: 10px"/></a>
 			<li><a href="<%=request.getContextPath()%>/index.jsp?group=cart&worker=CARTPAGE"><img src="<%=request.getContextPath() %>/images/shopping_cart.png" style="width: 20px; margin-left: 20px"/></a>
 			<li><a href="#"><img src="<%=request.getContextPath() %>/images/mypage.png" style="width: 20px; margin-left: 20px"/></a>
