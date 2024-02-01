@@ -16,11 +16,13 @@
     // 리뷰 데이터를 받아옵니다.
     String reviewSubject = multipartRequest .getParameter("review_subject");
     String reviewContent = multipartRequest.getParameter("review_content");
+    
     // 이미지 처리 로직을 여기에 추가합니다. (예시 코드에서는 생략)
 
     ReviewDTO review = new ReviewDTO();
-    review.setReview_subject(reviewSubject);
-    review.setReview_content(reviewContent);
+    review.setReviewSubject(reviewSubject);
+    review.setReviewContent(reviewContent);
+    //review.setReviewImage(reviewImage);
     // 이미지 정보도 여기에 추가합니다. (예시 코드에서는 생략)
 	System.out.println(reviewSubject);
     

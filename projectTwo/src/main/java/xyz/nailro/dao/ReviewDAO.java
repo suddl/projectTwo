@@ -41,9 +41,9 @@ public class ReviewDAO extends JdbcDAO{
 		        rs = pstmt.executeQuery();
 		        while (rs.next()) {
 		            ReviewDTO review = new ReviewDTO();
-		            review.setReview_subject(rs.getString("review_subject"));
-		            review.setReview_content(rs.getString("review_content"));
-		            review.setReview_image(rs.getString("review_image"));
+		            review.setReviewSubject(rs.getString("review_subject"));
+		            review.setReviewContent(rs.getString("review_content"));
+		            review.setReviewImage(rs.getString("review_image"));
 		            reviews.add(review);
 		        }
 		    } catch (SQLException e) {
@@ -114,15 +114,15 @@ public class ReviewDAO extends JdbcDAO{
 				
 				while(rs.next()) {
 					ReviewDTO review=new ReviewDTO();
-					review.setReview_num(rs.getInt("review_num"));
-					review.setReview_client_num(rs.getInt("review_client_num"));
-					review.setReview_name(rs.getString("review_name"));
-					review.setReview_subject(rs.getString("review_subject"));
-					review.setReview_content(rs.getString("review_content"));
-					review.setReview_order_num(rs.getInt("review_order_num"));
-					review.setReview_date(rs.getString("review_date"));
-					review.setReview_image(rs.getString("review_image"));
-					review.setReview_re(rs.getString("review_re"));
+					review.setReviewNum(rs.getInt("review_num"));
+					review.setReviewClientNum(rs.getInt("review_client_num"));
+					review.setReviewName(rs.getString("review_name"));
+					review.setReviewSubject(rs.getString("review_subject"));
+					review.setReviewContent(rs.getString("review_content"));
+					review.setReviewOrderNum(rs.getInt("review_order_num"));
+					review.setReviewDate(rs.getString("review_date"));
+					review.setReviewImage(rs.getString("review_image"));
+					review.setReviewRe(rs.getString("review_re"));
 							
 					reviewList.add(review);
 				}
@@ -169,13 +169,13 @@ public class ReviewDAO extends JdbcDAO{
 				
 				String sql="insert into review values(review_seq.nextval,?,?,?,?,sysdate,?,?,?)";
 				pstmt=con.prepareStatement(sql);
-				pstmt.setInt(1, review.getReview_client_num());
-				pstmt.setString(2, review.getReview_subject());
-				pstmt.setString(3, review.getReview_content());
-				pstmt.setInt(4,review.getReview_order_num());
-				pstmt.setString(5, review.getReview_image());
-				pstmt.setString(6, review.getReview_re());
-				pstmt.setString(7, review.getReview_rating());
+				pstmt.setInt(1, review.getReviewClientNum());
+				pstmt.setString(2, review.getReviewSubject());
+				pstmt.setString(3, review.getReviewContent());
+				pstmt.setInt(4,review.getReviewOrderNum());
+				pstmt.setString(5, review.getReviewImage());
+				pstmt.setString(6, review.getReviewRe());
+				pstmt.setString(7, review.getReviewRating());
 				
 				rows=pstmt.executeUpdate();
 			} catch (SQLException e) {
@@ -232,15 +232,15 @@ public class ReviewDAO extends JdbcDAO{
 				
 				if(rs.next()) {
 					review=new ReviewDTO();
-					review.setReview_num(rs.getInt("review_num"));
-					review.setReview_client_num(rs.getInt("review_client_num"));
-					review.setReview_name(rs.getString("review_name"));
-					review.setReview_subject(rs.getString("review_subject"));
-					review.setReview_content(rs.getString("review_content"));
-					review.setReview_order_num(rs.getInt("review_order_num"));
-					review.setReview_date(rs.getString("review_date"));
-					review.setReview_image(rs.getString("review_image"));
-					review.setReview_re(rs.getString("review_re"));
+					review.setReviewNum(rs.getInt("review_num"));
+					review.setReviewClientNum(rs.getInt("review_client_num"));
+					review.setReviewName(rs.getString("review_name"));
+					review.setReviewSubject(rs.getString("review_subject"));
+					review.setReviewContent(rs.getString("review_content"));
+					review.setReviewOrderNum(rs.getInt("review_order_num"));
+					review.setReviewDate(rs.getString("review_date"));
+					review.setReviewImage(rs.getString("review_image"));
+					review.setReviewRe(rs.getString("review_re"));
 				}
 			} catch (SQLException e) {
 				System.out.println("[에러]selectReviewByNum() 메소드의 SQL 오류 = "+e.getMessage());
@@ -282,21 +282,21 @@ public class ReviewDAO extends JdbcDAO{
 				con=getConnection();
 				
 				//사용자가 이미지 파일을 입력하지 않은 경우 - 이미지 파일 미변경(기존 이미지 파일 사용)
-				if(review.getReview_image()==null) {
+				if(review.getReviewImage()==null) {
 					String sql="update review set review_subject=?,review_content=?"
 							+ ",review_date=sysdate where review_num=?";
 					pstmt=con.prepareStatement(sql);
-					pstmt.setString(1, review.getReview_subject());
-					pstmt.setString(2, review.getReview_content());
-					pstmt.setInt(3, review.getReview_num());
+					pstmt.setString(1, review.getReviewSubject());
+					pstmt.setString(2, review.getReviewContent());
+					pstmt.setInt(3, review.getReviewNum());
 				} else {//사용자가 이미지 파일을 입력하지 않은 경우 - 이미지 파일 변경
 					String sql="update review set review_subject=?,review_content=?,review_image=?"
 							+ ",review_date=sysdate where review_num=?";
 					pstmt=con.prepareStatement(sql);
-					pstmt.setString(1, review.getReview_subject());
-					pstmt.setString(2, review.getReview_content());
-					pstmt.setString(3, review.getReview_image());
-					pstmt.setInt(4, review.getReview_num());
+					pstmt.setString(1, review.getReviewSubject());
+					pstmt.setString(2, review.getReviewContent());
+					pstmt.setString(3, review.getReviewImage());
+					pstmt.setInt(4, review.getReviewNum());
 				}			
 					
 				rows=pstmt.executeUpdate();

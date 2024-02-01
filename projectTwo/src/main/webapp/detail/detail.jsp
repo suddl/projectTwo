@@ -181,7 +181,7 @@ div {
 									&nbsp;&nbsp; <span id="count1" style="display: inline-block;">1</span>&nbsp;&nbsp;
 									<button type="button" id="plusBtn" onclick="countUp();">+</button>
 								</div>
-							</div>
+							</div></form>
 							&nbsp;&nbsp;
 							<!-- 총 상품 금액을 표시할 요소 -->
 							<div id="totalPrice" class="totalPrice">&nbsp;총 상품 금액:</div>

@@ -14,101 +14,101 @@ REVIEW_DATE                DATE
 REVIEW_IMAGE               VARCHAR2(50)   
 REVIEW_RE                  VARCHAR2(4000) 
 */
-		private int review_num;
-		private int review_client_num;
-		private String review_name; //client 테이블의 회원이름(NAME 컬럼)을 저장하기 위한 필드 - 작성자이름
-		private String review_subject;
-		private String review_content;
-		private int review_order_num;
-		private String review_date;
-		private String review_image;
-		private String review_re; //답글
-		private String review_rating;
+		private int reviewNum;
+		private int reviewClientNum;
+		private String reviewName; //client 테이블의 회원이름(NAME 컬럼)을 저장하기 위한 필드 - 작성자이름
+		private String reviewSubject;
+		private String reviewContent;
+		private int reviewOrderNum;
+		private String reviewDate;
+		private String reviewImage;
+		private String reviewRe; //답글
+		private String reviewRating;
 
 		public ReviewDTO() {
 			// TODO Auto-generated constructor stub
 		}
 
-		public int getReview_num() {
-			return review_num;
+		public int getReviewNum() {
+			return reviewNum;
 		}
 
-		public void setReview_num(int review_num) {
-			this.review_num = review_num;
+		public void setReviewNum(int reviewNum) {
+			this.reviewNum = reviewNum;
 		}
 
-		public int getReview_client_num() {
-			return review_client_num;
+		public int getReviewClientNum() {
+			return reviewClientNum;
 		}
 
-		public void setReview_client_num(int review_client_num) {
-			this.review_client_num = review_client_num;
+		public void setReviewClientNum(int reviewClientNum) {
+			this.reviewClientNum = reviewClientNum;
 		}
 
-		public String getReview_name() {
-			return review_name;
+		public String getReviewName() {
+			return reviewName;
 		}
 
-		public void setReview_name(String review_name) {
-			this.review_name = review_name;
+		public void setReviewName(String reviewName) {
+			this.reviewName = reviewName;
 		}
 
-		public String getReview_subject() {
-			return review_subject;
+		public String getReviewSubject() {
+			return reviewSubject;
 		}
 
-		public void setReview_subject(String review_subject) {
-			this.review_subject = review_subject;
+		public void setReviewSubject(String reviewSubject) {
+			this.reviewSubject = reviewSubject;
 		}
 
-		public String getReview_content() {
-			return review_content;
+		public String getReviewContent() {
+			return reviewContent;
 		}
 
-		public void setReview_content(String review_content) {
-			this.review_content = review_content;
+		public void setReviewContent(String reviewContent) {
+			this.reviewContent = reviewContent;
 		}
 
-		public int getReview_order_num() {
-			return review_order_num;
+		public int getReviewOrderNum() {
+			return reviewOrderNum;
 		}
 
-		public void setReview_order_num(int review_order_num) {
-			this.review_order_num = review_order_num;
+		public void setReviewOrderNum(int reviewOrderNum) {
+			this.reviewOrderNum = reviewOrderNum;
 		}
 
-		public String getReview_date() {
-			return review_date;
+		public String getReviewDate() {
+			return reviewDate;
 		}
 
-		public void setReview_date(String review_date) {
-			this.review_date = review_date;
+		public void setReviewDate(String reviewDate) {
+			this.reviewDate = reviewDate;
 		}
 
-		public String getReview_image() {
-			return review_image;
+		public String getReviewImage() {
+			return reviewImage;
 		}
 
-		public void setReview_image(String review_image) {
-			this.review_image = review_image;
+		public void setReviewImage(String reviewImage) {
+			this.reviewImage = reviewImage;
 		}
 
-		public String getReview_re() {
-			return review_re;
+		public String getReviewRe() {
+			return reviewRe;
 		}
 
-		public void setReview_re(String review_re) {
-			this.review_re = review_re;
+		public void setReviewRe(String reviewRe) {
+			this.reviewRe = reviewRe;
 		}
 
-		public String getReview_rating() {
-			return review_rating;
+		public String getReviewRating() {
+			return reviewRating;
 		}
 
-		public void setReview_rating(String review_rating) {
-			this.review_rating = review_rating;
+		public void setReviewRating(String reviewRating) {
+			this.reviewRating = reviewRating;
 		}
-
+		
 		
 		
 		
