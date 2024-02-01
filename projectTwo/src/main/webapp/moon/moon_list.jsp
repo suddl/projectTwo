@@ -1,3 +1,5 @@
+<%@page import="xyz.nailro.dao.ClientDAO"%>
+<%@page import="xyz.nailro.dto.ClientDTO"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="xyz.nailro.dto.MoonDTO"%>
@@ -29,9 +31,12 @@
 		pageSize=Integer.parseInt(request.getParameter("pageSize"));
 	}
 	
-	int moonClientNum=(Integer)session.getAttribute("moonClientNum");
+	String clientId = request.getParameter("id");
 	
-	int totalMoon=MoonDAO.getDAO().selectTotalMoon(search, keyword, moonClientNum);
+	String loginclientId= (String)session.getAttribute("clientId");
+	System.out.println("loginclientId : " +  loginclientId );
+	
+	int totalMoon=MoonDAO.getDAO().selectTotalMoon(search, keyword, loginclientId);
 	
 	int totalPage=(int)Math.ceil((double)totalMoon/pageSize);
 	
@@ -49,7 +54,8 @@
 	
 	List<MoonDTO> moonList=MoonDAO.getDAO().selectMoonList(startRow, endRow, search, keyword);
 	
-	//////loginMember
+
+	MoonDTO clientList=(MoonDTO)session.getAttribute("loginclientId");
 	
 	String currentDate=new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 	
