@@ -8,7 +8,7 @@
 <div id="profile" >
 <% if(loginClient==null) { %>
 	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_login">로그인</a>&nbsp;&nbsp;
-	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_join">회원가입</a>&nbsp;&nbsp;
+	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_terms">회원가입</a>&nbsp;&nbsp;
 	<% } else { %>
 		<span style="font-weight: bold;">[<%=loginClient.getClientName()%>]</span>님, 환영합니다. 
 	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_logout_action">로그아웃</a>&nbsp;&nbsp;
