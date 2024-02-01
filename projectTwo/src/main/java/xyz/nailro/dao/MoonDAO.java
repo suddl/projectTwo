@@ -72,20 +72,38 @@ public class MoonDAO extends JdbcDAO {
 			
 			if(keyword.equals("")) {
 				String sql ="select * from (select rownum rn, temp.* from (select moon_num"
-						+ ", moon_member, moon_title, moon_date, moon_status from moon join member on moon_member=member_num where moon_client_num =? order by moon_num ) temp) where rn between ? and ? ";
+						+ ", moon_client_num,client_name, moon_title,moon_content, moon_date, moon_re, moon_image from moon"
+						+ " join client on moon_client_num=client_num order by moon_num desc) temp) where rn between ? and ? ";
 				pstmt=con.prepareStatement(sql);
-				pstmt.setInt(1, moonClientNum);
-				pstmt.setInt(2, startRow);
-				pstmt.setInt(3, endRow);
+				//pstmt.setInt(1, moonClientNum);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
 			} else {
 				String sql ="select * from (select rownum rn, temp.* from (select moon_num"
-						+ ", moon_member, moon_title, moon_date, moon_status from moon join member on moon_member=member_num "
+						+ ", moon_client_num,client_name, moon_title,moon_content, moon_date, moon_re, moon_image from moon"
+						+ " join client on  moon_client_num=client_num "
 						+ " where " + search + "like '%'||?||'%' moon_status <> 3 order by moon_num) temp)"
 						+ " where rn between ? and ?";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1, keyword);
 				pstmt.setInt(2, startRow);
 				pstmt.setInt(3, endRow);
+			}
+			
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				MoonDTO moon=new MoonDTO();
+				moon.setMoonNum(rs.getInt("moon_num"));
+				moon.setMoonClientNum(rs.getInt("moon_client_num"));
+				moon.setMoonName(rs.getString("client_name"));
+				moon.setMoonTitle(rs.getString("moon_title"));
+				moon.setMoonContent(rs.getString("moon_content"));
+				moon.setMoonDate(rs.getString("moon_date"));
+				moon.setMoonRe(rs.getString("moon_re"));
+				moon.setMoonImage(rs.getString("moon_image"));
+				
+				moonList.add(moon);
 			}
 			
 		} catch (SQLException e) {
