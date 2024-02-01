@@ -330,7 +330,7 @@ public class ProductDAO extends JdbcDAO	{
 		}	finally	{
 			close(con, pstmt, rs);
 		}
-		return newProductList;
+		return newProductList;  
 	}	
 	
 	//상품 페이지(네일, 페디, 케어)
