@@ -76,10 +76,24 @@
         .product:hover {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+        .sorting	{
+            display: flex;
+            justify-content: flex-end;
+		}
+		
+		select[name="정렬 방식"]	{
+			margin-right: 10px;
+		}
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container">\
+    	<div class="sorting">
+    	<select name="정렬 방식">
+    		<option value="이름순" selected>&nbsp;이름순&nbsp;</option>
+    		<option value="가격순" >&nbsp;가격순&nbsp;</option>
+    	</select>
+    	</div>
     	<div class="buttons">
     		<button class="button">숏</button>
     		<button class="button">롱</button>

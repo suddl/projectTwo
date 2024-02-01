@@ -33,7 +33,7 @@ public class ProductDAO extends JdbcDAO	{
 		try	{
 			con=getConnection();
 			
-			String sql="select product_image, product_name, product_price from product where product_type = ?";
+			String sql="select product_image, product_name, product_price from product where product_type = ? order by product_num desc";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, "short");
 			
@@ -66,7 +66,7 @@ public class ProductDAO extends JdbcDAO	{
 		try	{
 			con=getConnection();
 			
-			String sql="select product_image, product_name, product_price from product where product_type = ?";
+			String sql="select product_image, product_name, product_price from product where product_type = ? order by product_num desc";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, "long");
 			
@@ -99,7 +99,7 @@ public class ProductDAO extends JdbcDAO	{
 		try	{
 			con=getConnection();
 			
-			String sql="select product_image, product_name, product_price from product where product_type = ?";
+			String sql="select product_image, product_name, product_price from product where product_type = ? order by product_num desc";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, "parts");
 			
@@ -132,7 +132,7 @@ public class ProductDAO extends JdbcDAO	{
 		try	{
 			con=getConnection();
 			
-			String sql="select product_image, product_name, product_price from product where product_type = ?";
+			String sql="select product_image, product_name, product_price from product where product_type = ? order by product_num desc";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, "fullcolor");
 			
@@ -167,7 +167,7 @@ public class ProductDAO extends JdbcDAO	{
 			if(keyword.equals(""))	{
 				System.out.println("검색어를 입력해주세요");
 			}	else	{
-				String sql="select product_image, product_name, product_price from product where "+search+"like '%'||?||'%'";
+				String sql="select product_image, product_name, product_price from product where "+search+"like '%'||?||'%' order by product_num desc";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1, keyword);
 			}
@@ -227,7 +227,7 @@ public class ProductDAO extends JdbcDAO	{
 		try	{
 			con=getConnection();
 			
-			String sql="select product_image, product_name, product_price from product where product_num order by desc";
+			String sql="select product_image, product_name, product_price from product order by product_num desc";
 			pstmt=con.prepareStatement(sql);
 			
 			rs=pstmt.executeQuery();
@@ -257,7 +257,7 @@ public class ProductDAO extends JdbcDAO	{
 		try	{
 			con=getConnection();
 			
-			String sql="select product_image, product_name, product_price from product where product_category = ?";
+			String sql="select product_image, product_name, product_price from product where product_category = ? order by product_num desc";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, "nail");
 			
@@ -288,7 +288,7 @@ public class ProductDAO extends JdbcDAO	{
 		try	{
 			con=getConnection();
 			
-			String sql="select product_image, product_name, product_price from product where product_category = ?";
+			String sql="select product_image, product_name, product_price from product where product_category = ? order by product_num desc";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, "pedi");
 			
@@ -319,7 +319,7 @@ public class ProductDAO extends JdbcDAO	{
 		try	{
 			con=getConnection();
 			
-			String sql="select product_image, product_name, product_price from product where product_category = ?";
+			String sql="select product_image, product_name, product_price from product where product_category = ? order by product_num desc";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, "nail");
 			
