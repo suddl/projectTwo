@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%-- 관리자로부터 상품글을 입력받기 위한 JSP 문서 --%>
+<%-- => 관리자만 요청 가능한 JSP 문서 --%>
+<%-- => [등록] 태그를 클릭한 경우 [/admin/product_add_action.jsp] 문서를 요청하여 페이지 
+이동 - 입력값(게시글) 전달 --%>
+<%@include file="/security/admin_check.jspf"%>
 
+<%
+	//전달값을 반환받아 저장 - 전달값이 없는 경우 변수에 초기값 저장
+	String pageNum="1", pageSize="10", search="", keyword="";
+%>
 <link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
 <style>
 fieldset {
@@ -66,6 +75,10 @@ button:hover {
 <%-- 파일(리뷰 이미지)을 입력받아 전달하기 위해 form 태그의 enctype 속성값을 반드시 [multipart/form-date]로 설정 --%>
 <form action="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_add_action"
 	method="post" enctype="multipart/form-data" id="productForm">
+	<input type="hidden" name="pageNum" value="<%=pageNum %>">
+	<input type="hidden" name="pageSize" value="<%=pageSize %>">
+	<input type="hidden" name="search" value="<%=search %>">
+	<input type="hidden" name="keyword" value="<%=keyword %>">
 <h1>상품등록</h1>
 <fieldset>
 	<table>
