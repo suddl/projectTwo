@@ -167,17 +167,15 @@ public class ReviewDAO extends JdbcDAO{
 			try {
 				con=getConnection();
 				
-				String sql="insert into review values(?,?,?,?,?,?,sysdate,?,?)";
+				String sql="insert into review values(review_seq.nextval,?,?,?,?,sysdate,?,?,?)";
 				pstmt=con.prepareStatement(sql);
-				pstmt.setInt(1, review.getReview_num());
-				pstmt.setInt(2, review.getReview_client_num());
-				pstmt.setString(3, review.getReview_name());
-				pstmt.setString(4, review.getReview_subject());
-				pstmt.setString(5, review.getReview_content());
-				pstmt.setInt(6, review.getReview_order_num());
-				pstmt.setString(7, review.getReview_date());
-				pstmt.setString(8, review.getReview_image());
-				pstmt.setString(9, review.getReview_re());
+				pstmt.setInt(1, review.getReview_client_num());
+				pstmt.setString(2, review.getReview_subject());
+				pstmt.setString(3, review.getReview_content());
+				pstmt.setInt(4,review.getReview_order_num());
+				pstmt.setString(5, review.getReview_image());
+				pstmt.setString(6, review.getReview_re());
+				pstmt.setString(7, review.getReview_rating());
 				
 				rows=pstmt.executeUpdate();
 			} catch (SQLException e) {

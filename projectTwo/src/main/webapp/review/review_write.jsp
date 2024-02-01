@@ -72,7 +72,7 @@ td {
     </script>
 </head>
 <body>
-	<h1 id="review_sbject">REVIEW</h1>
+	<h1 id="review_subject">REVIEW</h1>
 	<form
 		action="<%=request.getContextPath()%>/index.jsp?group=review&worker=review_writer_action"
 		method="post" enctype="multipart/form-data" id="reviewForm">
@@ -86,21 +86,21 @@ td {
 							onclick="setRating(3)">★</span> <span class="star"
 							onclick="setRating(4)">★</span> <span class="star"
 							onclick="setRating(5)">★</span>
-					</div> <input type="hidden" name="reviewStar" id="ratingValue">
+					</div> <input type="hidden" name="review_rating" id="ratingValue">
 				</td>
 			</tr>
 			<tr>
 				<td>제목:</td>
-				<td><input type="text" name="reviewSubject" id="subjectForm"
+				<td><input type="text" name="review_subject" id="subjectForm"
 					required></td>
 			</tr>
 			<tr>
 				<td>내용:</td>
-				<td><textarea name="reviewContent" rows="5" cols="50" required></textarea></td>
+				<td><textarea name="review_content" rows="5" cols="50" required></textarea></td>
 			</tr>
 			<tr>
 				<td>이미지:</td>
-				<td><input type="file" name="reviewImage"></td>
+				<td><input type="file" name="review_image"></td>
 			</tr>
 			<tr>
 				<th colspan="2" class="button-group">

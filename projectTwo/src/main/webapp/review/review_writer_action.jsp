@@ -1,20 +1,31 @@
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="xyz.nailro.dao.ReviewDAO"%>
 <%@ page import="xyz.nailro.dto.ReviewDTO"%>
-<%-- <%@include file="/security/login_check.jspf"%>   --%>
+<%-- <%@include file="/security/login_check.jspf"%> --%> 
+  
 
-<%
-    request.setCharacterEncoding("UTF-8");
+<%	
+ 	String saveDirectory=request.getServletContext().getRealPath("/review_images");
+    
+	MultipartRequest multipartRequest=new MultipartRequest(request, saveDirectory
+        , 20*1024*1024, "utf-8", new DefaultFileRenamePolicy());
+
+
     // 리뷰 데이터를 받아옵니다.
-    String reviewSubject = request.getParameter("reviewSubject");
-    String reviewContent = request.getParameter("reviewContent");
+    String reviewSubject = multipartRequest .getParameter("review_subject");
+    String reviewContent = multipartRequest.getParameter("review_content");
     // 이미지 처리 로직을 여기에 추가합니다. (예시 코드에서는 생략)
 
     ReviewDTO review = new ReviewDTO();
     review.setReview_subject(reviewSubject);
     review.setReview_content(reviewContent);
     // 이미지 정보도 여기에 추가합니다. (예시 코드에서는 생략)
-
+	System.out.println(reviewSubject);
+    
+    
+    
     ReviewDAO dao = ReviewDAO.getDAO();
     int result = dao.insertReview(review);
 

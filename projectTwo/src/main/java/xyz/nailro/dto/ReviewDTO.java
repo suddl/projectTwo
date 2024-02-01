@@ -23,6 +23,7 @@ REVIEW_RE                  VARCHAR2(4000)
 		private String review_date;
 		private String review_image;
 		private String review_re; //답글
+		private String review_rating;
 
 		public ReviewDTO() {
 			// TODO Auto-generated constructor stub
@@ -99,7 +100,15 @@ REVIEW_RE                  VARCHAR2(4000)
 		public void setReview_re(String review_re) {
 			this.review_re = review_re;
 		}
-		
+
+		public String getReview_rating() {
+			return review_rating;
+		}
+
+		public void setReview_rating(String review_rating) {
+			this.review_rating = review_rating;
+		}
+
 		
 		
 		
