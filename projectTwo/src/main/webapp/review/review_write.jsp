@@ -112,3 +112,9 @@ td {
 	</form>
 </body>
 </html>
+<script type="text/javascript">
+$("#saveBtn").change(function() {
+    //alert($("#reviewCount").val());
+    location.href="<%=request.getContextPath()%>/index.jsp?group=review&worker=review_list"
+});
+</script>

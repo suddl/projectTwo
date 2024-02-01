@@ -3,113 +3,11 @@
 <%@page import="xyz.nailro.dao.ReviewDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
+<link href="<%=request.getContextPath()%>/css/detail.css" type="text/css" rel="stylesheet">
+
 <head>
 <style>
-.custom-center {
-	display: flex;
-	justify-content: center; /* 중앙 정렬 */
-}
 
-.custom-card {
-	width: 20rem; /* 카드의 폭 조절 */
-	margin-left: 15px; /* 이미지와 카드 사이의 간격 조절 */
-	display: flex;
-}
-
-.carousel .carousel-item img {
-	max-width: 100%; /* 이미지 크기 조절 */
-	height: auto; /* 이미지 높이 자동 조절 */
-}
-
-.custom-nav .nav-link {
-	color: white; /* 기본 글자색 */
-	background-color: black; /* 기본 배경색 */
-}
-
-.custom-nav .nav-link.active {
-	background-color: gray; /* 활성 탭의 배경색 */
-	color: black; /* 활성 탭의 글자색 */
-}
-
-div {
-	text-align: center;
-}
-
-.di-line {
-	border-top: 1px solid #444444;
-	margin: 30px auto;
-	width: auto;
-}
-
-#cart {
-	margin-left: auto;
-	text-align: center;
-	background-color: gray;
-	color: white;
-	border: none;
-}
-
-#purchase {
-	text-align: center;
-	background-color: black;
-	color: white;
-	border: none;
-}
-
-#topBtn {
-	position: fixed;
-	right: 0%;
-	bottom: 0px;
-	display: none;
-	z-index: 999;
-	width: 50px; /* 버튼의 너비 */
-	background-size: cover; /* 이미지가 버튼 크기에 맞게 조정됨 */
-}
-
-.button a {
-	font-size: 20px;
-	display: inline-block;
-	padding: 10px 20px; /* 버튼의 크기 조절 */
-	background-color: pink; /* 배경색 */
-	color: black; /* 글자색 */
-	text-decoration: none; /* 밑줄 제거 */
-	border: none; /* 테두리 제거 */
-	text-align: center;
-	margin: 0px;
-	border-radius: 5px;
-}
-
-.button a:hover {
-	/* 마우스 호버 시 배경색 변경 */
-	
-}
-
-.custom-nav .col-auto {
-	margin: 0 auto;
-	margin-right: 5px;
-	margin-left: 20px;
-}
-
-.totalPrice {
-	text-align: left;
-}
-
-.di-line {
-	border-top: 1px dotted #444444;
-	margin: 30px auto;
-	width: auto;
-}
-
-.delivery {
-	font-size: 1em;
-	background-color: #f0f0f0; /* 배경색 추가 */
-}
-
-#reviwImage {
-	margin: 132px;
-}
 </style>
 <meta charset="UTF-8">
 <title>상세페이지</title>
@@ -124,7 +22,10 @@ div {
 	type="text/css" rel="stylesheet">
 </head>
 <body>
-		<a id="topBtn" href="#"> <img src="../images/topBtn.jpg"></a>
+<a id="topBtn" href="#"> <img src="./images/topBtn.jpg"></a>
+		<form
+		action="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail"
+		method="post" id="detail" name="detail"></form>
 		<div class="container">
 			<div class="row custom-center">
 				<div class="col-md-4">
@@ -157,12 +58,7 @@ div {
 						</div>
 					</div>
 				</div>
-			</div>
-	
-		<form action="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail"
-		method="post" id="detail" name="detail">
 				<div class="col-md-4">
-				
 					<div class="card custom-card">
 						<div class="card-body">
 							&nbsp;&nbsp;
@@ -182,11 +78,10 @@ div {
 									&nbsp;&nbsp; <span id="count1" style="display: inline-block;">1</span>&nbsp;&nbsp;
 									<button type="button" id="plusBtn" onclick="countUp();">+</button>
 								</div>
-							</div>
+							</div></
 							&nbsp;&nbsp;
 							<!-- 총 상품 금액을 표시할 요소 -->
 							<div id="totalPrice" class="totalPrice">&nbsp;총 상품 금액:</div>
-							
 							<script type="text/javascript"> 
     var unitPrice = 18000; // 상품 단가
     var count = 1; // 초기 수량
@@ -212,11 +107,7 @@ div {
 </script>
 							&nbsp;
 							<div class="button">
-								<a
-									href="<%=request.getContextPath()%>/index.jsp?group=cart&worker=cart_page"
-									id="cart">장바구니</a> <a
-									href="<%=request.getContextPath()%>/index.jsp?group=order&worker=order_main"
-									id="purchase">바로구매</a>
+								<a href="#" id="cart">장바구니</a> <a href="#" id="purchase">바로구매</a>
 							</div>
 							&nbsp;&nbsp;
 							<ul>
@@ -233,8 +124,10 @@ div {
 					</div>
 				</div>
 			</div>
-			</form>
+			</div>
+			
 			&nbsp;&nbsp;
+
 			<ul class="nav nav-pills nav-justified custom-nav">
 				<li class="nav-item"><a class="nav-link active"
 					aria-current="page" href="#review" id="pd">제품리뷰</a></li>
@@ -256,7 +149,7 @@ div {
 				<li class="nav-item"><a class="nav-link" href="#info" id="pd">상품설명</a></li>
 			</ul>
 			<p id="review"></p>
-		<%@include file="/review/review_write.jsp"%>
+		<%@include file="/review/review_list.jsp"%>
 			<%--
 			<h2>" + review.getReview_subject() + "</h2>");
         out.println("<p>" ++ "</p>");
@@ -266,10 +159,8 @@ div {
 			
     // 상품 ID 설정 (예시로 1번 상품)
     int productId = 1;
-
     ReviewDAO dao = ReviewDAO.getDAO();
     List<ReviewDTO> reviewList = dao.selectProductReviews(productId);
-
     for (ReviewDTO review : reviewList) {
         // 리뷰 정보를 출력합니다. 
         out.println("<h2>" + review.getReview_subject() + "</h2>");
@@ -277,7 +168,6 @@ div {
         out.println("<img src='" + review.getReview_image() + "' alt='ReviewImage'/>");
     }
 --%>
-
 			<%-- 데이터베이스에서 리뷰 데이터 가져오기 --%>
 			<%--리뷰를 3개까지만 출력하는 용도--%>
 			<%-- 
@@ -301,7 +191,6 @@ div {
     <p>리뷰 내용: <%= review.reviewImage %></p>
 </div>
 --%>
-
 			<%-- 버튼 선택에 따라 글씨 색 변경--%>
 			<script>
     // 모든 nav-link 요소를 가져옵니다.
@@ -313,8 +202,8 @@ div {
             this.classList.add('active'); //클릭 요소만 실행
         });
     });
-</script>
-			<script type="text/javascript">
+
+		//topBtn관련 js
 	$(function() {
 		$(window).scroll(function() {
 			if ($(this).scrollTop() > 800) { // 스크롤 위치가 800px 이상일 때
@@ -331,11 +220,9 @@ div {
 			return false;
 		});
 	});
-</script>
-			<script type="text/javascript">
-    window.onload = function() { //새로고침시 제일 위로가는 코드
-        window.scrollTo(0, 0);
-    }
+
+			
+   
 </script>
 			<script
 				src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"

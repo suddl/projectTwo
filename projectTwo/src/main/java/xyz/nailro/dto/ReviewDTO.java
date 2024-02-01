@@ -3,16 +3,17 @@ package xyz.nailro.dto;
 public class ReviewDTO {
 
 /*
-	이름                널?       유형             
+이름                널?       유형             
 ----------------- -------- -------------- 
 REVIEW_NUM        NOT NULL NUMBER         
 REVIEW_CLIENT_NUM          NUMBER         
-REVIEW_SUBJECT             VARCHAR2(500)  
-REVIEW_C0NTENT             VARCHAR2(3000) 
+REVIEW_SUBJECT    NOT NULL VARCHAR2(500)  
+REVIEW_C0NTENT    NOT NULL VARCHAR2(3000) 
 REVIEW_ORDER_NUM           NUMBER         
 REVIEW_DATE                DATE           
 REVIEW_IMAGE               VARCHAR2(50)   
 REVIEW_RE                  VARCHAR2(4000) 
+REVIEW_RATING              VARCHAR2(20)   
 */
 		private int reviewNum;
 		private int reviewClientNum;
