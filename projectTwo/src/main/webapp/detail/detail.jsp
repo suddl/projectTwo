@@ -124,11 +124,7 @@ div {
 	type="text/css" rel="stylesheet">
 </head>
 <body>
-	<form
-		action="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail"
-		method="post" id="detail" name="detail">
-		<a id="topBtn" href="#"> <img src="../images/topBtn.jpg">
-		</a> </a>
+		<a id="topBtn" href="#"> <img src="../images/topBtn.jpg"></a>
 		<div class="container">
 			<div class="row custom-center">
 				<div class="col-md-4">
@@ -161,7 +157,12 @@ div {
 						</div>
 					</div>
 				</div>
+			</div>
+	
+		<form action="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail"
+		method="post" id="detail" name="detail">
 				<div class="col-md-4">
+				
 					<div class="card custom-card">
 						<div class="card-body">
 							&nbsp;&nbsp;
@@ -181,10 +182,11 @@ div {
 									&nbsp;&nbsp; <span id="count1" style="display: inline-block;">1</span>&nbsp;&nbsp;
 									<button type="button" id="plusBtn" onclick="countUp();">+</button>
 								</div>
-							</div></form>
+							</div>
 							&nbsp;&nbsp;
 							<!-- 총 상품 금액을 표시할 요소 -->
 							<div id="totalPrice" class="totalPrice">&nbsp;총 상품 금액:</div>
+							
 							<script type="text/javascript"> 
     var unitPrice = 18000; // 상품 단가
     var count = 1; // 초기 수량
@@ -231,6 +233,7 @@ div {
 					</div>
 				</div>
 			</div>
+			</form>
 			&nbsp;&nbsp;
 			<ul class="nav nav-pills nav-justified custom-nav">
 				<li class="nav-item"><a class="nav-link active"
