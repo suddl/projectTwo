@@ -41,9 +41,9 @@ $("#submitBtn").click(function() {
 	
 	<%-- 전달값에 의해 form 태그의 action 속성값으로 요청 JSP 문서를 구분하여 저장 --%>
 	<% if(action.equals("modify")) { %>
-		$("#passwordForm").attr("action", "<%=request.getContextPath()%>/index.jsp?group=member&worker=client_modify");
+		$("#passwordForm").attr("action", "<%=request.getContextPath()%>/index.jsp?group=client&worker=client_modify");
 	<% } else { %>
-		$("#passwordForm").attr("action", "<%=request.getContextPath()%>/index.jsp?group=member&worker=client_remove_action");
+		$("#passwordForm").attr("action", "<%=request.getContextPath()%>/index.jsp?group=client&worker=client_remove_action");
 	<% } %>
 	
 	$("#passwordForm").submit();
