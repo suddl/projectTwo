@@ -257,6 +257,7 @@ public class ProductDAO extends JdbcDAO	{
 			rs=pstmt.executeQuery();
 			while(rs.next())	{
 				ProductDTO product = new ProductDTO();
+				product.setProductNum(rs.getInt("product_num"));
 				product.setProductImage(rs.getString("product_image"));
 				product.setProductName(rs.getString("product_name"));
 				product.setProductPrice(rs.getInt("product_price"));	
@@ -317,6 +318,7 @@ public class ProductDAO extends JdbcDAO	{
 			
 		while(rs.next())	{
 			ProductDTO product = new ProductDTO();
+			product.setProductNum(rs.getInt("product_num"));
 			product.setProductImage(rs.getString("product_image"));
 			product.setProductName(rs.getString("product_name"));
 			product.setProductPrice(rs.getInt("product_price"));
@@ -324,7 +326,7 @@ public class ProductDAO extends JdbcDAO	{
 			newProductList.add(product);
 			}
 		}	catch (SQLException e) {
-			System.out.println("[에러]selectProductList() 메소드의 오류 =");
+			System.out.println("[에러t]selectProductList() 메소드의 오류 =");
 		}	finally	{
 			close(con, pstmt, rs);
 		}
@@ -348,6 +350,7 @@ public class ProductDAO extends JdbcDAO	{
 			
 			while(rs.next())	{
 			ProductDTO product = new ProductDTO();
+			product.setProductNum(rs.getInt("product_num"));
 			product.setProductImage(rs.getString("product_image"));
 			product.setProductName(rs.getString("product_name"));
 			product.setProductPrice(rs.getInt("product_price"));
