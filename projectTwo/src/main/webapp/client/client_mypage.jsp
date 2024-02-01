@@ -1,15 +1,16 @@
+<%@page import="xyz.nailro.dto.ClientDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%--
+<% 
     //session 객체에 저장된 권한 관련 속성값을 MemberDTO 객체로 반환받아 저장
-    MemberDTO loginMember=(MemberDTO)session.getAttribute("loginMember");
+    ClientDTO loginClient=(ClientDTO)session.getAttribute("loginClient");
 
     //비로그인 상태의 사용자가 JSP 문서를 요청한 경우에 대한 응답 - 비정상적인 요청
-    if(loginMember==null) {
+    if(loginClient==null) {
         request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=error&worker=error_400");
         return;
-    }
---%>
+    } 
+%>
 
 <!DOCTYPE html>
 <html>
@@ -30,7 +31,10 @@
     <div class="container">
         <div class="row" align="center"> 
             <div class="mypage">
-                박민아 님 환영합니다! 
+            <% if (loginClient !=null) { %>
+            <%= loginClient.getClientName()%> 님 환영합니다!
+            <% } %>
+                
                 <button>1:1 문의하기</button> 
                 <button onclick="redirectToReviewWrite()">리뷰 쓰기</button>
             </div>
