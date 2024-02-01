@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<style type="text/css">
+<link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
+<style>
 fieldset {
 	text-align: center;
 	margin: 10px auto;

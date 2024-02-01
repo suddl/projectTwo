@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<style type="text/css">
+<link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
+<style>
 table {
 	margin: 5px auto;
 	border: 1px solid lightgray;

@@ -16,82 +16,83 @@ PRODUCT_CATEGORY NOT NULL VARCHAR2(100)
 PRODUCT_TYPE              VARCHAR2(50)  
 */
 public class ProductDTO {
-	private int product_num;
-	private int product_price;
-	private String product_name;
-	private String product_image;
-	private String product_image2;
-	private String product_image3;
-	private String product_category;
-	private String product_type;
+	private int productNum;
+	private String productName;
+	private String productImage;
+	private String productImage2;
+	private String productImage3;
+	private int productPrice;
+	private String productCategory;
+	private String productType;
 	
 	public ProductDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getProduct_num() {
-		return product_num;
+	public int getProductNum() {
+		return productNum;
 	}
 
-	public void setProduct_num(int product_num) {
-		this.product_num = product_num;
+	public void setProductNum(int productNum) {
+		this.productNum = productNum;
 	}
 
-	public int getProduct_price() {
-		return product_price;
+	public int getProductPrice() {
+		return productPrice;
 	}
 
-	public void setProduct_price(int product_price) {
-		this.product_price = product_price;
+	public void setProductPrice(int productPrice) {
+		this.productPrice = productPrice;
 	}
 
-	public String getProduct_name() {
-		return product_name;
+	public String getProductName() {
+		return productName;
 	}
 
-	public void setProduct_name(String product_name) {
-		this.product_name = product_name;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
-	public String getProduct_image() {
-		return product_image;
+	public String getProductImage() {
+		return productImage;
 	}
 
-	public void setProduct_image(String product_image) {
-		this.product_image = product_image;
+	public void setProductImage(String productImage) {
+		this.productImage = productImage;
 	}
 
-	public String getProduct_image2() {
-		return product_image2;
+	public String getProductImage2() {
+		return productImage2;
 	}
 
-	public void setProduct_image2(String product_image2) {
-		this.product_image2 = product_image2;
+	public void setProductImage2(String productImage2) {
+		this.productImage2 = productImage2;
 	}
 
-	public String getProduct_image3() {
-		return product_image3;
+	public String getProductImage3() {
+		return productImage3;
 	}
 
-	public void setProduct_image3(String product_image3) {
-		this.product_image3 = product_image3;
+	public void setProductImage3(String productImage3) {
+		this.productImage3 = productImage3;
 	}
 
-	public String getProduct_category() {
-		return product_category;
+	public String getProductCategory() {
+		return productCategory;
 	}
 
-	public void setProduct_category(String product_category) {
-		this.product_category = product_category;
+	public void setProductCategory(String productCategory) {
+		this.productCategory = productCategory;
 	}
 
-	public String getProduct_type() {
-		return product_type;
+	public String getProductType() {
+		return productType;
 	}
 
-	public void setProduct_type(String product_type) {
-		this.product_type = product_type;
+	public void setProductType(String productType) {
+		this.productType = productType;
 	}
+
 	
 	
 }

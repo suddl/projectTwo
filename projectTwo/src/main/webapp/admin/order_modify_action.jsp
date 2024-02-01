@@ -2,5 +2,5 @@
     pageEncoding="UTF-8"%>
 <%
 //페이지 이동
-request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=admin&worker=product_list");
+request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=admin&worker=order_list");
 %>
