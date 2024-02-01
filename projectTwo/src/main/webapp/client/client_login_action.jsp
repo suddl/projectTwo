@@ -37,7 +37,7 @@
 	if(client==null || !client.getClientPasswd().equals(passwd) || client.getClientStatus()==0) {
 		session.setAttribute("message", "진짜로 아이디 및 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요");
 		session.setAttribute("id", id);
-		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=clientr&worker=client_login&url=");//한번 로그인 실패한 후 로그인하면 메인페이지로 이동 
+		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=client&worker=client_login&url=");//한번 로그인 실패한 후 로그인하면 메인페이지로 이동 
 		return;		
 	}
 	

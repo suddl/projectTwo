@@ -6,8 +6,8 @@
 <%@page import="java.util.List"%>
 <%@page import="xyz.nailro.dao.MoonDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
+    pageEncoding="UTF-8"%> 
+<%@include file="/security/login_check.jspf"%>
 <% 
 	String search=request.getParameter("search");
 	if(search==null) {
@@ -41,7 +41,7 @@
 	
 	//System.out.println("id : " + id);
 	*/
-	ClientDTO loginClient=(ClientDTO)session.getAttribute("loginClient");
+	//ClientDTO loginClient=(ClientDTO)session.getAttribute("loginClient");
 	
 	int loginClientNum = loginClient.getClientNum();
 	//System.out.println("id : " + loginClientNum);
@@ -165,7 +165,7 @@ td {
 				
 				<td class="subject">
 					<%
-						String url=request.getContextPath()+"/index.jsp?group=moon&work=moon_detail&moonNum="+moon.getMoonNum()
+						String url=request.getContextPath()+"/index.jsp?group=moon&worker=moon_detail&moonNum="+moon.getMoonNum()
 						+"&pageNum="+pageNum+"&pageSize="+pageSize +"&search="+search+"&keyword="+keyword;
 					%>
 					<a href="<%=url %>"><%= moon.getMoonTitle() %></a>
