@@ -49,9 +49,9 @@ try {
 	// 게시글을 전달받아 REVIEW 테이블의 저장된 행의 컬럼값을 변경하고 변경행의 갯수를 반환하는
 	// ReviewDAO 클래스의 메소드 호출
 	ReviewDAO.getDAO().updateReview(review);
-	if (review.getReview_image() != null) {// 리뷰 이미지 파일이 있는 경우
+	if (review.getReviewImage() != null) {// 리뷰 이미지 파일이 있는 경우
 		// 서버 디렉토리에서 삭제 처리될 게시글의 리뷰 이미지 파일을 삭제 처리
-		new File(request.getServletContext().getRealPath(review.getReview_image())).delete();
+		new File(request.getServletContext().getRealPath(review.getReviewImage())).delete();
 	}
 
 	// 페이지 이동 - 검색 및 페이징 처리 관련 값 전달

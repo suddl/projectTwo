@@ -28,12 +28,12 @@ div {
         <% if(reviews != null && !reviews.isEmpty()) { %>
             <% for(ReviewDTO review : reviews) { %>
                 <div>
-                    <h2><%= review.getReview_subject() %></h2>
-                    <p><%= review.getReview_content() %></p>
-                    <% if (review.getReview_image() != null && !review.getReview_image().isEmpty()) { %>
-                        <img src="<%= review.getReview_image() %>" alt="리뷰 이미지" style="max-width: 200px;">
+                    <h2><%= review.getReviewSubject() %></h2>
+                    <p><%= review.getReviewContent() %></p>
+                    <% if (review.getReviewImage() != null && !review.getReviewImage().isEmpty()) { %>
+                        <img src="<%= review.getReviewImage() %>" alt="리뷰 이미지" style="max-width: 200px;">
                     <% } %>
-                    <a href="review_detail.jsp?reviewId=<%= review.getReview_num() %>">상세보기</a>
+                    <a href="review_detail.jsp?reviewId=<%= review.getReviewNum() %>">상세보기</a>
                 </div>
             <% } %>
         <% } else { %>

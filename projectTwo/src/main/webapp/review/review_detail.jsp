@@ -18,14 +18,14 @@
     <h1>리뷰 상세보기</h1>
     <% if (review != null) { %>
         <div>
-            <h2><%= review.getReview_subject() %></h2>
-            <p><%= review.getReview_content() %></p>
-            <% if (review.getReview_image() != null && !review.getReview_image().isEmpty()) { %>
-                <img src="<%= review.getReview_image() %>" alt="리뷰 이미지" style="max-width: 400px;">
+            <h2><%= review.getReviewSubject() %></h2>
+            <p><%= review.getReviewContent() %></p>
+            <% if (review.getReviewImage() != null && !review.getReviewImage().isEmpty()) { %>
+                <img src="<%= review.getReviewImage() %>" alt="리뷰 이미지" style="max-width: 400px;">
             <% } %>
             <div>
-                <a href="review_modify.jsp?reviewId=<%= review.getReview_num() %>">수정하기</a>
-                <a href="review_remove_action.jsp?reviewId=<%= review.getReview_num() %>" onclick="return confirm('정말 삭제하시겠습니까?');">삭제하기</a>
+                <a href="review_modify.jsp?reviewId=<%= review.getReviewNum() %>">수정하기</a>
+                <a href="review_remove_action.jsp?reviewId=<%= review.getReviewNum() %>" onclick="return confirm('정말 삭제하시겠습니까?');">삭제하기</a>
             </div>
         </div>
     <% } else { %>
