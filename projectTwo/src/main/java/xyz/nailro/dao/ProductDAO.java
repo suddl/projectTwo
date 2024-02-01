@@ -24,136 +24,37 @@ public class ProductDAO extends JdbcDAO	{
 		return _dao;
 	}
 	
-	//네일(숏) 버튼용
-	public List<ProductDTO> selectNailShortType()	{
+	//네일 버튼용
+	public List<ProductDTO> selectNailType(String product_type)	{
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		List<ProductDTO> shortTypeList=new ArrayList<ProductDTO>();
+		List<ProductDTO> nailTypeList=new ArrayList<ProductDTO>();
 		try	{
 			con=getConnection();
 			
 			String sql="select product_image, product_name, product_price from product where product_type = ? order by product_num desc";
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, "short");
+			pstmt.setString(1, "product_type");
 			
 		
 			rs=pstmt.executeQuery();
 				
 			while(rs.next())	{
-				ProductDTO product = new ProductDTO();
-				product.setProduct_image(rs.getString("product_image"));
-				product.setProduct_name(rs.getString("product_name"));
-				product.setProduct_price(rs.getInt("product_price"));		
+				ProductDTO type = new ProductDTO();
+				type.setProduct_image(rs.getString("product_image"));
+				type.setProduct_name(rs.getString("product_name"));
+				type.setProduct_price(rs.getInt("product_price"));		
 		
-				shortTypeList.add(product);
+				nailTypeList.add(type);
 			}
 			
 		} catch (SQLException e)	{
-			System.out.println("[에러]selectNailShortType() 메소드의 SQL 오류 ="+e.getMessage());
+			System.out.println("[에러]selectNailType() 메소드의 SQL 오류 ="+e.getMessage());
 		} finally	{
 			close(con, pstmt, rs);
 		}
-		return shortTypeList;
-	}
-
-	//네일(롱) 버튼용
-	public List<ProductDTO> selectNailLongType()	{
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		List<ProductDTO> longTypeList=new ArrayList<ProductDTO>();
-		try	{
-			con=getConnection();
-			
-			String sql="select product_image, product_name, product_price from product where product_type = ? order by product_num desc";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, "long");
-			
-		
-			rs=pstmt.executeQuery();
-				
-			while(rs.next())	{
-				ProductDTO product = new ProductDTO();
-				product.setProduct_image(rs.getString("product_image"));
-				product.setProduct_name(rs.getString("product_name"));
-				product.setProduct_price(rs.getInt("product_price"));		
-		
-				longTypeList.add(product);
-			}
-			
-		} catch (SQLException e)	{
-			System.out.println("[에러]selectNailLongType() 메소드의 SQL 오류 ="+e.getMessage());
-		} finally	{
-			close(con, pstmt, rs);
-		}
-		return longTypeList;
-	}
-	
-	//네일(파츠) 버튼용
-	public List<ProductDTO> selectNailPartsType()	{
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		List<ProductDTO> partsTypeList=new ArrayList<ProductDTO>();
-		try	{
-			con=getConnection();
-			
-			String sql="select product_image, product_name, product_price from product where product_type = ? order by product_num desc";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, "parts");
-			
-		
-			rs=pstmt.executeQuery();
-				
-			while(rs.next())	{
-				ProductDTO product = new ProductDTO();
-				product.setProduct_image(rs.getString("product_image"));
-				product.setProduct_name(rs.getString("product_name"));
-				product.setProduct_price(rs.getInt("product_price"));		
-		
-				partsTypeList.add(product);
-			}
-			
-		} catch (SQLException e)	{
-			System.out.println("[에러]selectNailPartsType() 메소드의 SQL 오류 ="+e.getMessage());
-		} finally	{
-			close(con, pstmt, rs);
-		}
-		return partsTypeList;
-	}
-	
-	//네일(풀컬러) 버튼용
-	public List<ProductDTO> selectFullcolorType()	{
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		List<ProductDTO> fullcolorTypeList=new ArrayList<ProductDTO>();
-		try	{
-			con=getConnection();
-			
-			String sql="select product_image, product_name, product_price from product where product_type = ? order by product_num desc";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, "fullcolor");
-			
-		
-			rs=pstmt.executeQuery();
-				
-			while(rs.next())	{
-				ProductDTO product = new ProductDTO();
-				product.setProduct_image(rs.getString("product_image"));
-				product.setProduct_name(rs.getString("product_name"));
-				product.setProduct_price(rs.getInt("product_price"));		
-		
-				fullcolorTypeList.add(product);
-			}
-			
-		} catch (SQLException e)	{
-			System.out.println("[에러]selectNailFullcolorType() 메소드의 SQL 오류 ="+e.getMessage());
-		} finally	{
-			close(con, pstmt, rs);
-		}
-		return fullcolorTypeList;
+		return nailTypeList;
 	}
 	
 	//상품 검색 결과
@@ -248,97 +149,34 @@ public class ProductDAO extends JdbcDAO	{
 		return newProductList;
 	}
 	
-	//상품 페이지(네일)
-	public List<ProductDTO> selectNailList()	{
+	//상품 페이지(네일, 페디, 케어)
+	public List<ProductDTO> selectProductByCategory(String category)	{
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		List<ProductDTO> nailList=new ArrayList<ProductDTO>();
+		List<ProductDTO> productList=new ArrayList<ProductDTO>();
 		try	{
 			con=getConnection();
 			
 			String sql="select product_image, product_name, product_price from product where product_category = ? order by product_num desc";
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, "nail");
+			pstmt.setString(1, "product_category");
 			
 			rs=pstmt.executeQuery();
 			
-		while(rs.next())	{
+			while(rs.next())	{
 			ProductDTO product = new ProductDTO();
 			product.setProduct_image(rs.getString("product_image"));
 			product.setProduct_name(rs.getString("product_name"));
 			product.setProduct_price(rs.getInt("product_price"));
 			
-			nailList.add(product);
+			productList.add(product);
 			}
 		}	catch (SQLException e) {
 			System.out.println("[에러]selectNailList() 메소드의 오류 =");
 		}	finally	{
 			close(con, pstmt, rs);
 		}
-		return nailList;
-	}
-
-	//상품 페이지(페디)
-	public List<ProductDTO> selectPediList()	{
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		List<ProductDTO> pediList=new ArrayList<ProductDTO>();
-		try	{
-			con=getConnection();
-			
-			String sql="select product_image, product_name, product_price from product where product_category = ? order by product_num desc";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, "pedi");
-			
-			rs=pstmt.executeQuery();
-			
-		while(rs.next())	{
-			ProductDTO product = new ProductDTO();
-			product.setProduct_image(rs.getString("product_image"));
-			product.setProduct_name(rs.getString("product_name"));
-			product.setProduct_price(rs.getInt("product_price"));
-			
-			pediList.add(product);
-			}
-		}	catch (SQLException e) {
-			System.out.println("[에러]selectNailList() 메소드의 오류 =");
-		}	finally	{
-			close(con, pstmt, rs);
-		}
-		return pediList;
-	}
-
-	//상품 페이지(케어&툴)
-	public List<ProductDTO> careList()	{
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		List<ProductDTO> careList=new ArrayList<ProductDTO>();
-		try	{
-			con=getConnection();
-			
-			String sql="select product_image, product_name, product_price from product where product_category = ? order by product_num desc";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, "nail");
-			
-			rs=pstmt.executeQuery();
-			
-		while(rs.next())	{
-			ProductDTO product = new ProductDTO();
-			product.setProduct_image(rs.getString("product_image"));
-			product.setProduct_name(rs.getString("product_name"));
-			product.setProduct_price(rs.getInt("product_price"));
-			
-			careList.add(product);
-			}
-		}	catch (SQLException e) {
-			System.out.println("[에러]selectNailList() 메소드의 오류 =");
-		}	finally	{
-			close(con, pstmt, rs);
-		}
-		return careList;
-	}
-	
+		return productList;
+	}	
 }
