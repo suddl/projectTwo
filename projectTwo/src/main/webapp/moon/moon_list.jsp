@@ -157,7 +157,7 @@ td {
 			<td colspan="5">검색된 게시글이 없습니다.</td>
 		</tr>
 		<% } else { %>
-			<% System.out.println("moonList.size()= " + moonList.size()); %>
+			<% // System.out.println("moonList.size()= " + moonList.size()); %>
 			<% for(MoonDTO moon : moonList) { %>
 			<tr>
 				<td><%=displayNum %></td>
@@ -171,20 +171,19 @@ td {
 					<a href="<%=url %>"><%= moon.getMoonTitle() %></a>
 				</td>
 				<td><%= moon.getMoonName() %></td>
-				
-				<td>
-				<% if(moon.getMoonRe()==null) { %>
-					미답변
-				<% } else {%>
-					답변완료
-				<% } %>
-				</td>
 				<td>
 					<% if(currentDate.equals(moon.getMoonDate().substring(0, 10))) { %>
 							<%=moon.getMoonDate().substring(11) %>
 					<% } else { %>
 							<%=moon.getMoonDate() %>
 					<% } %>
+				</td>
+				<td>
+				<% if(moon.getMoonRe()==null) { %>
+					미답변
+				<% } else {%>
+					답변완료
+				<% } %>
 				</td>
 			</tr>
 			<% } %>
