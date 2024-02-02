@@ -21,12 +21,10 @@
 
     if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
         // 검색 키워드가 제공된 경우 제품 검색 수행
-        productList = ProductDAO.getDAO().searchProduct("product_name", searchKeyword);
-
+        productList = ProductDAO.getDAO().searchProduct(searchKeyword);
         // 검색 결과가 비어 있는지 확인
         boolean searchResultEmpty = productList.isEmpty();
-        request.setAttribute("searchResultEmpty", searchResultEmpty);
-    }
+        request.setAttribute("searchResultEmpty", searchResultEmpty);    }
 %>
 <!DOCTYPE html>
 <html>
@@ -136,7 +134,6 @@
         <!-- 검색 결과 또는 "결과 없음" 메시지 표시 -->
         <div class="product-list">
             <% if (searchKeyword != null && !searchKeyword.trim().isEmpty()) { %>
-                <% if (searchResultEmpty) { %>
                     <p>검색 결과가 없습니다.</p>
                 <% } else { %>
         <% for (ProductDTO product : productList)	{ 
@@ -156,7 +153,7 @@
                         </div>
                     <% } %>
                 <% } %>
-            <% } %>
+            
         </div>
     </div>
 <script>

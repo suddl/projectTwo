@@ -105,7 +105,7 @@
 </head>
 <body>
 <%
-	List<ProductDTO> productList = ProductDAO.getDAO().selectProductByCategory(nail);
+	List<ProductDTO> productList = ProductDAO.getDAO().selectProductByCategory("nail");
 %>
     <div class="container">
 
