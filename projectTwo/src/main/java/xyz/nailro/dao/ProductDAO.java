@@ -238,7 +238,6 @@ public class ProductDAO extends JdbcDAO	{
 		}
 		return rows;		
 	}
-	// 상품 검색
 	public List<ProductDTO> searchProduct(String keyword) {
 	    Connection con = null;
 	    PreparedStatement pstmt = null;
@@ -255,11 +254,7 @@ public class ProductDAO extends JdbcDAO	{
 	        pstmt.setString(2, likeKeyword);
 	        pstmt.setString(3, likeKeyword);
 	        rs = pstmt.executeQuery();
-	        if (!rs.next()) {
-	            System.out.println("검색 결과가 없습니다");
-	        } else {
-	            rs.beforeFirst();
-	        }
+
 	        while (rs.next()) {
 	            ProductDTO product = new ProductDTO();
 	            product.setProductNum(rs.getInt("product_num"));
@@ -268,14 +263,19 @@ public class ProductDAO extends JdbcDAO	{
 	            product.setProductPrice(rs.getInt("product_price"));
 	            searchProductList.add(product);
 	        }
-	        } catch (SQLException e) {
+
+	        // 검색 결과가 없는 경우
+	        if (searchProductList.isEmpty()) {
+	            System.out.println("검색 결과가 없습니다");
+	        }
+	    } catch (SQLException e) {
 	        System.out.println("[에러]searchProduct() 메소드의 SQL 오류 = " + e.getMessage());
 	    } finally {
 	        close(con, pstmt, rs);
 	    }
+
 	    return searchProductList;
 	}
-
 	// 검색어를 전달받아 해당 검색어가 상품 카테고리에 포함된 상품들을 검색
 	public List<ProductDTO> searchProductByCategory(String keyword) {
 	    Connection con = null;

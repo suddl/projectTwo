@@ -19,12 +19,13 @@
 
     // 검색 결과를 저장할 제품 목록 초기화
     List<ProductDTO> productList = null;
+    searchResultEmpty = false; // 기본값은 false로 설정
 
     if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
         // 검색 키워드가 제공된 경우 제품 검색 수행
         productList = ProductDAO.getDAO().searchProduct(searchKeyword);
         // 검색 결과가 비어 있는지 확인
-        boolean searchResultEmpty = productList != null && productList.isEmpty();
+        searchResultEmpty = productList.isEmpty();
         request.setAttribute("searchResultEmpty", searchResultEmpty);
     }
 %>
