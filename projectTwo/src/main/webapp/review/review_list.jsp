@@ -5,7 +5,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="xyz.nailro.dao.ReviewDAO"%>
 <%@ page import="xyz.nailro.dto.ReviewDTO"%>
-<%-- <%@include file="/security/login_check.jspf"%> --%>
+<%@include file="/security/login_check.jspf"%> 
 
 <%
 //게시글 검색 기능에 필요한 전달값(검색대상과 검색단어)을 반환받아 저장
@@ -145,7 +145,9 @@ td {
 </style>
 </head>
 <body>
-
+<form  action="<%=request.getContextPath() %>/index.jsp?group=review&worker=review_wirter_action" 
+	method="post" id="reviewForm" name="review">
+	<%-- <input type="hidden" name="url" value="<%=url %>"> --%>
 <div id="review_list">
 	<%-- 검색된 게시글 총갯수 출력 --%>
 	<div id="review_title">REVIEW(<%=totalReview %>)</div>
@@ -213,6 +215,8 @@ td {
 			<% } %>
 		<% } %>
 	</table>
+	</div>
+	</form>
 	
 	<%-- 페이지번호 출력 및 링크 제공 - 블럭화 처리 --%>
 	<%

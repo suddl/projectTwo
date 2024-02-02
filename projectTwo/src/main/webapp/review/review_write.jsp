@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%-- <%@include file="/security/login_check.jspf"%> --%>
+<%@include file="/security/login_check.jspf"%>
 
 <html>
 <head>
@@ -103,7 +103,7 @@ td {
 				<td><input type="file" name="review_image"></td>
 			</tr>
 			<tr>
-				<th colspan="2" class="button-group">
+				<th colspan="2" class="button-group">				
 					<button type="submit" id="saveBtn">글저장</button>
 					<button type="reset" id="resetBtn">다시쓰기</button>
 				</th>

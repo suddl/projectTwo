@@ -36,7 +36,7 @@
             <% } %>
                 
                 <button>1:1 문의하기</button> 
-                <button onclick="redirectToReviewWrite()">리뷰 쓰기</button>
+                <button onclick="redirectToReviewWrite()" href="<%=request.getContextPath() %>/index.jsp?group=review&worker=review_write">리뷰 쓰기</button>
             </div>
             
             <div class="mybuttons" style="margin-top: 4cm;>
