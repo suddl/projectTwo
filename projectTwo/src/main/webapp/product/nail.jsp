@@ -3,18 +3,16 @@
 <%@page import="java.util.List"%>
 <%@page import="xyz.nailro.dao.ProductDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<% 	
-	int pageNum=1;
-	if(request.getParameter("pageNum")!=null)	{
-		pageNum=Integer.parseInt(request.getParameter("pageNum"));
-	}
-	
-	int pageSize=12;
-	if(request.getParameter("pageSize")!=null)	{
-		if(request.getParameter("pageSize")!=null)	{
-			pageNum=Integer.parseInt(request.getParameter("pageNum"));
-		}
-	}
+<%     
+    int pageNum = 1;
+    if (request.getParameter("pageNum") != null) {
+        pageNum = Integer.parseInt(request.getParameter("pageNum"));
+    }
+    
+    int pageSize = 12;
+    if (request.getParameter("pageSize") != null) {
+        pageSize = Integer.parseInt(request.getParameter("pageSize"));
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -125,22 +123,23 @@
     		<button data-product-type="all">전체</button>
 		</div>
 
-        <div class="product-list">
-        <% for (ProductDTO product : productList)	{ 
+    <div class="product-list">
+        <% for (ProductDTO product : productList) { 
             String url = request.getContextPath() + "/index.jsp?group=detail&worker=detail"
                     + "&productNum=" + product.getProductNum() + "&productImage=" + product.getProductImage()
                     + "&productName=" + product.getProductName() + "&productPrice=" + product.getProductPrice();        
         %>
-            <div class="product">
-                <a href="<%=request.getContextPath() %>/index.jsp?group=detail&worker=detail">
-                    <img class="product-image" src="<%=request.getContextPath() %>/images/<%=product.getProductImage()%>" alt="이미지 준비중">
-                </a>
-                <div class="product-name">
-                    <a href="<%=request.getContextPath() %>/index.jsp?group=detail&worker=detail"><%=product.getProductName()%></a>
-                </div>
-                <div class="product-price"><%=product.getProductPrice() %></div>
+        <div class="product" data-product-type="<%=product.getProductType()%>">
+            <a href="<%=url%>">
+                <img class="product-image" src="<%=request.getContextPath() %>/images/<%=product.getProductImage()%>" alt="이미지 준비중">
+            </a>
+            <div class="product-name">
+                <a href="<%=url%>"><%=product.getProductName()%></a>
             </div>
+            <div class="product-price"><%=product.getProductPrice() %></div>
+        </div>
         <% } %>
+
 	</div>
 </div>
 <script>
@@ -165,8 +164,17 @@
             productListContainer.find('.product').hide();
             productListContainer.find('.product[data-product-type="' + productType + '"]').show();
         }
-   
-     // 정렬 방식 변경 이벤트 핸들러
+
+        sortProducts(); // 필터링 후 정렬 적용
+    }
+
+    $('select[name="정렬 방식"]').on('change', function() {
+        sortType = $(this).val();
+        displayProducts(getActiveFilterType());
+        sortProducts();
+    });
+
+    // 가격순 정렬 토글 기능 추가
     function sortProducts() {
         var productListContainer = $('.product-list');
         var products = productListContainer.find('.product');
@@ -200,22 +208,6 @@
         // 정렬된 배열을 화면에 적용
         productListContainer.empty().append(products);
     }
-
-    // 화면에 필터된 제품들을 출력
-    function displayProducts(productType) {
-        var productListContainer = $('.product-list');
-        productListContainer.find('.product').hide();
-
-        // 필터된 제품들을 화면에 출력
-        $('[data-product-type="' + productType + '"]').show();
-        sortProducts(); // 필터링 후 정렬 적용
-    }
-
-    // 가격순 정렬 토글 기능 추가
-    $('select[name="정렬 방식"]').on('change', function() {
-        sortType = $(this).val();
-        sortProducts();
-    });
 </script>
 </body>
 </html>

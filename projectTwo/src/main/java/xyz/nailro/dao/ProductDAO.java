@@ -367,35 +367,39 @@ public class ProductDAO extends JdbcDAO	{
 		return newProductList;  
 	}	
 	
-	//상품 페이지(네일, 페디, 케어)
-	public List<ProductDTO> selectProductByCategory(String productCategory)	{
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		List<ProductDTO> productList=new ArrayList<ProductDTO>();
-		try	{
-			con=getConnection();
-			
-			String sql="select product_image, product_name, product_price from product where product_category = ? order by product_num desc";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, productCategory);
-			
-			rs=pstmt.executeQuery();
-			
-			while(rs.next())	{
-			ProductDTO product = new ProductDTO();
-			product.setProductNum(rs.getInt("product_num"));
-			product.setProductImage(rs.getString("product_image"));
-			product.setProductName(rs.getString("product_name"));
-			product.setProductPrice(rs.getInt("product_price"));
-			
-			productList.add(product);
-			}
-		}	catch (SQLException e) {
-			System.out.println("[에러]selectProductByCategory() 메소드의 오류 =");
-		}	finally	{
-			close(con, pstmt, rs);
-		}
-		return productList;
-	}	
+	// 상품 페이지(네일, 페디, 케어)
+	public List<ProductDTO> selectProductByCategory(String productCategory) {
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    List<ProductDTO> productList = new ArrayList<ProductDTO>();
+
+	    try {
+	        con = getConnection();
+
+	        // product_num을 선택하도록 SQL 쿼리 수정
+	        String sql = "SELECT product_num, product_image, product_name, product_price FROM product WHERE product_category = ? ORDER BY product_num DESC";
+	        pstmt = con.prepareStatement(sql);
+	        pstmt.setString(1, productCategory);
+
+	        rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	            ProductDTO product = new ProductDTO();
+	            // product_num 필드에 대한 설정 추가
+	            product.setProductNum(rs.getInt("product_num"));
+	            product.setProductImage(rs.getString("product_image"));
+	            product.setProductName(rs.getString("product_name"));
+	            product.setProductPrice(rs.getInt("product_price"));
+
+	            productList.add(product);
+	        }
+	    } catch (SQLException e) {
+	        // 더 구체적인 에러 메시지 출력
+	        System.err.println("[에러] selectProductByCategory() 메소드의 오류: " + e.getMessage());
+	    } finally {
+	        close(con, pstmt, rs);
+	    }
+	    return productList;
+	}
 }
