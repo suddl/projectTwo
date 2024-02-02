@@ -67,9 +67,22 @@ public class ReviewDAO extends JdbcDAO{
 				
 				//매개변수에 저장된 값을 비교하여 접속된 DBMS 서버에 다른 SQL 명령을 전달하여 실행
 				// => 동적 SQL(Dynamic SQL)
-			
 				
-
+			if(keyword.equals("")) {
+				String sql="select count(*) from review";
+				pstmt=con.prepareStatement(sql);
+			} else {
+				String sql="select count(*) from review join client on review_client_num=client_num"
+						+ "where "+search+ "like '%'||?||'%'";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, keyword);
+			}
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				totalCount=rs.getInt(1);
+			}
 			} catch (SQLException e) {
 				System.out.println("[에러]selectTotalReview() 메소드의 SQL 오류 = "+e.getMessage());
 			} finally {
