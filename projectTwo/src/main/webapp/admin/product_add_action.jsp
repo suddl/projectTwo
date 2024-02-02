@@ -10,7 +10,6 @@
 <%-- => 관리자만 요청 가능한 JSP 문서 --%>
 <%-- => 게시글이 [multipart/form-data] 타입으로 전달되므로 COS 라이브러리의 MultipartRequest 객체를 사용하여 처리 --%>
 <%-- => 전달받은 파일은 [/review_images] 서버 디렉터리에 저장되도록 업로드 처리 --%>
-<%@include file="/security/admin_check.jspf"%>
 <%
 	//JSP 문서를 GET 방식으로 요청한 경우에 대한 응답 처리 - 비정상적인 요청
 	if(request.getMethod().equals("GET")) {
@@ -33,7 +32,7 @@
 	String keyword=multipartRequest.getParameter("keyword");
 	
 	String productName=Utility.escapeTag(multipartRequest.getParameter("productName"));
-	int productPrice=Integer.parseInt(Utility.escapeTag(multipartRequest.getParameter("productPrice")));
+	int productPrice=Integer.parseInt(multipartRequest.getParameter("productPrice"));
 	String productCategory=Utility.escapeTag(multipartRequest.getParameter("productCategory"));
 	String productType=Utility.escapeTag(multipartRequest.getParameter("productType"));
 	

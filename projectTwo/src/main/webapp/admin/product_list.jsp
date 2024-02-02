@@ -1,4 +1,4 @@
- <%@page import="xyz.nailro.dto.ClientDTO"%>
+<%@page import="xyz.nailro.dto.ClientDTO"%>
 <%@page import="xyz.nailro.dto.ProductDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="xyz.nailro.dao.ProductDAO"%>
@@ -37,6 +37,7 @@
 		pageSize=Integer.parseInt(request.getParameter("pageSize"));
 	}
 
+	
 	//검색정보(검색대상과 검색단어)를 전달받아 PRODUCT 테이블에 저장된 게시글 중 검색대상의 컬럼에
 	//검색단어가 포함된 게시글의 갯수를 검색하여 반환하는 ProductDAO 클래스의 메서드 호출
 	// => 검색 기능을 사용하지 않을 경우 PRODUCT 테이블에 저장된 모든 게시글의 갯수를 반환
@@ -68,6 +69,7 @@
 	//클래스의 메소드 호출
 	List<ProductDTO> productList=ProductDAO.getDAO().selectProductList(startRow, endRow, search, keyword);
 	
+
 	//session 객체에 저장된 권한 관련 속성값을 반환받아 저장
 	// => 관리자에게만 글쓰기 권한 제공
 	ClientDTO loginClient=(ClientDTO)session.getAttribute("loginClient");
@@ -170,38 +172,17 @@ button + button {
 	</tr>
 	
 	<%-- List 객체의 요소(ProductDTO 객체)를 차례대로 제공받아 저장하여 처리하기 위한 반복문 --%>
-	<% for(ProductDTO product : productList) { %>
-	<tr>
+	<% for(ProductDTO product  : productList) { %>
+	<tr align="center">
+		<td width="50"><input type="checkbox" name="product"></td>
 		<%-- 게시글의 글번호가 아닌 게시글의 일련번호 출력 --%>
-		<td><%=displayNum %></td>
-		<% displayNum--; %><%-- 게시글 일련번호를 1씩 감소하여 저장 --%>
-	<tr>
-		<td><input type="checkbox" name="product"></td>
-		<td>1000</td>
-		<td>이미지</td>
-		<td>선라이즈네일</td>
-		<td>네일</td>
-		<td>롱</td>
-		<td>20,000원</td>
-		<td><button type="button" id="modifyBtn">수정</button></td>
-	</tr>
-	<tr>
-		<td><input type="checkbox" name="product"></td>
-		<td>1001</td>
-		<td>이미지</td>
-		<td>슈가프렌치네일</td>
-		<td>네일</td>
-		<td>숏</td>
-		<td>18,000원</td>
-		<td><button type="button" id="modifyBtn">수정</button></td>
-	</tr>
-	<tr>
-		<td><input type="checkbox" name="product"></td>
-		<td><%=product.getProductNum() %></td>
-		<td><%=product.getProductImage() %></td>
-		<td><%=product.getProductName() %></td>
-		<td><%=product.getProductType() %></td>
-		<td><%=product.getProductPrice() %></td>
+		<td width="100"><%=product.getProductCategory() %><%=product.getProductType() %><%=product.getProductNum() %></td>
+		<td width="170"><%=product.getProductImage() %></td>
+		<td width="250"><%=product.getProductName() %></td>
+		<td width="200"><%=product.getProductCategory() %></td>
+		<td width="150"><%=product.getProductType() %></td>
+		<td width="150"><%=product.getProductPrice() %></td>
+		<td width="100"><button type="button" id="modifyBtn">수정</button></td>
 	</tr>
 	<% } %>
 </table>
@@ -271,6 +252,7 @@ button + button {
 </div>
 
 <script type="text/javascript">
+
 $("#productCount").change(function() {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_list"
 		+"&pageNum=<%=pageNum%>&pageSize="+$("#productCount").val()
@@ -288,4 +270,11 @@ $("#addBtn").click(function() {
 $("#removeBtn").click(function() {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_remove_action";
 });
+
+function removeConfirm(productNum) {
+	if(confirm("삭제 하시겠습니까?")) {
+		location.href="product_remove_action.jsp?productNum="+productNum;
+	}
+}
+
 </script>

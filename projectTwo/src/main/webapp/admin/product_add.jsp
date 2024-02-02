@@ -4,7 +4,6 @@
 <%-- => 관리자만 요청 가능한 JSP 문서 --%>
 <%-- => [등록] 태그를 클릭한 경우 [/admin/product_add_action.jsp] 문서를 요청하여 페이지 
 이동 - 입력값(게시글) 전달 --%>
-<%@include file="/security/admin_check.jspf"%>
 
 <%
 	//전달값을 반환받아 저장 - 전달값이 없는 경우 변수에 초기값 저장
@@ -91,26 +90,27 @@ button:hover {
 		<tr>
 			<th>가격</th>
 			<td>
-				<input type="text" name="productPrice" id="productPrice" size="30">
+				<input type="text" name="productPrice" id="productPrice" size="30" 
+					 maxlength="10"> 원 
 			</td>					
 		</tr>	
 		<tr>
 			<th>카테고리</th>
 			<td>
 			<select name="productCategory">
-				<option value="nail">&nbsp;네일&nbsp;&nbsp;</option>
-				<option value="pedi">&nbsp;페디&nbsp;&nbsp;</option>
-				<option value="careTool">&nbsp;케어&툴&nbsp;&nbsp;</option>
+				<option value="N">&nbsp;네일&nbsp;&nbsp;</option>
+				<option value="PD">&nbsp;페디&nbsp;&nbsp;</option>
+				<option value="CT">&nbsp;케어&툴&nbsp;&nbsp;</option>
 			</select>
 			</td>
 		</tr>			
 		<tr>
 			<th>세부사항</th>
 			<td>
-				<input type='radio' name='productType' value="long"> 롱
-				<input type='radio' name='productType' value="short"> 숏
-				<input type='radio' name='productType' value="parts"> 파츠
-				<input type='radio' name='productType' value="fullColor"> 풀컬러
+				<input type='radio' name='productType' value="L"> 롱
+				<input type='radio' name='productType' value="S"> 숏
+				<input type='radio' name='productType' value="P"> 파츠
+				<input type='radio' name='productType' value="FC"> 풀컬러
 			</td>
 		</tr>			
 		<tr>
@@ -140,6 +140,7 @@ button:hover {
 <div id="message" style="color: red;"></div>
 
 <script type="text/javascript">
+
 $("#productName").focus();
 
 $("#productForm").submit(function() {
@@ -163,4 +164,5 @@ $("#listBtn").click(function() {
 $("#cancelBtn").click(function() {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_list"
 });
+
 </script>
