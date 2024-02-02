@@ -29,7 +29,7 @@ td {
 		<tr> 
 			<th>제목</th> 
 			<td>
-				<select id="moonTitle">
+				<select name="moonTitle">
 					<option value="상품" selected>상품 문의입니다.</option>
 					<option value="배송">배송 문의입니다.</option>
 					<option value="교환&취소&반품">교환&취소&반품 문의입니다.</option>

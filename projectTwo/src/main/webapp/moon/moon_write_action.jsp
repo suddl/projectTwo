@@ -23,7 +23,7 @@
 
 
 	String moonTitle=multipartRequest.getParameter("moonTitle");
-	/*
+	
 	if(moonTitle.equals("상품")){
 		moonTitle="상품 문의입니다.";
 	} else if(moonTitle.equals("배송")){
@@ -35,7 +35,7 @@
 	} else if(moonTitle.equals("기타")){
 		moonTitle="기타 문의입니다.";
 	}
-	*/
+	
 	
 	System.out.println("moonTitle : " + moonTitle);
 	
@@ -50,7 +50,7 @@
 	MoonDTO moon=new MoonDTO();
 	
 	moon.setMoonNum(nextNum);
-	moon.setMoonName(loginClient.getClientName());
+	moon.setMoonClientNum(loginClient.getClientNum());
 	moon.setMoonTitle(moonTitle);
 	moon.setMoonContent(moonContent);
 	moon.setMoonImage(moonImage);
