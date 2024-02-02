@@ -168,7 +168,7 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script>
+<script>
     var sortType = '신상품순'; // 초기 정렬 방식 설정
 
     // 초기에는 모든 제품을 표시
@@ -180,18 +180,23 @@
         displayProducts(productType);
     });
 
+    // 정렬 방식 변경 이벤트 핸들러
+    $('select[name="정렬 방식"]').on('change', function() {
+        sortType = $(this).val();
+        sortProducts();
+    });
+
     // 화면에 필터된 제품들을 출력
     function displayProducts(productType) {
         var productListContainer = $('.product-list');
-        
-        if (productType === 'all') {
-            productListContainer.find('.product').show();
-        } else {
-            productListContainer.find('.product').hide();
-            productListContainer.find('.product[data-product-type="' + productType + '"]').show();
-        }
-   
-     // 정렬 방식 변경 이벤트 핸들러
+        productListContainer.find('.product').hide();
+
+        // 필터된 제품들을 화면에 출력
+        $('[data-product-type="' + productType + '"]').show();
+        sortProducts(); // 필터링 후 정렬 적용
+    }
+
+    // 정렬 방식 변경 이벤트 핸들러
     function sortProducts() {
         var productListContainer = $('.product-list');
         var products = productListContainer.find('.product');
@@ -225,22 +230,6 @@
         // 정렬된 배열을 화면에 적용
         productListContainer.empty().append(products);
     }
-
-    // 화면에 필터된 제품들을 출력
-    function displayProducts(productType) {
-        var productListContainer = $('.product-list');
-        productListContainer.find('.product').hide();
-
-        // 필터된 제품들을 화면에 출력
-        $('[data-product-type="' + productType + '"]').show();
-        sortProducts(); // 필터링 후 정렬 적용
-    }
-
-    // 가격순 정렬 토글 기능 추가
-    $('select[name="정렬 방식"]').on('change', function() {
-        sortType = $(this).val();
-        sortProducts();
-    });
 </script>
 </body>
 </html>
