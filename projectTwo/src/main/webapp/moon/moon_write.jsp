@@ -26,7 +26,7 @@ td {
 	<input type="hidden" name="search" value="<%=search %>">
 	<input type="hidden" name="keyword" value="<%=keyword %>">
 	<table>
-		<tr>
+		<tr> 
 			<th>제목</th>
 			<td>
 				<select id="moonTitle">
