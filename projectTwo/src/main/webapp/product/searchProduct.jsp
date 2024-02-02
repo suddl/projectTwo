@@ -1,43 +1,28 @@
-<%@page import="xyz.nailro.dto.ProductDTO"%>
-<%@page import="java.util.List"%>
-<%@page import="xyz.nailro.dao.ProductDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%! boolean searchResultEmpty; %>
+<%@ page import="java.util.List" %>
+<%@ page import="xyz.nailro.dao.ProductDAO" %>
+<%@ page import="xyz.nailro.dto.ProductDTO" %>
+
 <%
-    int pageNum = 1;
-    if (request.getParameter("pageNum") != null) {
-        pageNum = Integer.parseInt(request.getParameter("pageNum"));
-    }
+    // 요청 매개변수에서 검색 키워드 가져오기
+    String keyword = request.getParameter("keyword");
 
-    int pageSize = 12;
-    if (request.getParameter("pageSize") != null) {
-        pageSize = Integer.parseInt(request.getParameter("pageSize"));
-    }
-
-    // 요청에서 검색 키워드 가져오기
-    String searchKeyword = request.getParameter("search");
-
-    // 검색 결과를 저장할 제품 목록 초기화
-    List<ProductDTO> productList = null;
-    searchResultEmpty = false; // 기본값은 false로 설정
-
-    if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-        // 검색 키워드가 제공된 경우 제품 검색 수행
-        productList = ProductDAO.getDAO().searchProduct(searchKeyword);
-        // 검색 결과가 비어 있는지 확인
-        searchResultEmpty = productList.isEmpty();
-        request.setAttribute("searchResultEmpty", searchResultEmpty);
-    }
+    // 키워드 유효성 검사 (더 많은 유효성 검사가 필요할 수 있음)
+    if (keyword == null || keyword.trim().isEmpty()) {
+        out.println("<h2>유효한 검색 키워드를 입력하세요.</h2>");
+    } else {
+        // 상품 검색 수행
+        List<ProductDTO> searchResults = ProductDAO.getDAO().searchProduct(keyword);
 %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Nailro - Nail</title>
+    <title>검색 결과 - Nailro</title>
     <link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
     <style>
         body {
-           font-family: 'Hahmlet', serif;
+            font-family: 'Hahmlet', serif;
             margin: 0;
             padding: 0;
         }
@@ -47,7 +32,7 @@
             margin: 0 auto;
             padding: 20px;
         }
-		
+
         .product-list {
             display: flex;
             flex-wrap: wrap;
@@ -92,83 +77,35 @@
         .product:hover {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-
-        .sorting	{
-            display: flex;
-            justify-content: flex-end;
-		}
-		
-		select[name="정렬 방식"]	{
-			margin-right: 10px;
-		}
-		
-    .filter-buttons {
-        display: flex;
-        gap: 60px; /* 원하는 간격 설정 */
-        justify-content: flex-start; /* 버튼을 왼쪽으로 정렬 */
-        margin-bottom: 30px; /* 간격을 위해 아래에 여분의 여백 추가 */
-        margin-left: 10px;
-    }
-
-    .filter-buttons button {
-        padding: 15px 30px; /* 원하는 버튼 크기 설정 */
-        font-size: 16px; /* 원하는 폰트 크기 설정 */
-    }		
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="sorting">
-            <select name="정렬 방식">
-                <option value="신상품순" selected>&nbsp;신상품순&nbsp;</option>
-                <option value="이름순">&nbsp;이름순&nbsp;</option>
-                <option value="가격순">&nbsp;가격순&nbsp;</option>     
-            </select>
-        </div>
-
-        <div class="filter-buttons" id="filterButtons">
-            <button data-product-type="short">숏</button>
-            <button data-product-type="long">롱</button>
-            <button data-product-type="parts">파츠</button>
-            <button data-product-type="fullColor">풀컬러</button>
-            <button data-product-type="all">전체</button>
-        </div>
-
-        <!-- 검색 결과 또는 "결과 없음" 메시지 표시 -->
-        <div class="product-list">
-            <% if (searchKeyword != null && !searchKeyword.trim().isEmpty()) { %>
-                <% if (searchResultEmpty) { %>
-                    <p>검색 결과가 없습니다.</p>
-                <% } else { %>
-                    <% for (ProductDTO product : productList) { %>
-            String url = request.getContextPath() + "/index.jsp?group=detail&worker=detail"
-                    + "&productNum=" + product.getProductNum() + "&productImage=" + product.getProductImage()
-                    + "&productName=" + product.getProductName() + "&productPrice=" + product.getProductPrice();        
-        %>
-                        <!-- 각 제품 표시 코드 -->
-                         <div class="product" data-product-num="<%=product.getProductNum()%>" data-product-type="<%=product.getProductType()%>">
-                            <a href="<%=request.getContextPath() %>/index.jsp?group=detail&worker=detail">
-                                <img class="product-image" src="<%=request.getContextPath() %>/images/<%=product.getProductImage()%>" alt="이미지 준비중">
-                            </a>
-                            <div class="product-name">
-                                <a href="<%=request.getContextPath() %>/index.jsp?group=detail&worker=detail"><%=product.getProductName()%></a>
-                            </div>
-                            <div class="product-price"><%=product.getProductPrice() %></div>
-                        </div>
-                    <% } %>
-                <% } %>
-            <% } else { %>
-                <!-- 검색 키워드가 없는 경우 모든 제품 표시 -->
-            <% for (ProductDTO product : productList) { %>           
-                    <!-- 각 제품 표시 코드 -->
-                    <div class="product" data-product-num="<%=product.getProductNum()%>" data-product-type="<%=product.getProductType()%>">
-                        <!-- ... (기존 코드) -->
+        <h2>"<%= keyword %>"에 대한 검색 결과</h2>
+        
+        <% if (searchResults.isEmpty()) { %>
+            <p>검색 결과가 없습니다.</p>
+        <% } else { %>
+            <div class="product-list">
+                <% for (ProductDTO product : searchResults) { 
+                    String url = request.getContextPath() + "/index.jsp?group=detail&worker=detail"
+                            + "&productNum=" + product.getProductNum() + "&productImage=" + product.getProductImage()
+                            + "&productName=" + product.getProductName() + "&productPrice=" + product.getProductPrice();        
+                %>
+                <div class="product">
+                    <a href="<%= url %>">
+                        <img class="product-image" src="<%= request.getContextPath() %>/images/<%= product.getProductImage() %>" alt="이미지 없음">
+                    </a>
+                    <div class="product-name">
+                        <a href="<%= url %>"><%= product.getProductName() %></a>
                     </div>
+                    <div class="product-price"><%= product.getProductPrice() %></div>
+                </div>
                 <% } %>
-            <% } %>
-        </div>
+            </div>
+        <% } %>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 <script>
     var sortType = '신상품순'; // 초기 정렬 방식 설정
 
@@ -181,23 +118,27 @@
         displayProducts(productType);
     });
 
-    // 정렬 방식 변경 이벤트 핸들러
-    $('select[name="정렬 방식"]').on('change', function() {
-        sortType = $(this).val();
-        sortProducts();
-    });
-
     // 화면에 필터된 제품들을 출력
     function displayProducts(productType) {
         var productListContainer = $('.product-list');
-        productListContainer.find('.product').hide();
+        
+        if (productType === 'all') {
+            productListContainer.find('.product').show();
+        } else {
+            productListContainer.find('.product').hide();
+            productListContainer.find('.product[data-product-type="' + productType + '"]').show();
+        }
 
-        // 필터된 제품들을 화면에 출력
-        $('[data-product-type="' + productType + '"]').show();
         sortProducts(); // 필터링 후 정렬 적용
     }
 
-    // 정렬 방식 변경 이벤트 핸들러
+    $('select[name="정렬 방식"]').on('change', function() {
+        sortType = $(this).val();
+        displayProducts(getActiveFilterType());
+        sortProducts();
+    });
+
+    // 가격순 정렬 토글 기능 추가
     function sortProducts() {
         var productListContainer = $('.product-list');
         var products = productListContainer.find('.product');
@@ -234,3 +175,6 @@
 </script>
 </body>
 </html>
+<%
+    }
+%>
