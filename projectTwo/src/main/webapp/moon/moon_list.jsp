@@ -145,11 +145,11 @@ td {
 	</div>
 	<table>
 		<tr>
-			<th>글번호</th>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>작성일</th>
-			<th>작성여부</th>
+			<th width="100">글번호</th>
+			<th width="500">제목</th>
+			<th width="100">작성자</th>
+			<th width="200">작성일</th>
+			<th width="100">작성여부</th>
 		</tr>
 		
 		<% if(totalMoon==0) { %>
@@ -239,5 +239,10 @@ td {
 			[다음]
 		<% } %>
 	</div>
-	
 </div>
+
+<script type="text/javascript">
+$("#writeBtn").click(function() {
+	location.href="<%=request.getContextPath()%>/index.jsp?group=moon&worker=moon_write";	
+});
+</script>
