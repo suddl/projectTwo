@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page import="xyz.nailro.dao.ProductDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%! boolean searchResultEmpty; %>
 <%
     int pageNum = 1;
     if (request.getParameter("pageNum") != null) {
@@ -23,8 +24,9 @@
         // 검색 키워드가 제공된 경우 제품 검색 수행
         productList = ProductDAO.getDAO().searchProduct(searchKeyword);
         // 검색 결과가 비어 있는지 확인
-        boolean searchResultEmpty = productList.isEmpty();
-        request.setAttribute("searchResultEmpty", searchResultEmpty);    }
+        boolean searchResultEmpty = productList != null && productList.isEmpty();
+        request.setAttribute("searchResultEmpty", searchResultEmpty);
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -134,15 +136,16 @@
         <!-- 검색 결과 또는 "결과 없음" 메시지 표시 -->
         <div class="product-list">
             <% if (searchKeyword != null && !searchKeyword.trim().isEmpty()) { %>
+                <% if (searchResultEmpty) { %>
                     <p>검색 결과가 없습니다.</p>
                 <% } else { %>
-        <% for (ProductDTO product : productList)	{ 
+                    <% for (ProductDTO product : productList) { %>
             String url = request.getContextPath() + "/index.jsp?group=detail&worker=detail"
                     + "&productNum=" + product.getProductNum() + "&productImage=" + product.getProductImage()
                     + "&productName=" + product.getProductName() + "&productPrice=" + product.getProductPrice();        
         %>
                         <!-- 각 제품 표시 코드 -->
-                        <div class="product">
+                         <div class="product" data-product-num="<%=product.getProductNum()%>" data-product-type="<%=product.getProductType()%>">
                             <a href="<%=request.getContextPath() %>/index.jsp?group=detail&worker=detail">
                                 <img class="product-image" src="<%=request.getContextPath() %>/images/<%=product.getProductImage()%>" alt="이미지 준비중">
                             </a>
@@ -153,10 +156,19 @@
                         </div>
                     <% } %>
                 <% } %>
-            
+            <% } else { %>
+                <!-- 검색 키워드가 없는 경우 모든 제품 표시 -->
+            <% for (ProductDTO product : productList) { %>           
+                    <!-- 각 제품 표시 코드 -->
+                    <div class="product" data-product-num="<%=product.getProductNum()%>" data-product-type="<%=product.getProductType()%>">
+                        <!-- ... (기존 코드) -->
+                    </div>
+                <% } %>
+            <% } %>
         </div>
     </div>
-<script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
     var sortType = '신상품순'; // 초기 정렬 방식 설정
 
     // 초기에는 모든 제품을 표시
