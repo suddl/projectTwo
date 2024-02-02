@@ -1,4 +1,4 @@
-<%-- <%@page import="xyz.nailro.dto.ReviewDTO"%> --%>
+ <%@page import="xyz.nailro.dto.ReviewDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="xyz.nailro.dao.ReviewDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"

@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.jasper.tagplugins.jstl.core.Catch;
 
 import xyz.nailro.dto.ReviewDTO;
 
@@ -74,6 +73,7 @@ public class ReviewDAO extends JdbcDAO{
 			} else {
 				String sql="select count(*) from review join client on review_client_num=client_num"
 						+ "where "+search+ "like '%'||?||'%'";
+				
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1, keyword);
 			}
@@ -83,6 +83,7 @@ public class ReviewDAO extends JdbcDAO{
 			if(rs.next()) {
 				totalCount=rs.getInt(1);
 			}
+
 			} catch (SQLException e) {
 				System.out.println("[에러]selectTotalReview() 메소드의 SQL 오류 = "+e.getMessage());
 			} finally {
