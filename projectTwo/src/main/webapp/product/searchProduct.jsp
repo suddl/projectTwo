@@ -1,20 +1,32 @@
-<%@page import="java.awt.JobAttributes.DefaultSelectionType"%>
 <%@page import="xyz.nailro.dto.ProductDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="xyz.nailro.dao.ProductDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<% 	
-	int pageNum=1;
-	if(request.getParameter("pageNum")!=null)	{
-		pageNum=Integer.parseInt(request.getParameter("pageNum"));
-	}
-	
-	int pageSize=12;
-	if(request.getParameter("pageSize")!=null)	{
-		if(request.getParameter("pageSize")!=null)	{
-			pageNum=Integer.parseInt(request.getParameter("pageNum"));
-		}
-	}
+<%
+    int pageNum = 1;
+    if (request.getParameter("pageNum") != null) {
+        pageNum = Integer.parseInt(request.getParameter("pageNum"));
+    }
+
+    int pageSize = 12;
+    if (request.getParameter("pageSize") != null) {
+        pageSize = Integer.parseInt(request.getParameter("pageSize"));
+    }
+
+    // 요청에서 검색 키워드 가져오기
+    String searchKeyword = request.getParameter("search");
+
+    // 검색 결과를 저장할 제품 목록 초기화
+    List<ProductDTO> productList = null;
+
+    if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+        // 검색 키워드가 제공된 경우 제품 검색 수행
+        productList = ProductDAO.getDAO().searchProduct("product_name", searchKeyword);
+
+        // 검색 결과가 비어 있는지 확인
+        boolean searchResultEmpty = productList.isEmpty();
+        request.setAttribute("searchResultEmpty", searchResultEmpty);
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -104,45 +116,49 @@
     </style>
 </head>
 <body>
-<%
-	List<ProductDTO> productList = ProductDAO.getDAO().selectProductByCategory(nail);
-%>
     <div class="container">
+        <div class="sorting">
+            <select name="정렬 방식">
+                <option value="신상품순" selected>&nbsp;신상품순&nbsp;</option>
+                <option value="이름순">&nbsp;이름순&nbsp;</option>
+                <option value="가격순">&nbsp;가격순&nbsp;</option>     
+            </select>
+        </div>
 
-    	<div class="sorting">
-    	<select name="정렬 방식">
-    		<option value="신상품순" selected>&nbsp;신상품순&nbsp;</option>
-    		<option value="이름순" >&nbsp;이름순&nbsp;</option>
-    		<option value="가격순" >&nbsp;가격순&nbsp;</option>    	
-    	</select>
-    	</div>
-    	
-		<div class="filter-buttons" id="filterButtons">
-    		<button data-product-type="short">숏</button>
-    		<button data-product-type="long">롱</button>
-    		<button data-product-type="parts">파츠</button>
-    		<button data-product-type="fullColor">풀컬러</button>
-    		<button data-product-type="all">전체</button>
-		</div>
+        <div class="filter-buttons" id="filterButtons">
+            <button data-product-type="short">숏</button>
+            <button data-product-type="long">롱</button>
+            <button data-product-type="parts">파츠</button>
+            <button data-product-type="fullColor">풀컬러</button>
+            <button data-product-type="all">전체</button>
+        </div>
 
+        <!-- 검색 결과 또는 "결과 없음" 메시지 표시 -->
         <div class="product-list">
+            <% if (searchKeyword != null && !searchKeyword.trim().isEmpty()) { %>
+                <% if (searchResultEmpty) { %>
+                    <p>검색 결과가 없습니다.</p>
+                <% } else { %>
         <% for (ProductDTO product : productList)	{ 
             String url = request.getContextPath() + "/index.jsp?group=detail&worker=detail"
                     + "&productNum=" + product.getProductNum() + "&productImage=" + product.getProductImage()
                     + "&productName=" + product.getProductName() + "&productPrice=" + product.getProductPrice();        
         %>
-            <div class="product">
-                <a href="<%=request.getContextPath() %>/index.jsp?group=detail&worker=detail">
-                    <img class="product-image" src="<%=request.getContextPath() %>/images/<%=product.getProductImage()%>" alt="이미지 준비중">
-                </a>
-                <div class="product-name">
-                    <a href="<%=request.getContextPath() %>/index.jsp?group=detail&worker=detail"><%=product.getProductName()%></a>
-                </div>
-                <div class="product-price"><%=product.getProductPrice() %></div>
-            </div>
-        <% } %>
-	</div>
-</div>
+                        <!-- 각 제품 표시 코드 -->
+                        <div class="product">
+                            <a href="<%=request.getContextPath() %>/index.jsp?group=detail&worker=detail">
+                                <img class="product-image" src="<%=request.getContextPath() %>/images/<%=product.getProductImage()%>" alt="이미지 준비중">
+                            </a>
+                            <div class="product-name">
+                                <a href="<%=request.getContextPath() %>/index.jsp?group=detail&worker=detail"><%=product.getProductName()%></a>
+                            </div>
+                            <div class="product-price"><%=product.getProductPrice() %></div>
+                        </div>
+                    <% } %>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
 <script>
     var sortType = '신상품순'; // 초기 정렬 방식 설정
 
