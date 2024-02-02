@@ -27,7 +27,7 @@ td {
 	<input type="hidden" name="keyword" value="<%=keyword %>">
 	<table>
 		<tr> 
-			<th>제목</th>
+			<th>제목</th> 
 			<td>
 				<select id="moonTitle">
 					<option value="상품" selected>상품 문의입니다.</option>
