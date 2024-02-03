@@ -30,13 +30,13 @@
 <body>
     <div class="container">
         <div class="row" align="center"> 
-            <div class="mypage">
+            <div style="background-color:#FFDCD1; height:100px; padding:100px; text-align:left;"class="mypage">
             <% if (loginClient !=null) { %>
             <%= loginClient.getClientName()%> 님 환영합니다!
             <% } %>
                 
-                <button>1:1 문의하기</button> 
-                <button onclick="redirectToReviewWrite()" href="<%=request.getContextPath() %>/index.jsp?group=review&worker=review_write">리뷰 쓰기</button>
+                <input type="button" class="ask" value="1:1 문의하기" style="float:right;"></input> 
+                <input type="button" value="리뷰 쓰기" style="float:right;" onclick="redirectToReviewWrite()" href="<%=request.getContextPath() %>/index.jsp?group=review&worker=review_write"></input>
             </div>
             
             <div class="mybuttons" style="margin-top: 4cm;>
@@ -49,20 +49,9 @@
             <button class="btn btn-1g" style="background-color: #FFDCE1;">게시글관리</button>
             <button class="btn btn-1g" style="background-color: #FFDCE1;">주문내역</button>
             </div>
-            
-            <div id="content">
-                <% 
-                    String returnUrl = (String)request.getAttribute("returnUrl");
-                    if (returnUrl == null) {
-                        response.sendRedirect(returnUrl);
-                        return;
-                    }
-                %>
-            </div>
         </div>
     </div>
     <div id="header"></div>
-    <div id="content"></div>
     <div id="footer"></div>
 </body>
 </html>
