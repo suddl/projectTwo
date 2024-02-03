@@ -5,27 +5,6 @@
 <html>
 <head>
 <link href="<%=request.getContextPath()%>/css/client.css" type="text/css" rel="stylesheet">
-<script type="text/javascript">
-function chk(){
- var req = document.form.req.checked;
- var num = 0;
- if(req == true){
-  num = 1;
- }
- if(num==1){
-  document.form.submit();
- }else{
-  alert("개인정보 약관에 동의하셔야 합니다.");
- }
-}
-function nochk(){
- alert("동의하지 않으면 가입하실 수 없습니다");
-
-window.location.href="<%=request.getContextPath()%>/index.jsp";
-
-
-}
-</script>
 <link href="style/memberStyle.css" rel="stylesheet" type="text/css"/>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>회원가입 창</title>
@@ -33,10 +12,8 @@ window.location.href="<%=request.getContextPath()%>/index.jsp";
 <body>
 <form action="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_join" 
 name="form" method="post">
- <table width="1400" height="650">
   <tr>
-   <td width="100%" height="10%"><span style="padding-left: 160px"></span>&nbsp;회원가입
-   </td>
+   <center>회원가입</center>
   </tr>
   <tr>
    <td height="15%"><span style="padding-left: 160px">
@@ -44,17 +21,16 @@ name="form" method="post">
    </td>
   </tr>
   <tr>
-   <td height="60%" align="center">
+   <td align="center">
    <hr><br>
    <p align="left">
-   <span style="padding-left: 160px">
-   <b>NAILRO 약관동의</b></span>
+   <center>NAILRO 약관동의</center>
    </p>
    <br>
   <div class: "terms">  <textarea rows="20" cols="150">
   
    제1조(목적) 
-
+   
 이 약관은 글루가 회사(전자상거래 사업자)가 운영하는 오호라 사이버 몰(이하 “몰”이라 한다)에서 제공하는 인터넷 관련 서비스(이하 “서비스”라 한다)를 이용함에 있어 사이버 몰과 이용자의 권리·의무 및 책임 사항을 규정함을 목적으로 합니다. 
 
 ※「PC통신, 무선 등을 이용하는 전자상거래에 대해서도 그 성질에 반하지 않는 한 이 약관을 준용합니다.」
@@ -279,34 +255,45 @@ name="form" method="post">
 #네이버 알림 시행에 관한 내용
 
 “오호라”는 회원가입, 주문안내, 배송안내 등 비광고성 정보를 네이버 알림으로 알려드립니다. 네이버 알림을 통해 안내되는 정보를 와이파이가 아닌 이동통신망으로 이용할 경우, 네이버 알림 수신 중 데이터 요금이 발생할 수 있습니다. 네이버 알림 수신을 원치 않으실 경우 반드시 알림을 해제하여 주시기 바랍니다.
-
-
-
+ 
 
    </textarea> </div>
    <br><br>
-   <input type="checkbox" name="req"> 개인정보 수집 및 이용에 동의합니다.
+   <input type="checkbox" id="req"> 개인정보 수집 및 이용에 동의합니다.
    <br>
    <hr>
    </td>
   </tr>
   <tr>
-   <td align="center" valign="top">
-   <script type="text/javascript">
-   function handleNochk() {
-	   nochk();
-	   return false;
-   }
-   </script>
-  
-    <button onclick="chk()">동의합니다</button>&nbsp;&nbsp;&nbsp;
-    <button onclick="return handleNochk();">동의하지 않습니다</button>
-     
-   </td>
   </tr>
- </table>
 </form>
-</body>
-</html>
+<form action="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_join" 
+name="form" method="post">
+   <td align="center" valign="top">
+    <input type="button" onclick="chk()" value="동의합니다"/>&nbsp;&nbsp;&nbsp;
+    <input type="button" onclick="nochk();return false;" value="동의하지 않습니다"/>    
+   </td>
+</form>
+</body><script type="text/javascript">
+function chk(){
+ var num = 0;
+if($('#req').is(":checked")){
+	num = 1;
+}
+ if(num==1){
+  <%-- document.form.submit(); --%>
+  window.location.href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_join";
+ }else{
+  alert("개인정보 약관에 동의하셔야 합니다.");
+ }
+}
+function nochk(){
+ alert("동의하지 않으면 가입하실 수 없습니다");
 
+window.location.href="<%=request.getContextPath()%>/index.jsp";
+
+
+}
+</script>
+</html>
  
