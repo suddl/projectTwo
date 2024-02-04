@@ -26,3 +26,4 @@
 	//페이지 이동 - 검색 및 페이징 처리 관련 값 전달
 	request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=admin&worker=product_list");	
 %>
+
