@@ -4,7 +4,7 @@
 <%-- => 관리자만 요청 가능한 JSP 문서 --%>
 <%-- => [등록] 태그를 클릭한 경우 [/admin/product_add_action.jsp] 문서를 요청하여 페이지 
 이동 - 입력값(게시글) 전달 --%>
-
+<%@include file="/security/admin_check.jspf"%>
 <%
 	//전달값을 반환받아 저장 - 전달값이 없는 경우 변수에 초기값 저장
 	String pageNum="1", pageSize="10", search="", keyword="";
@@ -114,21 +114,21 @@ button:hover {
 			</td>
 		</tr>			
 		<tr>
-			<th>상품이미지</th>
+			<th>상품대표이미지</th>
 			<td>
-				<input type="file" name="productImage">
+				<input type="file" name="productImage" id="productImage">
 			</td>
 		</tr>
 		<tr>
-			<th>상품상세이미지</th>
+			<th>상품상세이미지1</th>
 			<td>
-				<input type="file" name="productImage2">
+				<input type="file" name="productImage2" id="productImage2">
 			</td>
 		</tr>
 		<tr>
-			<th>상품상세이미지</th>
+			<th>상품상세이미지2</th>
 			<td>
-				<input type="file" name="productImage3">
+				<input type="file" name="productImage3" id="productImage3">
 			</td>
 		</tr>
 	</table>
@@ -151,8 +151,26 @@ $("#productForm").submit(function() {
 	}
 	
 	if($("#productPrice").val()=="") {
-		$("#message").text("가격을 입력해 주세요.");
+		$("#message").text("상품가격을 입력해 주세요.");
 		$("#productPrice").focus();
+		return false;
+	}
+	
+	if($("#productImage").val()=="") {
+		$("#message").text("상품대표이미지를 입력해 주세요.");
+		$("#productImage").focus();
+		return false;
+	}
+	
+	if($("#productImage2").val()=="") {
+		$("#message").text("상품상세이미지1을 입력해 주세요.");
+		$("#productImage2").focus();
+		return false;
+	}
+
+	if($("#productImage3").val()=="") {
+		$("#message").text("상품상세이미지2를 입력해 주세요.");
+		$("#productImage3").focus();
 		return false;
 	}
 });
