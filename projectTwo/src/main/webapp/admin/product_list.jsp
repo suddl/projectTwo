@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="xyz.nailro.dto.ClientDTO"%>
 <%@page import="xyz.nailro.dto.ProductDTO"%>
 <%@page import="java.util.List"%>
@@ -80,6 +81,17 @@
 %>
 <link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
 <style>
+#product_list {
+	width: 1000px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#product_title {
+	font-size:2em;
+	font-weight: bold;
+	color: pink;
+}
 table {
 	margin: 5px auto;
 	border: 1px solid lightgray;
@@ -94,9 +106,10 @@ h1{
 
 th {
 	border: 1px solid lightgray;
-	background: lightgray;
+	background: pink;
 	color: black;
 	height: 40px;
+	text-align: center;
 }
 
 td {
@@ -146,9 +159,10 @@ button + button {
 </style>
 
 <h1>상품관리</h1>
+<form name="productForm" id="productForm">
 <div id="product_list">
 	<%-- 검색된 게시글 총갯수 출력 --%>
-	<div id="product_title">상품관리목록(<%=totalProduct %>)</div>
+	<div class="product_title">상품목록(<%=totalProduct %>)</div>
 	
 	<div style="text-align: right;">
 		게시글갯수 : 
@@ -158,10 +172,9 @@ button + button {
 			<option value="50" <% if(pageSize==50) { %> selected <% } %>>&nbsp;50개&nbsp;</option>	
 			<option value="100" <% if(pageSize==100) { %> selected <% } %>>&nbsp;100개&nbsp;</option>	
 		</select>
-	</div>
 <table>
 	<tr>
-		<th width="50"><input type="checkbox" name="product" value="selectAll" onclick='selectAll(this)'></th>
+		<th width="50"><input type="checkbox" id="allCheck"></th>	
 		<th width="100">상품번호</th>
 		<th width="170">이미지</th>
 		<th width="250">상품명</th>
@@ -172,20 +185,23 @@ button + button {
 	</tr>
 	
 	<%-- List 객체의 요소(ProductDTO 객체)를 차례대로 제공받아 저장하여 처리하기 위한 반복문 --%>
-	<% for(ProductDTO product  : productList) { %>
+	<% for(ProductDTO product : productList) { %>
 	<tr align="center">
-		<td width="50"><input type="checkbox" name="product"></td>
-		<%-- 게시글의 글번호가 아닌 게시글의 일련번호 출력 --%>
-		<td width="100"><%=product.getProductCategory() %><%=product.getProductType() %><%=product.getProductNum() %></td>
-		<td width="170"><%=product.getProductImage() %></td>
+		<td class="p_check"><input type="checkbox" name="checkp" value="<%=product.getProductNum()%>" class="check">
+		</td>
+		<td width="100"><%=product.getProductNum() %></td>
+		<td width="170">
+			<img src="<%=product.getProductImage()%>" width="170">
+		</td>
 		<td width="250"><%=product.getProductName() %></td>
 		<td width="200"><%=product.getProductCategory() %></td>
 		<td width="150"><%=product.getProductType() %></td>
-		<td width="150"><%=product.getProductPrice() %></td>
-		<td width="100"><button type="button" id="modifyBtn">수정</button></td>
+		<td width="150"><%=DecimalFormat.getCurrencyInstance().format(product.getProductPrice())%></td>
+		<td width="100"><input type="button" value="수정" ></td>
 	</tr>
 	<% } %>
 </table>
+	</div>
 <button type="button" id="removeBtn">삭제</button>
 <button type="button" id="addBtn">등록</button>
 
@@ -239,6 +255,8 @@ button + button {
 			[다음]
 		<% } %>
 	</div>
+</div>
+</form>
 
 <form action="<%=request.getContextPath() %>/index.jsp?group=admin&worker=product_list" method="post">
 	<%-- select 태그를 사용하여 검색대상을 선택해 전달 - 전달값은 반드시 컬럼명으로 설정 --%>
@@ -249,7 +267,6 @@ button + button {
 	<input type="text" name="keyword" value="<%=keyword%>" >
 	<button type="submit">검색</button>
 </form>
-</div>
 
 <script type="text/javascript">
 
@@ -259,22 +276,32 @@ $("#productCount").change(function() {
 		+"&search=<%=search%>&keyword=<%=keyword%>";
 });
 
-$("#modifyBtn").click(function() {
-	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_modify";
-});
 
 $("#addBtn").click(function() {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_add";
 });
 
+<%--제품선택--%>
+$("#allCheck").change(function() {
+	if($(this).is(":checked")) {
+		$(".check").prop("checked",true);
+	} else {
+		$(".check").prop("checked",false);
+	}
+});
+<%--제품삭제--%>
 $("#removeBtn").click(function() {
-	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_remove_action";
+	if($(".check").filter(":checked").length==0) {
+		$("#message").text("선택된 제품이 하나도 없습니다.");
+		return;
+	}
+	if(confirm("게시글을 정말로 삭제 하시겠습니까?")) {
+		location.href="<%=request.getContextPath()%>/index.jsp?group=review&worker=review_remove_action"
+	}			
+	$("#productForm").attr("action", "<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_remove_action");
+	$("#productForm").attr("method","post");
+	$("#productForm").submit();
 });
 
-function removeConfirm(productNum) {
-	if(confirm("삭제 하시겠습니까?")) {
-		location.href="product_remove_action.jsp?productNum="+productNum;
-	}
-}
-
 </script>
+

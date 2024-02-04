@@ -238,6 +238,28 @@ public class ProductDAO extends JdbcDAO	{
 		}
 		return rows;		
 	}
+	
+	//상품번호(int)를 전달받아 PRODUCT 테이블에 저장된 행을 삭제하고 삭제행의 갯수(int)를 반환하는 메소드
+	public int deleteProduct(String productNum) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		int rows=0;
+		try {
+			con=getConnection();
+			
+			String sql="delete from product where product_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, productNum);
+			
+			rows=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("[에러]deleteProduct() 메소드의 SQL 오류 = "+e.getMessage());
+		} finally {
+			close(con, pstmt);
+		}
+		return rows;
+	}
+	
 	public List<ProductDTO> searchProduct(String keyword) {
 	    Connection con = null;
 	    PreparedStatement pstmt = null;

@@ -95,57 +95,58 @@ public class ReviewDAO extends JdbcDAO{
 		//페이징 처리 관련 정보(시작 행번호와 종료 행번호)와 게시글 검색 기능 관련 정보(검색대상과
 		//검색단어)를 전달받아 REVIEW 테이블에 저장된 행을 검색하여 게시글 목록을 반환하는 메소드
 		public List<ReviewDTO> selectReviewList(int startRow, int endRow, String search, String keyword) {
-			Connection con=null;
-			PreparedStatement pstmt=null;
-			ResultSet rs=null;
-			List<ReviewDTO> reviewList=new ArrayList<ReviewDTO>();
-			try {
-				con=getConnection();
-				
-				if(keyword.equals("")) {//검색 기능을 사용하지 않은 경우
-					String sql="select * from (select rownum rn, temp.* from (select review_num"
-							+ ", review_client_num, review_name,review_subject,reveiw_content,"
-							+ "reveiw_content,review_date,review_image,review_re from review join client"
-							+ "on review_client_num=client_num order by review_num desc) temp)"
-							+"where rn between? and ?";
-					pstmt=con.prepareStatement(sql);
-					pstmt.setInt(1, startRow);
-					pstmt.setInt(2, endRow);
-				} else {//검색 기능을 사용한 경우
-					String sql="select * from (select rownum rn, temp.* from (select review_num"
-							+ ", review_client_num, review_name,review_subject,reveiw_content,"
-							+ "reveiw_content,review_date,review_image,review_re from review join client"
-							+ "on review_client_num=client_num where "+search+"like '%'||?||'%'"
-							+ "and review_date=1 order by review_date desc, review_date)temp)"
-							+ " where rn between ? and ?";
-					pstmt=con.prepareStatement(sql);
-					pstmt.setString(1, keyword);
-					pstmt.setInt(2, startRow);
-					pstmt.setInt(3, endRow);
-				}
-				
-				rs=pstmt.executeQuery();
-				
-				while(rs.next()) {
-					ReviewDTO review=new ReviewDTO();
-					review.setReviewNum(rs.getInt("review_num"));
-					review.setReviewClientNum(rs.getInt("review_client_num"));
-					review.setReviewName(rs.getString("review_name"));
-					review.setReviewSubject(rs.getString("review_subject"));
-					review.setReviewContent(rs.getString("review_content"));
-					review.setReviewOrderNum(rs.getInt("review_order_num"));
-					review.setReviewDate(rs.getString("review_date"));
-					review.setReviewImage(rs.getString("review_image"));
-					review.setReviewRe(rs.getString("review_re"));
-							
-					reviewList.add(review);
-				}
-			} catch (SQLException e) {
-				System.out.println("[에러]selectReviewList() 메소드의 SQL 오류 = "+e.getMessage());
-			} finally {
-				close(con, pstmt, rs);
-			}
-			return reviewList;
+		    Connection con = null;
+		    PreparedStatement pstmt = null;
+		    ResultSet rs = null;
+		    List<ReviewDTO> reviewList = new ArrayList<ReviewDTO>();
+		    try {
+		        con = getConnection();
+		        
+		        if (keyword.equals("")) { // 검색 기능을 사용하지 않은 경우
+		            String sql = "SELECT * FROM (SELECT ROWNUM rn, temp.* FROM (SELECT review_num"
+		                         + ", review_client_num, review_name, review_subject, review_content,"
+		                         + " review_date, review_image, review_re FROM review JOIN client"
+		                         + " ON review_client_num = client_num ORDER BY review_num DESC) temp)"
+		                         + " WHERE rn BETWEEN ? AND ?";
+		            pstmt = con.prepareStatement(sql);
+		            pstmt.setInt(1, startRow);
+		            pstmt.setInt(2, endRow);
+		        } else { // 검색 기능을 사용한 경우
+		            String sql = "SELECT * FROM (SELECT ROWNUM rn, temp.* FROM (SELECT review_num"
+		                         + ", review_client_num, review_name, review_subject, review_content,"
+		                         + " review_date, review_image, review_re FROM review JOIN client"
+		                         + " ON review_client_num = client_num WHERE " + search + " LIKE '%' || ? || '%'"
+		                         + " ORDER BY review_date DESC, review_num DESC) temp)"
+		                         + " WHERE rn BETWEEN ? AND ?";
+		            pstmt = con.prepareStatement(sql);
+		            pstmt.setString(1, keyword);
+		            pstmt.setInt(2, startRow);
+		            pstmt.setInt(3, endRow);
+		        }
+		        
+		        rs = pstmt.executeQuery();
+		        
+		        while (rs.next()) {
+		            ReviewDTO review = new ReviewDTO();
+		            review.setReviewNum(rs.getInt("review_num"));
+		            review.setReviewClientNum(rs.getInt("review_client_num"));
+		            review.setReviewName(rs.getString("review_name"));
+		            review.setReviewSubject(rs.getString("review_subject"));
+		            review.setReviewContent(rs.getString("review_content"));
+		            review.setReviewOrderNum(rs.getInt("review_order_num")); // This may need adjustment based on actual usage
+		            review.setReviewDate(rs.getString("review_date"));
+		            review.setReviewImage(rs.getString("review_image"));
+		            review.setReviewRe(rs.getString("review_re"));
+		            review.setReviewRating(rs.getString("review_rating")); // Ensure this field is handled if it's in your database schema
+		            
+		            reviewList.add(review);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("[에러] selectReviewList() 메소드의 SQL 오류 = " + e.getMessage());
+		    } finally {
+		        close(con, pstmt, rs);
+		    }
+		    return reviewList;
 		}
 		
 		//REVIEW_SEQ 시퀸스의 다음값(정수값)을 검색하여 반환하는 메소드

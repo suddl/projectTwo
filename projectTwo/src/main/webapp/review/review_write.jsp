@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/security/login_check.jspf"%>
 
+
 <html>
 <head>
 <title>리뷰 작성</title>
@@ -51,25 +52,12 @@ td {
 .star-rating .checked {
 	color: gold ;
 }
+
+#review_subject {
+	text-align: center;
+}
+
 </style>
-
-<script>
-        function setRating(rating) {
-            const stars = document.querySelectorAll('.star');
-            document.getElementById('ratingValue').value = rating;
-            stars.forEach((star, index) => {
-                if (index < rating) {
-                    star.classList.add('checked');
-                } else {
-                    star.classList.remove('checked');
-                }
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            setRating(1); // 
-        });
-    </script>
 </head>
 <body>
 	<h1 id="review_subject">REVIEW</h1>
@@ -113,6 +101,26 @@ td {
 </body>
 </html>
 <script type="text/javascript">
+        function setRating(rating) {
+            const stars = document.querySelectorAll('.star');
+            document.getElementById('ratingValue').value = rating;
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('checked');
+                } else {
+                    star.classList.remove('checked');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            setRating(1); 
+        });
+   
+
+        
+        
+//저장버튼 누르면 list에 보여주는 기능
 $("#saveBtn").change(function() {
     //alert($("#reviewCount").val());
     location.href="<%=request.getContextPath()%>/index.jsp?group=review&worker=review_list"
