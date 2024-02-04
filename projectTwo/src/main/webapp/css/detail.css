@@ -94,3 +94,8 @@ div {
 #reviwImage {
 	margin: 132px;
 }
+
+.dotted-line {
+    border-top: 2px dotted #000; /* 점선 스타일 */
+    margin: 20px 0; /* 위아래 여백 */
+}
