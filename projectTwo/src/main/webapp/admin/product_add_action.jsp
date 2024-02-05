@@ -19,7 +19,7 @@
 	}
 
 	//전달파일을 저장할 서버 디렉토리의 파일 시스템 경로를 반환받아 저장
-	String saveDirectory=request.getServletContext().getRealPath("/images");
+	String saveDirectory=request.getServletContext().getRealPath("/product_images");
 	
 	//MultipartRequest 객체 생성 - 모든 전달파일을 서버 디렉터리에 저장되도록 자동 업로드 처리
 	// => cos.jar 라이브러리 파일을 프로젝트에 빌드 처리해야만 MultipartRequest 클래스 사용 가능
@@ -40,15 +40,15 @@
 	//서버 디렉토리에 업로드되어 저장된 파일명을 반환받아 컨텍스트 경로를 저장
 	String productImage=null;
 	if(multipartRequest.getFilesystemName("productImage")!=null) {//업로드 파일이 있는 경우	
-		productImage="/images/"+multipartRequest.getFilesystemName("productImage");
+		productImage="/product_images/"+multipartRequest.getFilesystemName("productImage");
 	}
 	String productImage2=null;
 	if(multipartRequest.getFilesystemName("productImage2")!=null) {//업로드 파일이 있는 경우	
-		productImage2="/images/"+multipartRequest.getFilesystemName("productImage2");
+		productImage2="/product_images/"+multipartRequest.getFilesystemName("productImage2");
 	}
 	String productImage3=null;
 	if(multipartRequest.getFilesystemName("productImage3")!=null) {//업로드 파일이 있는 경우	
-		productImage3="/images/"+multipartRequest.getFilesystemName("productImage3");
+		productImage3="/product_images/"+multipartRequest.getFilesystemName("productImage3");
 	}
 	
 	//PRODUCT_SEQ 시퀸스의 다음값을 검색하여 반환하는 ProductDAO 클래스의 메소드 호출
