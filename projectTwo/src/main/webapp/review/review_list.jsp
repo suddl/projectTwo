@@ -80,6 +80,29 @@ int displayNum=totalReview-(pageNum-1)*pageSize;
 <head>
 <title>리뷰 목록</title>
 <style type="text/css">
+.center-align {
+    text-align: center;
+    margin: auto;
+    width: 60%; /* 혹은 적절한 너비를 설정하세요 */
+}
+
+.form-container, #page_list {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th, td {
+    border: 1px solid ;
+    text-align: center;    
+}
+
 #review_list {
 	width: 1000px;
 	margin: 0 auto;
@@ -135,6 +158,7 @@ td {
 #page_list {
 	font-size: 1.1em;
 	margin: 10px;
+	text-align: center;
 }
 
 #page_list a:hover {
@@ -142,17 +166,15 @@ td {
 }
 
 
+
+
 </style>
 </head>
 <body>
-<form  action="<%=request.getContextPath() %>/index.jsp?group=review&worker=review_wirter_action" 
-	method="post" id="reviewForm" name="review">
-	<%-- <input type="hidden" name="url" value="<%=url %>"> --%>
+<form action="<%=request.getContextPath() %>/index.jsp?group=review&worker=review_writer_action" method="post" id="reviewForm" name="review">
 <div id="review_list">
-	<%-- 검색된 게시글 총갯수 출력 --%>
-	<div id="review_title">REVIEW(<%=totalReview %>)</div>
-	
-	<div style="text-align: right;">
+    <div id="review_title">REVIEW(<%=totalReview %>)</div>
+    <div style="text-align: right;">
 		게시글갯수 : 
 		<select id="reviewCount">
 			<option value="10" <% if(pageSize==10) { %> selected <% } %>>&nbsp;10개&nbsp;</option>	
@@ -163,58 +185,45 @@ td {
 		&nbsp;&nbsp;&nbsp;
 	
 	<%-- 게시글 목록 출력 --%>
-	<table>
-		<tr>
-			<th width="100">글번호</th>
-			<th width="500">제목</th>
-			<th width="100">작성자</th>
-			<th width="200">작성일</th>
-		</tr>
+	</div>
+    <table>
+        <tr>
+            <th width="100">글번호</th>
+            <th width="500">제목</th>
+            <th width="100">작성자</th>
+            <th width="100">평점</th>
+            <th width="200">작성일</th>
+        </tr>
+
 		
 		<% if(totalReview==0) {//검색된 게시글이 없는 경우 %>
 			<tr>
 				<td colspan="5">검색된 게시글이 없습니다.</td>
 			</tr>
-		<% } else {//검색된 게시글이 있는 경우 %>
-			<%-- List 객체의 요소(ReviewDTO 객체)를 차례대로 제공받아 저장하여 처리하기 위한 반복문 --%>
-			<% for(ReviewDTO review : reviewList) { %>
-			<tr>
-				<%-- 게시글의 글번호가 아닌 게시글의 일련번호 출력 --%>
-				<td><%=displayNum %></td>
-				<% displayNum--; %><%-- 게시글 일련번호를 1씩 감소하여 저장 --%>
-				
-				<%-- 제목 출력 --%>
-				<td class="subject">
-					
-					<%-- 게시글 상태를 비교하여 제목과 링크를 구분해 응답 처리 --%>
-					<%
-						String url=request.getContextPath()+"/index.jsp?group=review&worker=review_detail"
-							+"&reviewNum="+review.getReviewNum()+"&pageNum="+pageNum+"&pageSize="+pageSize
-							+"&search="+search+"&keyword="+keyword;
-					%>
-								
-					<%-- 작성자(회원이름) 출력 --%>
-					<td><%=review.getReviewName() %></td>
-								
-					<%-- 조회수 출력 --%>
-					<td><%=review.getReviewRating() %></td>
-								
-					<%-- 작성일 출력 : 오늘 작성된 게시글인 경우 시간만 출력하고 오늘 작성된
-					게시글이 아닌 경우 날짜와 시간 출력 --%>	
-					<td>
-						<%-- 오늘 작성된 게시글인 경우 --%>
-						<% if(currentDate.equals(review.getReviewDate().substring(0, 10))) { %>
-							<%=review.getReviewDate().substring(11) %>
-						<% } else { %>
-							<%=review.getReviewDate() %>
-						<% } %>
-					</td>		
-				
-			
-			</tr>
-				
-			<% } %>
-		<% } %>
+	
+        <% } else { %>
+        <% for(ReviewDTO review : reviewList) { %>
+        <tr>
+            <td><%=displayNum %></td>
+            <% displayNum--; %>
+            <td class="subject">
+                <a href="<%=request.getContextPath()%>/index.jsp?group=review&worker=review_detail&reviewNum=
+                <%=review.getReviewNum()%>&pageNum=<%=pageNum%>&pageSize=<%=pageSize%>&search=<%=search%>&keyword=<%=keyword%>">
+                    <%=review.getReviewSubject()%>
+                </a>
+            </td>
+            <td><%=review.getReviewName()%></td>
+            <td><%=review.getReviewRating()%></td>
+            <td>
+                <% if(currentDate.equals(review.getReviewDate().substring(0, 10))) { %>
+                    <%=review.getReviewDate().substring(11)%>
+                <% } else { %>
+                    <%=review.getReviewDate()%>
+                <% } %>
+            </td>
+        </tr>
+        <% } %>
+        <% } %>
 	</table>
 	</div>
 	</form>
@@ -267,9 +276,10 @@ td {
 		<% } else { %>	
 			[다음]
 		<% } %>
-	</div>
+	
 	
 	<%-- 사용자로부터 검색 관련 정보를 입력받기 위한 태그 출력 --%>
+
 	<form action="<%=request.getContextPath() %>/index.jsp?group=review&worker=review_list" method="post">
 		<%-- select 태그를 사용하여 검색대상을 선택해 전달 - 전달값은 반드시 컬럼명으로 설정 --%>
 		<select name="search">
@@ -280,7 +290,7 @@ td {
 		<input type="text" name="keyword" value="<%=keyword%>">
 		<button type="submit">검색</button>
 	</form>
-</div>
+	</div>
 
 <script type="text/javascript">
 $("#reviewCount").change(function() {
@@ -292,28 +302,4 @@ $("#reviewCount").change(function() {
 
 
 </script>
-
-
-
-
-<%-- 
-    <h1>리뷰 목록</h1>
-    <div>
-        <% if(reviews != null && !reviews.isEmpty()) { %>
-            <% for(ReviewDTO review : reviews) { %>
-                <div>
-                    <h2><%= review.getReviewSubject() %></h2>
-                    <p><%= review.getReviewContent() %></p>
-                    <% if (review.getReviewImage() != null && !review.getReviewImage().isEmpty()) { %>
-                        <img src="<%= review.getReviewImage() %>" alt="리뷰 이미지" style="max-width: 200px;">
-                    <% } %>
-                    <a href="review_detail.jsp?reviewId=<%= review.getReviewNum() %>">상세보기</a>
-                </div>
-            <% } %>
-        <% } else { %>
-            <p>리뷰가 없습니다.</p>
-        <% } %>
-    </div>
-</body>
---%>
 </html>
