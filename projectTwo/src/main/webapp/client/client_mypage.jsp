@@ -18,7 +18,17 @@
     <script>
         function redirectToReviewWrite() {
             window.location.href = '<%=request.getContextPath()%>/review/review_write.jsp';
+         }    
+        function redirectToCart() {
+        	window.location.href = '<%=request.getContextPath()%>/cart/cart_page.jsp';
         }
+        function redirectToClientModify() {
+        	window.location.href = '<%=request.getContextPath()%>/client/client_modify.jsp';
+        }
+        function redirectToReviewModify() {
+        	window.location.href = '<%=request.getContextPath()%>/review/review_modify.jsp'
+        }
+        
     </script>
     <meta charset="UTF-8">
     <title>Nailro</title>
@@ -35,14 +45,16 @@
             <%= loginClient.getClientName()%> 님 환영합니다!
             <% } %>
                 
-                <input type="button" class="ask" value="1:1 문의하기" style="float:right;"></input> 
+                <input type="button" value="1:1 문의하기" style="float:right;" onclick="redirectToReviewModify()" />
+                
                 <input type="button" value="리뷰 쓰기" style="float:right;" onclick="redirectToReviewWrite()" href="<%=request.getContextPath() %>/index.jsp?group=review&worker=review_write"></input>
             </div>
             
             <div class="mybuttons" style="margin-top: 4cm;>
             <!-- Move these buttons below the "리뷰 쓰기" button -->
-            <button class="btn btn-1g" style="background-color: #FFDCE1;">장바구니</button> 
-            <button class="btn btn-1g" style="background-color: #FFDCE1;">회원정보</button>
+          <input type="button" value="장바구니" style="background-color: #FFDCD1; border: none; color: black;" onclick="redirectToCart()" class="btn btn-primary">
+            <input type="button" value="회원정보" style="background-color: #FFDCD1; border: none; color: black;" onclick="redirectToClientModify()" class="btn btn-primary">
+            
             </div>
             
             <div class="button-group" style="margin-top: 2cm;">
