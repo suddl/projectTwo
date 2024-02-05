@@ -98,19 +98,19 @@ button:hover {
 			<th>카테고리</th>
 			<td>
 			<select name="productCategory">
-				<option value="N">&nbsp;네일&nbsp;&nbsp;</option>
-				<option value="PD">&nbsp;페디&nbsp;&nbsp;</option>
-				<option value="CT">&nbsp;케어&툴&nbsp;&nbsp;</option>
+				<option value="Nail">&nbsp;네일&nbsp;&nbsp;</option>
+				<option value="Pedi">&nbsp;페디&nbsp;&nbsp;</option>
+				<option value="CareTool">&nbsp;케어&툴&nbsp;&nbsp;</option>
 			</select>
 			</td>
 		</tr>			
 		<tr>
 			<th>세부사항</th>
 			<td>
-				<input type='radio' name='productType' value="L"> 롱
-				<input type='radio' name='productType' value="S"> 숏
-				<input type='radio' name='productType' value="P"> 파츠
-				<input type='radio' name='productType' value="FC"> 풀컬러
+				<input type='radio' name='productType' value="Long"> 롱
+				<input type='radio' name='productType' value="Short"> 숏
+				<input type='radio' name='productType' value="Parts"> 파츠
+				<input type='radio' name='productType' value="FuulColor"> 풀컬러
 			</td>
 		</tr>			
 		<tr>
