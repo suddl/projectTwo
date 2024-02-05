@@ -103,7 +103,7 @@
 </head>
 <body>
 <%
-	List<ProductDTO> productList = ProductDAO.getDAO().selectProductByCategory("nail");
+	List<ProductDTO> productList = ProductDAO.getDAO().selectProductByCategory("Nail");
 %>
     <div class="container">
 
@@ -131,7 +131,7 @@
         %>
         <div class="product" data-product-type="<%=product.getProductType()%>">
             <a href="<%=url%>">
-                <img class="product-image" src="<%=request.getContextPath() %>/images/<%=product.getProductImage()%>" alt="이미지 준비중">
+                <img class="product-image" src="<%=request.getContextPath() %>/<%=product.getProductImage()%>" alt="이미지 준비중">
             </a>
             <div class="product-name">
                 <a href="<%=url%>"><%=product.getProductName()%></a>
