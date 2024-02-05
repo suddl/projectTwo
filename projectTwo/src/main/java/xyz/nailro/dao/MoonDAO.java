@@ -61,6 +61,38 @@ public class MoonDAO extends JdbcDAO {
 		return totalCount;
 	}
 	
+	public int selectTotalAllMoon(String search, String keyword) {
+		Connection con= null;
+		PreparedStatement pstmt= null;
+		ResultSet rs= null;
+		int totalCount=0;
+		try {
+			con=getConnection();
+			
+			if(keyword.equals("")) {	// 검색기능을 사용하지 않은 경우
+				String sql="select count(*) from moon";
+				pstmt=con.prepareStatement(sql);
+			} else {
+				String sql = "select count(*) from moon join member on moon_client_num=member_num"
+						+ "where " + search + "like '%'||?||'%' ";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, keyword);
+			}
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				totalCount=rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("[에러]selectTotalAllMoon() 메소드의 SQL 오류 = "+e.getMessage());
+		} finally {
+			close(con, pstmt, rs);
+		}
+		return totalCount;
+	}
+	
 	// 페이징 처리 관련 정보와 게시글 검색 기능 관련 정보를 전달받아 moon 테이블에 저장된 행을 검색하여 게시글 목록 반환
 	public List<MoonDTO> selectMoonList(int startRow, int endRow, String search, String keyword, int moonClientNum) {
 		Connection con=null;
@@ -114,6 +146,58 @@ public class MoonDAO extends JdbcDAO {
 		return moonList;
 	}
 	
+	public List<MoonDTO> selectAllMoonList(int startRow, int endRow, String search, String keyword) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<MoonDTO> moonList=new ArrayList<MoonDTO>();
+		try {
+			con= getConnection();
+			
+			if(keyword.equals("")) {
+				String sql ="select * from (select rownum rn, temp.* from (select moon_num"
+						+ ", moon_client_num,client_name, moon_title,moon_content, moon_date, moon_re, moon_image from moon"
+						+ " join client on moon_client_num=client_num order by moon_num desc) temp) where rn between ? and ? ";
+				pstmt=con.prepareStatement(sql);
+				//pstmt.setInt(1, moonClientNum);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+			} else {
+				String sql ="select * from (select rownum rn, temp.* from (select moon_num"
+						+ ", moon_client_num,client_name, moon_title,moon_content, moon_date, moon_re, moon_image from moon"
+						+ " join client on  moon_client_num=client_num "
+						+ " where " + search + "like '%'||?||'%' moon_status <> 3 order by moon_num) temp)"
+						+ " where rn between ? and ?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, keyword);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+			}
+			
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				MoonDTO moon=new MoonDTO();
+				moon.setMoonNum(rs.getInt("moon_num"));
+				moon.setMoonClientNum(rs.getInt("moon_client_num"));
+				moon.setMoonName(rs.getString("client_name"));
+				moon.setMoonTitle(rs.getString("moon_title"));
+				moon.setMoonContent(rs.getString("moon_content"));
+				moon.setMoonDate(rs.getString("moon_date"));
+				moon.setMoonRe(rs.getString("moon_re"));
+				moon.setMoonImage(rs.getString("moon_image"));
+				
+				moonList.add(moon);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("[에러]selectAllMoonList() 메소드의 SQL 오류 = "+e.getMessage());
+		} finally {
+			close(con, pstmt, rs);
+		}
+		return moonList;
+	}
+	
 	public int selectMoonNextNum() {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -159,5 +243,39 @@ public class MoonDAO extends JdbcDAO {
 			close(con, pstmt);
 		}
 		return rows;
+	}
+	
+	public MoonDTO selectMoonByNum(int moonNum) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		MoonDTO moon=null;
+		try {
+			con=getConnection();
+			String sql="select moon_num, moon_client_num,client_name moon_name, moon_title,moon_content, "
+					+ "moon_date, moon_re, moon_image from moon join client on moon.moon_client_num=client.client_num "
+					+ "where moon_num =?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, moonNum);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				moon=new MoonDTO();
+				moon.setMoonNum(rs.getInt("moon_num"));
+				moon.setMoonClientNum(rs.getInt("moon_client_num"));
+				moon.setMoonName(rs.getString("moon_name"));
+				moon.setMoonTitle(rs.getString("moon_title"));
+				moon.setMoonContent(rs.getString("moon_content"));
+				moon.setMoonDate(rs.getString("moon_date"));
+				moon.setMoonRe(rs.getString("moon_re"));
+				moon.setMoonImage(rs.getString("moon_image"));
+			}
+		} catch (SQLException e) {
+			System.out.println("[에러]selectMoonByNum() 메소드의 SQL 오류 = "+e.getMessage());
+		} finally {
+			close(con, pstmt, rs);
+		}
+		return moon;
 	}
 }

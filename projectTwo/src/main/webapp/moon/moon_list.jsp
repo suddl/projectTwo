@@ -46,8 +46,14 @@
 	int loginClientNum = loginClient.getClientNum();
 	//System.out.println("id : " + loginClientNum);
 	
+	int totalMoon=0;
 	
-	int totalMoon=MoonDAO.getDAO().selectTotalMoon(search, keyword, loginClientNum);
+	if(loginClient.getClientStatus()==9) {
+		totalMoon=MoonDAO.getDAO().selectTotalAllMoon(search, keyword);
+	} else {
+		totalMoon=MoonDAO.getDAO().selectTotalMoon(search, keyword, loginClientNum);
+	}
+	System.out.println("totalMoon : " + totalMoon);
 	
 	int totalPage=(int)Math.ceil((double)totalMoon/pageSize);
 	
@@ -63,7 +69,13 @@
 		endRow=totalMoon;
 	}
 	
-	List<MoonDTO> moonList=MoonDAO.getDAO().selectMoonList(startRow, endRow, search, keyword,loginClientNum);
+	List<MoonDTO> moonList=null;
+	
+	if(loginClient.getClientStatus()==9) {
+		moonList=MoonDAO.getDAO().selectAllMoonList(startRow, endRow, search, keyword);
+	} else {
+		moonList=MoonDAO.getDAO().selectMoonList(startRow, endRow, search, keyword,loginClientNum);
+	}
 	
 
 	//MoonDTO clientList=(MoonDTO)session.getAttribute("loginclientId");
