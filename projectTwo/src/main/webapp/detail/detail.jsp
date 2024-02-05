@@ -98,7 +98,7 @@
 	</form>
 	&nbsp;&nbsp; &nbsp;&nbsp;
 	<div class="button">
-		<a id="cartBtn">장바구니</button>
+		<button id="cartBtn">장바구니</div>
 		<a href="<%=request.getContextPath()%>/index.jsp?group=order&worker=order_main"	id="purchase">바로구매</a>
 				
 	</div>
@@ -142,7 +142,7 @@
 		<li class="nav-item"><a class="nav-link" href="#info" id="pd">상품설명</a></li>
 	</ul>
 	<p id="review"></p>
-	<%@include file="/review/review_list.jsp"%>
+	
 	<%--
 			<h2>" + review.getReview_subject() + "</h2>");
         out.println("<p>" ++ "</p>");
@@ -184,6 +184,12 @@
     <p>리뷰 내용: <%= review.reviewImage %></p>
 </div>
 --%>
+
+
+
+
+
+
 	<%-- 버튼 선택에 따라 글씨 색 변경--%>
 	<script type="text/javascript">
 	//제품상세,제품리뷰 바에서 클릭시 색상 변경되는 코드
