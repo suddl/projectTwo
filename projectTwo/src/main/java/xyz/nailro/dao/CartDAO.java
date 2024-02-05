@@ -28,31 +28,42 @@ public class CartDAO extends JdbcDAO{
 	}
 	
 	//cart 테이블의 저장된 모든 행을 검색하여 카트목록 반환하는 메소드
-	/*
-	public List<cartDTO> selectCarttList(){
+	
+	public List<CartDTO> selectCartList(int ClientNum){
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs=null;
-		List<cartDTO> cartList = new ArrayList<cartDTO>();
+		List<CartDTO> cartList = new ArrayList<CartDTO>();
 		
 		try {
 			con = getConnection();
 			
-			String sql = "select cart_id, goods_no, goods_name, goods_price, surang from goods join cart"
-					+ " on goods_name=Ingoods_name; order by goods_no";
+			String sql = "select car_num, cart_quantity, cart_product, cart_client_num,"
+					+ " client_id,client_name, client_phone, client_email, "
+					+ "client_address1,client_address2, client_zipcode from client join cart"
+					+ " on cart.cart_client_num=client.client_num where client_num=?"
+					+ " order by car_num;";
 			
 			pstmt=con.prepareStatement(sql);
-			
+			pstmt.setInt(1, ClientNum);
 			rs = pstmt.executeQuery();
 			
+			
 			while(rs.next()) {
-				cartDTO cart = new cartDTO();
-				cart=new cartDTO();
-				cart.setCartId(rs.getInt("cart_id"));
-				cart.setGoodsNo(rs.getInt("goods_no"));
-				cart.setGoodsName(rs.getString("goods_name"));
-				cart.setGoodsPrice(rs.getString("goods_price"));
-				cart.setSurang(rs.getInt("surang"));
+				CartDTO cart = new CartDTO();
+				cart=new CartDTO();
+				cart.setCarNum(rs.getInt("car_num")+"");
+				cart.setCarQuantity(rs.getInt("cart_quantity")+"");
+				cart.setCarProduct(rs.getInt("cart_product")+"");
+				cart.setCarClientNum(rs.getInt("cart_client_num")+"");
+				cart.setClientId(rs.getString("client_id"));
+				cart.setClientName(rs.getString("client_name"));
+				cart.setClientPhone(rs.getString("client_phone"));
+				cart.setClientEmail(rs.getString("client_email"));
+				cart.setClientAddress1(rs.getString("client_address1"));
+				cart.setClientAddress2(rs.getString("client_address2"));
+				cart.setClientZipCode(rs.getString("client_zipcode"));
+				
 				
 				cartList.add(cart);
 			}
@@ -61,12 +72,12 @@ public class CartDAO extends JdbcDAO{
 		} catch (SQLException e) {
 			// TODO: handle exception
 		}finally {
-			
+			close(con, pstmt, rs);
 		}
 		
 		return cartList;
 	}
-	*/
+	
 
 	//회원정보를 전달받아 MEMBER 테이블의 행으로 삽입하고 삽입행의 갯수를 반환하는 메소드
 	public int insertCart(int quantity, int ProducNum, int CNum ) {

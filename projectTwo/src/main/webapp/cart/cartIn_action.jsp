@@ -39,7 +39,11 @@
     int Num = loginClient.getClientNum();
     System.out.println("회원번호="+Num);
 
+    //장바구니 테이블에 상품정보 삽입
     CartDAO.getDAO().insertCart(cott, pNum, Num);
+    
+    
+    
 
 
     request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=cart&worker=cart_page");

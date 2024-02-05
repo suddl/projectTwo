@@ -1,29 +1,11 @@
+<%@page import="java.util.List"%>
+<%@page import="xyz.nailro.dto.CartDTO"%>
+<%@page import="xyz.nailro.dao.CartDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<%@include file="/security/login_url.jspf"%>
-
-<%
-
-request.setCharacterEncoding("utf-8");
-
-//상세페이지에서 히든으로 상품아이디 값을 받아오기
-String productNum = request.getParameter("productNum");
-String quantity = request.getParameter("quantity");
-
-//받아온 상품값으로 DAO를 이용해 해당 상품 정보를 찾아 장바구니id 생성 후 같이 저장
-//String sangpumId = request.getParameter("inputValue");
-
-
-
-%> 
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-<link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
 <style> 
 .table{
 width: 80%;
@@ -101,6 +83,38 @@ border: 1px solid #DCDCDC;
 
 </style>
 
+<%@include file="/security/login_url.jspf"%>
+
+<%
+//회원번호
+int Num = loginClient.getClientNum();
+//System.out.println("회원번호="+Num);
+
+CartDTO cartDTO = new CartDTO();
+
+List<CartDTO> cartDTOs = CartDAO.getDAO().selectCartList(Num);
+
+
+
+
+request.setCharacterEncoding("utf-8");
+
+//상세페이지에서 히든으로 상품아이디 값을 받아오기
+//String productNum = request.getParameter("productNum");
+//String quantity = request.getParameter("quantity");
+
+//받아온 상품값으로 DAO를 이용해 해당 상품 정보를 찾아 장바구니id 생성 후 같이 저장
+//String sangpumId = request.getParameter("inputValue");
+
+
+
+%> 
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
+
 </head>
 <body>
 <h1>장바구니</h1>
@@ -115,45 +129,21 @@ border: 1px solid #DCDCDC;
       <th scope="col">가격</th>
     </tr>
   </thead>
-  <%
-  	
-  %>
+  
   <form action="<%=request.getContextPath() %>/index.jsp?group=order&worker=order_main"
    method="post" id="orderForm" name="orderForm" >
   <tbody>
-    <tr>
-      <th scope="row">
-      <input type="checkbox" name="product" >
-      </th>
-      <td>이미지&nbsp;&nbsp; <%=productNum %></td>
-      <td>
-      <div>
-      <button type="button" id="MinBtn" onclick="countZero();">-</button>&nbsp;&nbsp;
-  	<p id="count1" style="display: inline-block;"><%=quantity %></p>
-     &nbsp;&nbsp; <button type="button" id="PlusBtn" onclick="countUp();">+</button>
-  	</div>
-      <script type="text/javascript">
-          var count=1;
+  <%for(CartDTO carts : cartDTOs) { %>
+  	<tr>
+  	<td width="50"><%=carts.getCarClientNum() %></td>
+  	<td width="50"><%=carts.getCarProduct() %></td>
+  	<td width="50"><%=carts.getCarQuantity() %></td>
+  	</tr>
+  System.out.println("뭐지"+<%=carts.getCarClientNum()%>)
+  <% } %>
+  
+  
 
-          var countUp=function(){
-              count=count+1;
-              document.querySelector("#count1").innerText=count;
-          };
-          
-          //0이하로 안내려가는 버튼
-          var countZero=function(){
-          	if(count>1){
-          	count=count-1;
-          	document.querySelector("#count1").innerText=count;
-          	}
-          	
-          };
-      </script>
-      
-      </td>
-      <td>10,000 원</td>
-    </tr>
- 
   </tbody>
 </table>
 
