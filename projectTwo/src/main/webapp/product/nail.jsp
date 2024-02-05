@@ -124,6 +124,7 @@
 		</div>
 
     <div class="product-list">
+    <%-- 제품 이미지 클릭시 제품 상세 페이지로 넘길 값(productNum, productImage, productName, productPrice  --%>
         <% for (ProductDTO product : productList) { 
             String url = request.getContextPath() + "/index.jsp?group=detail&worker=detail"
                     + "&productNum=" + product.getProductNum() + "&productImage=" + product.getProductImage()
