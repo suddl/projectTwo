@@ -10,6 +10,7 @@
 		moon.setMoonClientNum(5);//회원번호 변경
 		moon.setMoonTitle("테스트-"+i);//제목 변경
 		moon.setMoonContent("게시글 테스트 - "+i);//내용 변경
+		moon.setMoonStatus(1);
 	
 		
 		MoonDAO.getDAO().insertMoon(moon);

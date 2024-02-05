@@ -103,3 +103,24 @@ td {
 		<% } %>
 	</div>
 </div>
+<script type="text/javascript">
+$("#modifyBtn").click(function() {
+	location.href="<%=request.getContextPath()%>/index.jsp?group=moon&worker=moon_modify"
+		+"&moonNum=<%=moon.getMoonNum()%>&pageNum=<%=pageNum%>"
+		+"&pageSize=<%=pageSize%>&search=<%=search%>&keyword=<%=keyword%>";	
+
+});
+
+$("#removeBtn").click(function() {
+	if(confirm("게시글을 정말로 삭제 하시겠습니까?")) {
+		location.href="<%=request.getContextPath()%>/index.jsp?group=moon&worker=moon_remove_action&&moonNum=<%=moon.getMoonNum()%>&pageNum=<%=pageNum%>"
+			+"&pageSize=<%=pageSize%>&search=<%=search%>&keyword=<%=keyword%>";	
+	}
+});
+
+$("#listBtn").click(function() {
+	location.href="<%=request.getContextPath()%>/index.jsp?group=moon&worker=moon_list"
+		+"&pageNum=<%=pageNum%>&pageSize=<%=pageSize%>&search=<%=search%>&keyword=<%=keyword%>";	
+});
+</script>
+

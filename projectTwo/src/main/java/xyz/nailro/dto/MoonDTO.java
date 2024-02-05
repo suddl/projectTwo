@@ -1,21 +1,23 @@
 package xyz.nailro.dto;
 
 /*
-	CREATE TABLE MOON(MOON_NUM NUMBER PRIMARY KEY, MOON_CLIENT_NUM NUMBER CONSTRAINT MOON_CLIENT_FK REFERENCES MEMBER(MEMBER_NUM), 
-	MOON_TITLE VARCHAR2(300), MOON_CONTENT VARCHAR2(4000), MOON_DATE DATE, MOON_RE VARCHAR2(4000), MOON_IMAGE VARCHAR2(100));
+	CREATE TABLE MOON(MOON_NUM NUMBER PRIMARY KEY, MOON_CLIENT_NUM NUMBER CONSTRAINT MOON_CLIENT_FK REFERENCES CLIENT(CLIENT_NUM), 
+	MOON_TITLE VARCHAR2(300), MOON_CONTENT VARCHAR2(4000), MOON_DATE DATE, MOON_RE VARCHAR2(4000), MOON_IMAGE VARCHAR2(100), MOON_STATUS NUMBER(1));
 
     
 	create sequence moon_seq;
   
-		이름              널?       유형             
-	--------------- -------- -------------- 
-	MOON_NUM        NOT NULL NUMBER         
-	MOON_CLIENT_NUM          NUMBER         
-	MOON_TITLE               VARCHAR2(300)  
-	MOON_CONTENT             VARCHAR2(4000) 
-	MOON_DATE                DATE           
-	MOON_RE                  VARCHAR2(4000) 
-	MOON_IMAGE               VARCHAR2(100)
+	
+이름              널?       유형             
+--------------- -------- -------------- 
+MOON_NUM        NOT NULL NUMBER         
+MOON_CLIENT_NUM          NUMBER         
+MOON_TITLE      NOT NULL VARCHAR2(300)  
+MOON_CONTENT    NOT NULL VARCHAR2(4000) 
+MOON_DATE       NOT NULL DATE           
+MOON_RE                  VARCHAR2(4000) 
+MOON_IMAGE               VARCHAR2(100)  
+MOON_STATUS              NUMBER         
 
 */
 
@@ -28,6 +30,7 @@ public class MoonDTO {
 	private String moonImage;
 	private String moonDate;
 	private String moonRe;
+	private int moonStatus;
 	
 	public MoonDTO() {
 		// TODO Auto-generated constructor stub
@@ -95,6 +98,14 @@ public class MoonDTO {
 
 	public void setMoonRe(String moonRe) {
 		this.moonRe = moonRe;
+	}
+
+	public int getMoonStatus() {
+		return moonStatus;
+	}
+
+	public void setMoonStatus(int moonStatus) {
+		this.moonStatus = moonStatus;
 	}
 
 	
