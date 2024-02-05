@@ -95,11 +95,18 @@
 						
 	</form>
 	&nbsp;&nbsp; &nbsp;&nbsp;
+	<div class="button-container d-flex justify-content-around mt-3">
+    <button id="cartBtn" class="btn btn-secondary">장바구니</button>
+    <a href="<%=request.getContextPath()%>/index.jsp?group=order&worker=order_main" class="btn btn-success" id="purchase">바로구매</a>
+</div>
+	
+	<%-- 
 	<div class="button">
 		<button id="cartBtn">장바구니</div>
 		<a href="<%=request.getContextPath()%>/index.jsp?group=order&worker=order_main"	id="purchase">바로구매</a>
 				
-	</div>
+	</div> --%>
+	
 	&nbsp;&nbsp;
 	<ul>
 		<li>
@@ -140,6 +147,7 @@
 		<li class="nav-item"><a class="nav-link" href="#info" id="pd">상품설명</a></li>
 	</ul>
 	<p id="review"></p>
+	<%@include file="/review/review_list.jsp"%>
 	
 	<%--
 			<h2>" + review.getReview_subject() + "</h2>");
