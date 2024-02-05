@@ -10,9 +10,11 @@
 request.setCharacterEncoding("utf-8");
 
 //상세페이지에서 히든으로 상품아이디 값을 받아오기
-String sangpumId = request.getParameter("inputValue");
+String productNum = request.getParameter("productNum");
+String quantity = request.getParameter("quantity");
 
 //받아온 상품값으로 DAO를 이용해 해당 상품 정보를 찾아 장바구니id 생성 후 같이 저장
+//String sangpumId = request.getParameter("inputValue");
 
 
 
@@ -123,11 +125,11 @@ border: 1px solid #DCDCDC;
       <th scope="row">
       <input type="checkbox" name="product" >
       </th>
-      <td>이미지&nbsp;&nbsp; <%=sangpumId %></td>
+      <td>이미지&nbsp;&nbsp; <%=productNum %></td>
       <td>
       <div>
       <button type="button" id="MinBtn" onclick="countZero();">-</button>&nbsp;&nbsp;
-  	<p id="count1" style="display: inline-block;">1</p>
+  	<p id="count1" style="display: inline-block;"><%=quantity %></p>
      &nbsp;&nbsp; <button type="button" id="PlusBtn" onclick="countUp();">+</button>
   	</div>
       <script type="text/javascript">
@@ -151,52 +153,6 @@ border: 1px solid #DCDCDC;
       </td>
       <td>10,000 원</td>
     </tr>
-    
-     <tr>
-      <th scope="row">
-      <input type="checkbox" name="product" >
-      </th>
-      <td>이미지&nbsp;&nbsp; 상품명</td>
-      <td>
-      <div>
-      <button type="button" id="MinBtn" onclick="countZero2();">-</button>&nbsp;&nbsp;<%-- 메소드명끝에 상품no 넣기 --%>
-  	<p id="count2" style="display: inline-block;">1</p>
-      &nbsp;&nbsp;<button type="button" id="PlusBtn" onclick="countUp2();">+</button>
-  	</div>
-  	
-      <script type="text/javascript">
-      	//전체선택
-      	function selectAll(selectAll)  {
-    	  const checkboxes = document.getElementsByName('product');
-    	  
-    	  checkboxes.forEach((checkbox) => {
-    	    checkbox.checked =  selectAll.checked;
-    	  })
-    	  
-    	}
-      
-      	
-          var count2=1;
-
-          var countUp2=function(){
-              count2=count2+1;
-              document.querySelector("#count2").innerText=count2;
-          };
-          
-          //0이하로 안내려가는 버튼
-          var countZero2=function(){
-          	if(count2>1){
-          	count2=count2-1;
-          	document.querySelector("#count2").innerText=count2;
-          	}
-          	
-          };
-      </script>
-      
-      </td>
-      <td>10,000 원</td>
-    </tr>
- 
  
   </tbody>
 </table>

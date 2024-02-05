@@ -104,7 +104,7 @@ public class MoonDAO extends JdbcDAO {
 			
 			if(keyword.equals("")) {
 				String sql ="select * from (select rownum rn, temp.* from (select moon_num"
-						+ ", moon_client_num,client_name, moon_title,moon_content, moon_date, moon_re, moon_image from moon"
+						+ ", moon_client_num,client_name, moon_title,moon_content, moon_date, moon_re, moon_image, moon_status from moon"
 						+ " join client on moon_client_num=client_num order by moon_num desc) temp) where rn between ? and ? ";
 				pstmt=con.prepareStatement(sql);
 				//pstmt.setInt(1, moonClientNum);
@@ -112,7 +112,7 @@ public class MoonDAO extends JdbcDAO {
 				pstmt.setInt(2, endRow);
 			} else {
 				String sql ="select * from (select rownum rn, temp.* from (select moon_num"
-						+ ", moon_client_num,client_name, moon_title,moon_content, moon_date, moon_re, moon_image from moon"
+						+ ", moon_client_num,client_name, moon_title,moon_content, moon_date, moon_re, moon_image, moon_status from moon"
 						+ " join client on  moon_client_num=client_num "
 						+ " where " + search + "like '%'||?||'%' moon_status <> 3 order by moon_num) temp)"
 						+ " where rn between ? and ?";
@@ -134,6 +134,7 @@ public class MoonDAO extends JdbcDAO {
 				moon.setMoonDate(rs.getString("moon_date"));
 				moon.setMoonRe(rs.getString("moon_re"));
 				moon.setMoonImage(rs.getString("moon_image"));
+				moon.setMoonStatus(rs.getInt("moon_status"));
 				
 				moonList.add(moon);
 			}
@@ -156,7 +157,7 @@ public class MoonDAO extends JdbcDAO {
 			
 			if(keyword.equals("")) {
 				String sql ="select * from (select rownum rn, temp.* from (select moon_num"
-						+ ", moon_client_num,client_name, moon_title,moon_content, moon_date, moon_re, moon_image from moon"
+						+ ", moon_client_num,client_name, moon_title,moon_content, moon_date, moon_re, moon_image, moon_status from moon"
 						+ " join client on moon_client_num=client_num order by moon_num desc) temp) where rn between ? and ? ";
 				pstmt=con.prepareStatement(sql);
 				//pstmt.setInt(1, moonClientNum);
@@ -164,7 +165,7 @@ public class MoonDAO extends JdbcDAO {
 				pstmt.setInt(2, endRow);
 			} else {
 				String sql ="select * from (select rownum rn, temp.* from (select moon_num"
-						+ ", moon_client_num,client_name, moon_title,moon_content, moon_date, moon_re, moon_image from moon"
+						+ ", moon_client_num,client_name, moon_title,moon_content, moon_date, moon_re, moon_image, moon_status from moon"
 						+ " join client on  moon_client_num=client_num "
 						+ " where " + search + "like '%'||?||'%' moon_status <> 3 order by moon_num) temp)"
 						+ " where rn between ? and ?";
@@ -186,6 +187,7 @@ public class MoonDAO extends JdbcDAO {
 				moon.setMoonDate(rs.getString("moon_date"));
 				moon.setMoonRe(rs.getString("moon_re"));
 				moon.setMoonImage(rs.getString("moon_image"));
+				moon.setMoonStatus(rs.getInt("moon_status"));
 				
 				moonList.add(moon);
 			}
@@ -228,13 +230,14 @@ public class MoonDAO extends JdbcDAO {
 		int rows=0;
 		try {
 			con=getConnection();
-			String sql="insert into moon values(?,?,?,?,sysdate,null,?)";
+			String sql="insert into moon values(?,?,?,?,sysdate,null,?,?)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, moon.getMoonNum());
 			pstmt.setInt(2, moon.getMoonClientNum());
 			pstmt.setString(3, moon.getMoonTitle());
 			pstmt.setString(4, moon.getMoonContent());
 			pstmt.setString(5, moon.getMoonImage());
+			pstmt.setInt(6, moon.getMoonStatus());
 			
 			rows=pstmt.executeUpdate();
 		}catch (SQLException e) {
@@ -277,5 +280,38 @@ public class MoonDAO extends JdbcDAO {
 			close(con, pstmt, rs);
 		}
 		return moon;
+	}
+	
+	public int updateMoon(MoonDTO moon) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		int rows=0;
+		try {
+			con=getConnection();
+
+			if(moon.getMoonImage()==null) {
+				String sql= "update moon set moon_title=?, moon_content=?, moon_status=?, moon_date=sysdate where moon_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, moon.getMoonTitle());
+				pstmt.setString(2, moon.getMoonContent());
+				pstmt.setInt(3, moon.getMoonStatus());
+				pstmt.setInt(4, moon.getMoonNum());
+			} else {
+				String sql= "update moon set moon_title=?, moon_content=?, moon_image=?, moon_status=?, moon_date=sysdate where moon_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, moon.getMoonTitle());
+				pstmt.setString(2, moon.getMoonContent());
+				pstmt.setString(3, moon.getMoonImage());
+				pstmt.setInt(4, moon.getMoonStatus());
+				pstmt.setInt(5, moon.getMoonNum());
+			}
+			
+			rows=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("[에러]updateMoon() 메소드의 SQL 오류 = "+e.getMessage());
+		} finally {
+			close(con, pstmt);
+		}
+		return rows;		
 	}
 }

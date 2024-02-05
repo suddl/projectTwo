@@ -103,7 +103,7 @@
 </head>
 <body>
 <%
-	List<ProductDTO> productList = ProductDAO.getDAO().selectProductByCategory("nail");
+	List<ProductDTO> productList = ProductDAO.getDAO().selectProductByCategory("Nail");
 %>
     <div class="container">
 
@@ -116,14 +116,15 @@
     	</div>
     	
 		<div class="filter-buttons" id="filterButtons">
-    		<button data-product-type="short">숏</button>
-    		<button data-product-type="long">롱</button>
-    		<button data-product-type="parts">파츠</button>
-    		<button data-product-type="fullColor">풀컬러</button>
-    		<button data-product-type="all">전체</button>
+    		<button data-product-type="Short">숏</button>
+    		<button data-product-type="Long">롱</button>
+    		<button data-product-type="Parts">파츠</button>
+    		<button data-product-type="FullColor">풀컬러</button>
+    		<button data-product-type="All">전체</button>
 		</div>
 
     <div class="product-list">
+    <%-- 제품 이미지 클릭시 제품 상세 페이지로 넘길 값(productNum, productImage, productName, productPrice  --%>
         <% for (ProductDTO product : productList) { 
             String url = request.getContextPath() + "/index.jsp?group=detail&worker=detail"
                     + "&productNum=" + product.getProductNum() + "&productImage=" + product.getProductImage()
@@ -131,7 +132,7 @@
         %>
         <div class="product" data-product-type="<%=product.getProductType()%>">
             <a href="<%=url%>">
-                <img class="product-image" src="<%=request.getContextPath() %>/images/<%=product.getProductImage()%>" alt="이미지 준비중">
+                <img class="product-image" src="<%=request.getContextPath() %>/<%=product.getProductImage()%>" alt="이미지 준비중">
             </a>
             <div class="product-name">
                 <a href="<%=url%>"><%=product.getProductName()%></a>

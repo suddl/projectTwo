@@ -118,6 +118,8 @@ td {
 	height: 40px;
 }
 
+
+
 button {
 	margin: 10px auto;
 	padding: 5px;
@@ -190,8 +192,10 @@ button + button {
 		<td class="p_check"><input type="checkbox" name="checkp" value="<%=product.getProductNum()%>" class="check">
 		</td>
 		<td width="100"><%=product.getProductNum() %></td>
-		<td width="170">
-			<img src="<%=product.getProductImage()%>" width="170">
+		<td class="content">
+		<% if(product.getProductImage()!=null) { %>
+			<img src="<%=request.getContextPath() %>/<%= product.getProductImage()%>" width="170" height="100">
+			<% } %>
 		</td>
 		<td width="250"><%=product.getProductName() %></td>
 		<td width="200"><%=product.getProductCategory() %></td>

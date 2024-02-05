@@ -176,11 +176,18 @@ td {
 				<% displayNum--; %>
 				
 				<td class="subject">
+				
+				
 					<%
 						String url=request.getContextPath()+"/index.jsp?group=moon&worker=moon_detail&moonNum="+moon.getMoonNum()
 						+"&pageNum="+pageNum+"&pageSize="+pageSize +"&search="+search+"&keyword="+keyword;
 					%>
+					<% if(moon.getMoonStatus()==1){ %>
 					<a href="<%=url %>"><%= moon.getMoonTitle() %></a>
+					<% } else if(moon.getMoonStatus()==0){ %>
+						<span class="subject_hidden">삭제글</span>
+						게시글 작성자 또는 관리자에 의해 삭제된 게시글입니다.
+					<% } %>
 				</td>
 				<td><%= moon.getMoonName() %></td>
 				<td>
