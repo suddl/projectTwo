@@ -1,4 +1,6 @@
 <%@page import="xyz.nailro.util.Utility"%>
+<%@page import="xyz.nailro.dto.ClientDTO"%>
+<%@page import="xyz.nailro.dao.ClientDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%-- 비밀번호를 전달받아 MEMBER 테이블에 저장된 회원정보의 비밀번호와 비교하여 같은 경우 회원정보를
@@ -9,22 +11,16 @@
 <%-- => [회원변경] 태그를 클릭한 경우 [/member/member_modify_action.jsp] 문서를 요청하여 페이지 이동 - 입력값 전달 --%>
 <%@include file="/security/login_check.jspf" %>  
 <%
-	//JSP 문서를 GET 방식으로 요청한 경우에 대한 응답 처리 - 비정상적인 요청
-	if(request.getMethod().equals("GET")) {
-		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=error&worker=error_400");
-		return;
-	}	
-
 	//전달값을 반환받아 저장
-	String passwd=Utility.encrypt(request.getParameter("client_passwd"));
+	String passwd=request.getParameter("passwd");
 	
 	//로그인 상태의 사용자 비밀번호와 전달받은 비밀번호를 비교하여 같지 않은 경우에 대한 응답 처리
 	if(!loginClient.getClientPasswd().equals(passwd)) {
 		session.setAttribute("message", "입력하신 비밀번호가 맞지 않습니다.");	
 		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=client&worker=password_confirm&action=modify");
-		return;
+		//return;
 	}
-%>    
+%>
 <style type="text/css">
 fieldset {
 	text-align: left;

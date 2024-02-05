@@ -45,9 +45,9 @@
             <%= loginClient.getClientName()%> 님 환영합니다!
             <% } %>
                 
-                <input type="button" value="1:1 문의하기" style="float:right;" onclick="redirectToReviewModify()" />
+                <input type="button" value="1:1 문의하기" style="float:right;" onclick="redirectToReviewModify()"/>
                 
-                <input type="button" value="리뷰 쓰기" style="float:right;" onclick="redirectToReviewWrite()" href="<%=request.getContextPath() %>/index.jsp?group=review&worker=review_write"></input>
+                <input type="button" value="리뷰 쓰기" style="float:right;" onclick="redirectToReviewWrite()"/>
             </div>
             
             <div class="mybuttons" style="margin-top: 4cm;>

@@ -26,6 +26,7 @@
 	
 	//글번호를 전달받아 REVIEW 테이블의 단일행을 검색하여 게시글(ReviewDTO 객체)을 반환하는 
 	//ReviewDAO 클래스의 메소드 호출
+	///HOTFIX 오류수정 필요
 	ReviewDTO review=ReviewDAO.getDAO().selectReviewByNum(reviewNum);
 	
 	//검색된 게시글이 없는 경우에 대한 응답 처리 - 비정상적인 요청

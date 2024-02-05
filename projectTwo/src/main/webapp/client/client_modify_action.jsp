@@ -1,4 +1,4 @@
-<%@page import="xyz.nailro.dao.ClientDAO"%>
+<%--<%@page import="xyz.nailro.dao.ClientDAO"--%>
 <%@page import="xyz.nailro.util.Utility"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -6,7 +6,7 @@
 문서를 요청하기 위한 URL 주소를 전달하여 응답하는 JSP 문서 --%> 
 <%-- => 로그인 상태의 사용자만 요청 가능한 JSP 문서 --%>
 <%@include file="/security/login_check.jspf" %>  
-<% 
+<%--
 	//JSP 문서를 GET 방식으로 요청한 경우에 대한 응답 처리 - 비정상적인 요청
 	if(request.getMethod().equals("GET")) {
 		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=error&worker=error_400");
@@ -56,4 +56,4 @@
 	//페이지 이동
 	request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=client&worker=client_mypage");
 	
-%>
+--%>
