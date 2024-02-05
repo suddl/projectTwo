@@ -4,14 +4,10 @@
 <%@page import="xyz.nailro.dao.ReviewDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link href="<%=request.getContextPath()%>/css/detail.css"
-	type="text/css" rel="stylesheet">
 <%-- 각 produc 마다 받아와야하기에 막아둠
       Product product = (Product) request.getAttribute("product");
 --%>
 <head>
-<style>
-</style>
 <meta charset="UTF-8">
 <title>상세페이지</title>
 <link
@@ -19,6 +15,8 @@
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous">
+<link href="<%=request.getContextPath()%>/css/detail.css"
+	type="text/css" rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link href="<%=request.getContextPath()%>/css/header.css"

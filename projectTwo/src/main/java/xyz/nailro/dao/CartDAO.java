@@ -39,10 +39,11 @@ public class CartDAO extends JdbcDAO{
 			con = getConnection();
 			
 			String sql = "select car_num, cart_quantity, cart_product, cart_client_num,"
-					+ " client_id,client_name, client_phone, client_email, "
+					+ "product_name, client_id,client_name, client_phone, client_email, "
 					+ "client_address1,client_address2, client_zipcode from client join cart"
-					+ " on cart.cart_client_num=client.client_num where client_num=?"
-					+ " order by car_num;";
+					+ " on cart_client_num=client_num join product"
+					+ " on cart_product=product_num where client_num=?"
+					+ " order by car_num";
 			
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, ClientNum);
@@ -51,11 +52,11 @@ public class CartDAO extends JdbcDAO{
 			
 			while(rs.next()) {
 				CartDTO cart = new CartDTO();
-				cart=new CartDTO();
-				cart.setCarNum(rs.getInt("car_num")+"");
-				cart.setCarQuantity(rs.getInt("cart_quantity")+"");
-				cart.setCarProduct(rs.getInt("cart_product")+"");
-				cart.setCarClientNum(rs.getInt("cart_client_num")+"");
+				cart.setCarNum(String.valueOf(rs.getInt("car_num")));
+				cart.setCartQuantity(String.valueOf(rs.getInt("cart_quantity")));
+				cart.setCartProduct(String.valueOf(rs.getInt("cart_product")));
+				cart.setCartClientNum(String.valueOf(rs.getInt("cart_client_num")));
+				cart.setCartProductName(rs.getString("product_name"));
 				cart.setClientId(rs.getString("client_id"));
 				cart.setClientName(rs.getString("client_name"));
 				cart.setClientPhone(rs.getString("client_phone"));
@@ -70,7 +71,7 @@ public class CartDAO extends JdbcDAO{
 					
 			
 		} catch (SQLException e) {
-			// TODO: handle exception
+			System.out.println("selectCartList 에러"+ e.getMessage());
 		}finally {
 			close(con, pstmt, rs);
 		}

@@ -90,11 +90,8 @@ border: 1px solid #DCDCDC;
 int Num = loginClient.getClientNum();
 //System.out.println("회원번호="+Num);
 
-CartDTO cartDTO = new CartDTO();
-
 List<CartDTO> cartDTOs = CartDAO.getDAO().selectCartList(Num);
-
-
+//System.out.println("dto객체="+cartDTOs.size());
 
 
 request.setCharacterEncoding("utf-8");
@@ -105,10 +102,10 @@ request.setCharacterEncoding("utf-8");
 
 //받아온 상품값으로 DAO를 이용해 해당 상품 정보를 찾아 장바구니id 생성 후 같이 저장
 //String sangpumId = request.getParameter("inputValue");
-
-
-
 %> 
+
+
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -119,9 +116,9 @@ request.setCharacterEncoding("utf-8");
 <body>
 <h1>장바구니</h1>
 
-<table class="table" >
+<table class="table">
+<tbody>
   <thead>
-  
     <tr>
       <th scope="col"><input type="checkbox" name="product" value="selectAll" onclick='selectAll(this)' ></th>
       <th scope="col">상품명</th>
@@ -132,18 +129,16 @@ request.setCharacterEncoding("utf-8");
   
   <form action="<%=request.getContextPath() %>/index.jsp?group=order&worker=order_main"
    method="post" id="orderForm" name="orderForm" >
-  <tbody>
+  
   <%for(CartDTO carts : cartDTOs) { %>
-  	<tr>
-  	<td width="50"><%=carts.getCarClientNum() %></td>
-  	<td width="50"><%=carts.getCarProduct() %></td>
-  	<td width="50"><%=carts.getCarQuantity() %></td>
-  	</tr>
-  System.out.println("뭐지"+<%=carts.getCarClientNum()%>)
+  <tr>
+    <th scope="col"><input type="checkbox" name="product" value="selectAll" onclick='selectAll(this)' ></th>
+  	<th scope="col"><%=carts.getCartProductName() %></th>
+  	<th scope="col"><%=carts.getCartQuantity() %>개</th>
+  	<th scope="col"><%=carts.getCartProduct() %></th>
+  
+  </tr>
   <% } %>
-  
-  
-
   </tbody>
 </table>
 

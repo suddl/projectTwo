@@ -27,17 +27,17 @@
 	//상품번호
 	String pN = multipartRequest.getParameter("productNum");
     int pNum = Integer.parseInt(pN);
-    System.out.println(pN);
+   // System.out.println(pN);
 
     //담긴 수량
 	String cot = multipartRequest.getParameter("counting");
     int cott = Integer.parseInt(cot);
-    System.out.println(cot);
+  //  System.out.println(cot);
 
 
     //회원번호
     int Num = loginClient.getClientNum();
-    System.out.println("회원번호="+Num);
+    //System.out.println("회원번호="+Num);
 
     //장바구니 테이블에 상품정보 삽입
     CartDAO.getDAO().insertCart(cott, pNum, Num);

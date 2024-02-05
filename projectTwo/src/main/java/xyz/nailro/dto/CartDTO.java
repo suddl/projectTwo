@@ -10,10 +10,11 @@ CLIENT_STATUS NUMBER(10) NOT NULL );
 */
 public class CartDTO {
 	private String CarNum;//장바구니 번호
-	private String CarQuantity;//담긴수량
-	private String CarProduct;//장바구니 담긴 상품번호
+	private String CartQuantity;//담긴수량
+	private String CartProduct;//장바구니 담긴 상품번호
 	private String CartClientNum;//장바구니 회원번호 FK
-
+	private String CartProductName;//장바구니 담긴 상품이름
+	
 	private String ClientId; 
 	private String ClientName; 
 	private String ClientPhone; 
@@ -34,28 +35,36 @@ public class CartDTO {
 		CarNum = carNum;
 	}
 
-	public String getCarQuantity() {
-		return CarQuantity;
+	public String getCartQuantity() {
+		return CartQuantity;
 	}
 
-	public void setCarQuantity(String carQuantity) {
-		CarQuantity = carQuantity;
+	public void setCartQuantity(String cartQuantity) {
+		CartQuantity = cartQuantity;
 	}
 
-	public String getCarProduct() {
-		return CarProduct;
+	public String getCartProduct() {
+		return CartProduct;
 	}
 
-	public void setCarProduct(String carProduct) {
-		CarProduct = carProduct;
+	public void setCartProduct(String cartProduct) {
+		CartProduct = cartProduct;
 	}
 
-	public String getCarClientNum() {
+	public String getCartProductName() {
+		return CartProductName;
+	}
+
+	public void setCartProductName(String cartProductName) {
+		CartProductName = cartProductName;
+	}
+
+	public String getCartClientNum() {
 		return CartClientNum;
 	}
 
-	public void setCarClientNum(String carClientNum) {
-		CartClientNum = carClientNum;
+	public void setCartClientNum(String cartClientNum) {
+		CartClientNum = cartClientNum;
 	}
 
 	public String getClientId() {
@@ -115,6 +124,5 @@ public class CartDTO {
 	}
 	
 	
-	
-	
+		
 }
