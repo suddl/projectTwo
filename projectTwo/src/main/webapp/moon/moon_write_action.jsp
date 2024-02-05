@@ -37,7 +37,7 @@
 	}
 	
 	
-	System.out.println("moonTitle : " + moonTitle);
+	//System.out.println("moonTitle : " + moonTitle);
 	
 	String moonContent=Utility.escapeTag(multipartRequest.getParameter("moonContent"));
 	String moonImage=null;

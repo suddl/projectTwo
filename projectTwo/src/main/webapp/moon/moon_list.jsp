@@ -53,7 +53,7 @@
 	} else {
 		totalMoon=MoonDAO.getDAO().selectTotalMoon(search, keyword, loginClientNum);
 	}
-	System.out.println("totalMoon : " + totalMoon);
+	//System.out.println("totalMoon : " + totalMoon);
 	
 	int totalPage=(int)Math.ceil((double)totalMoon/pageSize);
 	

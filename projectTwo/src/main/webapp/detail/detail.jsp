@@ -7,7 +7,7 @@
 <link href="<%=request.getContextPath()%>/css/detail.css"
 	type="text/css" rel="stylesheet">
 <%-- 각 produc 마다 받아와야하기에 막아둠
-    Product product = (Product) request.getAttribute("product");
+      Product product = (Product) request.getAttribute("product");
 --%>
 <head>
 <style>
