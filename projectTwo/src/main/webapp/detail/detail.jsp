@@ -31,8 +31,8 @@
 <body>
 	<a id="topBtn" href="#"> <img src="./images/topBtn.jpg"></a>
 	<form
-		action="<%=request.getContextPath()%>/index.jsp?group=cart&worker=cart_page"
-		method="post"  id="productForm" name="detail">
+		action="<%=request.getContextPath()%>/index.jsp?group=cart&worker=cartIn_action"
+		method="post"  id="detail" name="detail">
 		<input type="hidden" name="productNum" value="1">
 		
 		<div class="container">
@@ -89,7 +89,7 @@
 									<button type="button" id="minusBtn" onclick="countZero();">-</button>&nbsp;&nbsp;
 					 
 									 <%-- 여기서는 화면에 출력해주고 --%>
-									<span id="count1" name="count1" style="display: inline-block;" >  </span>&nbsp;&nbsp;
+									<span id="count1" name="count1" style="display: inline-block;" > 1 </span>&nbsp;&nbsp;
 			
 					 				<%-- 여기서는 데이터를 action에 넘긴다 --%>
 									<input type="hidden" name ="counting" id="countHidden">

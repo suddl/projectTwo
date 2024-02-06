@@ -146,8 +146,7 @@ int total = 0;
      
      <%
      total += Integer.parseInt(carts.getCartProductPrice()) * Integer.parseInt(carts.getCartQuantity());
-     	String priceP = String.format("%,d",Integer.parseInt(carts.getCartProductPrice()) * 
-             Integer.parseInt(carts.getCartQuantity())); 
+     	String priceP = String.format("%,d",Integer.parseInt(carts.getCartProductPrice()) * Integer.parseInt(carts.getCartQuantity())); 
       %>
 		     
      <th ><%=priceP %>원</th>

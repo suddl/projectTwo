@@ -9,9 +9,9 @@
 <%@include file="/security/login_url.jspf" %>
     
 <%
-	String saveDirectory=request.getServletContext().getRealPath("/images");
+	//String saveDirectory=request.getServletContext().getRealPath("/images");
     
-	MultipartRequest multipartRequest = new MultipartRequest(request, saveDirectory, 20*1024*1024,"utf-8", new DefaultFileRenamePolicy());
+	//MultipartRequest multipartRequest = new MultipartRequest(request, saveDirectory, 20*1024*1024,"utf-8", new DefaultFileRenamePolicy());
 
 	//상품번호
     /*
@@ -25,22 +25,22 @@
     
     
 	//상품번호
-	String pN = multipartRequest.getParameter("productNum");
-    int pNum = Integer.parseInt(pN);
-   // System.out.println(pN);
+	String pN = request.getParameter("productNum");
+    int producNum = Integer.parseInt(pN);
+    //System.out.println("상품번호="+pN);
 
     //담긴 수량
-	String cot = multipartRequest.getParameter("counting");
-    int cott = Integer.parseInt(cot);
-  //  System.out.println(cot);
+	String cot = request.getParameter("counting");
+    int carQuantity = Integer.parseInt(cot);
+    System.out.println(cot);
 
 
     //회원번호
     int Num = loginClient.getClientNum();
-    //System.out.println("회원번호="+Num);
+    System.out.println("회원번호="+Num);
 
     //장바구니 테이블에 상품정보 삽입
-    CartDAO.getDAO().insertCart(cott, pNum, Num);
+    CartDAO.getDAO().insertCart(carQuantity, producNum, Num);
     
     
     

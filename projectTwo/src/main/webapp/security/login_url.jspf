@@ -12,24 +12,34 @@
 	if(loginClient==null){
 		//request.getRequestURI() : 요청 URL 주소에서 JSP 문서의 경로를 반환하는 메소드
 		String requestURI = request.getRequestURI();	
+		//System.out.println(requestURI);//requestURI = /shop/index.jsp
 				
 		//request.getQueryString() : 요청 URL 주소에서 질의문자열 반환하는 메소드
 		String queryString=request.getQueryString();
+		System.out.println(queryString);//group=cart&worker=cart_list
 		
+		String productNum = request.getParameter("productNum");
+		String counting = request.getParameter("counting");
+		
+		//System.out.println(request.getParameter("productNum"));
+		//System.out.println(request.getParameter("counting"));
 				
 		//페이지를 요청한 URL 주소를 생성하여 저장
 		String url = "";
 		if(queryString!=null){
-			url=requestURI+"?"+queryString;
+			
+			//비로그인 상태로 접근시 장바구니값 저장
+			url=requestURI+"?"+queryString+"&productNum="+productNum+"&counting="+counting;
 		}else{
 			url=requestURI; 
 		}
 		//System.out.println(url);///shop/index.jsp?group=cart&worker=cart_list
-		
+				
 		//JSP 문서의 URL 주소를 부호화 처리하여 저장
 		url = URLEncoder.encode(url, "utf-8");
 		
 		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=client&worker=client_login&url="+url);
+		
 		return;
 	}
 
