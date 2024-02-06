@@ -102,6 +102,7 @@ request.setCharacterEncoding("utf-8");
 
 //받아온 상품값으로 DAO를 이용해 해당 상품 정보를 찾아 장바구니id 생성 후 같이 저장
 //String sangpumId = request.getParameter("inputValue");
+
 %> 
 
 
@@ -135,7 +136,9 @@ request.setCharacterEncoding("utf-8");
     <th scope="col"><input type="checkbox" name="product" value="selectAll" onclick='selectAll(this)' ></th>
   	<th scope="col"><%=carts.getCartProductName() %></th>
   	<th scope="col"><%=carts.getCartQuantity() %>개</th>
-  	<th scope="col"><%=carts.getCartProduct() %></th>
+  	<% String priceP = String.format("%,d",Integer.parseInt(carts.getCartProductPrice()) * 
+  			Integer.parseInt(carts.getCartQuantity())); %>
+  	<th scope="col"><%=priceP %>원</th>
   
   </tr>
   <% } %>

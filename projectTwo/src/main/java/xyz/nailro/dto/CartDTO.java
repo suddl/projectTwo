@@ -14,7 +14,17 @@ public class CartDTO {
 	private String CartProduct;//장바구니 담긴 상품번호
 	private String CartClientNum;//장바구니 회원번호 FK
 	private String CartProductName;//장바구니 담긴 상품이름
+	private String CartProductPrice;//장바구니 담긴 상품가격
 	
+	
+	public String getCartProductPrice() {
+		return CartProductPrice;
+	}
+
+	public void setCartProductPrice(String cartProductPrice) {
+		CartProductPrice = cartProductPrice;
+	}
+
 	private String ClientId; 
 	private String ClientName; 
 	private String ClientPhone; 
