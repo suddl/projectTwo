@@ -10,11 +10,6 @@
 <%-- 비로그인 상태의 사용자가 JSP 문서를 요청한 경우 에러페이지로 이동되도록 응답 처리 --%>
 <%@include file="/security/admin_check.jspf" %>    
 <%
-	//글번호가 전달되지 않은 경우에 대한 응답 처리 - 비정상적인 요청
-	if(request.getParameter("productNum")==null) {
-		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=error&worker=error_400");
-		return;
-	}
 
 	//전달값을 반환받아 저장
 	int productNum=Integer.parseInt(request.getParameter("productNum"));
@@ -125,19 +120,19 @@ button:hover {
 			<th>카테고리</th>
 			<td>
 			<select name="productCategory">
-				<option value="nail" <% { %> selected <% } %>>&nbsp;네일&nbsp;&nbsp;</option>
-				<option value="pedi" <% { %> selected <% } %>>&nbsp;페디&nbsp;&nbsp;</option>
-				<option value="careTool" <% { %> selected <% } %>>&nbsp;케어&툴&nbsp;&nbsp;</option>
+				<option value="Nail" <% { %> selected <% } %>>&nbsp;네일&nbsp;&nbsp;</option>
+				<option value="Pedi" <% { %> selected <% } %>>&nbsp;페디&nbsp;&nbsp;</option>
+				<option value="CareTool" <% { %> selected <% } %>>&nbsp;케어&툴&nbsp;&nbsp;</option>
 			</select>
 			</td>
 		</tr>			
 		<tr>
 			<th>세부사항</th>
 			<td>
-				<input type='radio' name='productType' value="long"> 롱
-				<input type='radio' name='productType' value="short"> 숏
-				<input type='radio' name='productType' value="parts"> 파츠
-				<input type='radio' name='productType' value="fullColor"> 풀컬러
+				<input type='radio' name='productType' value="Long"> 롱
+				<input type='radio' name='productType' value="Short"> 숏
+				<input type='radio' name='productType' value="Parts"> 파츠
+				<input type='radio' name='productType' value="FullColor"> 풀컬러
 			</td>
 		</tr>			
 		<tr>
