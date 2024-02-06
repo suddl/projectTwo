@@ -45,8 +45,8 @@ th, td {
 
 th {
 	width: 100px;
-	background: black;
-	color: white;
+	background: pink;
+	color: black;
 }
 
 td {
@@ -67,9 +67,15 @@ td {
 	text-align: right;
 	margin: 5px;
 }
+
+#review_title {
+	font-size:2em;
+	font-weight: bold;
+	color: pink;
+}
 </style>
 <div id="moon_detail">
-	<h1>1:1 문의</h1>
+	<h1 id="review_title">REVIEW</h1>
 	<table>
 		<tr>
 			<th>제목</th>

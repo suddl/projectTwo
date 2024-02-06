@@ -124,7 +124,7 @@ table {
 th {
 	border: 1px solid black;
 	background-color: pink ;
-	color: blakc;
+	font: black;
 	text-align: center;
 }
 
@@ -206,11 +206,14 @@ td {
         <tr>
             <td><%=displayNum %></td>
             <% displayNum--; %>
+            
             <td class="subject">
-                <a href="<%=request.getContextPath()%>/index.jsp?group=review&worker=review_detail&reviewNum=
-                <%=review.getReviewNum()%>&pageNum=<%=pageNum%>&pageSize=<%=pageSize%>&search=<%=search%>&keyword=<%=keyword%>">
-                    <%=review.getReviewSubject()%>
-                </a>
+            <%
+            String url=request.getContextPath()+"/index.jsp?group=review&worker=review_detail"
+               +"&reviewNum="+review.getReviewNum()+"&pageNum="+pageNum+"&pageSize="+pageSize
+               +"&search="+search+"&keyword="+keyword;
+         %>
+         <a href="<%=url%>"><%=review.getReviewSubject() %></a>
             </td>
             <td><%=review.getReviewName()%></td>
             <td><%=review.getReviewRating()%></td>

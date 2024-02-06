@@ -7,11 +7,22 @@
   
 
 <%	
- 	String saveDirectory=request.getServletContext().getRealPath("/review_images");
-    
-	MultipartRequest multipartRequest=new MultipartRequest(request, saveDirectory
-        , 20*1024*1024, "utf-8", new DefaultFileRenamePolicy());
+//JSP 문서를 GET 방식으로 요청한 경우에 대한 응답 처리 - 비정상적인 요청
+	if(request.getMethod().equals("GET")) {
+		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=error&worker=error_400");
+		return;
+	}
 
+	//전달파일을 저장할 서버 디렉토리의 파일 시스템 경로를 반환받아 저장
+	//String saveDirectory=application.getRealPath("/review_images");
+	String saveDirectory=request.getServletContext().getRealPath("/review_images");
+	//System.out.println("saveDirectory = "+saveDirectory);
+	
+	//MultipartRequest 객체 생성 - 모든 전달파일을 서버 디렉터리에 저장되도록 자동 업로드 처리
+	// => cos.jar 라이브러리 파일을 프로젝트에 빌드 처리해야만 MultipartRequest 클래스 사용 가능
+	MultipartRequest multipartRequest=new MultipartRequest(request, saveDirectory
+			, 20*1024*1024, "utf-8", new DefaultFileRenamePolicy());
+	
 
     // 리뷰 데이터를 받아옵니다.
     String reviewSubject = multipartRequest.getParameter("review_subject");
