@@ -69,16 +69,20 @@ border: 1px solid #DCDCDC;
 }
 
 #BuyBtn {
-	margin: 0 auto;
-	padding: 5px;
-	width: 200px;
-	background-color: black;
-	color: white;
-	font-size: 20px;
-	cursor: pointer;
-	font-weight: bold;
-	border-radius: 10px;
-	
+   margin: 0 auto;
+   padding: 5px;
+   width: 200px;
+   background-color: black;
+   color: white;
+   font-size: 20px;
+   cursor: pointer;
+   font-weight: bold;
+   border-radius: 10px;
+   
+}
+
+#ProductList{
+	width: 60%;
 }
 
 </style>
@@ -103,6 +107,9 @@ request.setCharacterEncoding("utf-8");
 //받아온 상품값으로 DAO를 이용해 해당 상품 정보를 찾아 장바구니id 생성 후 같이 저장
 //String sangpumId = request.getParameter("inputValue");
 
+//총 상품계산금액
+int total = 0;
+
 %> 
 
 
@@ -117,14 +124,14 @@ request.setCharacterEncoding("utf-8");
 <body>
 <h1>장바구니</h1>
 
-<table class="table">
-<tbody>
+<div width="60%">
+<table class="table table-hover" id="ProductList">
   <thead>
     <tr>
-      <th scope="col"><input type="checkbox" name="product" value="selectAll" onclick='selectAll(this)' ></th>
-      <th scope="col">상품명</th>
-      <th scope="col">수량</th>
-      <th scope="col">가격</th>
+      <th ><input type="checkbox" name="product" value="selectAll" onclick='selectAll(this)' ></th>
+      <th >상품명</th>
+      <th >수량</th>
+      <th >가격</th>
     </tr>
   </thead>
   
@@ -133,26 +140,44 @@ request.setCharacterEncoding("utf-8");
   
   <%for(CartDTO carts : cartDTOs) { %>
   <tr>
-    <th scope="col"><input type="checkbox" name="product" value="selectAll" onclick='selectAll(this)' ></th>
-  	<th scope="col"><%=carts.getCartProductName() %></th>
-  	<th scope="col"><%=carts.getCartQuantity() %>개</th>
-  	<% String priceP = String.format("%,d",Integer.parseInt(carts.getCartProductPrice()) * 
-  			Integer.parseInt(carts.getCartQuantity())); %>
-  	<th scope="col"><%=priceP %>원</th>
+    <th width="10%"><input type="checkbox" name="product" value="selectAll" onclick='selectAll(this)' ></th>
+     <th width="30%"><img src="<%=request.getContextPath()%><%=carts.getCartProductImages()%>" width="150" height="100"> <%=carts.getCartProductName() %></th>
+     <th ><%=carts.getCartQuantity() %>개</th>
+     
+     <%
+     total += Integer.parseInt(carts.getCartProductPrice()) * Integer.parseInt(carts.getCartQuantity());
+     	String priceP = String.format("%,d",Integer.parseInt(carts.getCartProductPrice()) * 
+             Integer.parseInt(carts.getCartQuantity())); 
+      %>
+		     
+     <th ><%=priceP %>원</th>
   
   </tr>
   <% } %>
-  </tbody>
 </table>
+</div>
 
 <div style="border: 1px solid black; border-radius: 20px;  width: 30%; margin:0 auto; background-color: #DCDCDC; margin-top:30px;
 padding: 30px;">
-<p class="money" > 총 상품금액 </p> <span class="NumMoney"> 20,000 원</span>
+<p class="money" > 총 상품금액 </p> <span class="NumMoney"> <%=String.format("%,d", total)%> 원</span>
  
-<p class="money" > 배송비</p><span class="NumMoney" > 3,000 원</span>
+<p class="money" > 배송비</p><span class="NumMoney" >
+ <% if(total>=50000){ %> 
+		0 원
+<% 	}else{ %>
+		3,000원
+	<% } %>
+ 
+ </span>
 <hr>
 
-<p class="moneyALL" >총 결제 금액</p><span class="NumMoneyALL" > 23,000 원</span>
+<p class="moneyALL" >총 결제 금액</p><span class="NumMoneyALL" >
+<% if(total>=50000){ %>
+		<%=String.format("%,d", total)%>
+<% 	}else{ %>
+		<%=String.format("%,d", (total+3000))%>
+	<% } %>
+</span>
 
 </div>
 
