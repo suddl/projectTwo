@@ -39,7 +39,7 @@ public class CartDAO extends JdbcDAO{
 			con = getConnection();
 			
 			String sql = "select car_num, cart_quantity, cart_product, cart_client_num,"
-					+ "product_name, product_price,client_id,client_name, client_phone, client_email, "
+					+ "product_name, product_price, product_image, client_id,client_name, client_phone, client_email, "
 					+ "client_address1,client_address2, client_zipcode from client join cart"
 					+ " on cart_client_num=client_num join product"
 					+ " on cart_product=product_num where client_num=?"
@@ -58,6 +58,7 @@ public class CartDAO extends JdbcDAO{
 				cart.setCartClientNum(String.valueOf(rs.getInt("cart_client_num")));
 				cart.setCartProductName(rs.getString("product_name"));
 				cart.setCartProductPrice(String.valueOf(rs.getInt("product_price")));
+				cart.setCartProductImages(rs.getString("product_image"));
 				cart.setClientId(rs.getString("client_id"));
 				cart.setClientName(rs.getString("client_name"));
 				cart.setClientPhone(rs.getString("client_phone"));

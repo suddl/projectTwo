@@ -15,16 +15,9 @@ public class CartDTO {
 	private String CartClientNum;//장바구니 회원번호 FK
 	private String CartProductName;//장바구니 담긴 상품이름
 	private String CartProductPrice;//장바구니 담긴 상품가격
+	private String CartProductImages;//장바구니 담긴 상품사진
 	
 	
-	public String getCartProductPrice() {
-		return CartProductPrice;
-	}
-
-	public void setCartProductPrice(String cartProductPrice) {
-		CartProductPrice = cartProductPrice;
-	}
-
 	private String ClientId; 
 	private String ClientName; 
 	private String ClientPhone; 
@@ -133,6 +126,21 @@ public class CartDTO {
 		ClientZipCode = clientZipCode;
 	}
 	
-	
+	public String getCartProductImages() {
+		return CartProductImages;
+	}
+
+	public void setCartProductImages(String cartProductImages) {
+		CartProductImages = cartProductImages;
+	}
+
+	public String getCartProductPrice() {
+		return CartProductPrice;
+	}
+
+	public void setCartProductPrice(String cartProductPrice) {
+		CartProductPrice = cartProductPrice;
+	}
+
 		
 }
