@@ -1,12 +1,14 @@
  
+<%@page import="xyz.nailro.dao.ProductDAO"%>
+<%@page import="xyz.nailro.dto.ProductDTO"%>
 <%@page import="xyz.nailro.dto.ReviewDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="xyz.nailro.dao.ReviewDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%-- 각 produc 마다 받아와야하기에 막아둠
-      Product product = (Product) request.getAttribute("product");
---%>
+<% 
+   ProductDTO product = (ProductDTO)request.getAttribute("product");
+%>
 <head>
 <meta charset="UTF-8">
 
@@ -69,10 +71,10 @@
 				<div class="col-md-4">
 					<div class="card custom-card">
 						<div class="card-body">
-							<h5 class="card-title">상품명자리</h5>
+							<h5 class="card-title"><%=request.getAttribute("productName")%></h5>
 							&nbsp;&nbsp;
 							<%-- 	<h5 class="card-title"><%=product.getName()%></h5> --%>
-							<p class="price">가격:product.getPrice원</p>
+							<p class="price">가격:<%=request.getAttribute("productPrice")%>원</p>
 							<%-- 		<p class="price">가격:<%=product.getPrice()%>원</p> --%>
 							<%-- 	<input type="hidden" id="unitPrice"
 								value="<%=product.getPrice()%>"> --%>
@@ -104,12 +106,6 @@
     <a href="<%=request.getContextPath()%>/index.jsp?group=order&worker=order_main" class="btn btn-success" id="purchase">바로구매</a>
 </div>
 	
-	<%-- 
-	<div class="button">
-		<button id="cartBtn">장바구니</div>
-		<a href="<%=request.getContextPath()%>/index.jsp?group=order&worker=order_main"	id="purchase">바로구매</a>
-				
-	</div> --%>
 	
 	&nbsp;&nbsp;
 	<ul>
@@ -137,11 +133,11 @@
 		<li class="nav-item"><a class="nav-link" href="#info" id="pd">상품설명</a></li>
 	</ul>
 	<div>
-		<img src="<%=request.getContextPath()%>/images/d_detail1.jpg"
+		<img src="<%=request.getAttribute("productImage2")%>"
 			class="img-fluid" id="d_img1"> <img
-			src="<%=request.getContextPath()%>/images/d_detail2.jpg"
-			class="img-fluid" id="dedatilimg1"> <img
-			src="<%=request.getContextPath()%>/images/info.jpg" class="img-fluid"
+			src="<%=request.getAttribute("productImage3")%>"
+			class="img-fluid" id="dedatilimg1"> 
+			<img src="<%=request.getContextPath()%>/images/info.jpg" class="img-fluid"
 			id="info">
 	</div>
 	<ul class="nav nav-pills nav-justified custom-nav">
@@ -153,53 +149,6 @@
 	<p id="review"></p>
 	<%@include file="/review/review_list.jsp"%>
 	
-	<%--
-			<h2>" + review.getReview_subject() + "</h2>");
-        out.println("<p>" ++ "</p>");
-        out.println("<img src='" + review.getReview_image() + "' alt='Review Image'/>");
-			
-			
-			
-    // 상품 ID 설정 (예시로 1번 상품)
-    int productId = 1;
-    ReviewDAO dao = ReviewDAO.getDAO();
-    List<ReviewDTO> reviewList = dao.selectProductReviews(productId);
-    for (ReviewDTO review : reviewList) {
-        // 리뷰 정보를 출력합니다. 
-        out.println("<h2>" + review.getReview_subject() + "</h2>");
-        out.println("<p>" + review.getReview_content() + "</p>");
-        out.println("<img src='" + review.getReview_image() + "' alt='ReviewImage'/>");
-    }
---%>
-	<%-- 데이터베이스에서 리뷰 데이터 가져오기 --%>
-	<%--리뷰를 3개까지만 출력하는 용도--%>
-	<%-- 
-				<% for (int i = 0; i < 3; i++) { %>
-				
-				<div id=>
-				<img src="<%=request.getContextPath()%>/images/d_detail1.jpg"
-					 id="reviwImage">
-				</div>
-				
-				<% } %>
-			<%-- 	
-		<% String reviewTitle = (String) request.getAttribute("reviewTitle");
-    	String reviewContent = (String) request.getAttribute("reviewContent");
-    	String reviewContent = (String) request.getAttribute("reviewImage");
-    	%>
-    	
-<div>
-    <h2>리뷰 제목: <%= review.reviewSubject %></h2>
-    <p>리뷰 내용: <%= review.reviewContent %></p>
-    <p>리뷰 내용: <%= review.reviewImage %></p>
-</div>
---%>
-
-
-
-
-
-
 	<%-- 버튼 선택에 따라 글씨 색 변경--%>
 	<script type="text/javascript">
 	//제품상세,제품리뷰 바에서 클릭시 색상 변경되는 코드
@@ -249,35 +198,7 @@
     window.onload = function() {
         updateTotalPrice(); // 페이지 로딩 시 초기 총 금액 설정
     }
-    /*
-    //값을 받아온 뒤에 실행할 총 상품금액 변경 코드 
-    var unitPrice = document.getElementById('unitPrice').value; // 상품 단가를 동적으로 받아옴
-    var count = 1; // 초기 수량
-
-    function updateTotalPrice() {
-        var totalPrice = unitPrice * count;
-        document.getElementById("totalPrice").innerText = "총 상품 금액: " + totalPrice + "원";
-    }
-
-    function countUp() {
-        count++;
-        document.getElementById("count1").innerText = count;
-        updateTotalPrice();
-    }
-
-    function countZero() {
-        if (count > 1) {
-            count--;
-            document.getElementById("count1").innerText = count;
-            updateTotalPrice();
-        }
-    }
-
-    window.onload = function() {
-        updateTotalPrice(); // 페이지 로딩 시 초기 총 금액 설정
-    }
-*/
-    
+  
 
 		//topBtn관련 js
 	$(function() {
@@ -297,8 +218,6 @@
 		});
 	});
 
-			
-   
 </script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
