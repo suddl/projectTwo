@@ -80,6 +80,10 @@ td {
 			<td><%= review.getReviewDate() %></td>
 		</tr>
 		<tr>
+			<th>별점</th>
+			<td><%= review.getReviewRating()%></td>
+		</tr>
+		<tr>
 			<th>내용</th>
 			<td class="content">
 				<%=review.getReviewContent().replace("\n", "<br>") %>

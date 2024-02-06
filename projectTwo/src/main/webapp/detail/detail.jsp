@@ -224,7 +224,7 @@
     
     function updateTotalPrice() {
         var totalPrice = unitPrice * count;
-        document.getElementById("totalPrice").innerText = "총 상품 금액: " + totalPrice + "원";
+        document.getElementById("totalPrice").innerText = "총 상품 금액: " + new Intl.NumberFormat('en-US').format(totalPrice)+ "원";
     }
     function countUp() {
         count++;
