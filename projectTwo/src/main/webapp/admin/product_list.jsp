@@ -5,6 +5,7 @@
 <%@page import="xyz.nailro.dao.ProductDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@include file="/security/admin_check.jspf"%>
 <%--PRODUCT 테이블에 저장된 행을 검색하여 게시글 목록을 전달하여 응답하는 JSP 문서 --%>
 <%-- => 게시글을 페이지 단위로 구분하여 검색해 출력 처리되도록 작성 - 페이징 처리 --%>
 <%-- => [페이지번호] 태그를 클릭한 경우 [/admin/product_list.jsp] 문서를 요청하여 페이지 이동 
@@ -69,12 +70,8 @@
 	//검색단어)를 전달받아 PRODUCT 테이블에 저장된 행을 검색하여 게시글 목록을 반환하는 ProductDAO 
 	//클래스의 메소드 호출
 	List<ProductDTO> productList=ProductDAO.getDAO().selectProductList(startRow, endRow, search, keyword);
-	
+	DecimalFormat df=new DecimalFormat("###,###");
 
-	//session 객체에 저장된 권한 관련 속성값을 반환받아 저장
-	// => 관리자에게만 글쓰기 권한 제공
-	ClientDTO loginClient=(ClientDTO)session.getAttribute("loginClient");
-	
 	//페이지에 출력될 게시글의 일련번호 시작값을 계산하여 저장
 	// => 검색된 게시글의 총갯수가 91개인 경우 >> 1Page : 91, 2Page : 81, 3Page, 71
 	int displayNum=totalProduct-(pageNum-1)*pageSize;
@@ -93,7 +90,7 @@
 	color: pink;
 }
 table {
-	margin: 5px auto;
+	margin: 10px auto;
 	border: 1px solid lightgray;
 	border-collapse: collapse;
 }
@@ -124,19 +121,6 @@ button {
 	margin: 10px auto;
 	padding: 5px;
 	width: 70px;
-	background-color: lightgray;
-	color: black;
-	font-size: 15px;
-	cursor: pointer;
-	font-weight: bold;
-	border-width: thin;
-}
-
-#modifyBtn {
-	margin: 10px auto;
-	padding: 5px;
-	width: 50px;
-	height: 35px;
 	background-color: lightgray;
 	color: black;
 	font-size: 15px;
@@ -183,7 +167,6 @@ button + button {
 		<th width="200">카테고리</th>
 		<th width="150">세부사항</th>
 		<th width="150">가격</th>
-		<th width="100">수정</th>
 	</tr>
 	
 	<%-- List 객체의 요소(ProductDTO 객체)를 차례대로 제공받아 저장하여 처리하기 위한 반복문 --%>
@@ -197,11 +180,16 @@ button + button {
 			<img src="<%=request.getContextPath() %>/<%= product.getProductImage()%>" width="170" height="100">
 			<% } %>
 		</td>
-		<td width="250"><%=product.getProductName() %></td>
+		<td width="250">
+		<%
+			String url=request.getContextPath()+"/index.jsp?group=admin&worker=product_detail"
+			+"&productNum="+product.getProductNum()+"&pageNum="+pageNum+"&pageSize="+pageSize
+			+"&search="+search+"&keyword="+keyword;
+		%>
+		<a href="<%=url%>"><%=product.getProductName() %></a></td>
 		<td width="200"><%=product.getProductCategory() %></td>
 		<td width="150"><%=product.getProductType() %></td>
-		<td width="150"><%=DecimalFormat.getCurrencyInstance().format(product.getProductPrice())%></td>
-		<td width="100"><input type="button" value="수정" ></td>
+		<td width="150"><%=df.format(product.getProductPrice()) %>원</td>
 	</tr>
 	<% } %>
 </table>
