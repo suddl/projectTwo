@@ -26,9 +26,9 @@
         	window.location.href = '<%=request.getContextPath()%>/client/client_modify.jsp';
         }
         function redirectToReviewModify() {
-        	window.location.href = '<%=request.getContextPath()%>/review/review_modify.jsp'
+        	window.location.href = '<%=request.getContextPath()%>/moon/moon_list.jsp'
         }
-        
+       
     </script>
     <meta charset="UTF-8">
     <title>Nailro</title>

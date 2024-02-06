@@ -127,5 +127,33 @@ public class ClientDAO extends JdbcDAO{
 			}
 			return rows;
 		}
-		
-}
+		//회원정보를 전달받아 Client 테이블에 저장된 행을 변경하고 변경행의 갯수를 반환하는 메소드 
+		public String selectClientId(ClientDTO client) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			String id=null;
+			try {
+				con=getConnection();
+				
+				String sql="select client_id from client where client_name=? and client_email=?";
+				
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, client.getClientName());
+				pstmt.setString(2, client.getClientEmail());
+				
+				rs=pstmt.executeQuery();
+				
+				if(rs.next()) {
+					id=rs.getString(1);
+				}
+			} catch (SQLException e) {
+				System.out.println("[에러]selectClientById() 메소드의 SQL 오류 = "+e.getMessage());
+			} finally {
+				close(con, pstmt, rs);
+			}
+			return id;
+		}
+	}
+ 	
+	
