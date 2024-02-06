@@ -9,6 +9,10 @@
 --%>
 <head>
 <meta charset="UTF-8">
+
+<%
+	
+%>
 <title>상세페이지</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -25,8 +29,8 @@
 <body>
 	<a id="topBtn" href="#"> <img src="./images/topBtn.jpg"></a>
 	<form
-		action="<%=request.getContextPath()%>/index.jsp?group=cart&worker=cartIn_action"
-		method="post" enctype="multipart/form-data" id="productForm" name="detail">
+		action="<%=request.getContextPath()%>/index.jsp?group=cart&worker=cart_page"
+		method="post"  id="productForm" name="detail">
 		<input type="hidden" name="productNum" value="1">
 		
 		<div class="container">
