@@ -40,8 +40,7 @@ public class MoonDAO extends JdbcDAO {
 				pstmt=con.prepareStatement(sql);
 				pstmt.setInt(1, moonClientNum);
 			} else {
-				String sql = "select count(*) from moon join member on moon_client_num=member_num"
-						+ "where moon_client_num =?" + search + "like '%'||?||'%' ";
+				String sql = "select count(*) from moon join client on moon_client_num=client_num where moon_client_num =? and "+search+" like '%'||?||'%' and  moon_status=1";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setInt(1, moonClientNum);
 				pstmt.setString(2, keyword);
@@ -73,8 +72,7 @@ public class MoonDAO extends JdbcDAO {
 				String sql="select count(*) from moon";
 				pstmt=con.prepareStatement(sql);
 			} else {
-				String sql = "select count(*) from moon join member on moon_client_num=member_num"
-						+ "where " + search + "like '%'||?||'%' ";
+				String sql = "select count(*) from moon join client on moon_client_num=client_num where "+search+" like '%'||?||'%' and  moon_status=1";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1, keyword);
 			}
@@ -103,23 +101,21 @@ public class MoonDAO extends JdbcDAO {
 			con= getConnection();
 			
 			if(keyword.equals("")) {
-				String sql ="select * from (select rownum rn, temp.* from (select moon_num"
-						+ ", moon_client_num,client_name, moon_title,moon_content, moon_date, moon_re, moon_image, moon_status from moon"
-						+ " join client on moon_client_num=client_num order by moon_num desc) temp) where rn between ? and ? ";
+				String sql ="select * from (select rownum rn, temp.* from (select moon_num, moon_client_num,client_name, moon_title,moon_content,"
+						+ " moon_date, moon_re, moon_image, moon_status from moon"
+						+ " join client on moon_client_num=client_num where moon_client_num =? order by moon_num desc) temp) where rn between ? and ? ";
 				pstmt=con.prepareStatement(sql);
-				//pstmt.setInt(1, moonClientNum);
-				pstmt.setInt(1, startRow);
-				pstmt.setInt(2, endRow);
-			} else {
-				String sql ="select * from (select rownum rn, temp.* from (select moon_num"
-						+ ", moon_client_num,client_name, moon_title,moon_content, moon_date, moon_re, moon_image, moon_status from moon"
-						+ " join client on  moon_client_num=client_num "
-						+ " where " + search + "like '%'||?||'%' moon_status <> 3 order by moon_num) temp)"
-						+ " where rn between ? and ?";
-				pstmt=con.prepareStatement(sql);
-				pstmt.setString(1, keyword);
+				pstmt.setInt(1, moonClientNum);
 				pstmt.setInt(2, startRow);
 				pstmt.setInt(3, endRow);
+			} else {
+				String sql ="select * from (select rownum rn, temp.* from (select moon_num, moon_client_num,client_name, moon_title,moon_content,"
+						+ " moon_date, moon_re, moon_image, moon_status from moon join client on  moon_client_num=client_num where " + search + " like '%'||?||'%' and moon_status =1 and  moon_client_num =? order by moon_num) temp) where rn between ? and ?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, keyword);
+				pstmt.setInt(2, moonClientNum);
+				pstmt.setInt(3, startRow);
+				pstmt.setInt(4, endRow);
 			}
 			
 			rs=pstmt.executeQuery();
@@ -167,7 +163,7 @@ public class MoonDAO extends JdbcDAO {
 				String sql ="select * from (select rownum rn, temp.* from (select moon_num"
 						+ ", moon_client_num,client_name, moon_title,moon_content, moon_date, moon_re, moon_image, moon_status from moon"
 						+ " join client on  moon_client_num=client_num "
-						+ " where " + search + "like '%'||?||'%' moon_status <> 3 order by moon_num) temp)"
+						+ " where " + search + " like '%'||?||'%' and moon_status =1 order by moon_num) temp)"
 						+ " where rn between ? and ?";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1, keyword);

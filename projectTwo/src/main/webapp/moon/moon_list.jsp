@@ -7,7 +7,7 @@
 <%@page import="xyz.nailro.dao.MoonDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> 
-<%@include file="/security/login_check.jspf"%>
+<%@include file="/security/login_url.jspf"%>
 <% 
 	String search=request.getParameter("search");
 	if(search==null) {
@@ -148,7 +148,7 @@ td {
 </style>
 <h1>1:1 문의 게시판</h1>
 <div id="moon_list">
-	<div id="moon_title">문의 목록<%= totalMoon %></div>
+	<div id="moon_title">문의 목록(<%= totalMoon %>)</div>
 	
 	<div style="text-align: right;">
 		<% if(loginClient!=null) { %>
@@ -176,8 +176,6 @@ td {
 				<% displayNum--; %>
 				
 				<td class="subject">
-				
-				
 					<%
 						String url=request.getContextPath()+"/index.jsp?group=moon&worker=moon_detail&moonNum="+moon.getMoonNum()
 						+"&pageNum="+pageNum+"&pageSize="+pageSize +"&search="+search+"&keyword="+keyword;
@@ -258,6 +256,15 @@ td {
 			[다음]
 		<% } %>
 	</div>
+	<form action="<%=request.getContextPath() %>/index.jsp?group=moon&worker=moon_list" method="post">
+		<select name="search">
+			<option value="client_name" <% if(search.equals("client_name")) { %>  selected <% } %>>&nbsp;작성자&nbsp;</option>
+			<option value="moon_title" <% if(search.equals("moon_title")) { %>  selected <% } %>>&nbsp;제목&nbsp;</option>
+			<option value="moon_content" <% if(search.equals("moon_content")) { %>  selected <% } %>>&nbsp;내용&nbsp;</option>
+		</select>
+		<input type="text" name="keyword" value="<%=keyword%>">
+		<button type="submit">검색</button>
+	</form>
 </div>
 
 <script type="text/javascript">
