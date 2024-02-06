@@ -10,7 +10,7 @@
 		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=error&worker=error_400");
 		return;
 	}
-
+	 
 	int reviewNum=Integer.parseInt(request.getParameter("reviewNum"));
 	String pageNum=request.getParameter("pageNum");
 	String pageSize=request.getParameter("pageSize");

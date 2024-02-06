@@ -6,7 +6,7 @@
 <%@ page import="xyz.nailro.dao.ReviewDAO"%>
 <%@ page import="xyz.nailro.dto.ReviewDTO"%>
 
-
+ 
 <%
 //게시글 검색 기능에 필요한 전달값(검색대상과 검색단어)을 반환받아 저장
 String search=request.getParameter("search");//검색대상

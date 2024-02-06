@@ -12,7 +12,7 @@
 		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=error&worker=error_400");
 		return;
 	}
-
+ 
 	//전달파일을 저장할 서버 디렉토리의 파일 시스템 경로를 반환받아 저장
 	//String saveDirectory=application.getRealPath("/review_images");
 	String saveDirectory=request.getServletContext().getRealPath("/review_images");

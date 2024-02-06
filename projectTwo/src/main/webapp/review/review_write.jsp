@@ -13,7 +13,7 @@ table {
 
 th {
 	width: 100px;
-	font-weight: bold;
+	font-weight: bold; 
 }
 
 td {
