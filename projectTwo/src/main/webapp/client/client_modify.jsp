@@ -69,7 +69,7 @@ legend {
 	color: white;
 }
 </style>
-<form id="join" action="<%=request.getContextPath() %>/index.jsp?group=client&worker=member_modify_action" method="post">
+<form id="join" action="<%=request.getContextPath() %>/index.jsp?group=client&worker=client_modify_action" method="post">
 <input type="hidden" name="ClientNum" value="<%=loginClient.getClientNum() %>">
 
 <fieldset>
