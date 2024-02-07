@@ -58,13 +58,13 @@
 	int displayNum=totalFaq-(pageNum-1)*pageSize;
 %>
 <style type="text/css">
-#review_list {
+#faq_list {
 	width: 1000px;
 	margin: 0 auto;
 	text-align: center;
 }
 
-#review_title {
+#faq_title {
 	font-size: 1.2em;
 	font-weight: bold;
 }
@@ -94,7 +94,7 @@ td {
 	text-overflow: ellipsis;
 }
 
-#review_list a:hover {
+#faq_list a:hover {
 	text-decoration: none; 
 	color: blue;
 	font-weight: bold;
@@ -143,7 +143,7 @@ td {
 	<% for(FaqDTO faq : faqList) { %>
 	<tr>
 		<%-- Faq 번호 --%>
-		<td><%=dispayNum %></td>
+		<td><%=displayNum %></td>
 		<% displayNum--; %>
 		
 		<%-- Faq 카테고리 --%>
@@ -153,10 +153,10 @@ td {
 		<td class="subject">
 			<%
 			String url=request.getContextPath()+"/index.jsp?group=admin&worker=faq_detail"
-					+"&reviewNum="+faq.getReviewNum()+"&pageNum="+pageNum+"&pageSize="+pageSize
+					+"&faqNum="+faq.getFaqNum()+"&pageNum="+pageNum+"&pageSize="+pageSize
 					+"&keyword="+keyword;
 			%>
-
+		<a href="<%=url%>"><%=faq.getFaqSubject() %></a>
 		</td>
 	</tr>		
 </table>
@@ -181,8 +181,8 @@ td {
 	%>
 	<div id="page_list">
 		<%
-			String responseUrl=request.getContextPath()+"/index.jsp?group=review&worker=review_list"
-					+"&pageSize="+pageSize+"&search="+search+"&keyword="+keyword;
+			String responseUrl=request.getContextPath()+"/index.jsp?group=admin&worker=faq_list"
+					+"&pageSize="+pageSize+"&keyword="+keyword;
 		%>
 	
 		<%-- 이전 페이지블럭이 있는 경우에만 링크 제공 --%>
@@ -218,14 +218,14 @@ td {
 
 
 <script type="text/javascript">
-$("#reviewCount").change(function() {
+$("#faqCount").change(function() {
 	//alert($("#faqCount").val());
-	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=faq_list"
+	location.href="<%=request.getContextPath()%>""/index.jsp?group=admin&worker=faq_list"
 		+"&pageNum=<%=pageNum%>&pageSize="+$("#faqCount").val()
 		+"&keyword=<%=keyword%>";
 });
  
 $("#writeBtn").click(function() {
-	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=faq_write";	
+	location.href="<%=request.getContextPath()%>""/index.jsp?group=admin&worker=faq_write";
 });
 </script>
