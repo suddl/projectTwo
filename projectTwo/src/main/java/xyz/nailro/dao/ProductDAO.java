@@ -211,25 +211,81 @@ public class ProductDAO extends JdbcDAO	{
 			
 			//사용자가 이미지 파일을 입력하지 않은 경우 - 이미지 파일 미변경(기존 이미지 파일 사용)
 			if(product.getProductImage()==null) {
-				String sql="update product set product_name=?, product_price=?"
-						+ ", product_category=? product_type=? where product_num=?";
+				String sql="update product set product_name=?, product_image2=?"
+						+ ", product_image3=?, product_price=?, product_category=?, product_type=? where product_num=?";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1, product.getProductName());
-				pstmt.setInt(2, product.getProductPrice());
-				pstmt.setString(3, product.getProductCategory());
-				pstmt.setString(4, product.getProductType());
-				pstmt.setInt(5, product.getProductNum());
+				pstmt.setString(2, product.getProductImage2());
+				pstmt.setString(3, product.getProductImage3());
+				pstmt.setInt(4, product.getProductPrice());
+				pstmt.setString(5, product.getProductCategory());
+				pstmt.setString(6, product.getProductType());
+				pstmt.setInt(7, product.getProductNum());
 			} else {//사용자가 이미지 파일을 입력하지 않은 경우 - 이미지 파일 변경
-				String sql="update product set product_name=?, product_price=?"
-						+ ", product_category=? product_type=? where product_num=?";
+				String sql="update product set product_name=?, product_image=?, product_image2=?"
+						+ ", product_image3=?, product_price=?, product_category=?, product_type=? where product_num=?";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1, product.getProductName());
-				pstmt.setInt(2, product.getProductPrice());
-				pstmt.setString(3, product.getProductCategory());
-				pstmt.setString(4, product.getProductType());
-				pstmt.setInt(5, product.getProductNum());
+				pstmt.setString(2, product.getProductImage());
+				pstmt.setString(3, product.getProductImage2());
+				pstmt.setString(4, product.getProductImage3());
+				pstmt.setInt(5, product.getProductPrice());
+				pstmt.setString(6, product.getProductCategory());
+				pstmt.setString(7, product.getProductType());
+				pstmt.setInt(8, product.getProductNum());
 			}			
-				
+			rows=pstmt.executeUpdate();
+			//사용자가 이미지 파일을 입력하지 않은 경우 - 이미지 파일 미변경(기존 이미지 파일 사용)
+			if(product.getProductImage2()==null) {
+				String sql="update product set product_name=?, product_image=?"
+						+ ", product_image3=?, product_price=?, product_category=?, product_type=? where product_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, product.getProductName());
+				pstmt.setString(2, product.getProductImage());
+				pstmt.setString(3, product.getProductImage3());
+				pstmt.setInt(4, product.getProductPrice());
+				pstmt.setString(5, product.getProductCategory());
+				pstmt.setString(6, product.getProductType());
+				pstmt.setInt(7, product.getProductNum());
+			} else {//사용자가 이미지 파일을 입력하지 않은 경우 - 이미지 파일 변경
+				String sql="update product set product_name=?, product_image=?, product_image2=?"
+						+ ", product_image3=?, product_price=?, product_category=?, product_type=? where product_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, product.getProductName());
+				pstmt.setString(2, product.getProductImage());
+				pstmt.setString(3, product.getProductImage2());
+				pstmt.setString(4, product.getProductImage3());
+				pstmt.setInt(5, product.getProductPrice());
+				pstmt.setString(6, product.getProductCategory());
+				pstmt.setString(7, product.getProductType());
+				pstmt.setInt(8, product.getProductNum());
+			}
+			rows=pstmt.executeUpdate();
+			//사용자가 이미지 파일을 입력하지 않은 경우 - 이미지 파일 미변경(기존 이미지 파일 사용)
+			if(product.getProductImage3()==null) {
+				String sql="update product set product_name=?, product_image=?"
+						+ ", product_image2=?, product_price=?, product_category=?, product_type=? where product_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, product.getProductName());
+				pstmt.setString(2, product.getProductImage());
+				pstmt.setString(3, product.getProductImage3());
+				pstmt.setInt(4, product.getProductPrice());
+				pstmt.setString(5, product.getProductCategory());
+				pstmt.setString(6, product.getProductType());
+				pstmt.setInt(7, product.getProductNum());
+			} else {//사용자가 이미지 파일을 입력하지 않은 경우 - 이미지 파일 변경
+				String sql="update product set product_name=?, product_image=?, product_image2=?"
+						+ ", product_image3=?, product_price=?, product_category=?, product_type=? where product_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, product.getProductName());
+				pstmt.setString(2, product.getProductImage());
+				pstmt.setString(3, product.getProductImage2());
+				pstmt.setString(4, product.getProductImage3());
+				pstmt.setInt(5, product.getProductPrice());
+				pstmt.setString(6, product.getProductCategory());
+				pstmt.setString(7, product.getProductType());
+				pstmt.setInt(8, product.getProductNum());
+			}
 			rows=pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("[에러]updateProduct() 메소드의 SQL 오류 = "+e.getMessage());

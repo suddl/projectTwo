@@ -85,9 +85,9 @@
 }
 
 #product_title {
-	font-size:2em;
+	font-size:1.2em;
 	font-weight: bold;
-	color: pink;
+	
 }
 table {
 	margin: 10px auto;
@@ -95,11 +95,6 @@ table {
 	border-collapse: collapse;
 }
 
-h1{
-	text-align : center; 
-	margin-bottom: 30px;
-	font-size: 35px;
-}
 
 th {
 	border: 1px solid lightgray;
@@ -148,7 +143,7 @@ button + button {
 <form name="productForm" id="productForm">
 <div id="product_list">
 	<%-- 검색된 게시글 총갯수 출력 --%>
-	<div class="product_title">상품목록(<%=totalProduct %>)</div>
+	<div id="product_title">상품목록(<%=totalProduct %>)</div>
 	
 	<div style="text-align: right;">
 		게시글갯수 : 
@@ -289,7 +284,10 @@ $("#removeBtn").click(function() {
 	}
 	if(confirm("게시글을 정말로 삭제 하시겠습니까?")) {
 		location.href="<%=request.getContextPath()%>/index.jsp?group=review&worker=review_remove_action"
-	}			
+	} else {
+		return false;
+	}		
+	
 	$("#productForm").attr("action", "<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_remove_action");
 	$("#productForm").attr("method","post");
 	$("#productForm").submit();

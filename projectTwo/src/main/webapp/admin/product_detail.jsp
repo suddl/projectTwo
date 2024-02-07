@@ -29,7 +29,7 @@
 <link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
 <style>
 #product_detail {
-	width: 500px;
+	width: 800px;
 	margin: 0 auto;
 
 h1{
@@ -54,7 +54,7 @@ th {
 }
 
 td {
-	width: 400px;
+	width: 650px;
 	word-spacing: 5px;
 	border: 1px solid lightgray;
 	height: 40px;
@@ -96,28 +96,20 @@ button:hover {
 	<table>
 		<tr>
 			<th>상품명</th>
-			<td>
-				<%=product.getProductName() %>
-			</td>					
+			<td><%=product.getProductName() %></td>					
 		</tr>	
 		<tr>
 			<th>가격</th>
-			<td>
-				<%=df.format(product.getProductPrice()) %>원 
-			</td>					
+			<td><%=df.format(product.getProductPrice()) %>원 </td>					
 		</tr>	
 		<tr>
 			<th>카테고리</th>
-			<td>
-				<%=product.getProductCategory() %>
-			</td>
+			<td><%=product.getProductCategory() %></td>
 		</tr>			
 		<tr>
 			<th>세부사항</th>
-			<td>
-				<%=product.getProductType() %>
-			</td>
-		</tr>			
+			<td><%=product.getProductType() %></td>
+		</tr>
 		<tr>
 			<th>상품대표이미지</th>
 			<td>

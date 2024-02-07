@@ -52,7 +52,7 @@ th {
 	text-align: left;
 	width: 120px;
 	font-weight: bold;
-	padding-top: 20px;
+	padding-top: 10px;
 	padding-bottom: 20px;
 }
 
@@ -113,16 +113,16 @@ button:hover {
 			<th>가격</th>
 			<td>
 				<input type="text" name="productPrice" id="productPrice" size="30"
-						value="<%=product.getProductPrice()%>">
+						value="<%=product.getProductPrice()%>">원
 			</td>					
 		</tr>	
 		<tr>
 			<th>카테고리</th>
 			<td>
-			<select name="productCategory">
-				<option value="Nail" <% { %> selected <% } %>>&nbsp;네일&nbsp;&nbsp;</option>
-				<option value="Pedi" <% { %> selected <% } %>>&nbsp;페디&nbsp;&nbsp;</option>
-				<option value="CareTool" <% { %> selected <% } %>>&nbsp;케어&툴&nbsp;&nbsp;</option>
+			<select name="productCategory" onChange="getselect()">
+				<option value="<%=product.getProductCategory()%>" <% { %> selected <% } %>>&nbsp;네일&nbsp;&nbsp;</option>
+				<option value="<%=product.getProductCategory()%>" <% { %> selected <% } %>>&nbsp;페디&nbsp;&nbsp;</option>
+				<option value="<%=product.getProductCategory()%>" <% { %> selected <% } %>>&nbsp;케어&툴&nbsp;&nbsp;</option>
 			</select>
 			</td>
 		</tr>			
@@ -136,32 +136,32 @@ button:hover {
 			</td>
 		</tr>			
 		<tr>
-			<th>상품이미지</th>
+			<th>상품대표이미지</th>
 			<td>
-				<input type="file" name="productImage"><br><br>
+				<input type="file" name="productImage">
 				<% if(product.getProductImage()!=null) { %>
 					<div style="color: red;">이미지를 변경할 경우에만 파일을 입력해 주세요.</div>
-					<img src="<%=request.getContextPath()%>/<%=product.getProductImage()%>" width="200">
+					<img src="<%=request.getContextPath()%>/<%=product.getProductImage()%>" width="200"><br><br>
 				<% } %>
 			</td>
 		</tr>
 		<tr>
-			<th>상품상세이미지</th>
+			<th>상품상세이미지1</th>
 			<td>
-				<input type="file" name="productImage2"><br><br>
+				<input type="file" name="productImage2">
 				<% if(product.getProductImage2()!=null) { %>
 					<div style="color: red;">이미지를 변경할 경우에만 파일을 입력해 주세요.</div>
-					<img src="<%=request.getContextPath()%>/<%=product.getProductImage2()%>" width="200">
+					<img src="<%=request.getContextPath()%>/<%=product.getProductImage2()%>" width="200"><br><br>
 				<% } %>
 			</td>
 		</tr>
 		<tr>
-			<th>상품상세이미지</th>
+			<th>상품상세이미지2</th>
 			<td>
-				<input type="file" name="productImage3"><br><br>
+				<input type="file" name="productImage3">
 				<% if(product.getProductImage3()!=null) { %>
 					<div style="color: red;">이미지를 변경할 경우에만 파일을 입력해 주세요.</div>
-					<img src="<%=request.getContextPath()%>/<%=product.getProductImage3()%>" width="200">
+					<img src="<%=request.getContextPath()%>/<%=product.getProductImage3()%>" width="200"><br><br>
 				<% } %>
 			</td>
 		</tr>
@@ -189,6 +189,14 @@ $("#productForm").submit(function() {
 		return false;
 	}
 });
+
+function getselect() {
+    var select = document.getElementById('productCategory');
+    var option = select.options[select.selectedIndex];
+
+    document.getElementById('value').value = option.value;
+    document.getElementById('text').value = option.text;
+}
 
 $("#listBtn").click(function() {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_list"
