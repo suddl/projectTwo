@@ -37,7 +37,7 @@
 		<ul>
 			<li>
 				<form  class="search-bar" action="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct" method="post">
-					<input type="search" name="search" id="keyword" placeholder="검색어를 입력하세요.">
+                <input type="text" id="searchInput" name="keyword" placeholder="검색어를 입력하세요.">
 					<button class="search-btn" type="submit">
 						<img src="<%=request.getContextPath() %>/images/ham_search.png" style="width: 10px;"/>
 					</button>
