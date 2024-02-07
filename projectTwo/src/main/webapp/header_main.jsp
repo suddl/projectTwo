@@ -1,4 +1,4 @@
- <%@page import="xyz.nailro.dto.ClientDTO"%>
+<%@page import="xyz.nailro.dto.ClientDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 

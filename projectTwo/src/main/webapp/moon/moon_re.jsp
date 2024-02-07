@@ -140,6 +140,7 @@ $("#moonReForm").submit(function() {
 });
 
 $("#resetBtn").click(function() {
+	$("#moonRe").text("");
 	$("#moonRe").focus();
 	$("#message").text("");
 });

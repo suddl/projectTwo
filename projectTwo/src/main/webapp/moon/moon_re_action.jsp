@@ -1,3 +1,4 @@
+<%@page import="xyz.nailro.util.Utility"%>
 <%@page import="xyz.nailro.dao.MoonDAO"%>
 <%@page import="xyz.nailro.dto.MoonDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -15,7 +16,7 @@
 	String search=request.getParameter("search");
 	String keyword=request.getParameter("keyword");
 	
-	String moonRe=request.getParameter("moonRe");
+	String moonRe=Utility.escapeTag(request.getParameter("moonRe"));
 	
 	MoonDTO moon=new MoonDTO();
 	moon.setMoonNum(moonNum);
