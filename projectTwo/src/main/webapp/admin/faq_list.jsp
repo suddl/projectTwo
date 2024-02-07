@@ -207,7 +207,7 @@ td {
 		<% } else { %>	
 			[다음]
 		<% } %>
-	</div>
+	</div> 
 	
 	<%-- 사용자로부터 검색 관련 정보를 입력받기 위한 태그 출력 --%>
 	<form action="<%=request.getContextPath() %>/index.jsp?group=admin&worker=faq_list" method="post">
