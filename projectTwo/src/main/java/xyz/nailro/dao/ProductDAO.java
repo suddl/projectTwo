@@ -367,7 +367,7 @@ public class ProductDAO extends JdbcDAO	{
 		try	{
 			con=getConnection();
 			
-			String sql="select product_image, product_name, product_price from product order by product_num desc";
+			String sql="select product_num, product_image, product_name, product_price from product order by product_num desc";
 			pstmt=con.prepareStatement(sql);
 			
 			rs=pstmt.executeQuery();
