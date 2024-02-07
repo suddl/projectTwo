@@ -8,6 +8,6 @@ System.out.println(url);
 		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?"+url);
 	}
 
-%>    
+%>     
 <img src="<%= request.getContextPath() %>/images/main_image.jpg" width="65%"height="600">
 

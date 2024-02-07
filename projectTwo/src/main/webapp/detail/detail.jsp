@@ -169,7 +169,7 @@
     $("#cartBtn").click(function(){
         $("#url2").val("group=cart&worker=cartIn_action&productNum=1&counting="+count);
     	
-    	$("#detail").submit();
+    	$("#detail").submit(); 
     	
     });
     

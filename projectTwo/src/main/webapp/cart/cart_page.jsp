@@ -108,7 +108,7 @@ request.setCharacterEncoding("utf-8");
 //String sangpumId = request.getParameter("inputValue");
 
 //총 상품계산금액
-int total = 0;
+int total = 0; 
 
 %> 
 

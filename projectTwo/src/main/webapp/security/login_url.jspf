@@ -9,7 +9,7 @@
 	//session 객체에 저장된 권한 관련 속성값을 MemberDTO 객체로 반환받아 저장
 	ClientDTO loginClient = (ClientDTO)session.getAttribute("loginClient");
 	
-	if(loginClient==null){
+	if(loginClient==null){ 
 		//request.getRequestURI() : 요청 URL 주소에서 JSP 문서의 경로를 반환하는 메소드
 		String requestURI = request.getRequestURI();	
 		//System.out.println(requestURI);//requestURI = /shop/index.jsp

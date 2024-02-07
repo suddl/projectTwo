@@ -13,7 +13,7 @@
     
 	//MultipartRequest multipartRequest = new MultipartRequest(request, saveDirectory, 20*1024*1024,"utf-8", new DefaultFileRenamePolicy());
 
-	//상품번호
+	//상품번호 
     /*
     String pn = request.getParameter("productNum");
     int pNum = Integer.parseInt(pn );
