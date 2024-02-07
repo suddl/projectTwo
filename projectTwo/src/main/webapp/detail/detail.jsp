@@ -8,6 +8,7 @@
 	pageEncoding="UTF-8"%>
 <% 
    ProductDTO product = (ProductDTO)request.getAttribute("product");
+
 %>
 <head>
 <meta charset="UTF-8">
@@ -32,7 +33,8 @@
 	<a id="topBtn" href="#"> <img src="./images/topBtn.jpg"></a>
 	<form
 		action="<%=request.getContextPath()%>/index.jsp?group=cart&worker=cartIn_action"
-		method="post"  id="detail" name="detail">
+		method="get"  id="detail" name="detail">
+		<input type="hidden" name="url" id="url2">
 		<input type="hidden" name="productNum" value="1">
 		
 		<div class="container">
@@ -89,10 +91,10 @@
 									<button type="button" id="minusBtn" onclick="countZero();">-</button>&nbsp;&nbsp;
 					 
 									 <%-- 여기서는 화면에 출력해주고 --%>
-									<span id="count1" name="count1" style="display: inline-block;" > 1 </span>&nbsp;&nbsp;
+									<span id="count1" name="count1" style="display: inline-block;" value="1">  </span>&nbsp;&nbsp;
 			
 					 				<%-- 여기서는 데이터를 action에 넘긴다 --%>
-									<input type="hidden" name ="counting" id="countHidden">
+									<input type="hidden" name ="counting" id="countHidden" value="5">
 					
 									<button type="button" id="plusBtn" onclick="countUp();">+</button>
 								</div>
@@ -151,6 +153,7 @@
 	
 	<%-- 버튼 선택에 따라 글씨 색 변경--%>
 	<script type="text/javascript">
+    var count = 1; // 초기 수량
 	//제품상세,제품리뷰 바에서 클릭시 색상 변경되는 코드
     // 모든 nav-link 요소를 가져옵니다.
     const navLinks = document.querySelectorAll('.nav-link');
@@ -164,6 +167,7 @@
     
     //장바구니 클릭시 cartIn_action으로 submit;
     $("#cartBtn").click(function(){
+        $("#url2").val("group=cart&worker=cartIn_action&productNum=1&counting="+count);
     	
     	$("#detail").submit();
     	
@@ -171,7 +175,6 @@
     
     //총상품금액 코드
     var unitPrice = 18000; // 상품 단가
-    var count = 1; // 초기 수량
     document.getElementById("count1").innerText = count;//초기수량 출력
 
     
@@ -185,13 +188,14 @@
         document.getElementById("count1").innerText = count;
         //action으로 데이터 넘기는 히든필드 값 변경
         document.getElementById("countHidden").value = count;
+        
         updateTotalPrice();
     }
     function countZero() {
         if (count > 1) {
             count--;
             document.getElementById("count1").innerText = count;
-            document.getElementById("countHidden").value = count;
+            document.getElementById("count1").value = count;
             updateTotalPrice();
         }
     }

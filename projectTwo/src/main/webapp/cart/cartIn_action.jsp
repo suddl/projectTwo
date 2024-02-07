@@ -23,6 +23,9 @@
     System.out.println(cot);
     */
     
+    //String url = request.getParameter("url");
+    //System.out.println("전달쿼리값="+url);
+    
     
 	//상품번호
 	String pN = request.getParameter("productNum");
@@ -32,12 +35,12 @@
     //담긴 수량
 	String cot = request.getParameter("counting");
     int carQuantity = Integer.parseInt(cot);
-    System.out.println(cot);
+    //System.out.println(cot);
 
 
     //회원번호
     int Num = loginClient.getClientNum();
-    System.out.println("회원번호="+Num);
+    //System.out.println("회원번호="+Num);
 
     //장바구니 테이블에 상품정보 삽입
     CartDAO.getDAO().insertCart(carQuantity, producNum, Num);

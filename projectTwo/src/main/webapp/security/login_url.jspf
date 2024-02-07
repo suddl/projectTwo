@@ -29,7 +29,8 @@
 		if(queryString!=null){
 			
 			//비로그인 상태로 접근시 장바구니값 저장
-			url=requestURI+"?"+queryString+"&productNum="+productNum+"&counting="+counting;
+			//url=requestURI+"?"+queryString+"&productNum="+productNum+"&counting="+counting;
+			url=requestURI+"?"+queryString;
 		}else{
 			url=requestURI; 
 		}
@@ -37,7 +38,8 @@
 				
 		//JSP 문서의 URL 주소를 부호화 처리하여 저장
 		url = URLEncoder.encode(url, "utf-8");
-		
+		System.out.println(url);
+		//request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=client&worker=client_login&url="+url);
 		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=client&worker=client_login&url="+url);
 		
 		return;
