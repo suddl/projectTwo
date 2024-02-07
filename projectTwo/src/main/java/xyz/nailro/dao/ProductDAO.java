@@ -271,10 +271,10 @@ public class ProductDAO extends JdbcDAO	{
 	        String sql = "SELECT product_num, product_name, product_image, product_price FROM product " +
 	                     "WHERE product_name LIKE ? OR product_category LIKE ? OR product_type LIKE ?";
 	        pstmt = con.prepareStatement(sql);
-	        String likeKeyword = "%" + keyword + "%";
-	        pstmt.setString(1, likeKeyword);
-	        pstmt.setString(2, likeKeyword);
-	        pstmt.setString(3, likeKeyword);
+	        String keywd = "%" + keyword + "%";
+	        pstmt.setString(1, keywd);
+	        pstmt.setString(2, keywd);
+	        pstmt.setString(3, keywd);
 	        rs = pstmt.executeQuery();
 
 	        while (rs.next()) {
