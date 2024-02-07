@@ -7,10 +7,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <% 
-   ProductDTO product = (ProductDTO)request.getAttribute("product");
+   //ProductDTO product = (ProductDTO)request.getAttribute("product");
    int productNum = Integer.parseInt(request.getParameter("productNum"));
    
-   ProductDTO FindProduct = ProductDAO.getDAO().selectProductByNum(productNum);
+   ProductDTO product = ProductDAO.getDAO().selectProductByNum(productNum);
 %>
 <head>
 <meta charset="UTF-8">
@@ -46,15 +46,15 @@
                   <div id="carouselExample" class="carousel slide">
                      <div class="carousel-inner">
                         <div class="carousel-item active">
-                           <img src="<%=FindProduct.getProductImage()%>"
+                           <img src="<%=request.getContextPath() %><%=product.getProductImage() %>"
                               alt="d_main" class="d-block w-100" alt="peach">
                         </div>
                         <div class="carousel-item">
-                           <img src="<%=FindProduct.getProductImage()%>"
+                           <img src="<%=product.getProductImage()%>"
                               class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
-                           <img src="<%=FindProduct.getProductImage()%>"
+                           <img src="<%=product.getProductImage()%>"
                               class="d-block w-100" alt="...">
                         </div>
                      </div>
@@ -75,10 +75,10 @@
             <div class="col-md-4">
                <div class="card custom-card">
                   <div class="card-body">
-                     <h5 class="card-title"><%=FindProduct.getProductName()%></h5>
+                     <h5 class="card-title"><%=product.getProductName()%></h5>
                      &nbsp;&nbsp;
                      <%--    <h5 class="card-title"><%=product.getName()%></h5> --%>
-                     <p class="price">가격:<%=FindProduct.getProductPrice()%>원</p>
+                     <p class="price">가격:<%=product.getProductPrice()%>원</p>
                      <%--       <p class="price">가격:<%=product.getPrice()%>원</p> --%>
                      <%--    <input type="hidden" id="unitPrice"
                         value="<%=product.getPrice()%>"> --%>
@@ -137,9 +137,9 @@
       <li class="nav-item"><a class="nav-link" href="#info" id="pd">상품설명</a></li>
    </ul>
    <div>
-      <img src="<%=request.getAttribute("productImage2")%>"
+      <img src="<%=request.getContextPath() %><%=product.getProductImage2() %>"
          class="img-fluid" id="d_img1"> <img
-         src="<%=request.getAttribute("productImage3")%>"
+         src="<%=request.getContextPath() %><%=product.getProductImage3() %>"
          class="img-fluid" id="dedatilimg1"> 
          <img src="<%=request.getContextPath()%>/images/info.jpg" class="img-fluid"
          id="info">
