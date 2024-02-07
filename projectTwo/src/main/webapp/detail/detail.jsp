@@ -46,15 +46,15 @@
                   <div id="carouselExample" class="carousel slide">
                      <div class="carousel-inner">
                         <div class="carousel-item active">
-                           <img src="<%=request.getContextPath()%>/images/d_main1.jpg"
+                           <img src="<%=FindProduct.getProductImage()%>"
                               alt="d_main" class="d-block w-100" alt="peach">
                         </div>
                         <div class="carousel-item">
-                           <img src="<%=request.getContextPath()%>/images/d_main2.jpg"
+                           <img src="<%=FindProduct.getProductImage()%>"
                               class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
-                           <img src="<%=request.getContextPath()%>/images/d_main3.jpg"
+                           <img src="<%=FindProduct.getProductImage()%>"
                               class="d-block w-100" alt="...">
                         </div>
                      </div>
@@ -75,10 +75,10 @@
             <div class="col-md-4">
                <div class="card custom-card">
                   <div class="card-body">
-                     <h5 class="card-title"><%=request.getAttribute("productName")%></h5>
+                     <h5 class="card-title"><%=FindProduct.getProductName()%></h5>
                      &nbsp;&nbsp;
                      <%--    <h5 class="card-title"><%=product.getName()%></h5> --%>
-                     <p class="price">가격:<%=request.getAttribute("productPrice")%>원</p>
+                     <p class="price">가격:<%=FindProduct.getProductPrice()%>원</p>
                      <%--       <p class="price">가격:<%=product.getPrice()%>원</p> --%>
                      <%--    <input type="hidden" id="unitPrice"
                         value="<%=product.getPrice()%>"> --%>
