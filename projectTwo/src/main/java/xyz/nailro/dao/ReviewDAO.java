@@ -259,6 +259,36 @@ public class ReviewDAO extends JdbcDAO {
         }
         return rows;
     }
+    
+
+    
+    //리뷰삭제 dao
+    public int DeleteReviewByNum (int reviewNum) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        int rows = 0;
+        try {
+            con = getConnection();
+            String sql = "delete from review where review_num = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, reviewNum);
+           
+            rows = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("[에러] 리뷰삭제() 메소드의 SQL 오류 = " + e.getMessage());
+        } finally {
+            close(con, pstmt);
+        }
+        return rows;
+    }
+    
+    
+
+    
+
+    
+
+    
 
   //부모글 관련 정보를 전달받아 REVIEW 테이블에 저장된 행에서 REVIEW_REF 컬럼값과 REVIEW_RESTEP
   		//컬럼값을 비교하여 REVIEW_RESTEP 컬럼값이 1 증가되도록 변경하고 변경행의 갯수를 반환하는 메소드
