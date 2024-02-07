@@ -2,6 +2,7 @@ package xyz.nailro.dao;
 
 import java.sql.Connection;
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -103,5 +104,60 @@ public class CartDAO extends JdbcDAO{
 			close(con, pstmt);
 		}
 		return rows;
+	}
+	
+	
+	
+	//회원번호,상품번호,현재담겨있는 상품수량,전달받은 수량,전달받아 테이블에 저장된 행의 회원상태를 변경하고 변경행의 갯수를 반환하는 메소드
+	
+	public int updateCartQuantity(int Num, int productNum,int InCartQuantity,int ReceiveCarQuantity) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		int rows=0;
+		try {
+			con=getConnection();
+			
+			String sql="update cart set cart_quantity=? where cart_client_num = ? and cart_product=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, InCartQuantity+ReceiveCarQuantity);
+			pstmt.setInt(2, Num);
+			pstmt.setInt(3, productNum);
+			
+			rows=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("[에러]updateMemberStatus() 메소드의 SQL 오류 = "+e.getMessage());
+		} finally {
+			close(con, pstmt);
+		}
+		return rows;
+	}
+	
+	
+	//상품번호화 회원번호를 전달받아 수량을 반환하는 메소드
+	public String selectQuantityCart(int productNum, int Num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String quantity =null;
+		try {
+			con = getConnection();
+			
+			String sql= "select cart_quantity from cart where cart_product =? and cart_client_num = ?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, productNum);
+			pstmt.setInt(2, Num);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				quantity=rs.getString("cart_quantity");
+			}
+			
+		}catch (SQLException e) {
+			System.out.println("[에러]selectQuantityCart() 메소드의 SQL 오류 = "+e.getMessage());
+		}finally {
+			close(con, pstmt, rs);
+		}
+		return quantity;
 	}
 }
