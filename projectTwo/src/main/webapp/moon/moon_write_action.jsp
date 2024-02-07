@@ -37,7 +37,6 @@
 	}
 	
 	
-	//System.out.println("moonTitle : " + moonTitle);
 	
 	String moonContent=Utility.escapeTag(multipartRequest.getParameter("moonContent"));
 	

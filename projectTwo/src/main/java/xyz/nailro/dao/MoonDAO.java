@@ -292,6 +292,7 @@ public class MoonDAO extends JdbcDAO {
 				pstmt.setString(2, moon.getMoonContent());
 				pstmt.setInt(3, moon.getMoonStatus());
 				pstmt.setInt(4, moon.getMoonNum());
+				
 			} else {
 				String sql= "update moon set moon_title=?, moon_content=?, moon_image=?, moon_status=?, moon_date=sysdate where moon_num=?";
 				pstmt=con.prepareStatement(sql);
@@ -305,6 +306,62 @@ public class MoonDAO extends JdbcDAO {
 			rows=pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("[에러]updateMoon() 메소드의 SQL 오류 = "+e.getMessage());
+		} finally {
+			close(con, pstmt);
+		}
+		return rows;		
+	}
+	
+	public int updateReMoon(MoonDTO moon) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		int rows=0;
+		try {
+			con=getConnection();
+
+			if(moon.getMoonImage()==null) {
+				String sql= "update moon set moon_re=? where moon_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, moon.getMoonRe());
+				pstmt.setInt(2, moon.getMoonNum());
+				
+			} else {
+				String sql= "update moon set moon_re=? where moon_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, moon.getMoonRe());
+				pstmt.setInt(2, moon.getMoonNum());
+			}
+			
+			rows=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("[에러]updateReMoon() 메소드의 SQL 오류 = "+e.getMessage());
+		} finally {
+			close(con, pstmt);
+		}
+		return rows;		
+	}
+	
+	public int updateReNullMoon(MoonDTO moon) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		int rows=0;
+		try {
+			con=getConnection();
+
+			if(moon.getMoonImage()==null) {
+				String sql= "update moon set moon_re=null where moon_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, moon.getMoonNum());
+				
+			} else {
+				String sql= "update moon set moon_re=null where moon_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, moon.getMoonNum());
+			}
+			
+			rows=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("[에러]updateReNullMoon() 메소드의 SQL 오류 = "+e.getMessage());
 		} finally {
 			close(con, pstmt);
 		}

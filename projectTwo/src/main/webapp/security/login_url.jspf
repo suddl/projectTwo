@@ -16,7 +16,7 @@
 				
 		//request.getQueryString() : 요청 URL 주소에서 질의문자열 반환하는 메소드
 		String queryString=request.getQueryString();
-		System.out.println(queryString);//group=cart&worker=cart_list
+		//System.out.println(queryString);//group=cart&worker=cart_list
 		
 		String productNum = request.getParameter("productNum");
 		String counting = request.getParameter("counting");
@@ -38,7 +38,7 @@
 				
 		//JSP 문서의 URL 주소를 부호화 처리하여 저장
 		url = URLEncoder.encode(url, "utf-8");
-		System.out.println(url);
+		//System.out.println(url);
 		//request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=client&worker=client_login&url="+url);
 		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=client&worker=client_login&url="+url);
 		

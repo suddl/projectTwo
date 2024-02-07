@@ -23,12 +23,13 @@
 		return;
 	}
 	
+	
 	ClientDTO loginClient =(ClientDTO)session.getAttribute("loginClient");
 	
 %>
 <style type="text/css">
 #moon_detail {
-	width: 500px;
+	width: 800px;
 	margin: 0 auto;
 }
 
@@ -43,13 +44,13 @@ th, td {
 }
 
 th {
-	width: 100px;
+	width: 150px;
 	background: black;
 	color: white;
 }
 
 td {
-	width: 400px;
+	width: 650px;
 }
 
 .subject, .content {
@@ -65,6 +66,11 @@ td {
 #moon_menu {
 	text-align: right;
 	margin: 5px;
+}
+.re {
+	height: 300px;
+	vertical-align: middle;
+	padding: 0px;
 }
 </style>
 <div id="moon_detail">
@@ -89,6 +95,19 @@ td {
 			</td>
 		</tr>
 	</table>
+	<hr>
+	<table>
+		<tr>
+			<th>답변</th>
+			<td class="re">
+			<% if(moon.getMoonRe()==null) {%>
+			답변이 없습니다.			
+			<%	}else { %>
+			<%=moon.getMoonRe() %>
+			<% } %>
+			</td>
+		</tr>
+	</table>
 	
 	<div id="moon_menu">
 		<% if(loginClient!=null && (loginClient.getClientNum()==moon.getMoonClientNum())) { %>
@@ -99,7 +118,13 @@ td {
 		<button type="button" id="listBtn">글목록</button>
 		
 		<% if(loginClient!=null && (loginClient.getClientStatus()==9)) { %>
+			<% if(moon.getMoonRe()==null) { %>
 			<button type="button" id="replyBtn">답글쓰기</button>
+			<% } %>
+			<% if(moon.getMoonRe()!=null) { %>
+			<button type="button" id="replyModifyBtn">답글수정하기</button>
+			<% } %>
+			<button type="button" id="replyRemoveBtn">답글삭제하기</button>
 		<% } %>
 	</div>
 </div>
@@ -122,5 +147,24 @@ $("#listBtn").click(function() {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=moon&worker=moon_list"
 		+"&pageNum=<%=pageNum%>&pageSize=<%=pageSize%>&search=<%=search%>&keyword=<%=keyword%>";	
 });
+
+$("#replyBtn").click(function() {
+	location.href="<%=request.getContextPath()%>/index.jsp?group=moon&worker=moon_re"
+		+"&moonNum=<%=moon.getMoonNum()%>&pageNum=<%=pageNum%>"
+		+"&pageSize=<%=pageSize%>&search=<%=search%>&keyword=<%=keyword%>";	
+});
+
+$("#replyRemoveBtn").click(function() {
+	location.href="<%=request.getContextPath()%>/index.jsp?group=moon&worker=moon_reremove"
+		+"&moonNum=<%=moon.getMoonNum()%>&pageNum=<%=pageNum%>"
+		+"&pageSize=<%=pageSize%>&search=<%=search%>&keyword=<%=keyword%>";	
+});
+
+$("#replyModifyBtn").click(function() {
+	location.href="<%=request.getContextPath()%>/index.jsp?group=moon&worker=moon_re"
+		+"&moonNum=<%=moon.getMoonNum()%>&pageNum=<%=pageNum%>"
+		+"&pageSize=<%=pageSize%>&search=<%=search%>&keyword=<%=keyword%>";	
+});
+
 </script>
 

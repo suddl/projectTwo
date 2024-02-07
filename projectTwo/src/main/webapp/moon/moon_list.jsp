@@ -31,20 +31,8 @@
 		pageSize=Integer.parseInt(request.getParameter("pageSize"));
 	}
 	
-	/*
-	ClientDTO loginClient=(ClientDTO)session.getAttribute("loginClient");
-	
-	String id = loginClient.getClientId();
-	//session.setAttribute("clientId", id);
-	//String loginclientId= (String)session.getAttribute("clientId");
-	//System.out.println("loginclientId : " +  loginclientId );
-	
-	//System.out.println("id : " + id);
-	*/
-	//ClientDTO loginClient=(ClientDTO)session.getAttribute("loginClient");
 	
 	int loginClientNum = loginClient.getClientNum();
-	//System.out.println("id : " + loginClientNum);
 	
 	int totalMoon=0;
 	
@@ -53,7 +41,6 @@
 	} else {
 		totalMoon=MoonDAO.getDAO().selectTotalMoon(search, keyword, loginClientNum);
 	}
-	//System.out.println("totalMoon : " + totalMoon);
 	
 	int totalPage=(int)Math.ceil((double)totalMoon/pageSize);
 	
@@ -169,7 +156,6 @@ td {
 			<td colspan="5">검색된 게시글이 없습니다.</td>
 		</tr>
 		<% } else { %>
-			<% // System.out.println("moonList.size()= " + moonList.size()); %>
 			<% for(MoonDTO moon : moonList) { %>
 			<tr>
 				<td><%=displayNum %></td>

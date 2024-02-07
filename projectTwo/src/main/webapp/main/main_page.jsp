@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%
 	String url = request.getParameter("url");
-System.out.println(url);
 
 	if(url!=null){
 		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?"+url);
