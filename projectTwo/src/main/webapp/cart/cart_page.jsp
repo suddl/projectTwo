@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style> 
 .table{
 width: 80%;
@@ -128,7 +129,8 @@ int total = 0;
 <table class="table table-hover" id="ProductList">
   <thead>
     <tr>
-      <th ><input type="checkbox" name="product" value="selectAll" onclick='selectAll(this)' ></th>
+    <div style="margin-right: 1120px; ">전체선택</div>
+      <th ><input type="checkbox" name="productAll" id="selectAllCheckbox" onclick='selectAll(this)' ></th>
       <th >상품명</th>
       <th >수량</th>
       <th >가격</th>
@@ -140,8 +142,13 @@ int total = 0;
   
   <%for(CartDTO carts : cartDTOs) { %>
   <tr>
-    <th width="10%"><input type="checkbox" name="product" value="selectAll" onclick='selectAll(this)' ></th>
+  	<%-- 체크박스 --%>
+    <th width="10%"><input type="checkbox" name="productOne"  class="ckb" onclick='selectOnly(this)' ></th>
+    
+  	<%-- 이미지 --%>
      <th width="30%"><img src="<%=request.getContextPath()%><%=carts.getCartProductImages()%>" width="150" height="100"> <%=carts.getCartProductName() %></th>
+     
+     <%-- 수량 --%>
      <th ><%=carts.getCartQuantity() %>개</th>
      
      <%
@@ -172,9 +179,9 @@ padding: 30px;">
 
 <p class="moneyALL" >총 결제 금액</p><span class="NumMoneyALL" >
 <% if(total>=50000){ %>
-		<%=String.format("%,d", total)%>
+		<%=String.format("%,d", total)%> 원
 <% 	}else{ %>
-		<%=String.format("%,d", (total+3000))%>
+		<%=String.format("%,d", (total+3000))%> 원
 	<% } %>
 </span>
 
@@ -188,7 +195,63 @@ padding: 30px;">
  border-radius: 5px; width: 120px; height: 40px;  ">구매하기</button>
 </div>
 </form>
+<script>
+//전체선택체크박스를 클릭하면 해당 엘리먼트가 source에 대입
+function selectAll(source) {
+	//개별체크박스의 이름을 가져와 변수에 저장
+    var checkboxOnes = document.getElementsByName('productOne');
+    //반복문을 통해 생성된 이름이 같은 여러개의 체크박스들의 길이만큼 반복
+    for (var i = 0; i < checkboxOnes.length; i++) {
+		//i번째 체크박스의 상태를 최초 선택한체크박스 엘리먼트의 체크된상태로 바꾼다
+        checkboxOnes[i].checked = source.checked;
+    }
+}
 
+	/*
+const checkboxes = document.querySelectorAll(.chk);
+const totalCnt = checkboxes.length;
+const checkedCnt = document.querySelectorAll('.chk:cheked').length;
+for(i=0; i<totalCntl i++)
+
+if(totalCnt == checkedCnt){
+	document.querySelector('#selectAllCheckbox').checked=true;
+	
+}else{
+	document.querySelector('#selectAllCheckbox').checked=false;
+}
+	*/
+
+function selectOnly(source) {
+	
+	
+	//전체선택체크박스를 변수에 저장
+    let selectAllCheckbox = document.getElementById('selectAllCheckbox');
+    //선택한 체크박스가 체크된 상태라면
+    if (source.checked) {
+		//true를 변수에 저장
+        let allChecked = true;
+		//개별체크박스의 객체를 변수에 저장
+        let checkboxes = document.getElementsByName('productOne');
+		
+		//화면에 나타나는 체크박스의 수 만큼 반복문을 실행
+        for (let i = 0; i < checkboxes.length; i++) {
+			//체크박스가 체크되지 않은 상태라면
+            if (!checkboxes[i].checked) {//!checkboxes[i].checked => 개별체크박스의 상태가 체크되어있지 않다면
+                //전체선택변수에 false를 저장하고
+            	allChecked = false;
+            	//반복문을 종료
+                break;
+            }
+        }
+		//개별체크박스의 체크가 전부 되어있다면 allCheck에 true가 저장되어 
+		//전체 체크박스가 체크 될것이다.
+        selectAllCheckbox.checked = allChecked;
+    } else {
+		//선택한 개별체크박스가 체크해제 된다면 전체체크박스의 체크상태 또한 해제된다.
+        selectAllCheckbox.checked = false;
+    }
+}
+    </script>
 
 </body>
 </html>
