@@ -38,11 +38,9 @@
 		return;
 	  }
 
-	// 검색된 게시글(ReviewDTO 객체)의 상태(ReviewStatus 필드)를 [0]으로 변경(필요없을수도)
-	//review.setReviewClientNum(0);
+	
 
-	// 게시글을 전달받아 REVIEW 테이블의 저장된 행의 컬럼값을 변경하고 변경행의 갯수를 반환하는
-	// ReviewDAO 클래스의 메소드 호출
+	// 리뷰삭제 DAO 호출
 	ReviewDAO.getDAO().DeleteReviewByNum(reviewNum);
 	if (review.getReviewImage() != null) {// 리뷰 이미지 파일이 있는 경우
 		// 서버 디렉토리에서 삭제 처리될 게시글의 리뷰 이미지 파일을 삭제 처리
