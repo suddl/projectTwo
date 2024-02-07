@@ -138,7 +138,7 @@ td {
 	<div id="moon_title">문의 목록(<%= totalMoon %>)</div>
 	
 	<div style="text-align: right;">
-		<% if(loginClient!=null) { %>
+		<% if(loginClient!=null && loginClient.getClientStatus()==1) { %>
 			<button type="button" id="writeBtn">글쓰기</button>
 		<% } %>
 	</div>
