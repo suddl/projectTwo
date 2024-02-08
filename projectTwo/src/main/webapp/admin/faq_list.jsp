@@ -52,7 +52,7 @@
 	
 	//session 객체에 저장된 권한 관련 속성값을 반환받아 저장
 	// => 관리자 권한의 사용자에게만 글쓰기 권한 제공
-	ClientDTO admin=(ClientDTO)session.getAttribute("clientStatus==9");
+	ClientDTO admin=(ClientDTO)session.getAttribute("loginClient");
 	
 	//페이지에 출력될 게시글의 일련번호 시작값을 계산하여 저장
 	int displayNum=totalFaq-(pageNum-1)*pageSize;
@@ -122,11 +122,9 @@ td {
 <div id="faq_list">
 	<%-- 검색된 게시글 총갯수 출력 --%>
 	<div id="faq_title">자주 묻는 질문(FAQ)(<%=totalFaq %>)</div>
-		<button type="button" id="writeBtn">글쓰기</button>
 	<% 
-		int clientStatus=9;
-		if(clientStatus==9)	{	 // 관리자일때 %>
-		<button type="button">글쓰기</button>
+		if(admin!=null && admin.getClientStatus()==9)	{	 // 관리자일때 %>
+		<button type="button" id="writeBtn">글쓰기</button>	
 	<% } %>
 </div>
 
