@@ -155,6 +155,27 @@ public class ClientDAO extends JdbcDAO{
 			return id;
 		}
 		
+		//회원정보를 전달받아 MEMBER 테이블에 저장된 행의 회원상태를 변경하고 변경행의 갯수를 반환하는 메소드
+		public int updateClientStatus(ClientDTO client) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			int rows=0;
+			try {
+				con=getConnection();
+				
+				String sql="update client set client_status=? where client_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, client.getClientStatus());
+				pstmt.setInt(2, client.getClientNum());
+				
+				rows=pstmt.executeUpdate();
+			} catch (SQLException e) {
+				System.out.println("[에러]updateClientStatus() 메소드의 SQL 오류 = "+e.getMessage());
+			} finally {
+				close(con, pstmt);
+			}
+			return rows;
+		}
 
 		//회원정보를 전달받아 Client 테이블에 저장된 행을 변경하고 변경행의 갯수를 반환하는 메소드
 		public int updateClient(ClientDTO clinet) {
