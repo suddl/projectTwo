@@ -27,7 +27,26 @@
 	String productName=Utility.escapeTag(multipartRequest.getParameter("productName"));
 	int productPrice=Integer.parseInt(multipartRequest.getParameter("productPrice"));
 	String productCategory=Utility.escapeTag(multipartRequest.getParameter("productCategory"));
+	
+	if(productCategory.equals("Nail")){
+		productCategory="Nail";
+	} else if(productCategory.equals("Pedi")){
+		productCategory="Pedi";
+	} else if(productCategory.equals("CareTool")){
+		productCategory="CareTool";
+	}
+	
 	String productType=Utility.escapeTag(multipartRequest.getParameter("productType"));
+	
+	if(productType.equals("Long")){
+		productType="Long";
+	} else if(productType.equals("Short")){
+		productType="Short";
+	} else if(productType.equals("Parts")){
+		productType="Parts";
+	} else if(productType.equals("FullColor")){
+		productType="FullColor";
+	}
 	
 	String productImage=multipartRequest.getFilesystemName("productImage");
 	if(productImage!=null) {

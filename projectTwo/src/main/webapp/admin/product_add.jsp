@@ -97,10 +97,10 @@ button:hover {
 		<tr>
 			<th>카테고리</th>
 			<td>
-			<select name="productCategory" onChange="selectBoxChage(this.value)">
-				<option value="Nail">&nbsp;네일&nbsp;&nbsp;</option>
-				<option value="Pedi">&nbsp;페디&nbsp;&nbsp;</option>
-				<option value="CareTool">&nbsp;케어&툴&nbsp;&nbsp;</option>
+			<select name="productCategory" >
+				<option value="Nail">네일</option>
+				<option value="Pedi">페디</option>
+				<option value="CareTool">케어&툴</option>
 			</select>
 			</td>
 		</tr>			
@@ -174,6 +174,8 @@ $("#productForm").submit(function() {
 		return false;
 	}
 });
+
+$
 
 $("#listBtn").click(function() {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_list"

@@ -35,7 +35,26 @@
 	String productName=Utility.escapeTag(multipartRequest.getParameter("productName"));
 	int productPrice=Integer.parseInt(multipartRequest.getParameter("productPrice"));
 	String productCategory=Utility.escapeTag(multipartRequest.getParameter("productCategory"));
+	
+	if(productCategory.equals("Nail")){
+		productCategory="Nail";
+	} else if(productCategory.equals("Pedi")){
+		productCategory="Pedi";
+	} else if(productCategory.equals("CareTool")){
+		productCategory="CareTool";
+	}
+	
 	String productType=Utility.escapeTag(multipartRequest.getParameter("productType"));
+	
+	if(productType.equals("Long")){
+		productType="Long";
+	} else if(productType.equals("Short")){
+		productType="Short";
+	} else if(productType.equals("Parts")){
+		productType="Parts";
+	} else if(productType.equals("FullColor")){
+		productType="FullColor";
+	}
 	
 	//서버 디렉토리에 업로드되어 저장된 파일명을 반환받아 컨텍스트 경로를 저장
 	String productImage=null;

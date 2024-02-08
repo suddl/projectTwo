@@ -119,20 +119,20 @@ button:hover {
 		<tr>
 			<th>카테고리</th>
 			<td>
-			<select name="productCategory" onChange="getselect()">
-				<option value="<%=product.getProductCategory()%>" <% { %> selected <% } %>>&nbsp;네일&nbsp;&nbsp;</option>
-				<option value="<%=product.getProductCategory()%>" <% { %> selected <% } %>>&nbsp;페디&nbsp;&nbsp;</option>
-				<option value="<%=product.getProductCategory()%>" <% { %> selected <% } %>>&nbsp;케어&툴&nbsp;&nbsp;</option>
+			<select name="productCategory" >
+				<option value="Nail"<% if(product.getProductCategory().equals("Nail")) {%>selected<%}%>>네일</option>
+				<option value="Pedi"<% if(product.getProductCategory().equals("Pedi")) {%>selected<%}%>>페디</option>
+				<option value="CareTool"<% if(product.getProductCategory().equals("CareTool")) {%>selected<%}%>>케어&툴</option>
 			</select>
 			</td>
 		</tr>			
 		<tr>
 			<th>세부사항</th>
 			<td>
-				<input type='radio' name='productType' value="Long"> 롱
-				<input type='radio' name='productType' value="Short"> 숏
-				<input type='radio' name='productType' value="Parts"> 파츠
-				<input type='radio' name='productType' value="FullColor"> 풀컬러
+				<input type='radio' name='productType' value="Long"<% if(product.getProductType().equals("Long")) %>> 롱
+				<input type='radio' name='productType' value="Short"<% if(product.getProductType().equals("Short")) %>> 숏
+				<input type='radio' name='productType' value="Parts"<% if(product.getProductType().equals("Parts")) %>> 파츠
+				<input type='radio' name='productType' value="FullColor"<% if(product.getProductType().equals("FullColor"))%>> 풀컬러
 			</td>
 		</tr>			
 		<tr>
@@ -205,4 +205,5 @@ $("#listBtn").click(function() {
 $("#cancelBtn").click(function() {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_list"
 });
+
 </script>
