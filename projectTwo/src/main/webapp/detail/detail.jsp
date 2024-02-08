@@ -49,11 +49,7 @@
                               alt="d_main" class="d-block w-100" alt="peach">
                         </div>
                         <div class="carousel-item">
-                           <img src="<%=product.getProductImage()%>"
-                              class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                           <img src="<%=product.getProductImage()%>"
+                           <img src="<%=request.getContextPath() %><%=product.getProductImage2() %>"
                               class="d-block w-100" alt="...">
                         </div>
                      </div>
@@ -136,9 +132,7 @@
       <li class="nav-item"><a class="nav-link" href="#info" id="pd">상품설명</a></li>
    </ul>
    <div>
-      <img src="<%=request.getContextPath() %><%=product.getProductImage2() %>"
-         class="img-fluid" id="d_img1"> <img
-         src="<%=request.getContextPath() %><%=product.getProductImage3() %>"
+     <img src="<%=request.getContextPath() %><%=product.getProductImage3() %>"
          class="img-fluid" id="dedatilimg1"> 
          <img src="<%=request.getContextPath()%>/images/info.jpg" class="img-fluid"
          id="info">
