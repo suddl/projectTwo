@@ -110,7 +110,7 @@ button:hover {
 				<input type='radio' name='productType' value="Long"> 롱
 				<input type='radio' name='productType' value="Short"> 숏
 				<input type='radio' name='productType' value="Parts"> 파츠
-				<input type='radio' name='productType' value="FuulColor"> 풀컬러
+				<input type='radio' name='productType' value="FullColor"> 풀컬러
 			</td>
 		</tr>			
 		<tr>
