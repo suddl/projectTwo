@@ -33,23 +33,11 @@
 	}
 %>
 
-<style type="text/css">
-table {
-	margin: 0 auto;
-}
-
-th {
-	width: 100px;
-	font-weight: bold;
-}
-
-td {
-	text-align: left;
-}
-</style>
+<link href="<%=request.getContextPath()%>/css/write.css" type="text/css" rel="stylesheet">
 <h1>FAQ 작성</h1>
-<form action="<%=request.getContextPath()%>/index.jsp?group=admin&worker=faq_modify_action"
-	method="post" enctype="application/x-www-form-urlencoded" id="faqForm">
+
+<form action="<%=request.getContextPath()%>/index.jsp?group=admin&worker=faq_modify_action" method="post" id="faqForm">
+	<input type="hidden" name="faqNum" value="<%=faqNum %>">
 	<input type="hidden" name="pageNum" value="<%=pageNum %>">
 	<input type="hidden" name="pageSize" value="<%=pageSize %>">
 	<input type="hidden" name="pageSize" value="<%=faqCategory %>">
@@ -72,12 +60,6 @@ td {
 					<option value="주문"<% if(faq.getFaqCategory().equals("주문/결제")) {%>selected<%}%>>주문/결제</option>				
 					<option value="교환"<% if(faq.getFaqCategory().equals("교환/반품")) {%>selected<%}%>>교환/반품</option>				
 					<option value="기타"<% if(faq.getFaqCategory().equals("기타")) {%>selected<%}%>>기타</option>				
-					<%-- 
-					<option value="회원">회원관련</option>
-					<option value="주문">주문/결제</option>
-					<option value="교환">교환/반품</option>
-					<option value="기타">기타</option>
-					--%>
 				</select>
 			</td>
 		</tr>	
@@ -94,7 +76,7 @@ td {
 			</th>
 		</tr>
 	</table>	
-	</form>
+</form>
 <div id="message" style="color: red;"></div>
 
 <script type="text/javascript">
