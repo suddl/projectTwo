@@ -27,7 +27,7 @@
 	ClientDTO loginClient =(ClientDTO)session.getAttribute("loginClient");
 	
 %>
-<link href="<%=request.getContextPath()%>/css/moon_detail.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/detail.css" type="text/css" rel="stylesheet">
 <div id="moon_re">
 	<h1>1:1 문의</h1>
 	<table>

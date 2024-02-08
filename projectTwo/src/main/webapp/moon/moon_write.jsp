@@ -5,7 +5,7 @@
 <%
 	String pageNum="1", pageSize="10", search="", keyword="";
 %>
-<link href="<%=request.getContextPath()%>/css/moon_write.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/write.css" type="text/css" rel="stylesheet">
 <form action="<%=request.getContextPath() %>/index.jsp?group=moon&worker=moon_write_action" method="post" enctype="multipart/form-data" id="moonForm">
 	<input type="hidden" name="pageNum" value="<%=pageNum %>">
 	<input type="hidden" name="pageSize" value="<%=pageSize %>">
@@ -17,7 +17,7 @@
 			<th>제목</th> 
 			<td>
 				<select name="moonTitle">
-					<option value="상품" selected>상품 문의입니다.</option>
+					<option value="상품">상품 문의입니다.</option>
 					<option value="배송">배송 문의입니다.</option>
 					<option value="교환&취소&반품">교환&취소&반품 문의입니다.</option>
 					<option value="불량">불량 문의입니다.</option>

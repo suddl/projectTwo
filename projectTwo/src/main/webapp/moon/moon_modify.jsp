@@ -27,6 +27,7 @@
 		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=error&worker=error_400");
 		return;
 	}
+	String moonTitle=request.getParameter("moonTitle");
 %>
 <link href="<%=request.getContextPath()%>/css/moon_write.css" type="text/css" rel="stylesheet">
 <h1>게시글변경</h1>
@@ -40,15 +41,14 @@
 		<tr>
 			<th>제목</th> 
 			<td>
-				
 				<select name="moonTitle">
-					<option value="상품" selected>상품 문의입니다.</option>
-					<option value="배송">배송 문의입니다.</option>
-					<option value="교환&취소&반품">교환&취소&반품 문의입니다.</option>
-					<option value="불량">불량 문의입니다.</option>
-					<option value="기타">기타 문의입니다.</option>
+					<option value="상품" <% if(moon.getMoonTitle().equals("상품 문의입니다.")) { %> selected <% } %>>상품 문의입니다.</option>
+					<option value="배송" <% if(moon.getMoonTitle().equals("배송 문의입니다.")) { %> selected <% } %>>배송 문의입니다.</option>
+					<option value="교환&취소&반품" <% if(moon.getMoonTitle().equals("교환&취소&반품 문의입니다.")) { %> selected <% } %>>교환&취소&반품 문의입니다.</option>
+					<option value="불량" <% if(moon.getMoonTitle().equals("불량 문의입니다.")) { %> selected <% } %>>불량 문의입니다.</option>
+					<option value="기타" <% if(moon.getMoonTitle().equals("기타 문의입니다.")) { %> selected <% } %>>기타 문의입니다.</option>
 				</select>
-				<%= moon.getMoonTitle() %>
+				<% System.out.println("moon.getMoonTitle() =" + moon.getMoonTitle()); %>
 			</td>
 		</tr>
 		<tr>

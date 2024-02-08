@@ -28,7 +28,7 @@
 	
 %>
 <link href="<%=request.getContextPath()%>/css/moon_detail.css" type="text/css" rel="stylesheet">
-<div id="moon_detail">
+<div id="detail">
 	<h1>1:1 문의하기</h1>
 	<table>
 		<tr>

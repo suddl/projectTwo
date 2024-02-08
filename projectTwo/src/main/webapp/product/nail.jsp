@@ -35,11 +35,11 @@
 		</select>
 	</div>
 	<div class="filter-buttons" id="filterButtons">
+  		<button data-product-type="All">전체</button>
   		<button data-product-type="Short">숏</button>
   		<button data-product-type="Long">롱</button>
   		<button data-product-type="Parts">파츠</button>
   		<button data-product-type="FullColor">풀컬러</button>
-  		<button data-product-type="All">전체</button>
 	</div>
 
   	<div class="prodList">
