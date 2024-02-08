@@ -31,7 +31,7 @@
 		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=error&worker=error_400");
 		return;
 	}
-	FaqDAO.getDAO().updateFaq(faq);
+	FaqDAO.getDAO().deleteFaq(faqNum);
 	
 	//페이지 이동 - 검색 및 페이징 처리 관련 값 전달
 	request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=admin&worker=admin_faq_list"

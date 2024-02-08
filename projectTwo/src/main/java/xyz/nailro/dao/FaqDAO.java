@@ -72,15 +72,15 @@ public class FaqDAO extends JdbcDAO {
 			
 			if(keyword.equals("")) {//검색 기능을 사용하지 않은 경우
 				String sql="select * from (select rownum rn, temp.* from (select faq_num"
-					+ ", faq_subject, faq_content, faq_category from faq) temp)"
-					+ " where rn between ? and ?";
+					+ ", faq_subject, faq_content, faq_category from faq order by faq_num desc) temp)"
+					+ " where rn between ? and ? ";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setInt(1, startRow);
 				pstmt.setInt(2, endRow);
 			} else {//검색 기능을 사용한 경우
 				String sql="select * from (select rownum rn, temp.* from (select faq_num"
 					+ ", faq_subject, faq_content, faq_category from faq where "+keyword
-					+" like '%'||?||'%') temp) where rn between ? and ?";
+					+" like '%'||?||'%' order by faq_num desc) temp) where rn between ? and ?";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1, "%"+ keyword +"%");
 				pstmt.setInt(2, startRow);
@@ -212,5 +212,24 @@ public class FaqDAO extends JdbcDAO {
 		}
 		return rows;
 	}
-	
+	//FAQ 삭제
+	public int deleteFaq(int faqNum)	{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		int rows=0;
+		try {
+			con=getConnection();
+			
+			String sql="delete from faq where faq_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, faqNum);
+			
+			rows=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("[에러]deleteFaq() 메소드의 SQL 오류 = "+e.getMessage());
+		} finally {
+			close(con, pstmt);
+		}
+		return rows;
+	}
 }
