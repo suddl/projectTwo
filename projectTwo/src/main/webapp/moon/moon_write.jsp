@@ -23,7 +23,7 @@
 					<option value="불량">불량 문의입니다.</option>
 					<option value="기타">기타 문의입니다.</option>
 				</select>
-			</td>
+			</td> 
 		</tr>
 		<tr>
 			<th>내용</th>
