@@ -139,7 +139,7 @@ td {
 	
 	<div style="text-align: right;">
 		<% if(loginClient!=null && loginClient.getClientStatus()==1) { %>
-			<button type="button" id="writeBtn">글쓰기</button>
+			<button type="button" id="writeBtn">글쓰기</button> 
 		<% } %>
 	</div>
 	<table>
