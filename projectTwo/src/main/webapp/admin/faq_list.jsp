@@ -48,7 +48,7 @@
 	
 	//페이징 처리 관련 정보(시작 행번호, 종료 행번호, 검색단어)를 전달받아 FAQ 테이블에 저장된 행을 
 	//검색하여 게시글 목록을 반환하여 FaqDAO 클래스의 메소드 호출
-	List<FaqDTO> FaqList=FaqDAO.getDAO().selectFaqList(startRow, endRow, keyword);
+	List<FaqDTO> faqList=FaqDAO.getDAO().selectFaqList(startRow, endRow, keyword);
 	
 	//session 객체에 저장된 권한 관련 속성값을 반환받아 저장
 	// => 관리자 권한의 사용자에게만 글쓰기 권한 제공
@@ -159,6 +159,9 @@ td {
 		<a href="<%=url%>"><%=faq.getFaqSubject() %></a>
 		</td>
 	</tr>		
+	
+	<% } %>
+<% } %>	
 </table>
 	<%-- 페이지번호 출력 및 링크 제공 - 블럭화 처리 --%>
 	<%
@@ -220,12 +223,12 @@ td {
 <script type="text/javascript">
 $("#faqCount").change(function() {
 	//alert($("#faqCount").val());
-	location.href="<%=request.getContextPath()%>""/index.jsp?group=admin&worker=faq_list"
+	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=faq_list"
 		+"&pageNum=<%=pageNum%>&pageSize="+$("#faqCount").val()
 		+"&keyword=<%=keyword%>";
 });
  
 $("#writeBtn").click(function() {
-	location.href="<%=request.getContextPath()%>""/index.jsp?group=admin&worker=faq_write";
+	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=faq_write";
 });
 </script>
