@@ -27,47 +27,7 @@
 		return;
 	}
 %>
-<style type="text/css">
-#faq_detail {
-	width: 500px;
-	margin: 0 auto;
-}
-
-table {
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-
-th, td {
-	border: 1px solid black;
-	padding: 5px;	
-}
-
-th {
-	width: 100px;
-	background: black;
-	color: white;
-}
-
-td {
-	width: 400px;
-}
-
-.subject, .content {
-	text-align: left;
-}
-
-.content {
-	height: 300px;
-	vertical-align: middle;
-}
-
-#faq_menu {
-	text-align: right;
-	margin: 5px;
-}
-</style>
-
+<link href="<%=request.getContextPath()%>/css/moon_detail.css" type="text/css" rel="stylesheet">
 <div id="faq_detail">
 	<h1>FAQ</h1>
 	
@@ -92,13 +52,6 @@ td {
 		</tr>
 	</table>
 	
-	<div id="faq_menu">
-		<%
-		if(loginClient.getClientStatus()==9)	{ %>
-			<button type="button" id="modifyBtn">글변경</button>
-			<button type="button" id="removeBtn">글삭제</button>			
-		<% }%>
-	</div>
 </div>
 
 <script type="text/javascript">

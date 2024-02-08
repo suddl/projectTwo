@@ -54,4 +54,5 @@
 	//페이지 이동
 	request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=admin&worker=faq_list"
 		+"&pageNum="+pageNum+"&pageSize="+pageSize+"&keyword="+keyword);
+	%>
 	

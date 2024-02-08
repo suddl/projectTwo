@@ -65,12 +65,6 @@
 <div id="faq_list">
 	<%-- 검색된 게시글 총갯수 출력 --%>
 	<div id="faq_title">자주 묻는 질문(<%= totalFaq %>개)</div>
-	
-	<div id="writeBtn">
-		<% if(loginClient!=null && loginClient.getClientStatus()==9) { %>
-			<button type="button" id="writeBtn">글쓰기</button> 
-		<% } %>
-	</div>
 
 <%-- Faq 목록 출력 --%>
 	<table>

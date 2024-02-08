@@ -52,88 +52,32 @@
 	
 	//session 객체에 저장된 권한 관련 속성값을 반환받아 저장
 	// => 관리자 권한의 사용자에게만 글쓰기 권한 제공
-	ClientDTO admin=(ClientDTO)session.getAttribute("loginClient");
+	ClientDTO loginClient=(ClientDTO)session.getAttribute("loginClient");
 	
 	//페이지에 출력될 게시글의 일련번호 시작값을 계산하여 저장
 	int displayNum=totalFaq-(pageNum-1)*pageSize;
 %>
-<style type="text/css">
-#faq_list {
-	width: 1000px;
-	margin: 0 auto;
-	text-align: center;
-}
+<link href="<%=request.getContextPath()%>/css/moon_list.css" type="text/css" rel="stylesheet">
 
-#faq_title {
-	font-size: 1.2em;
-	font-weight: bold;
-}
 
-table {
-	margin: 5px auto;
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-
-th {
-	border: 1px solid black;
-	background: black;
-	color: white;
-}
-
-td {
-	border: 1px solid black;
-	text-align: center;	
-}
-
-.subject {
-	text-align: left;
-	padding: 5px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-#faq_list a:hover {
-	text-decoration: none; 
-	color: blue;
-	font-weight: bold;
-}
-
-.subject_hidden {
-	background: black;
-	color: white;
-	font-size: 14px;
-	border: 1px solid black;
-	border-radius: 4px;
-}
-
-#page_list {
-	font-size: 1.1em;
-	margin: 10px;
-}
-
-#page_list a:hover {
-	font-size: 1.3em;
-}
-</style>
 
 <h1>FAQ</h1>
 <div id="faq_list">
 	<%-- 검색된 게시글 총갯수 출력 --%>
-	<div id="faq_title">자주 묻는 질문(FAQ)(<%=totalFaq %>)</div>
-	<% 
-		if(admin!=null && admin.getClientStatus()==9)	{	 // 관리자일때 %>
-		<button type="button" id="writeBtn">글쓰기</button>	
-	<% } %>
-</div>
+	<div id="faq_title">자주 묻는 질문(<%= totalFaq %>개)</div>
+	
+	<div id="writeBtn">
+		<% if(loginClient!=null && loginClient.getClientStatus()==9) { %>
+			<button type="button" id="writeBtn">글쓰기</button> 
+		<% } %>
+	</div>
 
 <%-- Faq 목록 출력 --%>
-<table>
+	<table>
 	<tr>
 		<th width="100">글번호</th>
 		<th width="300">카테고리</th>
-		<th width="500">제목</th>
+		<th width="700">제목</th>
 		</tr>
 	<% if(totalFaq==0)	{	//검색된 게시글 없는 경우 %>
 	<tr>
@@ -162,7 +106,8 @@ td {
 	
 	<% } %>
 <% } %>	
-</table>
+	</table>
+</div>
 	<%-- 페이지번호 출력 및 링크 제공 - 블럭화 처리 --%>
 	<%
 		//하나의 페이지블럭에 출력될 페이지번호의 갯수 설정
@@ -221,12 +166,7 @@ td {
 
 
 <script type="text/javascript">
-$("#faqCount").change(function() {
-	//alert($("#faqCount").val());
-	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=faq_list"
-		+"&pageNum=<%=pageNum%>&pageSize="+$("#faqCount").val()
-		+"&keyword=<%=keyword%>";
-});
+
  
 $("#writeBtn").click(function() {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=faq_write";

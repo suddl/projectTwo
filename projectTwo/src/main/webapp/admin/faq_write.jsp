@@ -24,7 +24,7 @@
 			<th>카테고리</th> 
 			<td>
 				<select name="faqCategory">
-					<option value="배송" selected>배송관련</option>
+					<option value="배송">배송관련</option>
 					<option value="제품">제품관련</option>
 					<option value="회원">회원관련</option>
 					<option value="주문">주문/결제</option>
