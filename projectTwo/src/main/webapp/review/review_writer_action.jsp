@@ -28,7 +28,10 @@
     String reviewSubject = multipartRequest.getParameter("review_subject");
     String reviewContent = multipartRequest.getParameter("review_content");
     String reviewRating = multipartRequest.getParameter("review_rating");
-    // 이미지 처리 로직을 여기에 추가합니다. (예시 코드에서는 생략)
+    String reviewImage=null;
+	if(multipartRequest.getFilesystemName("review_image")!=null) {//업로드 파일이 있는 경우	
+		reviewImage="/review_images/"+multipartRequest.getFilesystemName("review_image");
+	}
 
     ReviewDTO review = new ReviewDTO();
     review.setReviewSubject(reviewSubject);
@@ -37,8 +40,7 @@
     review.setReviewOrderNum(43);  // 임시로 임의의값을 넣은 것임
     review.setReviewClientNum(4);
     review.setReviewProductNum(56);
-    //review.setReviewImage(reviewImage);
-    // 이미지 정보도 여기에 추가합니다. (예시 코드에서는 생략)
+    review.setReviewImage(reviewImage);
 	System.out.println(reviewSubject);
 	System.out.println(reviewContent);
 	System.out.println(reviewRating);
