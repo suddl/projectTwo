@@ -123,7 +123,9 @@ td {
 	<%-- 검색된 게시글 총갯수 출력 --%>
 	<div id="faq_title">자주 묻는 질문(FAQ)(<%=totalFaq %>)</div>
 		<button type="button" id="writeBtn">글쓰기</button>
-	<% if(admin!=null)	{	 // 관리자일때 %>
+	<% 
+		int clientStatus=9;
+		if(clientStatus==9)	{	 // 관리자일때 %>
 		<button type="button">글쓰기</button>
 	<% } %>
 </div>
