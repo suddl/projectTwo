@@ -29,7 +29,7 @@
 %>
 <link href="<%=request.getContextPath()%>/css/moon_detail.css" type="text/css" rel="stylesheet">
 <div id="moon_detail">
-	<h1>1:1 문의하기</h1>
+	<a href="<%=request.getContextPath()%>/index.jsp?group=moon&worker=moon_list"><h1>1:1 문의하기</h1></a>
 	<table>
 		<tr>
 			<th>제목</th>
