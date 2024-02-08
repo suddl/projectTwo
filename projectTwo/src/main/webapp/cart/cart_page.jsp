@@ -93,11 +93,10 @@ border: 1px solid #DCDCDC;
 <%
 //회원번호
 int Num = loginClient.getClientNum();
-System.out.println("회원번호="+Num);
+//System.out.println("회원번호="+Num);
 
 List<CartDTO> cartDTOs = CartDAO.getDAO().selectCartList(Num);
 //System.out.println("dto객체="+cartDTOs.size());
-System.out.println("dto객체="+cartDTOs.size());
 
 
 request.setCharacterEncoding("utf-8");
@@ -125,10 +124,11 @@ int total = 0;
 </head>
 <body>
 <h1>장바구니</h1>
-
+<%-- 폼시작00000000000000000000000000000000000000000000000000000000 --%>
+  <form action="<%=request.getContextPath() %>/index.jsp?group=cart&worker=cart_remove_action"
+   method="post" id="hangForm" name="hangForm" >
+   
 <div width="60%">
-  <form action="<%=request.getContextPath() %>/index.jsp?group=order&worker=order_main"
-   method="post" id="orderForm" name="orderForm" >
 <table class="table table-hover" id="ProductList">
   <thead>
     <tr>
@@ -139,20 +139,21 @@ int total = 0;
     </tr>
   </thead>
   
-  
   <%-- 상품목록 출력 --%>
   <%for(int i=0; i<cartDTOs.size();i++) { %>
-  <tr class="hang">
-  	<input type="hidden" id="clientNum" value="<%=Num %>">
-  	<input type="hidden" id="productNum" value="<%=cartDTOs.get(i).getCartProduct() %>">
+       <input type="hidden" name="selectedItemsInput" id="selectedItemsInput"  />
+  <tr class="hang" id="hang("+<%=i %>+")" >
+  
+  
   	
   	<%-- 체크박스 --%>
-    <th width="10%"><input type="checkbox" name="productOne"  class="ckb" onclick='selectOnly(this)' ></th>
+    <th width="10%"><input type="checkbox" name="productOne"  id="productOne" value="<%=cartDTOs.get(i).getCartProduct() %>"></th>
     
   	<%-- 이미지 --%>
      <th width="30%"><img src="<%=request.getContextPath()%><%=cartDTOs.get(i).getCartProductImages()%>" width="150" height="100"> 
      <%=cartDTOs.get(i).getCartProductName() %></th>
-     <% System.out.println(cartDTOs.get(i).getCartProductName());%>
+  	<input type="hidden" id="productNum" name="productNum" value="<%=cartDTOs.get(i).getCartProduct() %>">
+     
      <%-- 수량 --%>
      <th ><%=cartDTOs.get(i).getCartQuantity() %>개</th>
      
@@ -166,10 +167,14 @@ int total = 0;
   </tr>
   <% } %>
 </table>
-</div>
 
-<%-- 선택삭제버튼 --%>
-<button id="selectDelete" style="margin-right: 1050px;">선택삭제</button>
+</div>
+</form>
+
+<%-- 선택삭제버튼--------------------------------------------------------------------------- --%>
+<button type="button" id="GoRemove" style="margin-right: 1050px;" >선택삭제</button>
+
+<%-- 선택삭제버튼--------------------------------------------------------------------------- --%>
 
 <div style="border: 1px solid black; border-radius: 20px;  width: 30%; margin:0 auto; background-color: #DCDCDC; margin-top:30px;
 padding: 30px;">
@@ -205,7 +210,6 @@ padding: 30px;">
  <button type="submit" style="background-color:black; color: white; 
  border-radius: 5px; width: 120px; height: 40px;  ">구매하기</button>
 </div>
-</form>
 
 
 <%-- 스크립트 시작 --%>
@@ -253,55 +257,30 @@ function selectOnly(source) {
     }
 }
 
-//선택 체크박스 삭제
-$("#selectDelete").click(function() {
-	var clientnum=$("#clientNum").val();
-	var productnum=$("#productNum").val();
 	
-	$.ajax({
-		type: "get",
-		url: "<%=request.getContextPath()%>/cart/cart_remove.jsp",
-		data: {"clientnum":clientnum,"productnum":productnum},
-		dataType: "json",
-		success: function(result) {
-			if(result.code=="success"){
-				location.href="<%=request.getContextPath()%>/car/cart_page.jsp";
-			}else{
-				alert("삭제 실패");
-			}
-		},
-		error: function(xhr) {
-			alert("에러코드= " + xhr.status);
-		}
-	});
+//체크선택삭제-------------------------------------------------------------------
+$("#GoRemove").click(function () {
+	//배열변수를 선언
+	 var selectedItems = [];
+		//id로 선택된 체크박스중 체크된것은 this를 통해 그 태그의 val을
+		//배열인 selectedItems 변수에 each 함수를 통해 반복해서 넣는다. 
+	    $("#productOne:checked").each(function() {
+	        selectedItems.push($(this).val( ));
+	    });
+
+	    // 수집한 값이 있는지 확인 후 처리
+	    if (selectedItems.length > 0) {
+	        // 선택된 상품 목록을 hidden 필드에 저장
+	        $("#selectedItemsInput").val(selectedItems.join());
+
+	        // 폼 제출
+	        $("#hangForm").submit();
+ } else {
+     alert("삭제할 상품을 선택하세요.");
+ }
 });
 
-/*
-function removeChoiceCheck(source) {
-	
-	//전체선택체크박스를 변수에 저장
-    let selectAllCheckbox = document.getElementById('selectAllCheckbox');
-    //선택한 체크박스가 체크된 상태라면
-    if (source.checked) {
-		//true를 변수에 저장
-        let allChecked = true;
-		//개별체크박스의 객체를 변수에 저장
-        let checkboxes = document.getElementsByName('productOne');
-		
-		//화면에 나타나는 체크박스의 수 만큼 반복문을 실행
-        for (let i = 0; i < checkboxes.length; i++) {
-			//체크박스가 체크되지 않은 상태라면
-            if (checkboxes[i].checked) {//checkboxes[i].checked => 개별체크박스의 상태가 체크되어있다면
-                //선택된 체크박스의 행을 삭제한다.
-             	
-                
-                
-            	//반복문을 종료
-            }
-        }
-    }
-}
-*/
+
     </script>
 
 </body>
