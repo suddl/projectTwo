@@ -1,10 +1,38 @@
+<%@page import="xyz.nailro.dao.FaqDAO"%>
+<%@page import="xyz.nailro.dto.FaqDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@include file="/security/admin_check.jspf"%>
-<%	
-	//전달값을 반환받아 저장 - 없는 경우 변수에 초기값 저장
-	String pageNum="1", pageSize="10", faqCategory="", keyword="";
+<%@include file="/security/admin_check.jspf" %>    
+<%
+	//글번호가 전달되지 않은 경우에 대한 응답 처리 - 비정상적인 요청
+	if(request.getParameter("faqNum")==null)	{
+		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=error&worker=error_400");
+		return;	
+	}
+	
+	//전달값을 반환받아 저장
+	int faqNum=Integer.parseInt(request.getParameter("faqNum"));
+	String pageNum=request.getParameter("pageNum");
+	String pageSize=request.getParameter("pageSize");
+	String faqCategory=request.getParameter("faqCategory");
+	String keyword=request.getParameter("keyword");
+	
+	//글번호를 전달받아 faq 테이블의 단일행 검색, 게시글(faqDTO 객체)을 반환하는 faqDAO 메소드 호출
+	FaqDTO faq=FaqDAO.getDAO().selectFaqByNum(faqNum);
+	
+	//검색된 게시글이 없는 경우에 대한 응답 처리 - 비정상적인 요청
+	if(faq==null)	{
+		request.setAttribute("retrunUrl", request.getContextPath()+"/index.jsp?group=error&worker=error_400");
+		return;
+	}
+	
+	//로그인 상태자가 관리자가 아닌 경우에 대한 응답처리 - 비정상
+	if(loginClient.getClientStatus()!=9)	{
+		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=error&worker=error_400");
+		return;
+	}
 %>
+
 <style type="text/css">
 table {
 	margin: 0 auto;
@@ -20,7 +48,7 @@ td {
 }
 </style>
 <h1>FAQ 작성</h1>
-<form action="<%=request.getContextPath()%>/index.jsp?group=admin&worker=faq_write_action"
+<form action="<%=request.getContextPath()%>/index.jsp?group=admin&worker=faq_modify_action"
 	method="post" enctype="application/x-www-form-urlencoded" id="faqForm">
 	<input type="hidden" name="pageNum" value="<%=pageNum %>">
 	<input type="hidden" name="pageSize" value="<%=pageSize %>">
@@ -54,13 +82,14 @@ td {
 		</tr>
 		<tr>				
 			<th colspan="2">
-				<button type="submit">글저장</button>
+				<button type="submit">글변경</button>
 				<button type="reset" id="resetBtn">다시쓰기</button>
 			</th>
 		</tr>
 	</table>	
 	</form>
 <div id="message" style="color: red;"></div>
+
 <script type="text/javascript">
 $("#faqSubject").focus();
 
@@ -83,3 +112,4 @@ $("#resetBtn").click(function() {
 	$("#message").text("");
 });
 </script>
+	

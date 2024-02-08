@@ -186,4 +186,31 @@ public class FaqDAO extends JdbcDAO {
 		}
 		return faq;
 	}
+	
+	//게시글을 전달받아 FAQ 테이블의 저장된 행의 컬럼값을 변경하고 변경행의 갯수를 반환하는 메소드
+	public int updateFaq(FaqDTO faq)	{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		int rows=0;
+		try {
+			con=getConnection();
+			
+			String sql="update faq set faq_subject=?,faq_category=?,faq_content=? where faq_num=?";
+			
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1, faq.getFaqSubject());
+			pstmt.setString(2, faq.getFaqCategory());
+			pstmt.setString(3, faq.getFaqContent());
+			pstmt.setInt(4, faq.getFaqNum());
+			
+			rows=pstmt.executeUpdate();
+		} catch (SQLException e)	{
+			System.out.println("[에러]updateFaq() 메소드의 SQL 오류 = "+e.getMessage());
+		} finally {
+			close(con, pstmt);
+		}
+		return rows;
+	}
+	
 }

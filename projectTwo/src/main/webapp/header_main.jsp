@@ -30,7 +30,7 @@
 			<li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=nail">nail</a></li>
 			<li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=pedi">pedi</a></li>
 			<li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=care">care&tool</a></li>
-			<li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=faq">FAQ</a></li>
+			<li><a href="<%=request.getContextPath() %>/index.jsp?group=admin&worker=faq_list">FAQ</a></li>
 		</ul>
 	</div>
 	<div class="menu2">
