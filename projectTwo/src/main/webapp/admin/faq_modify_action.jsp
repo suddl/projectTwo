@@ -47,6 +47,6 @@
 	FaqDAO.getDAO().updateFaq(faq);
 	
 	//페이지 이동
-	request.setAttribute("returnUrl", request.getContentType()+"/index.jsp?group=admin&worker=faq_detail"
+	request.setAttribute("returnUrl", request.getContentType()+"/index.jsp?group=admin&worker=admin_faq_detail"
 		+"&faqNum="+faqNum+"&pageNum="+pageNum+"&pageSize="+pageSize+"&keyword="+keyword);	
 	%>

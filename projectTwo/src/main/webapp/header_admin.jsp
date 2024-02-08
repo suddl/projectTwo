@@ -15,7 +15,7 @@
 			<li><a href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_list">상품관리</a></li>
 			<li><a href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=order_list">주문관리</a></li>
 			<li><a href="<%=request.getContextPath()%>/index.jsp?group=moon&worker=moon_list">1:1문의관리</a></li>
-			<li><a href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=faq_list">FAQ관리</a></li>
+			<li><a href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=admin_faq_list">FAQ관리</a></li>
 		</ul>
 	</div>
 </div>

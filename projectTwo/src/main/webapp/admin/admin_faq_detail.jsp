@@ -27,7 +27,7 @@
 		return;
 	}
 %>
-<link href="<%=request.getContextPath()%>/css/detail.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/moon_detail.css" type="text/css" rel="stylesheet">
 <div id="faq_detail">
 	<h1>FAQ</h1>
 	
@@ -70,7 +70,7 @@ $("#modifyBtn").click(function() {
 
 $("#removeBtn").click(function() {
 	if(confirm("게시글을 정말로 삭제 하시겠습니까?")) {
-		location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=admin_remove_action"
+		location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=faq_remove_action"
 			+"&faqNum=<%=faq.getFaqNum()%>&pageNum=<%=pageNum%>"
 			+"&pageSize=<%=pageSize%>&keyword=<%=keyword%>";	
 	}

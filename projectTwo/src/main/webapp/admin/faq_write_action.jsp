@@ -52,7 +52,7 @@
 	FaqDAO.getDAO().insertFaq(faq);
 	
 	//페이지 이동
-	request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=admin&worker=faq_list"
+	request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=admin&worker=admin_faq_list"
 		+"&pageNum="+pageNum+"&pageSize="+pageSize+"&keyword="+keyword);
 	%>
 	

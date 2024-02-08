@@ -27,7 +27,7 @@
 		return;
 	}
 %>
-<link href="<%=request.getContextPath()%>/css/detail.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/moon_detail.css" type="text/css" rel="stylesheet">
 <div id="faq_detail">
 	<h1>FAQ</h1>
 	
