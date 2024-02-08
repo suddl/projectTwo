@@ -33,7 +33,7 @@ public class ReviewDAO extends JdbcDAO {
 
         try {
             con = getConnection();
-            String sql = "SELECT review_num, review_client_num, review_subject, review_content, review_order_num, review_date, review_image, review_re, review_rating FROM review WHERE review_order_num = ?";
+            String sql = "SELECT review_num, review_client_num, review_subject, review_content, review_order_num, review_date, review_image, review_re, review_rating,review_product_num FROM review WHERE review_order_num = ?";
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, productId);
 
@@ -49,6 +49,8 @@ public class ReviewDAO extends JdbcDAO {
                 review.setReviewImage(rs.getString("review_image"));
                 review.setReviewRe(rs.getString("review_re"));
                 review.setReviewRating(rs.getString("review_rating")); // 새로 추가된 필드 설정
+                review.setReviewProductNum(rs.getInt("review_product_num"));
+                
                 reviews.add(review);
             }
         } catch (SQLException e) {
@@ -103,9 +105,15 @@ public class ReviewDAO extends JdbcDAO {
 
             String sql = "";
             if (keyword.equals("")) {
-                sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num, client.client_name, review.review_subject, review.review_content, review.review_date, review.review_image, review.review_re, review.review_rating FROM review INNER JOIN client ON review.review_client_num = client.client_num ORDER BY review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
+                sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num, client.client_name, "
+                		+ "review.review_subject, review.review_content, review.review_date, review.review_image, "
+                		+ "review.review_re, review.review_rating, review.review_product_num "
+                		+ "FROM review INNER JOIN client ON review.review_client_num = client.client_num ORDER BY review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
             } else {
-                sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num, client.client_name, review.review_subject, review.review_content, review.review_date, review.review_image, review.review_re, review.review_rating FROM review INNER JOIN client ON review.review_client_num = client.client_num WHERE " + search + " LIKE '%' || ? || '%' ORDER BY review.review_date DESC, review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
+                sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num,"
+                		+ " client.client_name, review.review_subject, review.review_content, review.review_date, "
+                		+ "review.review_image, review.review_re, review.review_rating, review.review_product_num "
+                		+ "FROM review INNER JOIN client ON review.review_client_num = client.client_num WHERE " + search + " LIKE '%' || ? || '%' ORDER BY review.review_date DESC, review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
                 pstmt = con.prepareStatement(sql);
                 pstmt.setString(1, keyword);
                 pstmt.setInt(2, startRow);
@@ -135,6 +143,7 @@ public class ReviewDAO extends JdbcDAO {
                 review.setReviewImage(rs.getString("review_image"));
                 review.setReviewRe(rs.getString("review_re"));
                 review.setReviewRating(rs.getString("review_rating"));
+                review.setReviewProductNum(rs.getInt("review_product_num"));
                 reviewList.add(review);
             }
         } catch (SQLException e) {
@@ -176,7 +185,8 @@ public class ReviewDAO extends JdbcDAO {
         int rows = 0;
         try {
             con = getConnection();
-            String sql = "INSERT INTO review (review_num, review_client_num, review_subject, review_content, review_order_num, review_date, review_image, review_re, review_rating) VALUES (review_seq.nextval, ?, ?, ?, ?, SYSDATE, ?, ?, ?)";
+            String sql = "INSERT INTO review (review_num, review_client_num, review_subject, review_content, review_order_num, review_date,"
+            		+ " review_image, review_re, review_rating, review_product_num) VALUES (review_seq.nextval, ?, ?, ?, ?, SYSDATE, ?, ?, ?)";
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, review.getReviewClientNum());
             pstmt.setString(2, review.getReviewSubject());
@@ -185,6 +195,7 @@ public class ReviewDAO extends JdbcDAO {
             pstmt.setString(5, review.getReviewImage());
             pstmt.setString(6, review.getReviewRe());
             pstmt.setString(7, review.getReviewRating());
+            pstmt.setInt(8, review.getReviewProductNum());
             rows = pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("[에러] insertReview() 메소드의 SQL 오류 = " + e.getMessage());
@@ -202,7 +213,8 @@ public class ReviewDAO extends JdbcDAO {
         ReviewDTO review = null;
         try {
             con = getConnection();
-            String sql = "SELECT review_num, review_client_num, review_subject, review_content, review_order_num, review_date, review_image, review_re, review_rating FROM review WHERE review_num = ?";
+            String sql = "SELECT review_num, review_client_num, review_subject, review_content, review_order_num, review_date, review_image, "
+            		+ "review_re, review_rating,review_product_num FROM review WHERE review_num = ?";
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, reviewNum);
 
@@ -218,6 +230,7 @@ public class ReviewDAO extends JdbcDAO {
                 review.setReviewImage(rs.getString("review_image"));
                 review.setReviewRe(rs.getString("review_re"));
                 review.setReviewRating(rs.getString("review_rating")); // 새로 추가된 필드 설정
+                review.setReviewProductNum(rs.getInt("review_product_num"));
             }
         } catch (SQLException e) {
             System.out.println("[에러] selectReviewByNum() 메소드의 SQL 오류 = " + e.getMessage());
@@ -262,7 +275,7 @@ public class ReviewDAO extends JdbcDAO {
     
 
     
-    //리뷰삭제 dao
+    //리뷰삭제 DAO
     public int DeleteReviewByNum (int reviewNum) {
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -282,6 +295,8 @@ public class ReviewDAO extends JdbcDAO {
         return rows;
     }
     
+    
+    //detail 페이지에서 상품코드로 조인하여 관련된 리뷰만 불러오는 DAO
     
 
     }

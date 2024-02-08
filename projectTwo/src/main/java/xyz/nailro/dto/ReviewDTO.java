@@ -3,17 +3,18 @@ package xyz.nailro.dto;
 public class ReviewDTO {
 
 /*
-이름                널?       유형             
------------------ -------- -------------- 
-REVIEW_NUM        NOT NULL NUMBER         
-REVIEW_CLIENT_NUM          NUMBER         
-REVIEW_SUBJECT    NOT NULL VARCHAR2(500)  
-REVIEW_C0NTENT    NOT NULL VARCHAR2(3000) 
-REVIEW_ORDER_NUM           NUMBER         
-REVIEW_DATE                DATE           
-REVIEW_IMAGE               VARCHAR2(50)   
-REVIEW_RE                  VARCHAR2(4000) 
-REVIEW_RATING              VARCHAR2(20)   
+이름                 널?       유형             
+------------------ -------- -------------- 
+REVIEW_NUM         NOT NULL NUMBER         
+REVIEW_CLIENT_NUM           NUMBER         
+REVIEW_SUBJECT     NOT NULL VARCHAR2(500)  
+REVIEW_CONTENT     NOT NULL VARCHAR2(3000) 
+REVIEW_ORDER_NUM            NUMBER         
+REVIEW_DATE                 DATE           
+REVIEW_IMAGE                VARCHAR2(50)   
+REVIEW_RE                   VARCHAR2(4000) 
+REVIEW_RATING               VARCHAR2(20)   
+REVIEW_PRODUCT_NUM          NUMBER   
 */
 		private int reviewNum;
 		private int reviewClientNum;
@@ -25,6 +26,7 @@ REVIEW_RATING              VARCHAR2(20)
 		private String reviewImage;
 		private String reviewRe; //답글
 		private String reviewRating;
+		private int reviewProductNum;
 
 		public ReviewDTO() {
 			// TODO Auto-generated constructor stub
@@ -109,8 +111,14 @@ REVIEW_RATING              VARCHAR2(20)
 		public void setReviewRating(String reviewRating) {
 			this.reviewRating = reviewRating;
 		}
-		
-		
-		
+
+		public int getReviewProductNum() {
+			return reviewProductNum;
+		}
+
+		public void setReviewProductNum(int reviewProductNum) {
+			this.reviewProductNum = reviewProductNum;
+		}
+
 		
 }
