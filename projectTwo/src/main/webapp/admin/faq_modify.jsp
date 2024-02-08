@@ -66,12 +66,12 @@ td {
 			<th>카테고리</th> 
 			<td>
 				<select name="faqCategory">
-					<option value="배송"<% if(faq.getFaqCategory()=="배송관련") {%>selected<%}%>>배송관련</option>
-					<option value="제품"<% if("faq.getFaqCategory()"=="제품관련") {%>selected<%}%>>제품관련</option>				
-					<option value="회원"<% if("faq.getFaqCategory()"=="회원관련") {%>selected<%}%>>회원관련</option>				
-					<option value="주문"<% if("faq.getFaqCategory()"=="주문/결제") {%>selected<%}%>>주문/결제</option>				
-					<option value="교환"<% if("faq.getFaqCategory()"=="교환/반품") {%>selected<%}%>>교환/반품</option>				
-					<option value="기타"<% if("faq.getFaqCategory()"=="기타") {%>selected<%}%>>기타</option>				
+					<option value="배송"<% if(faq.getFaqCategory().equals("배송관련")) {%>selected<%}%>>배송관련</option>
+					<option value="제품"<% if(faq.getFaqCategory().equals("제품관련")) {%>selected<%}%>>제품관련</option>				
+					<option value="회원"<% if(faq.getFaqCategory().equals("회원관련")) {%>selected<%}%>>회원관련</option>				
+					<option value="주문"<% if(faq.getFaqCategory().equals("주문/결제")) {%>selected<%}%>>주문/결제</option>				
+					<option value="교환"<% if(faq.getFaqCategory().equals("교환/반품")) {%>selected<%}%>>교환/반품</option>				
+					<option value="기타"<% if(faq.getFaqCategory().equals("기타")) {%>selected<%}%>>기타</option>				
 					<%-- 
 					<option value="회원">회원관련</option>
 					<option value="주문">주문/결제</option>

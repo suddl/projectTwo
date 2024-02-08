@@ -57,7 +57,7 @@
 	//페이지에 출력될 게시글의 일련번호 시작값을 계산하여 저장
 	int displayNum=totalFaq-(pageNum-1)*pageSize;
 %>
-<link href="<%=request.getContextPath()%>/css/moon_list.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/list.css" type="text/css" rel="stylesheet">
 
 
 

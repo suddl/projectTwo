@@ -5,7 +5,7 @@
 	//전달값을 반환받아 저장 - 없는 경우 변수에 초기값 저장
 	String pageNum="1", pageSize="10", faqCategory="", keyword="";
 %>
-<link href="<%=request.getContextPath()%>/css/moon_write.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/write.css" type="text/css" rel="stylesheet">
 <h1>FAQ 작성</h1>
 <form action="<%=request.getContextPath()%>/index.jsp?group=admin&worker=faq_write_action"
 	method="post" enctype="application/x-www-form-urlencoded" id="faqForm">

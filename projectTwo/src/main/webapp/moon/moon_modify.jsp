@@ -29,7 +29,7 @@
 	}
 	String moonTitle=request.getParameter("moonTitle");
 %>
-<link href="<%=request.getContextPath()%>/css/moon_write.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/write.css" type="text/css" rel="stylesheet">
 <h1>게시글변경</h1>
 <form action="<%=request.getContextPath()%>/index.jsp?group=moon&worker=moon_modify_action" method="post" enctype="multipart/form-data" id="moonForm">
 	<input type="hidden" name="moonNum" value="<%=moonNum %>">
