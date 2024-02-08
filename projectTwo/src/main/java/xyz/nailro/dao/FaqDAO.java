@@ -27,7 +27,7 @@ public class FaqDAO extends JdbcDAO {
 	//검색정보(검색대상과 검색단어)를 전달받아 FAQ 테이블에 저장된 게시글 중 검색대상의 
 	//컬럼에 검색단어가 포함된 게시글의 갯수를 검색하여 반환하는 메소드
 	// => 검색 기능을 사용하지 않을 경우 FAQ 테이블에 저장된 모든 게시글의 갯수를 검색하여 반환
-	public int selectTotalFaq(String search, String keyword) {
+	public int selectTotalFaq(String keyword) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -42,9 +42,9 @@ public class FaqDAO extends JdbcDAO {
 				pstmt=con.prepareStatement(sql);
 			} else {//검색 기능을 사용한 경우
 				//게시글 제목을 검색하기 위해 REVIEW 테이블과 MEMBER 테이블의 행을 결합하여 검색
-				String sql="select count(*) from faq where "+search+" like '%'||?||'%'";
+				String sql="select count(*) from faq where "+keyword+" like '%'||?||'%'";
 				pstmt=con.prepareStatement(sql);
-				pstmt.setString(1, keyword);
+				pstmt.setString(1, "%"+ keyword +"%");
 			}
 			
 			rs=pstmt.executeQuery();
@@ -62,7 +62,7 @@ public class FaqDAO extends JdbcDAO {
 	
 	//페이징 처리 관련 정보(시작 행번호와 종료 행번호)와 게시글 검색 기능 관련 정보(검색대상과
 	//검색단어)를 전달받아 FAQ 테이블에 저장된 행을 검색하여 게시글 목록을 반환하는 메소드
-	public List<FaqDTO> selectFaqList(int startRow, int endRow, String search, String keyword) {
+	public List<FaqDTO> selectFaqList(int startRow, int endRow, String keyword) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -79,10 +79,10 @@ public class FaqDAO extends JdbcDAO {
 				pstmt.setInt(2, endRow);
 			} else {//검색 기능을 사용한 경우
 				String sql="select * from (select rownum rn, temp.* from (select faq_num"
-					+ ", faq_subject, faq_content, faq_category from faq where "+search
+					+ ", faq_subject, faq_content, faq_category from faq where "+keyword
 					+" like '%'||?||'%') temp) where rn between ? and ?";
 				pstmt=con.prepareStatement(sql);
-				pstmt.setString(1, keyword);
+				pstmt.setString(1, "%"+ keyword +"%");
 				pstmt.setInt(2, startRow);
 				pstmt.setInt(3, endRow);
 			}

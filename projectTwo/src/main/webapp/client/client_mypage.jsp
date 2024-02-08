@@ -15,27 +15,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        function redirectToReviewWrite() {
-            window.location.href = '<%=request.getContextPath()%>/review/review_write.jsp';
-         }    
+    function redirectToReviewWrite() {
+        $.get('<%=request.getContextPath()%>/review/review_write.jsp', function(data) {
+            $('#content').html(data); // Update the content area
+        });
+    }
         function redirectToCart() {
-        	window.location.href = '<%=request.getContextPath()%>/cart/cart_page.jsp';
+        	$.get('<%=request.getContextPath()%>/cart/cart_page.jsp', function(data) {
+        		$('#content').html(data);
+        	});
         }
         function redirectToClientModify() {
-        	window.location.href = '<%=request.getContextPath()%>/client/client_modify.jsp';
+        	$.get('<%=request.getContextPath()%>/client/client_modify.jsp', function(data) {
+        		$('#content').html(data);
+        	});
         }
         function redirectToReviewModify() {
-        	window.location.href = '<%=request.getContextPath()%>/moon/moon_list.jsp'
-        }
+        	   $.get('<%=request.getContextPath()%>/moon/moon_list.jsp', function(data) {
+        	      $('#content').html(data); // Update the content area
+        	   }).fail(function() {
+        	      console.error('Failed to load content for 1:1 문의하기.');
+        	   });
+        	}
        
     </script>
-    <meta charset="UTF-8">
-    <title>Nailro</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -50,7 +55,7 @@
                 <input type="button" value="리뷰 쓰기" style="float:right;" onclick="redirectToReviewWrite()"/>
             </div>
             
-            <div class="mybuttons" style="margin-top: 4cm;>
+            <div class="mybuttons" style="margin-top: 4cm;">
             <!-- Move these buttons below the "리뷰 쓰기" button -->
           <input type="button" value="장바구니" style="background-color: #FFDCD1; border: none; color: black;" onclick="redirectToCart()" class="btn btn-primary">
             <input type="button" value="회원정보" style="background-color: #FFDCD1; border: none; color: black;" onclick="redirectToClientModify()" class="btn btn-primary">
@@ -63,7 +68,6 @@
             </div>
         </div>
     </div>
-    <div id="header"></div>
-    <div id="footer"></div>
+ 
 </body>
 </html>

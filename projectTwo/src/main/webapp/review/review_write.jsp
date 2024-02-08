@@ -99,7 +99,6 @@ td {
             </tr>
         </table>
     </form>
-<%@ include file="../footer.jsp" %>
 </body>
 </html>
 <script type="text/javascript">

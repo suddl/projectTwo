@@ -32,7 +32,7 @@ th {
 	text-align: left;
 	width: 120px;
 	font-weight: bold;
-	padding-top: 20px;
+	padding-top: 10px;
 	padding-bottom: 20px;
 }
 
@@ -82,7 +82,7 @@ button:hover {
 <fieldset>
 	<table>
 		<tr>
-			<th>상품명</th>
+			<th >상품명</th>
 			<td>
 				<input type="text" name="productName" id="productName" size="30">
 			</td>					
@@ -97,7 +97,7 @@ button:hover {
 		<tr>
 			<th>카테고리</th>
 			<td>
-			<select name="productCategory">
+			<select name="productCategory" onChange="selectBoxChage(this.value)">
 				<option value="Nail">&nbsp;네일&nbsp;&nbsp;</option>
 				<option value="Pedi">&nbsp;페디&nbsp;&nbsp;</option>
 				<option value="CareTool">&nbsp;케어&툴&nbsp;&nbsp;</option>
