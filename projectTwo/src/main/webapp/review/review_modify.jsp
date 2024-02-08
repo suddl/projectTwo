@@ -74,6 +74,13 @@ td {
 			</td>					
 		</tr>	
 		<tr>
+			<th>별점</th>
+			<td>
+				<input type="text" name="reviewRating" id="reviewRating" size="40" 
+					value="<%=review.getReviewRating()%>">
+			</td>
+		</tr>
+		<tr>
 			<th>내용</th>
 			<td>
 				<textarea rows="7" cols="60" name="reviewContent" id="reviewContent"><%=review.getReviewContent() %></textarea>
@@ -108,6 +115,12 @@ $("#reviewForm").submit(function() {
 		$("#reviewSubject").focus();
 		return false;
 	}
+	
+	if($("#reviewRating").val()=="") {
+		$("#message").text("별점을 체크해주세요.");
+		$("#reviewRating").focus();
+		return false;
+	
 	
 	if($("#reviewContent").val()=="") {
 		$("#message").text("내용을 입력해 주세요.");

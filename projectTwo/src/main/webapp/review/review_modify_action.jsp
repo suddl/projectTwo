@@ -35,10 +35,7 @@
 	String keyword=multipartRequest.getParameter("keyword");
 	String reviewSubject=Utility.escapeTag(multipartRequest.getParameter("reviewSubject"));
 	int reviewStatus=1;//전달값이 없는 경우 - 일반글
-	//비밀글 없어서 주석처리 - 나중에 삭제할 것
-	//if(multipartRequest.getParameter("reviewSecret")!=null) {//전달값이 있는 경우 - 비밀글
-	//	reviewStatus=Integer.parseInt(multipartRequest.getParameter("reviewSecret"));
-	//}
+	String reviewRating=Utility.escapeTag(multipartRequest.getParameter("reviewRating"));
 	String reviewContent=Utility.escapeTag(multipartRequest.getParameter("reviewContent"));
 	
 	//서버 디렉토리에 업로드되어 저장된 파일명을 반환받아 컨텍스트 경로를 저장
@@ -58,6 +55,7 @@
 	ReviewDTO review=new ReviewDTO();
 	review.setReviewNum(reviewNum);
 	review.setReviewSubject(reviewSubject);
+	review.setReviewRating(reviewRating);
 	review.setReviewContent(reviewContent);
 	review.setReviewImage(reviewImage);
 	//review.setReviewStatus(reviewStatus);
