@@ -185,8 +185,7 @@ public class ReviewDAO extends JdbcDAO {
         int rows = 0;
         try {
             con = getConnection();
-            String sql = "INSERT INTO review (review_num, review_client_num, review_subject, review_content, review_order_num, review_date,"
-            		+ " review_image, review_re, review_rating, review_product_num) VALUES (review_seq.nextval, ?, ?, ?, ?, SYSDATE, ?, ?, ?)";
+            String sql = "INSERT INTO review VALUES (review_seq.nextval, ?, ?, ?, ?, SYSDATE, ?, ?, ?,?)";
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, review.getReviewClientNum());
             pstmt.setString(2, review.getReviewSubject());

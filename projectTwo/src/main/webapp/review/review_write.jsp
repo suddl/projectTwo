@@ -49,9 +49,6 @@ td {
     cursor: pointer;
 }
 
-.star-rating .checked {
-    color: gold;
-}
 
 #review_subject {
     text-align: center;
@@ -66,7 +63,7 @@ td {
         method="post" enctype="multipart/form-data" id="reviewForm">
         <table>
             <tr>
-                <td>만족도:</td>
+                <td>별점:</td>
                 <td>
                     <div class="star-rating">
                         <span class="star" onclick="setRating(1)">☆</span>
