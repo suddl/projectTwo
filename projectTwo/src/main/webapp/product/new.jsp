@@ -35,21 +35,21 @@
 		</select>
 	</div>
 
-<div class="prodList" id="prodList">
-	<% for (ProductDTO product : productList) { 
-	    String url = request.getContextPath() + "/index.jsp?group=detail&worker=detail&productNum=" + product.getProductNum();    
-	%>
-	    <div class="product" >
-	        <a href="<%=url%>">
-	            <img class="prodImage" src="<%=request.getContextPath() %>/<%=product.getProductImage()%>" alt="이미지 준비중">
-	        </a>
-	        <div class="prodName">
-	            <a href="<%=url%>"><%=product.getProductName()%></a>
-	        </div>
-	        <div class="prodPrice"><%=product.getProductPrice() %></div>
-	    </div>
-    <% } %>
-</div>
+	<div class="prodList" id="prodList">
+		<% for (ProductDTO product : productList) { 
+		    String url = request.getContextPath() + "/index.jsp?group=detail&worker=detail&productNum=" + product.getProductNum();    
+		%>
+		    <div class="product" >
+		        <a href="<%=url%>">
+		            <img class="prodImage" src="<%=request.getContextPath() %>/<%=product.getProductImage()%>" alt="이미지 준비중">
+		        </a>
+		        <div class="prodName">
+		            <a href="<%=url%>"><%=product.getProductName()%></a>
+		        </div>
+		        <div class="prodPrice"><%=product.getProductPrice() %></div>
+		    </div>
+	    <% } %>
+	</div>
 </div>
 <script>
 

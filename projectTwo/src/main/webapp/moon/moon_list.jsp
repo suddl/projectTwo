@@ -72,7 +72,7 @@
 	int displayNum=totalMoon-(pageNum-1)*pageSize;
 %>
 <link href="<%=request.getContextPath()%>/css/list.css" type="text/css" rel="stylesheet">
-<h1>1:1 문의하기</h1>
+<a href="<%=request.getContextPath()%>/index.jsp?group=moon&worker=moon_list"><h1>1:1 문의하기</h1></a>
 <div id="moon_list">
 	<div id="moon_title">문의 목록(<%= totalMoon %>개)</div>
 	
