@@ -93,10 +93,11 @@ border: 1px solid #DCDCDC;
 <%
 //회원번호
 int Num = loginClient.getClientNum();
-//System.out.println("회원번호="+Num);
+System.out.println("회원번호="+Num);
 
 List<CartDTO> cartDTOs = CartDAO.getDAO().selectCartList(Num);
 //System.out.println("dto객체="+cartDTOs.size());
+System.out.println("dto객체="+cartDTOs.size());
 
 
 request.setCharacterEncoding("utf-8");
@@ -126,34 +127,38 @@ int total = 0;
 <h1>장바구니</h1>
 
 <div width="60%">
+  <form action="<%=request.getContextPath() %>/index.jsp?group=order&worker=order_main"
+   method="post" id="orderForm" name="orderForm" >
 <table class="table table-hover" id="ProductList">
   <thead>
     <tr>
-    <div style="margin-right: 1120px; ">전체선택</div>
-      <th ><input type="checkbox" name="productAll" id="selectAllCheckbox" onclick='selectAll(this)' ></th>
+      <th ><input type="checkbox" name="productAll" id="selectAllCheckbox" onclick='selectAll(this)' >  전체선택</th> 
       <th >상품명</th>
       <th >수량</th>
       <th >가격</th>
     </tr>
   </thead>
   
-  <form action="<%=request.getContextPath() %>/index.jsp?group=order&worker=order_main"
-   method="post" id="orderForm" name="orderForm" >
   
-  <%for(CartDTO carts : cartDTOs) { %>
-  <tr>
+  <%-- 상품목록 출력 --%>
+  <%for(int i=0; i<cartDTOs.size();i++) { %>
+  <tr class="hang">
+  	<input type="hidden" id="clientNum" value="<%=Num %>">
+  	<input type="hidden" id="productNum" value="<%=cartDTOs.get(i).getCartProduct() %>">
+  	
   	<%-- 체크박스 --%>
     <th width="10%"><input type="checkbox" name="productOne"  class="ckb" onclick='selectOnly(this)' ></th>
     
   	<%-- 이미지 --%>
-     <th width="30%"><img src="<%=request.getContextPath()%><%=carts.getCartProductImages()%>" width="150" height="100"> <%=carts.getCartProductName() %></th>
-     
+     <th width="30%"><img src="<%=request.getContextPath()%><%=cartDTOs.get(i).getCartProductImages()%>" width="150" height="100"> 
+     <%=cartDTOs.get(i).getCartProductName() %></th>
+     <% System.out.println(cartDTOs.get(i).getCartProductName());%>
      <%-- 수량 --%>
-     <th ><%=carts.getCartQuantity() %>개</th>
+     <th ><%=cartDTOs.get(i).getCartQuantity() %>개</th>
      
      <%
-     total += Integer.parseInt(carts.getCartProductPrice()) * Integer.parseInt(carts.getCartQuantity());
-     	String priceP = String.format("%,d",Integer.parseInt(carts.getCartProductPrice()) * Integer.parseInt(carts.getCartQuantity())); 
+     total += Integer.parseInt(cartDTOs.get(i).getCartProductPrice()) * Integer.parseInt(cartDTOs.get(i).getCartQuantity());
+     	String priceP = String.format("%,d",Integer.parseInt(cartDTOs.get(i).getCartProductPrice()) * Integer.parseInt(cartDTOs.get(i).getCartQuantity())); 
       %>
 		     
      <th ><%=priceP %>원</th>
@@ -162,6 +167,9 @@ int total = 0;
   <% } %>
 </table>
 </div>
+
+<%-- 선택삭제버튼 --%>
+<button id="selectDelete" style="margin-right: 1050px;">선택삭제</button>
 
 <div style="border: 1px solid black; border-radius: 20px;  width: 30%; margin:0 auto; background-color: #DCDCDC; margin-top:30px;
 padding: 30px;">
@@ -177,6 +185,7 @@ padding: 30px;">
  </span>
 <hr>
 
+<%-- 결제금액 출력 --%>
 <p class="moneyALL" >총 결제 금액</p><span class="NumMoneyALL" >
 <% if(total>=50000){ %>
 		<%=String.format("%,d", total)%> 원
@@ -187,6 +196,8 @@ padding: 30px;">
 
 </div>
 
+<%-- 쇼핑계속하기 및 구매하기 버튼 출력 --%>
+
 <div style="margin:0 auto; text-align: center; margin-top: 30px">
 <button type="button" class="btn btn-secondary"  >쇼핑계속하기</button>&nbsp;&nbsp;&nbsp;
 <%-- <div id="BuyBtn" style="display: inline-block;" 
@@ -195,6 +206,10 @@ padding: 30px;">
  border-radius: 5px; width: 120px; height: 40px;  ">구매하기</button>
 </div>
 </form>
+
+
+<%-- 스크립트 시작 --%>
+
 <script>
 //전체선택체크박스를 클릭하면 해당 엘리먼트가 source에 대입
 function selectAll(source) {
@@ -207,22 +222,8 @@ function selectAll(source) {
     }
 }
 
-	/*
-const checkboxes = document.querySelectorAll(.chk);
-const totalCnt = checkboxes.length;
-const checkedCnt = document.querySelectorAll('.chk:cheked').length;
-for(i=0; i<totalCntl i++)
-
-if(totalCnt == checkedCnt){
-	document.querySelector('#selectAllCheckbox').checked=true;
-	
-}else{
-	document.querySelector('#selectAllCheckbox').checked=false;
-}
-	*/
 
 function selectOnly(source) {
-	
 	
 	//전체선택체크박스를 변수에 저장
     let selectAllCheckbox = document.getElementById('selectAllCheckbox');
@@ -251,6 +252,56 @@ function selectOnly(source) {
         selectAllCheckbox.checked = false;
     }
 }
+
+//선택 체크박스 삭제
+$("#selectDelete").click(function() {
+	var clientnum=$("#clientNum").val();
+	var productnum=$("#productNum").val();
+	
+	$.ajax({
+		type: "get",
+		url: "<%=request.getContextPath()%>/cart/cart_remove.jsp",
+		data: {"clientnum":clientnum,"productnum":productnum},
+		dataType: "json",
+		success: function(result) {
+			if(result.code=="success"){
+				location.href="<%=request.getContextPath()%>/car/cart_page.jsp";
+			}else{
+				alert("삭제 실패");
+			}
+		},
+		error: function(xhr) {
+			alert("에러코드= " + xhr.status);
+		}
+	});
+});
+
+/*
+function removeChoiceCheck(source) {
+	
+	//전체선택체크박스를 변수에 저장
+    let selectAllCheckbox = document.getElementById('selectAllCheckbox');
+    //선택한 체크박스가 체크된 상태라면
+    if (source.checked) {
+		//true를 변수에 저장
+        let allChecked = true;
+		//개별체크박스의 객체를 변수에 저장
+        let checkboxes = document.getElementsByName('productOne');
+		
+		//화면에 나타나는 체크박스의 수 만큼 반복문을 실행
+        for (let i = 0; i < checkboxes.length; i++) {
+			//체크박스가 체크되지 않은 상태라면
+            if (checkboxes[i].checked) {//checkboxes[i].checked => 개별체크박스의 상태가 체크되어있다면
+                //선택된 체크박스의 행을 삭제한다.
+             	
+                
+                
+            	//반복문을 종료
+            }
+        }
+    }
+}
+*/
     </script>
 
 </body>

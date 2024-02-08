@@ -160,4 +160,29 @@ public class CartDAO extends JdbcDAO{
 		}
 		return quantity;
 	}
+	
+	//삭제할 행의 번호를 전달 받아 선택행을 삭제하고 테이블에서 삭제
+	public int deleteCartInProduct(int ProductNum, int ClientNum ) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int rows = 0;
+		
+		try {
+			con = getConnection();
+			
+			String sql ="delete from cart where cart_product=? and cart_client_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, ProductNum);
+			pstmt.setInt(2, ClientNum);
+			
+			rows=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("[에러]deleteCartInProduct() 메소드 오류"+e.getMessage());
+		}finally {
+			close(con, pstmt);
+		}
+		return rows;
+		
+	}
+
 }

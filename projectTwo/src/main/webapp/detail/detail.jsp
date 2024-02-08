@@ -36,7 +36,7 @@
       action="<%=request.getContextPath()%>/index.jsp?group=cart&worker=cartIn_action"
       method="get"  id="detail" name="detail">
       <input type="hidden" name="url" id="url2">
-      <input type="hidden" name="productNum" value="1">
+      <input type="hidden" name="productNum" id="productNum" value="<%=productNum %>">
       
       <div class="container">
          <div class="row custom-center">
@@ -162,7 +162,8 @@
     
     //장바구니 클릭시 cartIn_action으로 submit;
     $("#cartBtn").click(function(){
-        $("#url2").val("group=cart&worker=cartIn_action&productNum=1&counting="+count);
+    	 var productNum = $("#productNum").val();
+        $("#url2").val("group=cart&worker=cartIn_action&productNum="+productNum+"&counting="+count);
        
        $("#detail").submit(); 
        

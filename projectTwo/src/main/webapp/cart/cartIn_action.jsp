@@ -31,7 +31,7 @@
 	//상품번호
 	String pN = request.getParameter("productNum");
     int productNum = Integer.parseInt(pN);
-    //System.out.println("상품번호="+pN);
+    System.out.println("상품번호="+pN);
 
     //담긴 수량
 	String cot = request.getParameter("counting");
