@@ -62,7 +62,7 @@ public class ClientDAO extends JdbcDAO{
 			return client;
 		}
 		
-		//회원번호를 전달받아 MEMBER 테이블에 저장된 행을 검색하여 회원정보를 반환하는 메소드
+		//회원번호를 전달받아 Client 테이블에 저장된 행을 검색하여 회원정보를 반환하는 메소드
 		public ClientDTO selectClientByNum(int clientNum) {
 			Connection con=null;
 			PreparedStatement pstmt=null;
@@ -155,30 +155,9 @@ public class ClientDAO extends JdbcDAO{
 			return id;
 		}
 		
-		//회원정보를 전달받아 MEMBER 테이블에 저장된 행의 회원상태를 변경하고 변경행의 갯수를 반환하는 메소드
-		public int updateClientStatus(ClientDTO client) {
-			Connection con=null;
-			PreparedStatement pstmt=null;
-			int rows=0;
-			try {
-				con=getConnection();
-				
-				String sql="update client set client_status=? where client_num=?";
-				pstmt=con.prepareStatement(sql);
-				pstmt.setInt(1, client.getClientStatus());
-				pstmt.setInt(2, client.getClientNum());
-				
-				rows=pstmt.executeUpdate();
-			} catch (SQLException e) {
-				System.out.println("[에러]updateClientStatus() 메소드의 SQL 오류 = "+e.getMessage());
-			} finally {
-				close(con, pstmt);
-			}
-			return rows;
-		}
 
 		//회원정보를 전달받아 Client 테이블에 저장된 행을 변경하고 변경행의 갯수를 반환하는 메소드
-		public int updateClient(ClientDTO clinet) {
+		public int updateClient(ClientDTO client) {
 			Connection con=null;
 			PreparedStatement pstmt=null;
 			int rows=0;
@@ -188,14 +167,12 @@ public class ClientDAO extends JdbcDAO{
 				String sql="update client set client_passwd=?,client_name=?,client_email=?,client_phone=?,client_zipcode=?"
 						+ ",client_address1=?,client_address2=? where client_num=?";
 				pstmt=con.prepareStatement(sql);
-				pstmt.setString(1, clinet.getClientPasswd());
-				pstmt.setString(2, clinet.getClientName());
-				pstmt.setString(3, clinet.getClientEmail());
-				pstmt.setString(4, clinet.getClientPhone());
-				pstmt.setString(5, clinet.getClientZipcode());
-				pstmt.setString(6, clinet.getClientAddress1());
-				pstmt.setString(7, clinet.getClientAddress2());
-				pstmt.setInt(8, clinet.getClientNum());
+				pstmt.setString(1, client.getClientPasswd());
+				pstmt.setString(2, client.getClientName());
+				pstmt.setString(4, client.getClientPhone());
+				pstmt.setString(6, client.getClientAddress1());
+				pstmt.setString(7, client.getClientAddress2());
+				pstmt.setInt(8, client.getClientNum());
 				
 				rows=pstmt.executeUpdate();
 			} catch (SQLException e) {
