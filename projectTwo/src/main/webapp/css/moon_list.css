@@ -1,0 +1,63 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@100;500&display=swap');
+
+#moon_list {
+	width: 1000px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#moon_title {
+	font-size: 25px;
+}
+
+.moon_list {
+	margin: 5px auto;
+	border-collapse: collapse;
+}
+
+th {
+	background: #FFDCE1;
+	color: black;
+	font-size: 18px;
+	height: 45px;
+}
+
+td {
+	border-bottom: 1px solid gray;
+	text-align: center;	
+	height: 40px;
+}
+
+.subject {
+	text-align: left;
+	padding: 5px;
+	padding-left: 15px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#moon_list a:hover {
+	text-decoration: none; 
+	color: rgb(255, 221, 238);
+	font-weight: bold;
+}
+
+.subject_hidden {
+	background: black;
+	color: white;
+	font-size: 14px;
+	border: 1px solid black;
+	border-radius: 4px;
+}
+
+#page_list {
+	font-size: 1.1em;
+	margin: 10px;
+}
+
+#writeBtn {
+	text-align: right;
+	margin-bottom: 5px;
+}

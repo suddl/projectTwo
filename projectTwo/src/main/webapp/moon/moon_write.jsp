@@ -5,26 +5,13 @@
 <%
 	String pageNum="1", pageSize="10", search="", keyword="";
 %>
-	
-<style type="text/css">
-table {
-	margin: 0 auto;
-}
-
-th {
-	width: 100px;
-	font-weight: bold;
-}
-
-td {
-	text-align: left;
-}
-</style>
+<link href="<%=request.getContextPath()%>/css/moon_write.css" type="text/css" rel="stylesheet">
 <form action="<%=request.getContextPath() %>/index.jsp?group=moon&worker=moon_write_action" method="post" enctype="multipart/form-data" id="moonForm">
 	<input type="hidden" name="pageNum" value="<%=pageNum %>">
 	<input type="hidden" name="pageSize" value="<%=pageSize %>">
 	<input type="hidden" name="search" value="<%=search %>">
 	<input type="hidden" name="keyword" value="<%=keyword %>">
+	<h1>1:1 문의하기 글작성</h1>
 	<table>
 		<tr> 
 			<th>제목</th> 
@@ -40,7 +27,7 @@ td {
 		</tr>
 		<tr>
 			<th>내용</th>
-			<td>
+			<td id="content">
 				<textarea rows="7" cols="60" name="moonContent" id="moonContent"></textarea>
 			</td>
 		</tr>
@@ -51,7 +38,7 @@ td {
 			</td>
 		</tr>
 		<tr>
-			<th colspan="2">
+			<th id="button" colspan="2">
 				<button type="submit">글저장</button>
 				<button type="reset" id="resetBtn">다시쓰기</button>
 			</th>

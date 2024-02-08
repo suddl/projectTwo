@@ -71,78 +71,17 @@
 	
 	int displayNum=totalMoon-(pageNum-1)*pageSize;
 %>
-<style type="text/css">
-
-#moon_list {
-	width: 1000px;
-	margin: 0 auto;
-	text-align: center;
-}
-
-#moon_title {
-	font-size: 1.2em;
-	font-weight: bold;
-}
-
-table {
-	margin: 5px auto;
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-
-th {
-	border: 1px solid black;
-	background: black;
-	color: white;
-}
-
-td {
-	border: 1px solid black;
-	text-align: center;	
-}
-
-.subject {
-	text-align: left;
-	padding: 5px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-#moon_list a:hover {
-	text-decoration: none; 
-	color: blue;
-	font-weight: bold;
-}
-
-.subject_hidden {
-	background: black;
-	color: white;
-	font-size: 14px;
-	border: 1px solid black;
-	border-radius: 4px;
-}
-
-#page_list {
-	font-size: 1.1em;
-	margin: 10px;
-}
-
-#page_list a:hover {
-	font-size: 1.3em;
-}
-
-</style>
-<h1>1:1 문의 게시판</h1>
+<link href="<%=request.getContextPath()%>/css/moon_list.css" type="text/css" rel="stylesheet">
+<h1>1:1 문의하기</h1>
 <div id="moon_list">
-	<div id="moon_title">문의 목록(<%= totalMoon %>)</div>
+	<div id="moon_title">문의 목록(<%= totalMoon %>개)</div>
 	
-	<div style="text-align: right;">
+	<div id="writeBtn">
 		<% if(loginClient!=null && loginClient.getClientStatus()==1) { %>
 			<button type="button" id="writeBtn">글쓰기</button> 
 		<% } %>
 	</div>
-	<table>
+	<table class="moon_list">
 		<tr>
 			<th width="100">글번호</th>
 			<th width="500">제목</th>

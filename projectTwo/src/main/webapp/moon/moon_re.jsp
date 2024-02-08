@@ -27,53 +27,7 @@
 	ClientDTO loginClient =(ClientDTO)session.getAttribute("loginClient");
 	
 %>
-<style type="text/css">
-#moon_re {
-	width: 800px;
-	margin: 0 auto;
-}
-
-table {
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-
-th, td {
-	border: 1px solid black;
-	padding: 5px;	
-}
-
-th {
-	width: 150px;
-	background: black;
-	color: white;
-}
-
-td {
-	width: 650px;
-}
-
-.subject, .content {
-	text-align: left;
-}
-
-.content {
-	height: 300px;
-	vertical-align: middle;
-	
-}
-
-.moonRe {
-	height: 300px;
-	vertical-align: middle;
-	padding: 0px;
-}
-
-#button {
-	margin: 5px;
-	background-color: white;
-}
-</style>
+<link href="<%=request.getContextPath()%>/css/moon_detail.css" type="text/css" rel="stylesheet">
 <div id="moon_re">
 	<h1>1:1 문의</h1>
 	<table>
@@ -114,8 +68,8 @@ td {
 				<% } %>
 			</td>
 		</tr>
-		<tr id="button">
-			<th colspan="2">
+		<tr>
+			<th  id="button" colspan="2">
 				<button type="submit">글저장</button>
 				<button type="reset" id="resetBtn">다시쓰기</button>
 			</th>

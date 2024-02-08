@@ -27,54 +27,9 @@
 	ClientDTO loginClient =(ClientDTO)session.getAttribute("loginClient");
 	
 %>
-<style type="text/css">
-#moon_detail {
-	width: 800px;
-	margin: 0 auto;
-}
-
-table {
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-
-th, td {
-	border: 1px solid black;
-	padding: 5px;	
-}
-
-th {
-	width: 150px;
-	background: black;
-	color: white;
-}
-
-td {
-	width: 650px;
-}
-
-.subject, .content {
-	text-align: left;
-}
-
-.content {
-	height: 300px;
-	vertical-align: middle;
-	
-}
-
-#moon_menu {
-	text-align: right;
-	margin: 5px;
-}
-.re {
-	height: 300px;
-	vertical-align: middle;
-	padding: 0px;
-}
-</style>
+<link href="<%=request.getContextPath()%>/css/moon_detail.css" type="text/css" rel="stylesheet">
 <div id="moon_detail">
-	<h1>1:1 문의</h1>
+	<h1>1:1 문의하기</h1>
 	<table>
 		<tr>
 			<th>제목</th>
