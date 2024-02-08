@@ -7,7 +7,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <% 
-   //ProductDTO product = (ProductDTO)request.getAttribute("product");
    int productNum = Integer.parseInt(request.getParameter("productNum"));
    
    ProductDTO product = ProductDAO.getDAO().selectProductByNum(productNum);
@@ -176,7 +175,7 @@
     });
     
     //총상품금액 코드
-    var unitPrice = 18000; // 상품 단가
+    var unitPrice = <%=product.getProductPrice()%>; // 상품 단가
     document.getElementById("count1").innerText = count;//초기수량 출력
 
     
