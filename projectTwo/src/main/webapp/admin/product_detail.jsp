@@ -31,6 +31,7 @@
 #product_detail {
 	width: 800px;
 	margin: 0 auto;
+}
 
 h1{
 	text-align : center; 
@@ -44,42 +45,31 @@ table {
 	border-collapse: collapse;
 }
 
+th, td {
+	border: 1px solid lightgray;
+	padding: 5px;	
+}
+
 th {
 	width: 150px;
-	border: 1px solid lightgray;
-	background: pink;
+	background: #FFDCE1;
 	color: black;
-	height: 40px;
-	text-align: center;
+	font-size: 18px;
 }
 
 td {
 	width: 650px;
-	word-spacing: 5px;
-	border: 1px solid lightgray;
-	height: 40px;
-	text-align: center;
 }
 
-button {
-	margin: 10px auto;
-	padding: 5px;
-	width: 70px;
-	background-color: lightgray;
-	color: black;
-	font-size: 15px;
-	cursor: pointer;
-	font-weight: bold;
-	border-width: thin;
+#button {
+	padding: 20px;
+	border: none;
+	background: white;
 }
 
-button + button {
-	margin-left: 10px;
-}
-
-button:hover {
-	color: white;
-	background-color: black;
+#product_menu {
+	text-align: right;
+	margin: 5px;
 }
 
 .error {
@@ -135,9 +125,10 @@ button:hover {
 			</td>
 		</tr>
 	</table>
-	<button type="button" id="listBtn">목록</button>
-	<button type="button" id="cancelBtn">취소</button>
-	<button type="button" id="modifyBtn">수정</button>
+	<div id="product_menu">
+		<button type="button" id="listBtn">목록</button>&nbsp;
+		<button type="button" id="modifyBtn">수정</button>
+	</div>
 </div>
 
 <script type="text/javascript">
@@ -152,8 +143,4 @@ $("#listBtn").click(function() {
 		+"&pageNum=<%=pageNum%>&pageSize=<%=pageSize%>&search=<%=search%>&keyword=<%=keyword%>";	
 });
 
-$("#cancelBtn").click(function() {
-	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_list"
-		+"&pageNum=<%=pageNum%>&pageSize=<%=pageSize%>&search=<%=search%>&keyword=<%=keyword%>";	
-});
 </script>

@@ -11,13 +11,11 @@
 %>
 <link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
 <style>
-fieldset {
-	text-align: center;
-	margin: 10px auto;
-	width: 900px;
-	border: 1px solid lightgray;
+#product_add {
+	width: 800px;
+	margin: 0 auto;
 }
-
+	
 h1{
 	text-align : center; 
 	margin-bottom: 30px;
@@ -25,41 +23,37 @@ h1{
 }
 
 table {
-	margin: 0 auto;
+	margin: 10px auto;
+	border: 1px solid lightgray;
+	border-collapse: collapse;
+}
+
+th, td {
+	border: 1px solid lightgray;
+	padding: 5px;	
 }
 
 th {
-	text-align: left;
-	width: 120px;
-	font-weight: bold;
-	padding-top: 10px;
-	padding-bottom: 20px;
+	width: 150px;
+	background: #FFDCE1;
+	color: black;
+	font-size: 18px;
 }
 
 td {
-	text-align: left;
-	word-spacing: 5px;
+	width: 650px;
+	text-align : left; 
 }
 
-button {
-	margin: 10px auto;
-	padding: 5px;
-	width: 70px;
-	background-color: lightgray;
-	color: black;
-	font-size: 15px;
-	cursor: pointer;
-	font-weight: bold;
-	border-width: thin;
+#button {
+	padding: 20px;
+	border: none;
+	background: white;
 }
 
-button + button {
-	margin-left: 10px;
-}
-
-button:hover {
-	color: white;
-	background-color: black;
+#product_menu {
+	text-align: right;
+	margin: 5px;
 }
 
 .error {
@@ -78,8 +72,9 @@ button:hover {
 	<input type="hidden" name="pageSize" value="<%=pageSize %>">
 	<input type="hidden" name="search" value="<%=search %>">
 	<input type="hidden" name="keyword" value="<%=keyword %>">
-<h1>상품등록</h1>
-<fieldset>
+
+<div id="product_add">
+	<h1>상품등록</h1>
 	<table>
 		<tr>
 			<th >상품명</th>
@@ -132,10 +127,11 @@ button:hover {
 			</td>
 		</tr>
 	</table>
-</fieldset>	
-	<button type="button" id="listBtn">목록</button>
-	<button type="button" id="cancelBtn">취소</button>
+	<div id="product_menu">
+	<button type="button" id="cancelBtn">취소</button>&nbsp;
 	<button type="submit">등록</button>
+	</div>
+</div>
 </form>
 <div id="message" style="color: red;"></div>
 
@@ -173,12 +169,6 @@ $("#productForm").submit(function() {
 		$("#productImage3").focus();
 		return false;
 	}
-});
-
-$
-
-$("#listBtn").click(function() {
-	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_list"
 });
 
 $("#cancelBtn").click(function() {

@@ -1,5 +1,4 @@
 <%@page import="java.text.DecimalFormat"%>
-<%@page import="xyz.nailro.dto.ClientDTO"%>
 <%@page import="xyz.nailro.dto.ProductDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="xyz.nailro.dao.ProductDAO"%>
@@ -85,53 +84,36 @@
 }
 
 #product_title {
-	font-size:1.2em;
-	font-weight: bold;
-	
+	font-size: 25px;
 }
-table {
-	margin: 10px auto;
-	border: 1px solid lightgray;
-	border-collapse: collapse;
-}
-
 
 th {
-	border: 1px solid lightgray;
-	background: pink;
+	background: #FFDCE1;
 	color: black;
-	height: 40px;
-	text-align: center;
+	font-size: 18px;
+	height: 45px;
 }
 
 td {
-	border: 1px solid lightgray;
+	border-bottom: 1px solid lightgray;
 	text-align: center;	
 	height: 40px;
 }
 
-
-
-button {
-	margin: 10px auto;
-	padding: 5px;
-	width: 70px;
-	background-color: lightgray;
-	color: black;
-	font-size: 15px;
-	cursor: pointer;
+#product_list a:hover {
+	text-decoration: none; 
+	color: rgb(255, 221, 238);
 	font-weight: bold;
-	border-width: thin;
+}
+
+#button {
+	text-align: right;
+	margin-bottom: 5px;
 }
 
 #page_list {
 	font-size: 1.1em;
 	margin: 10px;
-}
-
-button + button {
-	margin-left: 10px;
-	margin-bottom: 50px;
 }
 
 #page_list a:hover {
@@ -143,16 +125,12 @@ button + button {
 <form name="productForm" id="productForm">
 <div id="product_list">
 	<%-- 검색된 게시글 총갯수 출력 --%>
-	<div id="product_title">상품목록(<%=totalProduct %>)</div>
+	<div id="product_title">상품목록(<%=totalProduct %>개)</div>
+	<div id="button">
+		<button type="button" id="removeBtn">삭제</button>&nbsp;
+		<button type="button" id="addBtn">등록</button>
+	</div>
 	
-	<div style="text-align: right;">
-		게시글갯수 : 
-		<select id="productCount">
-			<option value="10" <% if(pageSize==10) { %> selected <% } %>>&nbsp;10개&nbsp;</option>	
-			<option value="20" <% if(pageSize==20) { %> selected <% } %>>&nbsp;20개&nbsp;</option>	
-			<option value="50" <% if(pageSize==50) { %> selected <% } %>>&nbsp;50개&nbsp;</option>	
-			<option value="100" <% if(pageSize==100) { %> selected <% } %>>&nbsp;100개&nbsp;</option>	
-		</select>
 <table>
 	<tr>
 		<th width="50"><input type="checkbox" id="allCheck"></th>	
@@ -189,8 +167,6 @@ button + button {
 	<% } %>
 </table>
 	</div>
-<button type="button" id="removeBtn">삭제</button>
-<button type="button" id="addBtn">등록</button>
 
 	<%-- 페이지번호 출력 및 링크 제공 - 블럭화 처리 --%>
 	<%
@@ -242,7 +218,6 @@ button + button {
 			[다음]
 		<% } %>
 	</div>
-</div>
 </form>
 
 <form action="<%=request.getContextPath() %>/index.jsp?group=admin&worker=product_list" method="post">
@@ -282,8 +257,8 @@ $("#removeBtn").click(function() {
 		$("#message").text("선택된 제품이 하나도 없습니다.");
 		return;
 	}
-	if(confirm("게시글을 정말로 삭제 하시겠습니까?")) {
-		location.href="<%=request.getContextPath()%>/index.jsp?group=review&worker=review_remove_action"
+	if(confirm("상품을 삭제 하시겠습니까?")) {
+		location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_remove_action"
 	} else {
 		return false;
 	}		
