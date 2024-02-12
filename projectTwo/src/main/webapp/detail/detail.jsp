@@ -178,6 +178,7 @@
         var totalPrice = unitPrice * count;
         document.getElementById("totalPrice").innerText = "총 상품 금액: " + new Intl.NumberFormat('en-US').format(totalPrice)+ "원";
     }
+    
     function countUp() {
         count++;
         //화면에 나오는 출력값 변경

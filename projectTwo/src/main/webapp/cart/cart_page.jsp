@@ -132,7 +132,7 @@ int total = 0;
 <table class="table table-hover" id="ProductList">
   <thead>
     <tr>
-      <th ><input type="checkbox" name="productAll" id="selectAllCheckbox" onclick='selectAll(this)' >  전체선택</th> 
+      <th ><input type="checkbox" name="productAll" id="selectAllCheckbox" onclick='selectAll(this)' checked>  전체선택</th> 
       <th >상품명</th>
       <th >수량</th>
       <th >가격</th>
@@ -147,23 +147,33 @@ int total = 0;
   
   	
   	<%-- 체크박스 --%>
-    <th width="10%"><input type="checkbox" name="productOne"  id="productOne" value="<%=cartDTOs.get(i).getCartProduct() %>" onclick="selectOnly(this)"></th>
+    <th width="10%"><input type="checkbox" name="productOne"  id="productOne" value="<%=cartDTOs.get(i).getCartProduct() %>" onclick="selectOnly(this)" checked></th>
     
   	<%-- 이미지 --%>
-     <th width="30%"><img src="<%=request.getContextPath()%><%=cartDTOs.get(i).getCartProductImages()%>" width="150" height="100"> 
+     <th width="30%"><img src="<%=request.getContextPath()%><%=cartDTOs.get(i).getCartProductImages()%>"  width="150" height="100" > 
      <%=cartDTOs.get(i).getCartProductName() %></th>
   	<input type="hidden" id="productNum" name="productNum" value="<%=cartDTOs.get(i).getCartProduct() %>">
      
      <%-- 수량 --%>
-     <th ><%=cartDTOs.get(i).getCartQuantity() %>개</th>
+     <th >
+     <button type="button" class="minusBtn" onclick="countDown(<%=i%>);">-</button>&nbsp;&nbsp;
+    <input type="text" id="cartQuantity<%=i%>" name="cartQuantity" style="width:30px;" readonly="readonly" value="<%=cartDTOs.get(i).getCartQuantity()%>"> 개
+    <button type="button" class="plusBtn" onclick="countUp(<%=i%>);">+</button>
+     
+     </th>
+     
      
      <%
      total += Integer.parseInt(cartDTOs.get(i).getCartProductPrice()) * Integer.parseInt(cartDTOs.get(i).getCartQuantity());
-     	String priceP = String.format("%,d",Integer.parseInt(cartDTOs.get(i).getCartProductPrice()) * Integer.parseInt(cartDTOs.get(i).getCartQuantity())); 
+     
+	String priceP = String.format("%,d",Integer.parseInt(cartDTOs.get(i).getCartProductPrice()) * Integer.parseInt(cartDTOs.get(i).getCartQuantity())); 
       %>
 		     
-     <th ><%=priceP %>원</th>
+		<input type="hidden" id="Cash2<%=i%>" name="" value="<%= cartDTOs.get(i).getCartProductPrice()%>">
+     <th id="Cash<%=i%>"><%=priceP %>원</th>
   
+     
+     
   </tr>
   <% } %>
 </table>
@@ -178,20 +188,20 @@ int total = 0;
 
 <div style="border: 1px solid black; border-radius: 20px;  width: 30%; margin:0 auto; background-color: #DCDCDC; margin-top:30px;
 padding: 30px;">
-<p class="money" > 총 상품금액 </p> <span class="NumMoney"> <%=String.format("%,d", total)%> 원</span>
+<p class="money" >총 상품금액 </p> <span id="NumMoney">  <%=total %> 원</span><br>
  
-<p class="money" > 배송비</p><span class="NumMoney" >
+<p class="money" > 배송비</p> <span id="transMoney" >
  <% if(total>=50000){ %> 
-		0 원
+		0 
 <% 	}else{ %>
-		3,000원
+		3,000
 	<% } %>
  
- </span>
+ </span> 원
 <hr>
 
 <%-- 결제금액 출력 --%>
-<p class="moneyALL" >총 결제 금액</p><span class="NumMoneyALL" >
+<p class="moneyALL" id="moneyALL">총 결제 금액</p><span id="NumMoneyALL" >
 <% if(total>=50000){ %>
 		<%=String.format("%,d", total)%> 원
 <% 	}else{ %>
@@ -215,6 +225,126 @@ padding: 30px;">
 <%-- 스크립트 시작 --%>
 
 <script>
+var totalAmount = 0;
+
+//체크박스 클릭 이벤트 핸들러
+document.getElementsByName('productOne').forEach(function (checkbox, index) {
+    checkbox.addEventListener('click', function () {
+        var countInput = document.getElementById("cartQuantity" + index);
+        var unitPriceElement = document.getElementById("Cash2" + index);
+
+        var count = parseInt(countInput.value);
+        var unitPrice = parseInt(unitPriceElement.value.replace(/[^\d]/g, ''));
+        
+        if (checkbox.checked) {
+            totalAmount += unitPrice * count;
+        } else {
+            totalAmount -= unitPrice * count;
+        }
+        
+     // 각 상품의 가격 업데이트
+        updateTotalPrice(index);
+
+        var totalAmountElement = document.getElementById("NumMoney");
+        totalAmountElement.innerText = new Intl.NumberFormat('en-US').format(totalAmount) + "원";
+
+        if (totalAmount > 50000) {
+            document.getElementById("transMoney").innerHTML = "0";
+            var AlltotalMoney = document.getElementById("NumMoneyALL");
+            AlltotalMoney.innerText = new Intl.NumberFormat('en-US').format(totalAmount) + "원";
+        } else {
+            document.getElementById("transMoney").innerHTML = "3,000";
+            var AlltotalMoney = document.getElementById("NumMoneyALL");
+            AlltotalMoney.innerText = new Intl.NumberFormat('en-US').format(totalAmount + 3000) + "원";
+        }
+    });
+});
+
+
+
+
+function updateTotalPrice(index) {
+	//수량 변수에 저장
+	var countInput = document.getElementById("cartQuantity" + index);
+	//상품가격 변수에 저장
+    var unitPriceElement = document.getElementById("Cash2" + index);
+    
+    // 수량 입력 필드와 상품 가격 엘리먼트가 존재하는지 확인
+    if (countInput && unitPriceElement) {
+	
+	//문자열인 수량을 정수로 변환하여 저장
+	var count = parseInt(countInput.value);
+	//정규표현식을 통해 숫자를 제외한 나머지를 빈문자열''을 통해제거
+	var unitPrice = parseInt(unitPriceElement.value.replace(/[^\d]/g, ''));
+    
+    var totalPrice = unitPrice * count;
+    document.getElementById("Cash"+index).innerText = new Intl.NumberFormat('en-US').format(totalPrice) + "원";
+    //unitPriceElement.innerText = new Intl.NumberFormat('en-US').format(totalPrice) + "원";
+    updateTotalPurchaseAmount(); // 총 결제 금액을 업데이트하는 함수 호출
+	
+    }
+}
+
+function countUp(index) {
+	//i번째 수량을 변수에 저장
+    var countInput = document.getElementById("cartQuantity" + index);
+	//저장된 문자열을 정수로 변환
+    count = parseInt(countInput.value);
+	//1증가
+    count++;
+	//i번째 수량의 값을 증가된 값 대입
+    countInput.value = count;
+    updateTotalPrice(index);
+}
+
+function countDown(index) {
+    var countInput = document.getElementById("cartQuantity" + index);
+    count = parseInt(countInput.value);
+    if (count > 1) {
+        count--;
+        countInput.value = count;
+        updateTotalPrice(index);
+    }
+}
+
+
+function updateTotalPurchaseAmount() {
+	   totalAmount = 0;
+	    var checkboxes = document.getElementsByName('productOne');
+	    
+	    
+	    
+	    for (var i = 0; i < checkboxes.length; i++) {
+	        if (checkboxes[i].checked) {
+	            var countInput = document.getElementById("cartQuantity" + i);
+	            var unitPriceElement = document.getElementById("Cash2" + i);
+	            
+	            var count = parseInt(countInput.value);
+	            var unitPrice = parseInt(unitPriceElement.value.replace(/[^\d]/g, ''));
+	            
+	            totalAmount += unitPrice * count;
+	        }
+	    }
+	    
+	    var totalAmountElement = document.getElementById("NumMoney");
+	    totalAmountElement.innerText = new Intl.NumberFormat('en-US').format(totalAmount) + "원";
+	    
+	    
+	    if(totalAmount>50000 || totalAmount===0){
+			 document.getElementById("transMoney").innerHTML = "0";
+			 var AlltotalMoney = document.getElementById("NumMoneyALL");
+			 AlltotalMoney.innerText = new Intl.NumberFormat('en-US').format(totalAmount) + "원";
+		}else{
+			 document.getElementById("transMoney").innerHTML = "3,000";
+			 var AlltotalMoney = document.getElementById("NumMoneyALL");
+			 AlltotalMoney.innerText = new Intl.NumberFormat('en-US').format(totalAmount+3000) + "원";
+		}
+	    
+	    
+	}
+
+
+
 //전체선택체크박스를 클릭하면 해당 엘리먼트가 source에 대입
 function selectAll(source) {
 	//개별체크박스의 이름을 가져와 변수에 저장
@@ -223,20 +353,24 @@ function selectAll(source) {
     for (var i = 0; i < checkboxOnes.length; i++) {
 		//i번째 체크박스의 상태를 최초 선택한체크박스 엘리먼트의 체크된상태로 바꾼다
         checkboxOnes[i].checked = source.checked;
+        updateTotalPrice(i); // 각 상품의 가격 업데이트
+
     }
 }
+
+
 
 
 function selectOnly(source) {
 	
 	//전체선택체크박스를 변수에 저장
-    let selectAllCheckbox = document.getElementById('selectAllCheckbox');
+    var selectAllCheckbox = document.getElementById('selectAllCheckbox');
     //선택한 체크박스가 체크된 상태라면
     if (source.checked) {
 		//true를 변수에 저장
         let allChecked = true;
 		//개별체크박스의 객체를 변수에 저장
-        let checkboxes = document.getElementsByName('productOne');
+        var checkboxes = document.getElementsByName('productOne');
 		
 		//화면에 나타나는 체크박스의 수 만큼 반복문을 실행
         for (let i = 0; i < checkboxes.length; i++) {
@@ -255,7 +389,11 @@ function selectOnly(source) {
 		//선택한 개별체크박스가 체크해제 된다면 전체체크박스의 체크상태 또한 해제된다.
         selectAllCheckbox.checked = false;
     }
+
+    var checkboxIndex = parseInt(source.id.replace("productOne", ""));
+    updateTotalPrice(checkboxIndex); // 선택된 상품의 가격 업데이트
 }
+
 
 	
 //체크선택삭제-------------------------------------------------------------------
