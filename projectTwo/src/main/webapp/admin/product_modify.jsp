@@ -93,7 +93,9 @@ td {
 	<input type="hidden" name="pageSize" value="<%=pageSize %>">
 	<input type="hidden" name="search" value="<%=search %>">
 	<input type="hidden" name="keyword" value="<%=keyword %>">
-
+	<input type="hidden" name="currentProductImage" value="<%=product.getProductImage()%>">
+	<input type="hidden" name="currentProductImage2" value="<%=product.getProductImage2()%>">
+	<input type="hidden" name="currentProductImage3" value="<%=product.getProductImage3()%>">
 <div id="product_modify">
 	<h1>상품수정</h1>
 	<table>
@@ -124,39 +126,39 @@ td {
 		<tr>
 			<th>세부사항</th>
 			<td>
-				<input type='radio' name='productType' value="Long"<% if(product.getProductType().equals("Long")) %>> 롱
-				<input type='radio' name='productType' value="Short"<% if(product.getProductType().equals("Short")) %>> 숏
-				<input type='radio' name='productType' value="Parts"<% if(product.getProductType().equals("Parts")) %>> 파츠
-				<input type='radio' name='productType' value="FullColor"<% if(product.getProductType().equals("FullColor"))%>> 풀컬러
+				<input type="radio" name="productType" value="Long"<% if(product.getProductType().equals("Long")) {%>checked<%}%>> 롱
+				<input type="radio" name="productType" value="Short"<% if(product.getProductType().equals("Short")) {%>checked<%}%>> 숏
+				<input type="radio" name="productType" value="Parts"<% if(product.getProductType().equals("Parts")) {%>checked<%}%>> 파츠
+				<input type="radio" name="productType" value="FullColor"<% if(product.getProductType().equals("FullColor")) {%>checked<%}%>> 풀컬러
 			</td>
 		</tr>			
 		<tr>
 			<th>상품대표이미지</th>
 			<td>
-				<input type="file" name="productImage">
+				<input type="file" name="productImage" id="productImage">
 				<% if(product.getProductImage()!=null) { %>
 					<div style="color: red;">이미지를 변경할 경우에만 파일을 입력해 주세요.</div>
-					<img src="<%=request.getContextPath()%>/<%=product.getProductImage()%>" width="200"><br><br>
+					<img src="<%=request.getContextPath()%><%=product.getProductImage()%>" width="200"><br><br>
 				<% } %>
 			</td>
 		</tr>
 		<tr>
 			<th>상품상세이미지1</th>
 			<td>
-				<input type="file" name="productImage2">
+				<input type="file" name="productImage2" id="productImage2">
 				<% if(product.getProductImage2()!=null) { %>
 					<div style="color: red;">이미지를 변경할 경우에만 파일을 입력해 주세요.</div>
-					<img src="<%=request.getContextPath()%>/<%=product.getProductImage2()%>" width="200"><br><br>
+					<img src="<%=request.getContextPath()%><%=product.getProductImage2()%>" width="200"><br><br>
 				<% } %>
 			</td>
 		</tr>
 		<tr>
 			<th>상품상세이미지2</th>
 			<td>
-				<input type="file" name="productImage3">
+				<input type="file" name="productImage3" id="productImage3">
 				<% if(product.getProductImage3()!=null) { %>
 					<div style="color: red;">이미지를 변경할 경우에만 파일을 입력해 주세요.</div>
-					<img src="<%=request.getContextPath()%>/<%=product.getProductImage3()%>" width="200"><br><br>
+					<img src="<%=request.getContextPath()%><%=product.getProductImage3()%>" width="200"><br><br>
 				<% } %>
 			</td>
 		</tr>

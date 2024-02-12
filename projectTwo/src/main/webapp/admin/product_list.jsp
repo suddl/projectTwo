@@ -84,7 +84,7 @@
 }
 
 #product_title {
-	font-size: 25px;
+	font-size: 17px;
 }
 
 th {
@@ -125,7 +125,7 @@ td {
 <form name="productForm" id="productForm">
 <div id="product_list">
 	<%-- 검색된 게시글 총갯수 출력 --%>
-	<div id="product_title">상품목록(<%=totalProduct %>개)</div>
+	<div id="product_title">Total : <%=totalProduct %>개의 상품</div>
 	<div id="button">
 		<button type="button" id="removeBtn">삭제</button>&nbsp;
 		<button type="button" id="addBtn">등록</button>
@@ -150,7 +150,7 @@ td {
 		<td width="100"><%=product.getProductNum() %></td>
 		<td class="content">
 		<% if(product.getProductImage()!=null) { %>
-			<img src="<%=request.getContextPath() %>/<%= product.getProductImage()%>" width="170" height="100">
+			<img src="<%=request.getContextPath() %><%= product.getProductImage()%>" width="170" height="100">
 			<% } %>
 		</td>
 		<td width="250">

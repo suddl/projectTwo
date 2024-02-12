@@ -104,7 +104,7 @@ td {
 			<th>상품대표이미지</th>
 			<td>
 				<% if(product.getProductImage()!=null) { %>
-					<img src="<%=request.getContextPath()%>/<%=product.getProductImage()%>" width="200">
+					<img src="<%=request.getContextPath()%><%=product.getProductImage()%>" width="200">
 				<% } %>
 			</td>
 		</tr>
@@ -112,7 +112,7 @@ td {
 			<th>상품상세이미지1</th>
 			<td>
 				<% if(product.getProductImage2()!=null) { %>
-					<img src="<%=request.getContextPath()%>/<%=product.getProductImage2()%>" width="200">
+					<img src="<%=request.getContextPath()%><%=product.getProductImage2()%>" width="200">
 				<% } %>
 			</td>
 		</tr>
@@ -120,7 +120,7 @@ td {
 			<th>상품상세이미지2</th>
 			<td>
 				<% if(product.getProductImage3()!=null) { %>
-					<img src="<%=request.getContextPath()%>/<%=product.getProductImage3()%>" width="200">
+					<img src="<%=request.getContextPath()%><%=product.getProductImage3()%>" width="200">
 				<% } %>
 			</td>
 		</tr>

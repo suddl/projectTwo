@@ -23,10 +23,12 @@
 	String pageSize=multipartRequest.getParameter("pageSize");
 	String search=multipartRequest.getParameter("search");
 	String keyword=multipartRequest.getParameter("keyword");
-	
-	String productName=Utility.escapeTag(multipartRequest.getParameter("productName"));
+	String currentProductImage=multipartRequest.getParameter("currentProductImage");
+	String currentProductImage2=multipartRequest.getParameter("currentProductImage2");
+	String currentProductImage3=multipartRequest.getParameter("currentProductImage3");
+	String productName=multipartRequest.getParameter("productName");
 	int productPrice=Integer.parseInt(multipartRequest.getParameter("productPrice"));
-	String productCategory=Utility.escapeTag(multipartRequest.getParameter("productCategory"));
+	String productCategory=multipartRequest.getParameter("productCategory");
 	
 	if(productCategory.equals("Nail")){
 		productCategory="Nail";
@@ -36,7 +38,7 @@
 		productCategory="CareTool";
 	}
 	
-	String productType=Utility.escapeTag(multipartRequest.getParameter("productType"));
+	String productType=multipartRequest.getParameter("productType");
 	
 	if(productType.equals("Long")){
 		productType="Long";
@@ -48,42 +50,40 @@
 		productType="FullColor";
 	}
 	
-	String productImage=multipartRequest.getFilesystemName("productImage");
-	if(productImage!=null) {
-		productImage="/product_images/"+productImage;
-		
-		String removeProductImage=ProductDAO.getDAO().selectProductByNum(productNum).getProductImage();
-		if(removeProductImage!=null) {
-			new File(saveDirectory, removeProductImage.substring("/product_images/".length())).delete();
-		}
+	String productImage=null;
+	if(multipartRequest.getFilesystemName("productImage")!=null) {//업로드 파일이 있는 경우	
+		productImage="/product_images/"+multipartRequest.getFilesystemName("productImage");
 	}
-	
-	String productImage2=multipartRequest.getFilesystemName("productImage2");
-	if(productImage2!=null) {
-		productImage2="/product_images/"+productImage2;
-		
-		String removeProductImage2=ProductDAO.getDAO().selectProductByNum(productNum).getProductImage2();
-		if(removeProductImage2!=null) {
-			new File(saveDirectory, removeProductImage2.substring("/product_images/".length())).delete();
-		}
+	String productImage2=null;
+	if(multipartRequest.getFilesystemName("productImage2")!=null) {//업로드 파일이 있는 경우	
+		productImage2="/product_images/"+multipartRequest.getFilesystemName("productImage2");
 	}
-	
-	String productImage3=multipartRequest.getFilesystemName("productImage3");
-	if(productImage!=null) {
-		productImage="/product_images/"+productImage;
-		
-		String removeProductImage3=ProductDAO.getDAO().selectProductByNum(productNum).getProductImage3();
-		if(removeProductImage3!=null) {
-			new File(saveDirectory, removeProductImage3.substring("/product_images/".length())).delete();
-		}
+	String productImage3=null;
+	if(multipartRequest.getFilesystemName("productImage3")!=null) {//업로드 파일이 있는 경우	
+		productImage3="/product_images/"+multipartRequest.getFilesystemName("productImage3");
 	}
-	
+
 	ProductDTO product=new ProductDTO();
 	product.setProductNum(productNum);
 	product.setProductName(productName);
-	product.setProductImage(productImage);
-	product.setProductImage2(productImage2);
-	product.setProductImage3(productImage3);
+	if(productImage==null) {
+		product.setProductImage(currentProductImage);
+	} else {
+		product.setProductImage(productImage);
+		new File(saveDirectory, currentProductImage).delete();
+	}
+	if(productImage2==null) {
+		product.setProductImage2(currentProductImage2);
+	} else {
+		product.setProductImage2(productImage2);
+		new File(saveDirectory, currentProductImage2).delete();
+	}
+	if(productImage3==null) {
+		product.setProductImage3(currentProductImage3);
+	} else {
+		product.setProductImage3(productImage3);
+		new File(saveDirectory, currentProductImage3).delete();
+	}
 	product.setProductPrice(productPrice);
 	product.setProductCategory(productCategory);
 	product.setProductType(productType);
