@@ -23,7 +23,8 @@ public class ReviewDAO extends JdbcDAO {
     public static ReviewDAO getDAO() {
         return _dao;
     }
-
+    
+    /*
     // detail.jsp 하단에 review를 출력하는 메소드
     public List<ReviewDTO> selectProductReviews(int productId) {
         Connection con = null;
@@ -60,7 +61,7 @@ public class ReviewDAO extends JdbcDAO {
         }
         return reviews;
     }
-
+	*/
     // 검색정보(검색대상과 검색단어)를 전달받아 REVIEW 테이블에 저장된 게시글 중 검색대상의 컬럼에 검색단어가 포함된 게시글의 갯수를 검색하여 반환하는 메소드
     public int selectTotalReview(String search, String keyword) {
         Connection con = null;
@@ -296,6 +297,41 @@ public class ReviewDAO extends JdbcDAO {
     
     
     //detail 페이지에서 상품코드로 조인하여 관련된 리뷰만 불러오는 DAO
-    
+    public List<ReviewDTO> selectProductReviews(int productId) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<ReviewDTO> reviews = new ArrayList<>();
+
+        try {
+            con = getConnection();
+            // SQL 쿼리 수정: review_order_num -> review_product_num
+            String sql = "SELECT review_num, review_client_num, review_subject, review_content, review_order_num, review_date, review_image, review_re, review_rating, review_product_num FROM review WHERE review_product_num = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, productId);
+
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                ReviewDTO review = new ReviewDTO();
+                review.setReviewNum(rs.getInt("review_num"));
+                review.setReviewClientNum(rs.getInt("review_client_num"));
+                review.setReviewSubject(rs.getString("review_subject"));
+                review.setReviewContent(rs.getString("review_content"));
+                review.setReviewOrderNum(rs.getInt("review_order_num"));
+                review.setReviewDate(rs.getString("review_date"));
+                review.setReviewImage(rs.getString("review_image"));
+                review.setReviewRe(rs.getString("review_re"));
+                review.setReviewRating(rs.getString("review_rating"));
+                review.setReviewProductNum(rs.getInt("review_product_num"));
+
+                reviews.add(review);
+            }
+        } catch (SQLException e) {
+            System.out.println("[에러] selectProductReviews() 메소드의 SQL 오류 = " + e.getMessage());
+        } finally {
+            close(con, pstmt, rs);
+        }
+        return reviews;
+    }
 
     }

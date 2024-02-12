@@ -35,7 +35,7 @@
 	String keyword=multipartRequest.getParameter("keyword");
 	String reviewSubject=Utility.escapeTag(multipartRequest.getParameter("reviewSubject"));
 	int reviewStatus=1;//전달값이 없는 경우 - 일반글
-	String reviewRating=Utility.escapeTag(multipartRequest.getParameter("reviewRating"));
+	String reviewRating = multipartRequest.getParameter("reviewRating");
 	String reviewContent=Utility.escapeTag(multipartRequest.getParameter("reviewContent"));
 	
 	//서버 디렉토리에 업로드되어 저장된 파일명을 반환받아 컨텍스트 경로를 저장

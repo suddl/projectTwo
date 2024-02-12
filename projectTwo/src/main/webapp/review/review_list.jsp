@@ -74,6 +74,17 @@ String currentDate=new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 //페이지에 출력될 게시글의 일련번호 시작값을 계산하여 저장
 // => 검색된 게시글의 총갯수가 91개인 경우 >> 1Page : 91, 2Page : 81, 3Page, 71
 int displayNum=totalReview-(pageNum-1)*pageSize;
+
+//제품 ID를 파라미터에서 받아옴
+//int productNum = Integer.parseInt(request.getParameter("productNum"));
+
+//해당 제품 ID에 대한 리뷰 목록을 조회
+//List<ReviewDTO> reviews = ReviewDAO.getDAO().selectProductReviews(productNum);
+
+
+
+
+
 %>
 
 <html>
