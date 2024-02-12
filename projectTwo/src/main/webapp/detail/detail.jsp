@@ -101,7 +101,7 @@
    </form>
    &nbsp;&nbsp; &nbsp;&nbsp;
    <div class="button-container d-flex justify-content-around mt-3">
-    <button id="cartBtn" class="btn btn-secondary">장바구니</button>
+    <button id="cartBtn" class="btn btn-secondary">장바구니 담기</button>
     <a href="<%=request.getContextPath()%>/index.jsp?group=order&worker=order_main" class="btn btn-success" id="purchase">바로구매</a>
 </div>
    

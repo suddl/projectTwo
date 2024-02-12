@@ -99,6 +99,9 @@ List<CartDTO> cartDTOs = CartDAO.getDAO().selectCartList(Num);
 //System.out.println("dto객체="+cartDTOs.size());
 
 
+String productNum = request.getParameter("productNum");
+
+
 request.setCharacterEncoding("utf-8");
 
 //상세페이지에서 히든으로 상품아이디 값을 받아오기
@@ -127,6 +130,8 @@ int total = 0;
 <%-- 폼시작00000000000000000000000000000000000000000000000000000000 --%>
   <form action="<%=request.getContextPath() %>/index.jsp?group=cart&worker=cart_remove_action"
    method="post" id="hangForm" name="hangForm" >
+    <input type="hidden" name="url" id="url2">
+   
    
 <div width="60%">
 <table class="table table-hover" id="ProductList">
@@ -214,17 +219,51 @@ padding: 30px;">
 <%-- 쇼핑계속하기 및 구매하기 버튼 출력 --%>
 
 <div style="margin:0 auto; text-align: center; margin-top: 30px">
-<button type="button" class="btn btn-secondary"  >쇼핑계속하기</button>&nbsp;&nbsp;&nbsp;
-<%-- <div id="BuyBtn" style="display: inline-block;" 
- >구매하기</div>--%>
- <button type="submit" style="background-color:black; color: white; 
- border-radius: 5px; width: 120px; height: 40px;  ">구매하기</button>
+<a href="<%=request.getContextPath()%>/index.jsp?group=main&worker=main_page&productNum=" class="btn btn-success" id="purchase">
+쇼핑계속하기</a>&nbsp;&nbsp;&nbsp;
+
+<a href="<%=request.getContextPath()%>/index.jsp?group=order&worker=order_main" class="btn btn-success" id="buyBtn" >
+구매하기</a>&nbsp;&nbsp;&nbsp;
+
+ <%-- 구매하기 버튼 클릭시 현재 수정된 제품의 수량을 장바구니 테이블에 다시 저장
+ DAO는 update로 만들고 회원번호와 상품번호를 전달받아 수량을 수정 그리고 구매하기 --%>
 </div>
 
 
 <%-- 스크립트 시작 --%>
 
 <script>
+//구매하기 클릭시 oder_action으로 submit;
+$("#buyBtn").click(function () {
+    var selectedItems = [];
+
+    $("input[name='productOne']:checked").each(function () {
+        selectedItems.push($(this).val());
+    });
+
+    if (selectedItems.length === 0) {
+        alert("구매할 상품을 선택하세요.");
+        return;
+    }
+
+    // AJAX를 이용한 비동기적 데이터 전송
+    $.ajax({
+        type: "POST",
+        url: "<%=request.getContextPath()%>/index.jsp?group=order&worker=order_main",
+        data: { selectedItems: selectedItems.join() },
+        success: function (response) {
+			//order_main 에 상품번호는 넘어간다 해당 상품 과 수량을 넘겨야한다.            
+            // 성공 시 처리
+            console.log(response);
+        },
+        error: function (error) {
+            // 오류 시 처리
+            console.error(error);
+        }
+    });
+});
+
+
 var totalAmount = 0;
 
 //체크박스 클릭 이벤트 핸들러

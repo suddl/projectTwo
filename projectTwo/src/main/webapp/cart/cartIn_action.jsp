@@ -70,16 +70,7 @@
 	CartDAO.getDAO().updateCartQuantity(Num, productNum, InCartQuantity, ReceiveCarQuantity);
 		
 	}
-	
-	
-	
-	
-    
-    
-    
-    
 
-
-    request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=cart&worker=cart_page");
+    request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=cart&worker=cart_page&productNum="+productNum);
     %>
 hi

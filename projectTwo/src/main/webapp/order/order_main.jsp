@@ -105,6 +105,24 @@ padding: 5px;
 }
 
 </style>
+<%@include file="/security/login_url.jspf"%>
+<%
+	String name = request.getParameter("selectedItems");
+	//String[] name = request.getParameterValues("selectedItems");
+	if(name!=null){
+System.out.println("전달값="+name);
+	//여기에 전달받은 상품과 수량 가격 출력
+
+
+	}else{
+System.out.println("전달값 없음");
+	}
+	
+	
+
+	
+
+%>
 <fieldset>
 <form action="<%=request.getContextPath() %>/index.jsp?group=order&worker=order_main"
    method="post" id="orderForm" name="orderForm" >
