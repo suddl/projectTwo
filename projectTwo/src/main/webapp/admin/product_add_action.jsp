@@ -44,7 +44,7 @@
 		productCategory="CareTool";
 	}
 	
-	String productType=Utility.escapeTag(multipartRequest.getParameter("productType"));
+	String productType=multipartRequest.getParameter("productType");
 	
 	if(productType.equals("롱")){
 		productType="Long";

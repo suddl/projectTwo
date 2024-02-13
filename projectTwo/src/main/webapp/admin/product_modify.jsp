@@ -79,11 +79,14 @@
 			<th>세부사항</th>
 			<td>
 			<select name="productType" id="productType">
+				<% if(product.getProductType()!=null) { %>
 				<option value="Long"<% if("Long".equals(product.getProductType())) {%>selected<%}%>>롱</option>	
 				<option value="Short"<% if("Short".equals(product.getProductType())) {%>selected<%}%>>숏</option>	
 				<option value="Parts"<% if("Parts".equals(product.getProductType())) {%>selected<%}%>>파츠</option>	
 				<option value="FullColor"<% if("FullColor".equals(product.getProductType())) {%>selected<%}%>>풀컬러</option>	
-				<option value=""<%=product.getProductType()%> selected>--선택--</option>	
+				<% } else { %>
+				<option value=""<% if("".equals(product.getProductType())) {%>selected<%}%>>--선택--</option>
+				<% } %>	
 			</select>
 			</td>
 		</tr>			

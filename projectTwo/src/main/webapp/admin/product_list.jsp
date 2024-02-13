@@ -5,16 +5,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="/security/admin_check.jspf"%>
-<%--PRODUCT 테이블에 저장된 행을 검색하여 게시글 목록을 전달하여 응답하는 JSP 문서 --%>
-<%-- => 게시글을 페이지 단위로 구분하여 검색해 출력 처리되도록 작성 - 페이징 처리 --%>
-<%-- => [페이지번호] 태그를 클릭한 경우 [/admin/product_list.jsp] 문서를 요청하여 페이지 이동 
-- 페이지번호, 게시글갯수, 검색대상, 검색단어 전달(검색기능을 유지하기 위해 검색대상과 검색단어 전달) --%>
-<%-- => [게시글갯수] 태그의 입력값을 변경한 경우 [/admin/product_list.jsp] 문서를 요청하여 페이지 이동 
-- 페이지번호, 게시글갯수, 검색대상, 검색단어 전달 --%>
-<%-- => [검색] 태그를 클릭한 경우 [/admin/product_list.jsp] 문서를 요청하여 페이지 이동 
-- 검색대상, 검색단어 전달 --%>
-<%-- => [등록] 태그를 클릭한 경우 [/admin/product_add.jsp] 문서를 요청하여 페이지 이동 
-- 관리자만 태그를 출력하여 링크가 제공되도록 작성 --%>
 <%
 	//게시글 검색 기능에 필요한 전달값(검색대상과 검색단어)을 반환받아 저장
 	String search=request.getParameter("search");//검색대상
@@ -100,7 +90,7 @@
 	
 <table>
 	<tr>
-		<th width="50"><input type="checkbox" id="allCheck"></th>	
+		<th width="50"><input type="checkbox" name="allCheck" id="allCheck" onclick="allCheck()"></th>	
 		<th width="100">상품번호</th>
 		<th width="170">이미지</th>
 		<th width="250">상품명</th>
@@ -112,8 +102,7 @@
 	<%-- List 객체의 요소(ProductDTO 객체)를 차례대로 제공받아 저장하여 처리하기 위한 반복문 --%>
 	<% for(ProductDTO product : productList) { %>
 	<tr align="center">
-		<td class="p_check"><input type="checkbox" name="checkp" value="<%=product.getProductNum()%>" class="check">
-		</td>
+		<td class="p_check"><input type="checkbox" name="check" id="check" value="<%=product.getProductNum()%>"></td>
 		<td width="100"><%=product.getProductNum() %></td>
 		<td class="content">
 		<% if(product.getProductImage()!=null) { %>
@@ -126,12 +115,14 @@
 			+"&productNum="+product.getProductNum()+"&pageNum="+pageNum+"&pageSize="+pageSize
 			+"&search="+search+"&keyword="+keyword;
 		%>
-		<a href="<%=url%>"><%=product.getProductName() %></a></td>
+		<a href="<%=url%>"><%=product.getProductName() %></a>
+		</td>
 		<td width="200"><%=product.getProductCategory() %></td>
-		<td width="150"><% if(product.getProductType()==null) { %>
-		-
+		<td width="150">
+		<% if(product.getProductType()==null) { %>
+			-
 		<% } else { %>
-		<%=product.getProductType() %>
+			<%=product.getProductType() %>
 		<% } %>
 		</td>
 		<td width="150"><%=df.format(product.getProductPrice()) %>원</td>
@@ -210,35 +201,45 @@ $("#productCount").change(function() {
 		+"&search=<%=search%>&keyword=<%=keyword%>";
 });
 
-
 $("#addBtn").click(function() {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_add";
 });
 
-<%--제품선택--%>
-$("#allCheck").change(function() {
-	if($(this).is(":checked")) {
-		$(".check").prop("checked",true);
-	} else {
-		$(".check").prop("checked",false);
-	}
-});
-<%--제품삭제--%>
-$("#removeBtn").click(function() {
-	if($(".check").filter(":checked").length==0) {
-		$("#message").text("선택된 제품이 하나도 없습니다.");
-		return;
-	}
-	if(confirm("상품을 삭제 하시겠습니까?")) {
-		location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_remove_action"
-	} else {
-		return false;
-	}		
-	
+$(document).ready(function() {
+	$("#allCheck").click(function() {
+		if($("#allCheck").prop("checked")) {
+			$("input[name=check]").prop("checked",true);
+		} else { 
+			$("input[name=check]").prop("checked",false);
+		}
+	});
+
+	$("input[name=check]").click(function() {
+		var total=$("input[name=check]").length;
+		var checked=$("input[name=check]:checked").length;
+
+		if(total!=checked) { 
+			$("#allCheck").prop("checked",false);
+		} else {
+			$("#allCheck").prop("checked",true);
+		}
+	});
+	   
+	$("#removeBtn").click(function() {
+		if($("input[name=check]").filter(":checked").length==0) {
+			alert("삭제할 상품을 선택하세요.");
+			return;
+		}
+
+		if(confirm("상품을 삭제 하시겠습니까?")) {
+			location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_remove_action"
+		} else {
+			return false;
+		}      
+
 	$("#productForm").attr("action", "<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_remove_action");
 	$("#productForm").attr("method","post");
 	$("#productForm").submit();
+	});
 });
-
-</script>
-
+	</script>
