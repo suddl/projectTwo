@@ -184,8 +184,7 @@ System.out.println("전달값수량="+proQun);
   <thead>
   
     <tr>
-      <th scope="col"><input type="checkbox" name="product" value="selectAll" onclick='selectAll(this)' ></th>
-      <th scope="col">상품명</th>
+      <th scope="col" style="text-align: center">상품명</th>
       <th scope="col">수량</th>
       <th scope="col">가격</th>
     </tr>
@@ -209,7 +208,6 @@ System.out.println("전달값수량="+proQun);
       String proQunFN = null;
   %>
   <tbody>
-    
   
   
       <%for(int i = 0; i<proNumResult.length; i++) { 
@@ -219,13 +217,9 @@ System.out.println("전달값수량="+proQun);
       int proNums = Integer.parseInt(proNumResult[i]); 
       CartDTO cartDTO =  CartDAO.getDAO().selectCheckCart(proNums, CNum);
       
-
       
       %>
-    <tr>
-      <th scope="row">
-      <input type="checkbox" name="product" >
-      </th>
+    <tr class="hang">
       <%--이미지 및 상품명 --%>
       <td><img src="<%=request.getContextPath()%><%=cartDTO.getCartProductImages()%>" width="150" height="100">
        <%=cartDTO.getCartProductName() %></td>
@@ -236,10 +230,20 @@ System.out.println("전달값수량="+proQun);
       <%--가격 --%>
       <td><%=Integer.parseInt(cartDTO.getCartProductPrice())* Integer.parseInt(proQunResult[i]) %> 원</td>
       
+      <td class><button type="button" class="bi bi-x-lg" style="background-color: white;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+</svg></button>  </td>
     </tr>
     <% } %>
  
- 
+ 	<script type="text/javascript">
+ 	$( document ).ready( function() {
+ 		  $( ".bi").click( function() {
+ 			  //closest메소드사용하여 가장 가까운 상위 tr을 삭제
+ 		    $(this).closest('tr').remove();
+ 		  });
+ 		});
+ 	</script>
  
   </tbody>
 </table>
