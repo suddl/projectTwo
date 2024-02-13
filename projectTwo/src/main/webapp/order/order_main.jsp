@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="xyz.nailro.dao.CartDAO"%>
 <%@page import="xyz.nailro.dto.CartDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -116,10 +117,28 @@ padding: 5px;
 System.out.println("전달값품번="+proNum);
 System.out.println("전달값수량="+proQun);
 */
-	
+//회원번호
+int Num = loginClient.getClientNum();
+//System.out.println("회원번호="+Num);
+
+CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
+//System.out.println("dto객체="+cartDTOs.size());
 	
 
 %>
+<ul>
+  <li>
+    <input type="checkbox" id="usedAddress" name="useAddress" checked>
+    <label for="usedAddress">기존 주소 사용</label>
+    <!-- ... (이전 코드) ... -->
+  </li>
+  <li>
+    <input type="checkbox" id="newAddress" name="useAddress">
+    <label for="newAddress">새로운 배송지</label>
+    <!-- ... (이전 코드) ... -->
+  </li>
+</ul>
+
 <fieldset>
 <form action="<%=request.getContextPath() %>/index.jsp?group=order&worker=order_main"
    method="post" id="orderForm" name="orderForm" >
@@ -127,43 +146,34 @@ System.out.println("전달값수량="+proQun);
 	<ul>
 		<li>
 			<label for="name">이름</label>
-			<input type="text" name="name" id="name">
+			<input type="text" name="name" id="name" value="<%=cartDTOs.getClientName()%>">
 			<div id="nameMsg" class="error">이름을 입력해 주세요.</div>
 		</li>
 		<li>
 			<label>우편번호</label>
-			<input type="text" name="zipcode" id="zipcode" size="7" readonly="readonly">
+			<input type="text" name="zipcode" id="zipcode" size="7" readonly="readonly" value="<%=cartDTOs.getClientZipCode()%>">
 			<span id="postSearch">우편번호 검색</span>
 			<div id="zipcodeMsg" class="error">우편번호를 입력해 주세요.</div>
 		</li>
 		<li>
 			<label for="address1">기본주소</label>
-			<input type="text" name="address1" id="address1" size="50" readonly="readonly">
+			<input type="text" name="address1" id="address1" size="50" readonly="readonly" value="<%=cartDTOs.getClientAddress1()%>">
 			<div id="address1Msg" class="error">기본주소를 입력해 주세요.</div>
 		</li>
 		<li>
 			<label for="address2">상세주소</label>
-			<input type="text" name="address2" id="address2" size="50" >
+			<input type="text" name="address2" id="address2" size="50" value="<%=cartDTOs.getClientAddress2()%>">
 			<div id="address2Msg" class="error">상세주소를 입력해 주세요.</div>
 		</li>
 		<li>
 			<label for="mobile2">전화번호</label>
-			<select name="mobile1">
-				<option value="010" selected>&nbsp;010&nbsp;</option>
-				<option value="011">&nbsp;011&nbsp;</option>
-				<option value="016">&nbsp;016&nbsp;</option>
-				<option value="017">&nbsp;017&nbsp;</option>
-				<option value="018">&nbsp;018&nbsp;</option>
-				<option value="019">&nbsp;019&nbsp;</option>
-			</select>
-			- <input type="text" name="mobile2" id="mobile2" size="4" maxlength="4">
-			- <input type="text" name="mobile3" id="mobile3" size="4" maxlength="4">
+			<input type="text" name="mobile2" id="mobile2" size="13" maxlength="13" value="<%=cartDTOs.getClientPhone()%>">
 			<div id="mobileMsg" class="error">전화번호를 입력해 입력해 주세요.</div>
 			<div id="mobileRegMsg" class="error">전화번호는 3~4 자리의 숫자로만 입력해 주세요.</div>
 		</li>
 		<li>
 			<label for="email">이메일</label>
-			<input type="text" name="email" id="email">
+			<input type="text" name="email" id="email" value="<%=cartDTOs.getClientEmail()%>">
 			<div id="emailMsg" class="error">이메일을 입력해 주세요.</div>
 			<div id="emailRegMsg" class="error">입력한 이메일이 형식에 맞지 않습니다.</div>
 		</li>
@@ -304,25 +314,67 @@ padding: 30px;">
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 
+$(document).ready(function() {
+    // "기존주소" 체크박스 클릭 이벤트
+    //on함수를 이용해 change 함수와 연결
+    //change 함수를 통해 $("#usedAddress") 즉 체크박스의 값이 변화가 생기면
+    // 등록한 콜백함수 실행
+    $("#usedAddress").on("change", function() {
+	//is함수를 사용하여 선택한 체크박스가 체크된 상태인지 확인한다.
+	//$(this)의 속성값이 (":checked") 체크된 상태인지 결과는 true와 false로 반환
+      if ($(this).is(":checked")) {
+    	   // "기존 주소" 사용 체크되면 "새로운 배송지" 체크 해제
+    	   //checked 속성이 프로퍼티이기 때문에, jQuery에서 속성을 조작할땐 prop 사용 
+    	   //attr 사용 불가는 아님 하지만 사용했을시 한쪽 체크박스가 해제될때 해제가 안될 수 있다
+    	   //즉 동기화되지 않을 수 있다.
+          $("#newAddress").prop("checked", false);
+    	  
+        // 체크되었을 때 기존 주소 정보를 입력 폼에 설정
+        $("#name").val("<%=cartDTOs.getClientName()%>");
+        $("#zipcode").val("<%=cartDTOs.getClientZipCode()%>");
+        $("#address1").val("<%=cartDTOs.getClientAddress1()%>");
+        $("#address2").val("<%=cartDTOs.getClientAddress2()%>");
+        $("#mobile2").val("<%=cartDTOs.getClientPhone()%>");
+        $("#email").val("<%=cartDTOs.getClientEmail()%>");
+      } else {
+        // 체크가 해제되었을 때 입력 폼 초기화
+        $("#name, #zipcode, #address1, #address2, #mobile2, #email").val("");
+      }
+    });
+
+    // "새로운 배송지" 체크박스 클릭 이벤트
+    $("#newAddress").on("change", function() {
+	//새로운배송지의 체크박스가 체크 된 상태라면
+      if ($(this).is(":checked")) {
+    	//"기존 주소" 체크 해제
+          $("#usedAddress").prop("checked", false);
+        // 체크되었을 때 입력 폼 초기화
+        $("#name, #zipcode, #address1, #address2, #mobile2, #email").val("");
+      }
+    });
+  });
+
+
+
 //x버튼 클릭시 해당 행 삭제
 	  $(document).ready(function() {
-          $(document).on('click', '.delete-btn', function() {
+          $(document).on("click", ".delete-btn", function() {
               // 현재 버튼이 속한 가장 가까운 tr 행을 찾아서 
-              var row = $(this).closest('tr');
+              var row = $(this).closest("tr");
               //삭제
               row.remove();
               
             // 삭제된 상품 가격을 차감
             //id가 EndCash인 행을 찾아 0~9까지를 제외한 나머지를 빈문자열로 대체하여 숫자를
             //제외한 나머지를 제거 후 정수로 변환
-            var itemTotal = parseInt(row.find("#EndCash").text().replace(/[^0-9]/g, ''));
+            var itemTotal = parseInt(row.find("#EndCash").text().replace(/[^0-9]/g, ""));
               
             //총상품금액을 정수로 변환, 숫자를 제외한 나머지 문자 삭제
-            var currentTotal = parseInt($('#totalAmount').text().replace(/[^0-9]/g, ''));
+            var currentTotal = parseInt($("#totalAmount").text().replace(/[^0-9]/g, ""));
             var newTotal = currentTotal - itemTotal;;
             
             //toLocaleString()을 통해 숫자사이에 ,을 찍어 쉽게 구분 10000-> 10,000
-              $('#totalAmount').text(newTotal.toLocaleString() + '원');
+              $("#totalAmount").text(newTotal.toLocaleString() + "원");
               
               // 총 구매금액이 50000원을 넘는 경우 배송비는 0원, 그렇지 않으면 3000원
               var shippingFee = newTotal > 50000 ? 0 : 3000;
@@ -330,7 +382,7 @@ padding: 30px;">
               $("#delivery").text(shippingFee.toLocaleString()+"원");
               // 배송비 적용하여 결제금액 갱신
               var finalTotal = newTotal + shippingFee;
-              $("#totalpayment").text(finalTotal.toLocaleString() + '원');
+              $("#totalpayment").text(finalTotal.toLocaleString() + "원");
           });
       });
 

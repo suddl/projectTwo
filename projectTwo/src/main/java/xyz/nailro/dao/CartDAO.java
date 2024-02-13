@@ -243,5 +243,44 @@ public class CartDAO extends JdbcDAO{
 		return carts;
 	}
 	
+	//client 테이블에 저장된 회원정보를 검색하여 반환하는 메소드
+	public CartDTO selectClientInfo(int ClientNum){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs=null;
+		CartDTO clientInfor = new CartDTO();
+		
+		try {
+			con = getConnection();
+			
+			String sql = "select client_name, client_phone, client_email, "
+					+ "client_address1,client_address2, client_zipcode from client where client_num=?";
+					
+			
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, ClientNum);
+			rs = pstmt.executeQuery();
+			
+			
+			if(rs.next()) {
+				clientInfor.setClientName(rs.getString("client_name"));
+				clientInfor.setClientPhone(rs.getString("client_phone"));
+				clientInfor.setClientEmail(rs.getString("client_email"));
+				clientInfor.setClientAddress1(rs.getString("client_address1"));
+				clientInfor.setClientAddress2(rs.getString("client_address2"));
+				clientInfor.setClientZipCode(rs.getString("client_zipcode"));
+				
+			}
+					
+			
+		} catch (SQLException e) {
+			System.out.println("selectClientInfo 에러"+ e.getMessage());
+		}finally {
+			close(con, pstmt, rs);
+		}
+		
+		return clientInfor;
+	}
+	
 
 }
