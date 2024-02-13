@@ -1,4 +1,3 @@
-<%@page import="oracle.security.o3logon.O3LoginClientHelper"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="xyz.nailro.dto.ClientDTO"%>
@@ -7,7 +6,7 @@
 <%@ page import="xyz.nailro.dao.ReviewDAO"%>
 <%@ page import="xyz.nailro.dto.ReviewDTO"%>
 
- 
+
 <%
 //게시글 검색 기능에 필요한 전달값(검색대상과 검색단어)을 반환받아 저장
 String search=request.getParameter("search");//검색대상
@@ -58,12 +57,10 @@ if(endRow>totalReview) {
 	endRow=totalReview;
 }
 
-int productReview = Integer.parseInt(request.getParameter("productNum"));
-
 //페이징 처리 관련 정보(시작 행번호와 종료 행번호)와 게시글 검색 기능 관련 정보(검색대상과
 //검색단어)를 전달받아 REVIEW 테이블에 저장된 행을 검색하여 게시글 목록을 반환하는 ReviewDAO 
 //클래스의 메소드 호출
-List<ReviewDTO> reviewList=ReviewDAO.getDAO().selectReviewList(startRow, endRow, search, keyword, productReview);
+List<ReviewDTO> reviewList=ReviewDAO.getDAO().selectReviewList(startRow, endRow, search, keyword);
 
 //session 객체에 저장된 권한 관련 속성값을 반환받아 저장
 // => 로그인 상태의 사용자에게만 글쓰기 권한 제공
@@ -77,17 +74,6 @@ String currentDate=new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 //페이지에 출력될 게시글의 일련번호 시작값을 계산하여 저장
 // => 검색된 게시글의 총갯수가 91개인 경우 >> 1Page : 91, 2Page : 81, 3Page, 71
 int displayNum=totalReview-(pageNum-1)*pageSize;
-
-//제품 ID를 파라미터에서 받아옴
-//int productNum = Integer.parseInt(request.getParameter("productNum"));
-
-//해당 제품 ID에 대한 리뷰 목록을 조회
-//List<ReviewDTO> reviews = ReviewDAO.getDAO().selectProductReviews(productNum);
-
-	
-
-
-
 %>
 
 <html>
@@ -170,9 +156,14 @@ td {
 }
 
 #page_list {
-	font-size: 1.1em;
-	margin: 10px;
-	text-align: center;
+    display: flex;
+    justify-content: center; /* 중앙 정렬 */
+    flex-wrap: wrap; /* 내용이 넘칠 경우 다음 줄로 */
+    margin: 20px 0;
+}
+
+#page_list a, #page_list span {
+    margin: 0 5px; /* 좌우 여백 */
 }
 
 #page_list a:hover {
@@ -244,6 +235,7 @@ td {
 	</table>
 	</div>
 	</form>
+
 	
 	<%-- 페이지번호 출력 및 링크 제공 - 블럭화 처리 --%>
 	<%
@@ -293,7 +285,7 @@ td {
 		<% } else { %>	
 			[다음]
 		<% } %>
-	
+		</div>
 	
 	<%-- 사용자로부터 검색 관련 정보를 입력받기 위한 태그 출력 --%>
 
@@ -308,6 +300,7 @@ td {
 		<button type="submit">검색</button>
 	</form>
 	</div>
+	
 
 <script type="text/javascript">
 $("#reviewCount").change(function() {
