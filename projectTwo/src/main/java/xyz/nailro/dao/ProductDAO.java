@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.nailro.dto.ProductDTO;
-
+ 
 public class ProductDAO extends JdbcDAO	{
 	private static ProductDAO _dao;
 	
@@ -390,7 +390,6 @@ public class ProductDAO extends JdbcDAO	{
 	    try {
 	        con = getConnection();
 
-	        // product_num을 선택하도록 SQL 쿼리 수정
 	        String sql = "SELECT product_num, product_image, product_name, product_price FROM product WHERE product_category = ? ORDER BY product_num DESC";
 	        pstmt = con.prepareStatement(sql);
 	        pstmt.setString(1, productCategory);
@@ -408,8 +407,7 @@ public class ProductDAO extends JdbcDAO	{
 	            productList.add(product);
 	        }
 	    } catch (SQLException e) {
-	        // 더 구체적인 에러 메시지 출력
-	        System.err.println("[에러] selectProductByCategory() 메소드의 오류: " + e.getMessage());
+	        System.out.println("[에러] selectProductByCategory() 메소드의 오류: " + e.getMessage());
 	    } finally {
 	        close(con, pstmt, rs);
 	    }
@@ -455,8 +453,135 @@ public class ProductDAO extends JdbcDAO	{
 			        close(con, pstmt, rs);
 			    }
 			    return productList;
-
-		
-		
 	}
+		//상품 페이지(네일, 페디, 케어 페이징 처리)
+		public int selectTotalProductByCategory(String productCategory) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			int totalCount=0;
+			try {
+				con=getConnection();
+				
+					String sql="select count(*) from product where product_category = ? order by product_num DESC";
+					pstmt=con.prepareStatement(sql);
+					pstmt.setString(1, productCategory);
+				
+				
+				rs=pstmt.executeQuery();
+				
+				if(rs.next()) {
+					totalCount=rs.getInt(1);
+				}
+			} catch (SQLException e) {
+				System.out.println("[에러]selectTotalProductByCategory() 메소드의 SQL 오류 = "+e.getMessage());
+			} finally {
+				close(con, pstmt, rs);
+			}
+			return totalCount;
+		}
+		
+		//상품 페이지(New 페이징 처리)
+		public int selectTotalProductByProductNum() {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			int totalCount=0;
+			try {
+				con=getConnection();
+				
+				String sql="select count(*) from product order by product_num DESC";
+				pstmt=con.prepareStatement(sql);
+				
+				
+				rs=pstmt.executeQuery();
+				
+				if(rs.next()) {
+					totalCount=rs.getInt(1);
+				}
+			} catch (SQLException e) {
+				System.out.println("[에러]selectTotalProductByProductNum() 메소드의 SQL 오류 = "+e.getMessage());
+			} finally {
+				close(con, pstmt, rs);
+			}
+			return totalCount;
+		}
+		
+		//페이징 처리 관련 정보(네일, 페디, 케어 / 시작 행번호와 종료 행번호)
+		public List<ProductDTO> selectProductListByCategory(int startRow, int endRow, String productCategory) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			List<ProductDTO> productList=new ArrayList<ProductDTO>();
+			try {
+				con=getConnection();
+				
+			
+					String sql="select * from (select rownum rn, temp.* from (select product_num, product_image, product_name, product_price from product  where product_category=? order by product_num) temp)"
+						+ " where rn between ? and ?";
+					pstmt=con.prepareStatement(sql);
+					pstmt.setString(1, productCategory);
+					pstmt.setInt(2, startRow);
+					pstmt.setInt(3, endRow);
+
+				
+				
+				rs=pstmt.executeQuery();
+				
+				while(rs.next()) {
+					ProductDTO product=new ProductDTO();
+					product.setProductNum(rs.getInt("product_num"));
+					product.setProductImage(rs.getString("product_image"));
+					product.setProductName(rs.getString("product_name"));
+					product.setProductPrice(rs.getInt("product_price"));
+					
+					
+					productList.add(product);
+				}
+			} catch (SQLException e) {
+				System.out.println("[에러]selectProductListByCategory() 메소드의 SQL 오류 = "+e.getMessage());
+			} finally {
+				close(con, pstmt, rs);
+			}
+			return productList;
+		}
+
+		//페이징 처리 관련 정보(new / 시작 행번호와 종료 행번호)
+		public List<ProductDTO> selectProductListByProductNum(int startRow, int endRow) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			List<ProductDTO> productList=new ArrayList<ProductDTO>();
+			try {
+				con=getConnection();
+				
+			
+					String sql="select * from (select rownum rn, temp.* from (select product_num, product_image, product_name, product_price from product order by product_num) temp)"
+						+ " where rn between ? and ?";
+					pstmt=con.prepareStatement(sql);
+	
+					pstmt.setInt(1, startRow);
+					pstmt.setInt(2, endRow);
+
+				
+				
+				rs=pstmt.executeQuery();
+				
+				while(rs.next()) {
+					ProductDTO product=new ProductDTO();
+					product.setProductNum(rs.getInt("product_num"));
+					product.setProductImage(rs.getString("product_image"));
+					product.setProductName(rs.getString("product_name"));
+					product.setProductPrice(rs.getInt("product_price"));
+					
+					
+					productList.add(product);
+				}
+			} catch (SQLException e) {
+				System.out.println("[에러]selectProductListByProductNum() 메소드의 SQL 오류 = "+e.getMessage());
+			} finally {
+				close(con, pstmt, rs);
+			}
+			return productList;
+		}
 }
