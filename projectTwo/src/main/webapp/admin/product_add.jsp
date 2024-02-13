@@ -34,11 +34,12 @@
 				<input type="text" name="productPrice" id="productPrice" size="30" 
 					 maxlength="10"> 원 
 			</td>					
-		</tr>	
+		</tr>
 		<tr>
 			<th>카테고리</th>
 			<td>
-			<select name="productCategory" >
+			<select name="productCategory" id="productCategory" onchange="productChange(this)">
+				<option value="">--선택--</option>
 				<option value="Nail">네일</option>
 				<option value="Pedi">페디</option>
 				<option value="CareTool">케어&툴</option>
@@ -48,12 +49,11 @@
 		<tr>
 			<th>세부사항</th>
 			<td>
-				<input type='radio' name='productType' value="Long"> 롱
-				<input type='radio' name='productType' value="Short"> 숏
-				<input type='radio' name='productType' value="Parts"> 파츠
-				<input type='radio' name='productType' value="FullColor"> 풀컬러
+				<select name="productType" id="productType" >
+				<option value="">--선택--</option>
+			</select>
 			</td>
-		</tr>			
+		</tr>
 		<tr>
 			<th>상품대표이미지</th>
 			<td>
@@ -117,6 +117,28 @@ $("#productForm").submit(function() {
 	}
 });
 
+function productChange(e) {
+	var Nail_n = ["롱", "숏", "파츠", "풀컬러"];
+	var Pedi_p = ["--선택--"];
+	var CareTool_c = ["--선택--"];
+	var Select_s = ["--선택--"];
+	var target = document.getElementById("productType");
+	
+	if(e.value == "Nail") var d = Nail_n;
+	else if(e.value == "Pedi") var d = Pedi_p;
+	else if(e.value == "CareTool") var d = CareTool_c;
+	else if(e.value == "") var d = Select_s;
+	
+	target.options.length = 0;
+	
+	for (x in d) {
+	var opt = document.createElement("option");
+	opt.value = d[x];
+	opt.innerHTML = d[x];
+	target.appendChild(opt);
+	}
+}
+	
 $("#cancelBtn").click(function() {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_list"
 });

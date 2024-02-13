@@ -29,62 +29,13 @@
 	}	
 %>
 
-<link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/product_add.css" type="text/css" rel="stylesheet">
 <style>
-#product_modify {
-	width: 800px;
-	margin: 0 auto;
-}
-	
-h1{
-	text-align : center; 
-	margin-bottom: 30px;
-	font-size: 35px;
-}
-
-table {
-	margin: 10px auto;
-	border: 1px solid lightgray;
-	border-collapse: collapse;
-}
-
-th, td {
-	border: 1px solid lightgray;
-	padding: 5px;	
-}
-
-th {
-	width: 150px;
-	background: #FFDCE1;
-	color: black;
-	font-size: 18px;
-}
-
-td {
-	width: 650px;
-	text-align : left; 
-}
-
-#button {
-	padding: 20px;
-	border: none;
-	background: white;
-}
-
-#product_menu {
+#product_me {
 	text-align: right;
 	margin: 5px;
 }
-
-.error {
-	color: red;
-	position: relative;
-	left: 160px;
-	display: none;
-}
-
 </style>
-
 <%-- 파일(리뷰 이미지)을 입력받아 전달하기 위해 form 태그의 enctype 속성값을 반드시 [multipart/form-date]로 설정 --%>
 <form action="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_modify_action"
 	method="post" enctype="multipart/form-data" id="productForm">
@@ -96,6 +47,7 @@ td {
 	<input type="hidden" name="currentProductImage" value="<%=product.getProductImage()%>">
 	<input type="hidden" name="currentProductImage2" value="<%=product.getProductImage2()%>">
 	<input type="hidden" name="currentProductImage3" value="<%=product.getProductImage3()%>">
+
 <div id="product_modify">
 	<h1>상품수정</h1>
 	<table>
@@ -116,7 +68,7 @@ td {
 		<tr>
 			<th>카테고리</th>
 			<td>
-			<select name="productCategory" >
+			<select name="productCategory" id="productCategory" onchange="productChange(this)">
 				<option value="Nail"<% if(product.getProductCategory().equals("Nail")) {%>selected<%}%>>네일</option>
 				<option value="Pedi"<% if(product.getProductCategory().equals("Pedi")) {%>selected<%}%>>페디</option>
 				<option value="CareTool"<% if(product.getProductCategory().equals("CareTool")) {%>selected<%}%>>케어&툴</option>
@@ -126,10 +78,13 @@ td {
 		<tr>
 			<th>세부사항</th>
 			<td>
-				<input type="radio" name="productType" value="Long"<% if(product.getProductType().equals("Long")) {%>checked<%}%>> 롱
-				<input type="radio" name="productType" value="Short"<% if(product.getProductType().equals("Short")) {%>checked<%}%>> 숏
-				<input type="radio" name="productType" value="Parts"<% if(product.getProductType().equals("Parts")) {%>checked<%}%>> 파츠
-				<input type="radio" name="productType" value="FullColor"<% if(product.getProductType().equals("FullColor")) {%>checked<%}%>> 풀컬러
+			<select name="productType" id="productType">
+				<option value="Long"<% if("Long".equals(product.getProductType())) {%>selected<%}%>>롱</option>	
+				<option value="Short"<% if("Short".equals(product.getProductType())) {%>selected<%}%>>숏</option>	
+				<option value="Parts"<% if("Parts".equals(product.getProductType())) {%>selected<%}%>>파츠</option>	
+				<option value="FullColor"<% if("FullColor".equals(product.getProductType())) {%>selected<%}%>>풀컬러</option>	
+				<option value=""<%=product.getProductType()%> selected>--선택--</option>	
+			</select>
 			</td>
 		</tr>			
 		<tr>
@@ -163,10 +118,10 @@ td {
 			</td>
 		</tr>
 	</table>
-	<div id="product_menu">
-		<button type="button" id="listBtn">목록</button>&nbsp;
-		<button type="button" id="cancelBtn">취소</button>&nbsp;
-		<button type="submit">수정</button>
+	<div id="product_me">
+	<button type="button" id="listBtn">목록</button>&nbsp;
+	<button type="button" id="cancelBtn">취소</button>&nbsp;
+	<button type="submit">수정</button>
 	</div>
 </div>
 </form>
@@ -195,6 +150,26 @@ function getselect() {
 
     document.getElementById('value').value = option.value;
     document.getElementById('text').value = option.text;
+}
+
+function productChange(e) {
+	var Nail_n = ["롱", "숏", "파츠", "풀컬러"];
+	var Pedi_p = ["--선택--"];
+	var CareTool_c = ["--선택--"];
+	var target = document.getElementById("productType");
+	
+	if(e.value == "Nail") var d = Nail_n;
+	else if(e.value == "Pedi") var d = Pedi_p;
+	else if(e.value == "CareTool") var d = CareTool_c;
+	
+	target.options.length = 0;
+	
+	for (x in d) {
+	var opt = document.createElement("option");
+	opt.value = d[x];
+	opt.innerHTML = d[x];
+	target.appendChild(opt);
+	}
 }
 
 $("#listBtn").click(function() {

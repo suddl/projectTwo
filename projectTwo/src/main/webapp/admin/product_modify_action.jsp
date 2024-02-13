@@ -48,7 +48,7 @@
 		productType="Parts";
 	} else if(productType.equals("FullColor")){
 		productType="FullColor";
-	}
+	} 
 	
 	String productImage=null;
 	if(multipartRequest.getFilesystemName("productImage")!=null) {//업로드 파일이 있는 경우	

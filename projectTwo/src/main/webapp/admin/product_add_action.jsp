@@ -46,14 +46,16 @@
 	
 	String productType=Utility.escapeTag(multipartRequest.getParameter("productType"));
 	
-	if(productType.equals("Long")){
+	if(productType.equals("롱")){
 		productType="Long";
-	} else if(productType.equals("Short")){
+	} else if(productType.equals("숏")){
 		productType="Short";
-	} else if(productType.equals("Parts")){
+	} else if(productType.equals("파츠")){
 		productType="Parts";
-	} else if(productType.equals("FullColor")){
+	} else if(productType.equals("풀컬러")){
 		productType="FullColor";
+	} else if(productType.equals("--선택--")){
+		productType="";
 	}
 	
 	//서버 디렉토리에 업로드되어 저장된 파일명을 반환받아 컨텍스트 경로를 저장

@@ -128,7 +128,12 @@
 		%>
 		<a href="<%=url%>"><%=product.getProductName() %></a></td>
 		<td width="200"><%=product.getProductCategory() %></td>
-		<td width="150"><%=product.getProductType() %></td>
+		<td width="150"><% if(product.getProductType()==null) { %>
+		-
+		<% } else { %>
+		<%=product.getProductType() %>
+		<% } %>
+		</td>
 		<td width="150"><%=df.format(product.getProductPrice()) %>원</td>
 	</tr>
 	<% } %>

@@ -45,7 +45,12 @@
 		</tr>			
 		<tr>
 			<th>세부사항</th>
-			<td><%=product.getProductType() %></td>
+			<td width="150"><% if(product.getProductType()==null) { %>
+			-
+			<% } else { %>
+			<%=product.getProductType() %>
+			<% } %>
+			</td>
 		</tr>
 		<tr>
 			<th>상품대표이미지</th>
