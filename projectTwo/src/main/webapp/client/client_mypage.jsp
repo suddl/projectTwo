@@ -49,7 +49,11 @@
               $('#content').html(data); 
               
            });
-           
+        }
+        function redirectToPassWordConFirm() {
+           $.get('<%=request.getContextPath()%>/client/password_cofirm.jsp', function(data) {
+              $('#content').html(data);
+           });
         }
        
     </script>
@@ -86,7 +90,7 @@
         </tr>
         <tr class="chas1" onclick="backChange(this,2)">
             <td class="box non-click" id="modifyButton" style="border: 1px solid black; padding: 20px;" onclick="redirectToClientModify()">회원정보 수정</td>
-            <td class="box non-click" style="border: 1px solid black; padding: 20px;">회원 탈퇴</td>
+            <td class="box non-click" style="border: 1px solid black; padding: 20px;"onclick="redirectToPassWordConFirm()">회원 탈퇴</td>
         </tr>
         <tr class="chas1">
             <td class="box non-click" style="border: 1px solid black; padding: 20px;">게시글관리</td>
