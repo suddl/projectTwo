@@ -44,6 +44,5 @@
 		
 		return;
 	}
-		System.out.println("여기까지온다.url");
 
 %>

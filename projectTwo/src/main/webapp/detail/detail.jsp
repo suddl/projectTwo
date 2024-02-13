@@ -90,7 +90,7 @@
                            <span id="count1" name="count1" style="display: inline-block;" value="1">  </span>&nbsp;&nbsp;
          
                             <%-- 여기서는 데이터를 action에 넘긴다 --%>
-                           <input type="hidden" name ="counting" id="countHidden" value="5">
+                           <input type="hidden" name ="counting" id="countHidden" value="1">
                
                            <button type="button" id="plusBtn" onclick="countUp();">+</button>
                         </div>
