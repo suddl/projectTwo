@@ -9,9 +9,9 @@
     }
 
 	 #agreement {
-      font-size: 1.5em; /* 크기 조절 (원하는 크기로 조절) */
-      font-weight: bold; /* 폰트 굵기 설정 */
-      margin-top: 20px; /* 약간의 상단 여백 추가 */
+      font-size: 1.5em; 
+      font-weight: bold; 
+      margin-top: 20px; 
     }
     
      .centered {
@@ -28,7 +28,7 @@
     <h2>Agreement</h2>
   	</div>
   <div class="centered">
-    <p>
+    <p> 
       제1조(목적) 
 
 이 약관은 글루가 회사(전자상거래 사업자)가 운영하는 오호라 사이버 몰(이하 “몰”이라 한다)에서 제공하는 인터넷 관련 서비스(이하 “서비스”라 한다)를 이용함에 있어 사이버 몰과 이용자의 권리·의무 및 책임 사항을 규정함을 목적으로 합니다. 

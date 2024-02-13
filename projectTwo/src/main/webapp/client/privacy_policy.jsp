@@ -9,7 +9,7 @@
     }
 
 	 #agreement {
-      font-size: 1.5em; 
+      font-size: 1.5em;  
       font-weight: bold; 
       margin-top: 20px; 
     }
