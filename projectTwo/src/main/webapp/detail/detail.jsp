@@ -78,7 +78,7 @@
                         value="<%=product.getPrice()%>"> --%>
                      <div class="di-line"></div>
 
-                     <div class="row">
+                     <div class="row"> 
                         <div class="col-auto">
                            <label class="col-form-label">&nbsp;&nbsp;구매수량</label>
                         </div>
