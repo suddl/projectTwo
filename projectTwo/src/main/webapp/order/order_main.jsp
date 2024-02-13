@@ -217,8 +217,10 @@ System.out.println("전달값수량="+proQun);
       //proNumResult의 i번쨰 숫자를 정수로 변환
       int proNums = Integer.parseInt(proNumResult[i]); 
       CartDTO cartDTO =  CartDAO.getDAO().selectCheckCart(proNums, CNum);
-      
-      
+      //itemTotal 변수에 수량과 상품가격을 곱해서 상품의 최종가격을 저장
+      int itemTotal = Integer.parseInt(cartDTO.getCartProductPrice()) * Integer.parseInt(proQunResult[i]);
+      //각 상품의 최종가격을 변수에 더하여 저장하면 총 상품금액을 알 수 있다.
+      total += itemTotal;
       %>
     <tr class="hang">
       <%--이미지 및 상품명 --%>
@@ -229,29 +231,37 @@ System.out.println("전달값수량="+proQun);
       <%=proQunResult[i] %> 개
       </td>
       <%--가격 --%>
-      <% total +=  Integer.parseInt(cartDTO.getCartProductPrice()) * Integer.parseInt(proQunResult[i]); %>
-      <td id="EndCash"><%=  Integer.parseInt(cartDTO.getCartProductPrice())* Integer.parseInt(proQunResult[i]) %> 원</td>
-      
-      <td class><button type="button" class="bi bi-x-lg" style="background-color: white;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-</svg></button>  </td>
+      <td id="EndCash"><%= String.format("%,d", itemTotal) %> 원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      	<button type="button" class="bi bi-x-lg delete-btn">
+           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+           </svg>
+        </button> 
+	</td>
     </tr>
     <% } %>
- 
- 	
- 
   </tbody>
 </table>
 
 
 <div style="border: 1px solid black; border-radius: 20px;  width: 100%; margin:0 auto; background-color: #DCDCDC; margin-top: 50px;
 padding: 30px;">
-<p class="money" > 총 상품금액 </p> <span class="NumMoney"> <%= String.format("%,d", total) %>원이다 </span>
+<p class="money" > 총 상품금액 </p>
+ <span class="NumMoney" id="totalAmount"><%= String.format("%,d", total) %>원 </span>
  
-<p class="money" > 배송비</p><span class="NumMoney" > 3,000 원</span>
+ 
+<p class="money" > 배송비</p>
+	<span class="NumMoney" id="delivery" >
+	<%--최초 화면출력시 배송비 출력 --%>
+	<% if(total>=50000){ %> 
+		0 원
+<% 	}else{ %>
+		3,000 원
+	<% } %>
+	</span> 
 <hr>
 
-<p class="moneyALL" >총 결제 금액</p><span class="NumMoneyALL" > 23,000 원</span>
+<p class="moneyALL" >총 결제 금액</p><span class="NumMoneyALL" id="totalpayment"><%= String.format("%,d", total) %>원 </span>
 
   <%-- 결제방법 선택 --%>
 </div>
@@ -287,6 +297,7 @@ padding: 30px;">
 	
 	<div id="FinishCash">결제하기</div>
 	</fieldset>
+	</form>
 	
 	
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -294,13 +305,33 @@ padding: 30px;">
 <script type="text/javascript">
 
 //x버튼 클릭시 해당 행 삭제
-	$( document ).ready( function() {
-		  $( ".bi").click( function() {
-			  //closest메소드사용하여 가장 가까운 상위 tr을 삭제
-		    $(this).closest('tr').remove();
-			  
-		  });
-		});
-
+	  $(document).ready(function() {
+          $(document).on('click', '.delete-btn', function() {
+              // 현재 버튼이 속한 가장 가까운 tr 행을 찾아서 
+              var row = $(this).closest('tr');
+              //삭제
+              row.remove();
+              
+            // 삭제된 상품 가격을 차감
+            //id가 EndCash인 행을 찾아 0~9까지를 제외한 나머지를 빈문자열로 대체하여 숫자를
+            //제외한 나머지를 제거 후 정수로 변환
+            var itemTotal = parseInt(row.find("#EndCash").text().replace(/[^0-9]/g, ''));
+              
+            //총상품금액을 정수로 변환, 숫자를 제외한 나머지 문자 삭제
+            var currentTotal = parseInt($('#totalAmount').text().replace(/[^0-9]/g, ''));
+            var newTotal = currentTotal - itemTotal;;
+            
+            //toLocaleString()을 통해 숫자사이에 ,을 찍어 쉽게 구분 10000-> 10,000
+              $('#totalAmount').text(newTotal.toLocaleString() + '원');
+              
+              // 총 구매금액이 50000원을 넘는 경우 배송비는 0원, 그렇지 않으면 3000원
+              var shippingFee = newTotal > 50000 ? 0 : 3000;
+				
+              $("#delivery").text(shippingFee.toLocaleString()+"원");
+              // 배송비 적용하여 결제금액 갱신
+              var finalTotal = newTotal + shippingFee;
+              $("#totalpayment").text(finalTotal.toLocaleString() + '원');
+          });
+      });
 
 </script>
