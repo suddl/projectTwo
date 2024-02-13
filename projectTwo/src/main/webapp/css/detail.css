@@ -10,6 +10,7 @@
 	width: 20rem; /* 카드의 폭 조절 */
 	margin-left: 15px; /* 이미지와 카드 사이의 간격 조절 */
 	display: flex;
+	height: 100%;
 }
 .carousel .carousel-item img {
 	max-width: 100%; /* 이미지 크기 조절 */
@@ -26,7 +27,7 @@
 	background-color: black; /* 기본 배경색 */
 }
 .custom-nav .nav-link.active {
-	background-color: gray; /* 활성 탭의 배경색 */
+	background: gray; /* 활성 탭의 배경색 */
 	color: black; /* 활성 탭의 글자색 */
 }
 div {
@@ -70,17 +71,17 @@ div {
 	margin: 0px;
 	border-radius: 5px;
 }
-.button a:hover {
-	/* 마우스 호버 시 배경색 변경 */
+
+.custom-nav  {
+	margin: 0 auto;
+}
+
+.col-auto {
+	text-align: center;
 	
 }
-.custom-nav .col-auto {
-	margin: 0 auto;
-	margin-right: 5px;
-	margin-left: 20px;
-}
 .totalPrice {
-	text-align: left;
+	text-align: center;
 }
 .di-line {
 	border-top: 1px dotted #444444;
@@ -100,6 +101,9 @@ div {
     margin: 20px 0; /* 위아래 여백 */
 }
 
+#proCount {
+	text-align: center;
+}
 
 .cartBtn {
     border-radius: 20px; /* 테두리 둥글게 */
@@ -109,4 +113,42 @@ div {
     color: white; /* 글자 색상 */
     text-decoration: none; /* 링크 밑줄 제거 */
     display: inline-block; /* 버튼처럼 보이게 함 */
+}
+
+.priceCount {
+	margin-bottom: 20px;	
+}
+
+.infodeli {
+	margin-top: 20px;
+}
+
+.protitle {
+	border-radius: 5px;
+	background: gray;
+	display: flex;
+	width: 400px;
+	height: 50px;
+	text-align: center;
+	justify-content: space-around;
+	align-items: center;
+	margin:0px;
+	padding:0px;
+
+}
+.proto {
+	border-radius: 5px;
+	background: black;
+	display: flex;
+	width: 400px;
+	height: 50px;
+	text-align: center;
+	justify-content: space-around;
+	align-items: center;
+	margin:0px;
+	padding:0px;
+}
+
+h5 {
+	margin-top: 20px;
 }
