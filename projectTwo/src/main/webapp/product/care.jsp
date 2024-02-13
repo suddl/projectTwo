@@ -26,6 +26,9 @@
 <%
 	List<ProductDTO> productList = ProductDAO.getDAO().selectProductByCategory("CareTool");
 %>
+<a href = "#">
+	<img class="logo" src="<%= request.getContextPath() %>/images/careLogo.jpg" alt="care&toll"/>
+</a>
 <div class="container">
 	<div class="sorting">
 		<select name="정렬 방식">

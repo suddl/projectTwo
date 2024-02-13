@@ -14,10 +14,23 @@
 	
 %>
 <link href="<%=request.getContextPath()%>/css/main.css" type="text/css" rel="stylesheet">
-<div>
-<img src="<%= request.getContextPath() %>/images/main_image.jpg" width="65%"height="600">
+<div class="sliderWrap">
+    <div class="sliderImg">
+        <div class="sliderInner">
+            <div class="imageSlider s1">
+	            <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=new">
+	            	<img src="<%= request.getContextPath() %>/images/main_image.jpg" width="1100px" height="600px">
+	            </a>
+            </div>
+            <div class="imageSlider s2">
+            	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_terms">
+           			<img src="<%= request.getContextPath() %>/images/newJoin.png" width="1200px" height="600px">
+           		</a>
+           	</div>
+        </div>
+    </div>
 </div>
-<br>
+
 <div>
 	<h2>이달의 신상품</h2>
 </div>
@@ -83,6 +96,41 @@
 </div>
 
 <script>
+const slideWrap = document.querySelector(".sliderWrap");
+const slideImg = slideWrap.querySelector(".sliderImg");         //보여지는 영역
+const slideInner = slideWrap.querySelector(".sliderInner");     //움직이는 영역
+const imageSlider = slideWrap.querySelectorAll(".imageSlider");              //개별 이미지
+
+let curIndex = 0;                                               //현재 보이는 이미지
+let slideCount = imageSlider.length;                                    //이미지 갯수
+let slideInterval = 2000;                                          //이미지 변경 간격 시간
+let slideWidth = imageSlider[0].offsetWidth;                      //이미지 가로 값
+let slideClone = slideInner.firstElementChild.cloneNode(true);    //첫번째 이미지 복사
+
+// 복사한 첫 번째 이미지 마지막에 붙여넣기
+slideInner.appendChild(slideClone);
+
+function slideEffect(){
+	curIndex++;
+
+    slideInner.style.transition = "all 0.6s";
+    slideInner.style.transform = "translateX(-"+ slideWidth * curIndex +"px)";
+
+    //마지막 이미지에 위치 했을 때
+    if(curIndex == slideCount){
+        setTimeout(() => {
+        	slideInner.style.transition = "0s";
+        	slideInner.style.transform = "translateX(0px)";
+        }, 700);
+
+        curIndex = 0;
+    }
+
+}
+
+setInterval(slideEffect, slideInterval);
+
+
 //선택자
 const sliderWrap = document.querySelector(".slider__wrap");
 const sliderImg = sliderWrap.querySelector(".slider__img");         //보여지는 영역

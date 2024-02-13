@@ -26,9 +26,9 @@
 <%
 	List<ProductDTO> productList = ProductDAO.getDAO().selectNewProductList();
 %>
-	<a href = "#">
-		<img class="logo" src="<%= request.getContextPath() %>/images/new_logo.jpg" alt="all"/>
-	</a>
+<a href = "#">
+	<img class="logo" src="<%= request.getContextPath() %>/images/new_logo.jpg" alt="all"/>
+</a>
 <div class="container">
 	<div class="sorting">   
 		<select name="정렬 방식">

@@ -14,6 +14,33 @@ h2 {
 	margin:30px;
 }
 
+.sliderWrap {
+    width: 100%;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sliderImg {  /* 이미지가 보이는 영역 */
+    position: relative;
+    width: 1200px;
+    height: 600px;
+    overflow: hidden;
+}
+.sliderInner {    /* 이미지 움직이는 영역 */
+    display: flex;
+    flex-wrap: wrap;
+    width: 4800px;  /* 총 이미지 영역 */
+    height: 600px;
+}
+.imageSlider {   /* 개별적인 이미지 */
+    position: relative;
+    width: 1200px;
+    height: 600px;
+}
+
+
+
 .slider__wrap {
     width: 100%;
     height: 470px;
@@ -74,7 +101,7 @@ h2 {
     border-radius: 50%;
     text-indent: -9999px;
     transition: all 0.3s;
-    margin: 2px;
+    margin: 5px;
 }
 .slider__dot .dot.active {
     background-color: rgba(255, 255, 255, 1);

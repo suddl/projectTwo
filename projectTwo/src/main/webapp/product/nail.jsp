@@ -26,6 +26,9 @@
 <%
 	List<ProductDTO> productList = ProductDAO.getDAO().selectProductByCategory("Nail");
 %>
+<a href = "#">
+	<img class="logo" src="<%= request.getContextPath() %>/images/nailLogo.jpg" alt="nail"/>
+</a>
 <div class="container">
 	<div class="sorting">
 		<select name="정렬 방식">
