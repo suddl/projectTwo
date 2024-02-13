@@ -12,7 +12,7 @@
     int pageSize = 12;
     if (request.getParameter("pageSize") != null) {
         pageSize = Integer.parseInt(request.getParameter("pageSize"));
-    }
+    } 
 %>
 <!DOCTYPE html>
 <html>

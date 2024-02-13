@@ -6,7 +6,6 @@ body{
 	margin: 0px;
 }
 
-
 #profile {
 	margin-top: 20px;
 	text-align: right;	 
@@ -19,8 +18,9 @@ ul li{
 	display: inline-block;
 }
 
-
-
+#moonlink{
+	margin-right: 10px;
+}
 .menu {
 	display: inline-block; 
 	text-align: center; 
@@ -79,9 +79,10 @@ ol li {
 	font-size: 15px;
 	word-spacing: 20px;
 	letter-spacing: 1px;
-	padding: 20px 60px;
+	padding: 20px;
 	margin-top: 0px;
 	border-bottom: 1px solid white;
+	
 }
 
 

@@ -2,7 +2,14 @@
     pageEncoding="UTF-8"%>
 <footer class="footer">
 	<div id="inner">
-		<div id="moon"><a href="<%=request.getContextPath() %>/index.jsp?group=moon&worker=moon_list">1:1문의하기</a></div>
+		<div id="moon">
+			<a href="<%=request.getContextPath() %>/index.jsp?group=moon&worker=moon_list"  id="moonlink">1:1문의하기</a>
+			<a href = "https://www.instagram.com/"><img class="logo" src="<%= request.getContextPath() %>/images/insta_logo.png"/></a> 
+			<a href = "https://www.facebook.com/?locale=ko_KR"><img class="logo" src="<%= request.getContextPath() %>/images/facebook_logo.png"/></a> 
+			<a href = "https://www.kakaocorp.com/page/service/service/KakaoTalk"><img class="logo" src="<%= request.getContextPath() %>/images/kakao_logo.png"/></a> 
+			<a href = "https://www.naver.com/"><img class="logo" src="<%= request.getContextPath() %>/images/naver_logo.png"/></a> 
+			<a href = "https://www.youtube.com/"><img class="logo" src="<%= request.getContextPath() %>/images/youtube_logo.png"/></a> 
+		</div>
 		<div id ="info">
 			<ol>
 				<li>대표 : 오창중 | 회사 : 네일로</li>
