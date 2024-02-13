@@ -14,6 +14,36 @@
 	List<ReviewDTO> reviewList = ReviewDAO.getDAO().selectProductReviewsForProduct(productReview);
 %>
 <head>
+<style>
+.review-table {
+	width: 80%;
+	margin: 0 auto;
+	border-collapse: collapse;
+}
+.review-table td,
+.review-table th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+.review-table .rating,
+.review-table .date {
+	width: 15%;
+}
+.review-table .subject {
+	width: 50%;
+	height: 20%
+}
+.review-table .review-content {
+	text-align: conter;
+}
+.review-table img {
+	max-width: 100px;
+	height: auto;
+}
+#ratingSubjectDate {
+	background-color: #E2E2E2;
+}
+</style>
 <meta charset="UTF-8">
 <title>상세페이지</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -111,7 +141,7 @@
  <ul class="proDetail" id="proDetail">
    <li class="item-1"><a class="protitle" href="#proDetail" id="pd">제품상세</a></li>
    <li class="item-1"><a class="proto" href="#proInfo" id="pd" style="color:white;">상품설명</a></li>
-   <li class="item-1"><a class="proto" href="review" id="pd" style="color:white;">제품리뷰</a></li>
+   <li class="item-1"><a class="proto" href="#review" id="pd" style="color:white;">제품리뷰</a></li>
 </ul>
 <img src="<%=request.getContextPath() %><%=product.getProductImage3() %>" class="img-fluid" id="dedatilimg1"> 
 <ul class="proInfo"  id="proInfo">
