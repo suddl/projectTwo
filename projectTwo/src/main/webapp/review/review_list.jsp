@@ -1,3 +1,4 @@
+<%@page import="oracle.security.o3logon.O3LoginClientHelper"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="xyz.nailro.dto.ClientDTO"%>
@@ -57,10 +58,12 @@ if(endRow>totalReview) {
 	endRow=totalReview;
 }
 
+int productReview = Integer.parseInt(request.getParameter("productNum"));
+
 //페이징 처리 관련 정보(시작 행번호와 종료 행번호)와 게시글 검색 기능 관련 정보(검색대상과
 //검색단어)를 전달받아 REVIEW 테이블에 저장된 행을 검색하여 게시글 목록을 반환하는 ReviewDAO 
 //클래스의 메소드 호출
-List<ReviewDTO> reviewList=ReviewDAO.getDAO().selectReviewList(startRow, endRow, search, keyword);
+List<ReviewDTO> reviewList=ReviewDAO.getDAO().selectReviewList(startRow, endRow, search, keyword, productReview);
 
 //session 객체에 저장된 권한 관련 속성값을 반환받아 저장
 // => 로그인 상태의 사용자에게만 글쓰기 권한 제공
@@ -81,7 +84,7 @@ int displayNum=totalReview-(pageNum-1)*pageSize;
 //해당 제품 ID에 대한 리뷰 목록을 조회
 //List<ReviewDTO> reviews = ReviewDAO.getDAO().selectProductReviews(productNum);
 
-
+	
 
 
 

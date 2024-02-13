@@ -95,7 +95,7 @@ public class ReviewDAO extends JdbcDAO {
    
 
 
-    public List<ReviewDTO> selectReviewList(int startRow, int endRow, String search, String keyword) {
+    public List<ReviewDTO> selectReviewList(int startRow, int endRow, String search, String keyword, int productNum) {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -109,28 +109,27 @@ public class ReviewDAO extends JdbcDAO {
                 sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num, client.client_name, "
                 		+ "review.review_subject, review.review_content, review.review_date, review.review_image, "
                 		+ "review.review_re, review.review_rating, review.review_product_num "
-                		+ "FROM review INNER JOIN client ON review.review_client_num = client.client_num ORDER BY review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
+                		+ "FROM review INNER JOIN client ON review.review_client_num = client.client_num ORDER BY review.review_num DESC) r) WHERE review_product_num = ? and rn BETWEEN ? AND ?";
+                pstmt = con.prepareStatement(sql);
+                pstmt.setInt(1, productNum);
+                pstmt.setInt(2, startRow);
+                pstmt.setInt(3, endRow);
+            
+          
             } else {
                 sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num,"
                 		+ " client.client_name, review.review_subject, review.review_content, review.review_date, "
                 		+ "review.review_image, review.review_re, review.review_rating, review.review_product_num "
-                		+ "FROM review INNER JOIN client ON review.review_client_num = client.client_num WHERE " + search + " LIKE '%' || ? || '%' ORDER BY review.review_date DESC, review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
-                pstmt = con.prepareStatement(sql);
-                pstmt.setString(1, keyword);
-                pstmt.setInt(2, startRow);
-                pstmt.setInt(3, endRow);
-            }
+                		+ "FROM review INNER JOIN client ON review.review_client_num = client.client_num WHERE review_product_num = ? and " + search + " LIKE '%' || ? || '%' ORDER BY review.review_date DESC, review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
+                
 
             pstmt = con.prepareStatement(sql);
-            if (keyword.equals("")) {
-                pstmt.setInt(1, startRow);
-                pstmt.setInt(2, endRow);
-            } else {
-                // 이 부분은 이미 위에서 처리하므로 중복되어서는 안됩니다.
-                // pstmt.setInt(2, startRow);
-                // pstmt.setInt(3, endRow);
+            pstmt.setInt(1, productNum);
+            pstmt.setString(2, keyword);
+            pstmt.setInt(3, startRow);
+            pstmt.setInt(4, endRow);
+            
             }
-
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -146,7 +145,7 @@ public class ReviewDAO extends JdbcDAO {
                 review.setReviewRating(rs.getString("review_rating"));
                 review.setReviewProductNum(rs.getInt("review_product_num"));
                 reviewList.add(review);
-            }
+            } 
         } catch (SQLException e) {
             System.out.println("[에러] selectReviewList() 메소드의 SQL 오류 = " + e.getMessage());
         } finally {
