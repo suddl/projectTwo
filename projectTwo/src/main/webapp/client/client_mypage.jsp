@@ -72,7 +72,7 @@
 <body> 
     <div class="container">
         <div class="row" align="center"> 
-            <div style="background-color:#FFDCD1; border-radius:50px 0 50px 0; height:100px; padding:100px; text-align:center;"class="mypage">
+            <div style="background-color:#FFDCD1; border-radius:50px 0 50px 0; height:100px; padding:100px; text-align:center; margin-left:auto; margin-right: auto; max-width:400px; "class="mypage">
             <% if (loginClient !=null) { %>
       
             <%= loginClient.getClientName()%> 님 환영합니다!
@@ -89,7 +89,7 @@
             <td class="box non-click" id="second" style="border: 1px solid black; padding: 20px;" onclick="redirectToCart()">장바구니</td>
         </tr>
         <tr class="chas1" onclick="backChange(this,2)">
-            <td class="box non-click" id="modifyButton" style="border: 1px solid black; padding: 20px;" onclick="redirectToClientModify()">회원정보 수정</td>
+            <td class="box non-click" id="modifyButton" style="border: 1px solid black; padding: 20px;" onclick="redirectToClientModify()">회원정보 수정&탈퇴</td>
             <td class="box non-click" style="border: 1px solid black; padding: 20px;"onclick="redirectToPassWordConFirm()">회원탈퇴</td>
         </tr>
         <tr class="chas1">

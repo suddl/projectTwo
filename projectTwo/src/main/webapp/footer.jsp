@@ -20,8 +20,8 @@
 			</ol>
 		</div>
 		<div id="info_area">
-			<a href="#">이용약관</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="#">개인정보처리방침</a>
+			<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=agreement" id=clientagreement>이용약관</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=privacy_policy" id=clientpolicy>개인정보처리방침</a>
 		</div>
 	</div>
 </footer> 
