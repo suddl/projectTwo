@@ -141,19 +141,19 @@
  <ul class="proDetail" id="proDetail">
    <li class="item-1"><a class="protitle" href="#proDetail" id="pd">제품상세</a></li>
    <li class="item-1"><a class="proto" href="#proInfo" id="pd" style="color:white;">상품설명</a></li>
-   <li class="item-1"><a class="proto" href="#review" id="pd" style="color:white;">제품리뷰</a></li>
+   <li class="item-1"><a class="proto" href="#proReview" id="pd" style="color:white;">제품리뷰</a></li>
 </ul>
 <img src="<%=request.getContextPath() %><%=product.getProductImage3() %>" class="img-fluid" id="dedatilimg1"> 
 <ul class="proInfo"  id="proInfo">
    <li class="item-2"><a class="proto" href="#proDetail" id="pd"  style="color:white;">제품상세</a></li>
    <li class="item-2"><a class="protitle" href="#proInfo" id="pd">상품설명</a></li>
-   <li class="item-2"><a class="proto" href="#review" id="pd" style="color:white;">제품리뷰</a></li>
+   <li class="item-2"><a class="proto" href="#proReview" id="pd" style="color:white;">제품리뷰</a></li>
 </ul>
 <img src="<%=request.getContextPath()%>/images/info.jpg" class="img-fluid" id="info">
 <ul class="proReview"  id="proReview">
    <li class="item-3"><a class="proto" href="#proDetail" id="pd" style="color:white;">제품상세</a></li>
    <li class="item-3"><a class="proto" href="#proInfo" id="pd" style="color:white;">상품설명</a></li>
-   <li class="item-3"><a class="protitle"  href="#review" id="pd">제품리뷰</a></li>
+   <li class="item-3"><a class="protitle"  href="#proReview" id="pd">제품리뷰</a></li>
 </ul>
  
 <h2 id="review" >REVIEW</h2>
