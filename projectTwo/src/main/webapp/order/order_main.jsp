@@ -107,9 +107,15 @@ padding: 5px;
 </style>
 <%@include file="/security/login_url.jspf"%>
 <%
+/*
 	String name = request.getParameter("selectedItems");
+	String name2 = request.getParameter("selectedQuantities ");
 	//String[] name = request.getParameterValues("selectedItems");
+System.out.println("전달값2="+name2);
+
+	
 	if(name!=null){
+//System.out.println("전달값="+name);
 System.out.println("전달값="+name);
 	//여기에 전달받은 상품과 수량 가격 출력
 
@@ -117,9 +123,31 @@ System.out.println("전달값="+name);
 	}else{
 System.out.println("전달값 없음");
 	}
+	*/
 	
 	
+	String selectedItems = request.getParameter("selectedItems");
+	String quantities = request.getParameter("quantities");
 
+	System.out.println("전달된 상품번호: " + selectedItems);
+	System.out.println("전달된 수량: " + quantities);
+/*
+	if (selectedItems != null && selectedQuantities != null) {
+	    // 전달받은 상품번호와 수량을 활용하여 처리
+	    // 예시: 각각의 상품번호와 수량을 배열로 변환하여 활용
+	    String[] itemArray = selectedItems.split(",");
+	    String[] quantityArray = selectedQuantities.split(",");
+
+	    for (int i = 0; i < itemArray.length; i++) {
+	        String item = itemArray[i];
+	        String quantity = quantityArray[i];
+	        // 여기에 각 상품번호(item)와 수량(quantity)에 대한 처리 추가
+	    }
+	} else {
+	    System.out.println("전달값 없음");
+	}
+	
+*/
 	
 
 %>

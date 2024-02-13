@@ -5,6 +5,11 @@
 <%@include file="/security/login_url.jspf"%>
 
 <%	
+	//System.out.println(request.getParameter("WChoice"));
+	
+  	String choice =  request.getParameter("WChoice");
+	
+  	if(choice.equals("1")){
 	int rows = 0;	
 
 	int CNum = loginClient.getClientNum();
@@ -30,8 +35,40 @@
 					}	
 		}
 	}
-
 	
 	request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=cart&worker=cart_page");
+		System.out.println("정상삭제");
 	
+  	}else if(choice.equals("2")){
+		System.out.println("여기가 값전달부분 시작----------");
+		String proNum = null;
+		String proQun = null;
+		
+		//전달받은 상품 번호
+		String[] productArray = request.getParameterValues("selectedItemsInput");
+		for(String pro : productArray){
+			if(!pro.equals("")){
+			//System.out.println("상품번호="+pro );
+			//변수에 상품번호들 저장
+			proNum=pro;
+			}else{
+				
+			}
+		}
+		
+		String[] selectedItemsInputQuan = request.getParameterValues("selectedItemsInputQuan");
+		for(String Quan : selectedItemsInputQuan ){
+			if(!Quan.equals("")){
+			//위에부터 순서대로 아래로 내려온다
+			//System.out.println("상품수량="+Quan );
+			proQun=Quan;
+			}else{
+				
+			}
+		}
+		
+		System.out.println(proNum);
+		System.out.println(proQun );
+  		
+  	}
 %>
