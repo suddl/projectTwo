@@ -90,7 +90,6 @@ int displayNum=totalReview-(pageNum-1)*pageSize;
     margin: 20px 0;
     display: flex;
     justify-content: center;
-    flex-direction: column;
 }
 
 table {
