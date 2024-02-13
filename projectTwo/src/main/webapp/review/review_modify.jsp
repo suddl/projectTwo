@@ -89,6 +89,7 @@
                         <span class="star" onclick="setRating(3)">☆</span>
                         <span class="star" onclick="setRating(4)">☆</span>
                         <span class="star" onclick="setRating(5)">☆</span>
+                    	<div style="color: red;">별점을 다시 체크해주세요!</div>
                     </div> 
                     <input type="hidden" name="reviewRating" id="ratingValue">
                 </td>
