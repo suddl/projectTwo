@@ -108,46 +108,13 @@ padding: 5px;
 <%@include file="/security/login_url.jspf"%>
 <%
 /*
-	String name = request.getParameter("selectedItems");
-	String name2 = request.getParameter("selectedQuantities ");
+	String proNum = request.getParameter("proNum");
+	String proQun = request.getParameter("proQun");
 	//String[] name = request.getParameterValues("selectedItems");
-System.out.println("전달값2="+name2);
-
-	
-	if(name!=null){
-//System.out.println("전달값="+name);
-System.out.println("전달값="+name);
-	//여기에 전달받은 상품과 수량 가격 출력
-
-
-	}else{
-System.out.println("전달값 없음");
-	}
-	*/
-	
-	
-	String selectedItems = request.getParameter("selectedItems");
-	String quantities = request.getParameter("quantities");
-
-	System.out.println("전달된 상품번호: " + selectedItems);
-	System.out.println("전달된 수량: " + quantities);
-/*
-	if (selectedItems != null && selectedQuantities != null) {
-	    // 전달받은 상품번호와 수량을 활용하여 처리
-	    // 예시: 각각의 상품번호와 수량을 배열로 변환하여 활용
-	    String[] itemArray = selectedItems.split(",");
-	    String[] quantityArray = selectedQuantities.split(",");
-
-	    for (int i = 0; i < itemArray.length; i++) {
-	        String item = itemArray[i];
-	        String quantity = quantityArray[i];
-	        // 여기에 각 상품번호(item)와 수량(quantity)에 대한 처리 추가
-	    }
-	} else {
-	    System.out.println("전달값 없음");
-	}
-	
+System.out.println("전달값품번="+proNum);
+System.out.println("전달값수량="+proQun);
 */
+	
 	
 
 %>
@@ -222,87 +189,42 @@ System.out.println("전달값 없음");
     </tr>
   </thead>
   <%
-  	
+  	//상품수량들
+	String proQun = request.getParameter("proQun");
+	//회원번호 저장
+    int CNum = loginClient.getClientNum();
+  	//상품번호들
+	String proNum = request.getParameter("proNum");
+
+	System.out.println("전달값품번="+proNum);
+	//System.out.println("전달값수량="+proQun);
+	
+    
+		String[] proNumResult = proNum.split(",");
+
+      System.out.println("길이"+proNumResult.length);
   %>
   <tbody>
+      <%for(int i = 0; i<proNumResult.length; i++) { 
+      //System.out.println("하나씩구분하여저장"+proNumResult[i]);
+      
+      %>
     <tr>
       <th scope="row">
       <input type="checkbox" name="product" >
       </th>
+      <%--이미지 및 상품명 --%>
       <td>이미지&nbsp;&nbsp; 상품명</td>
+      <%--수량 --%>
       <td>
-      <div>
-      <button id="MinBtn" onclick="countZero();">-</button>
-  	<p id="count1" style="display: inline-block;">1</p>
-      <button id="PlusBtn" onclick="countUp();">+</button>
-  	</div>
-      <script type="text/javascript">
-          var count=1;
-
-          var countUp=function(){
-              count=count+1;
-              document.querySelector("#count1").innerText=count;
-          };
-          
-          //0이하로 안내려가는 버튼
-          var countZero=function(){
-          	if(count>1){
-          	count=count-1;
-          	document.querySelector("#count1").innerText=count;
-          	}
-          	
-          };
-      </script>
       
       </td>
+      <%--가격 --%>
       <td>10,000 원</td>
-    </tr>
-    
-     <tr>
-      <th scope="row">
-      <input type="checkbox" name="product" >
-      </th>
-      <td>이미지&nbsp;&nbsp; 상품명</td>
-      <td>
-      <div>
-      <button id="MinBtn" onclick="countZero2();">-</button><%-- 메소드명끝에 상품no 넣기 --%>
-  	<p id="count2" style="display: inline-block;">1</p>
-      <button id="PlusBtn" onclick="countUp2();">+</button>
-  	</div>
-      <script type="text/javascript">
-      	//전체선택
-      	function selectAll(selectAll)  {
-    	  const checkboxes = document.getElementsByName('product');
-    	  
-    	  checkboxes.forEach((checkbox) => {
-    	    checkbox.checked =  selectAll.checked;
-    	  })
-    	  
-    	  checkboxes.forEach(function(checkbox) {
-    		    checkbox.checked = selectAll.checked;
-    		});
-    	}
       
-          var count2=1;
-
-          var countUp2=function(){
-              count2=count2+1;
-              document.querySelector("#count2").innerText=count2;
-          };
-          
-          //0이하로 안내려가는 버튼
-          var countZero2=function(){
-          	if(count2>1){
-          	count2=count2-1;
-          	document.querySelector("#count2").innerText=count2;
-          	}
-          	
-          };
-      </script>
-      
-      </td>
-      <td>10,000 원</td>
     </tr>
+    <% } %>
+ 
  
  
   </tbody>

@@ -8,11 +8,14 @@
 	//System.out.println(request.getParameter("WChoice"));
 	
   	String choice =  request.getParameter("WChoice");
+	int CNum = loginClient.getClientNum();
+	
+	String proNum = null;
+	String proQun = null;
 	
   	if(choice.equals("1")){
 	int rows = 0;	
 
-	int CNum = loginClient.getClientNum();
 	
 	//getParameterValues 메소드로 받은 다수의 객체를 배열로 받는다 
 	String[] productArray = request.getParameterValues("selectedItemsInput");
@@ -41,8 +44,7 @@
 	
   	}else if(choice.equals("2")){
 		System.out.println("여기가 값전달부분 시작----------");
-		String proNum = null;
-		String proQun = null;
+		
 		
 		//전달받은 상품 번호
 		String[] productArray = request.getParameterValues("selectedItemsInput");
@@ -67,8 +69,33 @@
 			}
 		}
 		
-		System.out.println(proNum);
-		System.out.println(proQun );
-  		
+  	
+		//System.out.println(proNum);
+		//System.out.println("전달전수량"+proQun);
+			//배열로 저장 ,로 구분해서
+			String[] proNumResult = proNum.split(",");
+			String[] proQunResult = proQun.split(",");
+			
+		for(int i=0; i<proNumResult.length; i++){
+				int proNumFinish = Integer.parseInt(proNumResult[i]);
+				int proQunFinish = Integer.parseInt(proQunResult[i]);
+				//제품번호의 갯수만큼 반복시키며 변수에 저장되어있는 배열을 하나씩 꺼내 테이블의 수량을 수정하는 메소드 실행
+		CartDAO.getDAO().updateOrderCartQuantity(proQunFinish, CNum, proNumFinish);
+		}
+		
   	}
+  	
+	request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=order&worker=order_main&proNum="+proNum+"&proQun="+proQun);
 %>
+
+
+
+
+
+
+
+
+
+
+
+

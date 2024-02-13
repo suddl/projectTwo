@@ -237,6 +237,8 @@ padding: 30px;">
 
 var totalAmount = 0;
 
+
+
 //체크박스 클릭 이벤트 핸들러
 document.getElementsByName('productOne').forEach(function (checkbox, index) {
     checkbox.addEventListener('click', function () {
@@ -433,7 +435,7 @@ $("#GoRemove").click(function () {
 	    
 });
 
-//체크선택삭제2-------------------------------------------------------------------
+//주문하기 페이지로 값 전달-------------------------------------------------------------------
 $("#GoOrder").click(function () {
 	//배열변수를 선언
 	

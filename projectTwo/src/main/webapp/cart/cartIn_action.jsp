@@ -6,7 +6,6 @@
 <%@page import="xyz.nailro.dto.ClientDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%@include file="/security/login_url.jspf" %>
     
 <%
@@ -31,17 +30,17 @@
 	//상품번호
 	String pN = request.getParameter("productNum");
     int productNum = Integer.parseInt(pN);
-    //System.out.println("상품번호="+pN);
+    System.out.println("상품번호="+pN);
 
     //담긴 수량
 	String cot = request.getParameter("counting");
     int ReceiveCarQuantity = Integer.parseInt(cot);
-    //System.out.println(cot);
+    System.out.println(cot);
 
 
     //회원번호
     int Num = loginClient.getClientNum();
-    //System.out.println("회원번호="+Num);
+    System.out.println("회원번호="+Num);
 	
     /*
     CartDTO cartdto = (CartDTO)CartDAO.getDAO().selectCartList(Num);
@@ -70,7 +69,7 @@
 	CartDAO.getDAO().updateCartQuantity(Num, productNum, InCartQuantity, ReceiveCarQuantity);
 		
 	}
-
+	
     request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=cart&worker=cart_page&productNum="+productNum);
     %>
 hi

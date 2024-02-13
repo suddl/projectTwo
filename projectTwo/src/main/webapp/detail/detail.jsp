@@ -32,10 +32,9 @@
 </head>
 <body>
    <a id="topBtn" href="#"> <img src="./images/topBtn.jpg"></a>
-   <form
-      action="<%=request.getContextPath()%>/index.jsp?group=cart&worker=cartIn_action"
-      method="get"  id="detail" name="detail">
-      <input type="hidden" name="url" id="url2">
+   <form action="<%=request.getContextPath()%>/index.jsp" method="get"  id="detail" name="detail">
+      <input type="hidden" name="group" value="cart">
+      <input type="hidden" name="worker" value="cartIn_action">
       <input type="hidden" name="productNum" id="productNum" value="<%=productNum %>">
       
       <div class="container">
@@ -101,7 +100,7 @@
    </form>
    &nbsp;&nbsp; &nbsp;&nbsp;
    <div class="button-container d-flex justify-content-around mt-3">
-    <button id="cartBtn" class="btn btn-secondary">장바구니 담기</button>
+    <button type="button" id="cartBtn" class="btn btn-secondary">장바구니 담기</button>
     <a href="<%=request.getContextPath()%>/index.jsp?group=order&worker=order_main" class="btn btn-success" id="purchase">바로구매</a>
 </div>
    
@@ -162,11 +161,7 @@
     
     //장바구니 클릭시 cartIn_action으로 submit;
     $("#cartBtn").click(function(){
-    	 var productNum = $("#productNum").val();
-        $("#url2").val("group=cart&worker=cartIn_action&productNum="+productNum+"&counting="+count);
-       
        $("#detail").submit(); 
-       
     });
     
     //총상품금액 코드
