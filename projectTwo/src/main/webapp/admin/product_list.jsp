@@ -75,45 +75,12 @@
 	// => 검색된 게시글의 총갯수가 91개인 경우 >> 1Page : 91, 2Page : 81, 3Page, 71
 	int displayNum=totalProduct-(pageNum-1)*pageSize;
 %>
-<link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/list.css" type="text/css" rel="stylesheet">
 <style>
-#product_list {
-	width: 1000px;
-	margin: 0 auto;
-	text-align: center;
-}
-
-#product_title {
-	font-size: 17px;
-}
-
-th {
-	background: #FFDCE1;
-	color: black;
-	font-size: 18px;
-	height: 45px;
-}
-
-td {
-	border-bottom: 1px solid lightgray;
-	text-align: center;	
-	height: 40px;
-}
-
-#product_list a:hover {
-	text-decoration: none; 
-	color: rgb(255, 221, 238);
-	font-weight: bold;
-}
 
 #button {
 	text-align: right;
 	margin-bottom: 5px;
-}
-
-#page_list {
-	font-size: 1.1em;
-	margin: 10px;
 }
 
 #page_list a:hover {
@@ -166,7 +133,6 @@ td {
 	</tr>
 	<% } %>
 </table>
-	</div>
 
 	<%-- 페이지번호 출력 및 링크 제공 - 블럭화 처리 --%>
 	<%
@@ -218,6 +184,7 @@ td {
 			[다음]
 		<% } %>
 	</div>
+</div>
 </form>
 
 <form action="<%=request.getContextPath() %>/index.jsp?group=admin&worker=product_list" method="post">

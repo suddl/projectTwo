@@ -26,60 +26,7 @@
 		return;
 	}
 %>
-<link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
-<style>
-#product_detail {
-	width: 800px;
-	margin: 0 auto;
-}
-
-h1{
-	text-align : center; 
-	margin-bottom: 30px;
-	font-size: 35px;
-}
-
-table {
-	margin: 10px auto;
-	border: 1px solid lightgray;
-	border-collapse: collapse;
-}
-
-th, td {
-	border: 1px solid lightgray;
-	padding: 5px;	
-}
-
-th {
-	width: 150px;
-	background: #FFDCE1;
-	color: black;
-	font-size: 18px;
-}
-
-td {
-	width: 650px;
-}
-
-#button {
-	padding: 20px;
-	border: none;
-	background: white;
-}
-
-#product_menu {
-	text-align: right;
-	margin: 5px;
-}
-
-.error {
-	color: red;
-	position: relative;
-	left: 160px;
-	display: none;
-}
-
-</style>
+<link href="<%=request.getContextPath()%>/css/product_add.css" type="text/css" rel="stylesheet">
 
 <div id="product_detail">
 	<h1>상품정보</h1>

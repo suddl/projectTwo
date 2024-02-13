@@ -9,61 +9,7 @@
 	//전달값을 반환받아 저장 - 전달값이 없는 경우 변수에 초기값 저장
 	String pageNum="1", pageSize="10", search="", keyword="";
 %>
-<link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
-<style>
-#product_add {
-	width: 800px;
-	margin: 0 auto;
-}
-	
-h1{
-	text-align : center; 
-	margin-bottom: 30px;
-	font-size: 35px;
-}
-
-table {
-	margin: 10px auto;
-	border: 1px solid lightgray;
-	border-collapse: collapse;
-}
-
-th, td {
-	border: 1px solid lightgray;
-	padding: 5px;	
-}
-
-th {
-	width: 150px;
-	background: #FFDCE1;
-	color: black;
-	font-size: 18px;
-}
-
-td {
-	width: 650px;
-	text-align : left; 
-}
-
-#button {
-	padding: 20px;
-	border: none;
-	background: white;
-}
-
-#product_menu {
-	text-align: right;
-	margin: 5px;
-}
-
-.error {
-	color: red;
-	position: relative;
-	left: 160px;
-	display: none;
-}
-
-</style>
+<link href="<%=request.getContextPath()%>/css/product_add.css" type="text/css" rel="stylesheet">
 
 <%-- 파일(리뷰 이미지)을 입력받아 전달하기 위해 form 태그의 enctype 속성값을 반드시 [multipart/form-date]로 설정 --%>
 <form action="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_add_action"
