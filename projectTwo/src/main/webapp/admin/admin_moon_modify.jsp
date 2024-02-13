@@ -48,7 +48,6 @@
 					<option value="불량" <% if(moon.getMoonTitle().equals("불량 문의입니다.")) { %> selected <% } %>>불량 문의입니다.</option>
 					<option value="기타" <% if(moon.getMoonTitle().equals("기타 문의입니다.")) { %> selected <% } %>>기타 문의입니다.</option>
 				</select>
-				<% System.out.println("moon.getMoonTitle() =" + moon.getMoonTitle()); %>
 			</td>
 		</tr>
 		<tr>
