@@ -46,11 +46,31 @@
 	<div class="slider__wrap">
 	    <div class="slider__img">
 	        <div class="slider__inner">
-	            <div class="slider s1"><a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=101"><img src="<%= request.getContextPath() %>/product_images/baby_n.jpg" alt="틴트 베이비 네일" /></a></div>
-	            <div class="slider s2"><a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=100"><img src="<%= request.getContextPath() %>/product_images/basic_n.jpg" alt="베이직 네일" /></a></div>
-	            <div class="slider s3"><a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=94"><img src="<%= request.getContextPath() %>/product_images/creamfog_n.jpg" alt="크림 포그 네일" /></a></div>
-	            <div class="slider s4"><a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=96"><img src="<%= request.getContextPath() %>/product_images/audrey_n.jpg" alt="오드리 네일" /></a></div>
-	            <div class="slider s5"><a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=102"><img src="<%= request.getContextPath() %>/product_images/creamcheeze_n.jpg" alt="크림치즈 네일" /></a></div>
+	            <div class="slider s1">
+	            	<a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=101">
+	            		<img src="<%= request.getContextPath() %>/product_images/baby_n.jpg" alt="틴트 베이비 네일" width="350px" height="470px" />
+	            	</a>
+	            </div>
+	            <div class="slider s2">
+		            <a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=100">
+		            	<img src="<%= request.getContextPath() %>/product_images/basic_n.jpg" alt="베이직 네일" width="350px" height="470px" />
+		            </a>
+	            </div>
+	            <div class="slider s3">
+		            <a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=94">
+		           		<img src="<%= request.getContextPath() %>/product_images/creamfog_n.jpg" alt="크림 포그 네일" width="350px" height="470px" />
+		            </a>
+	            </div>
+	            <div class="slider s4">
+		            <a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=96">
+		            	<img src="<%= request.getContextPath() %>/product_images/audrey_n.jpg" alt="오드리 네일" width="350px" height="470px" />
+		            </a>
+	            </div>
+	            <div class="slider s5">
+		            <a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=102">
+		            	<img src="<%= request.getContextPath() %>/product_images/creamcheeze_n.jpg" alt="크림치즈 네일" width="350px" height="470px" />
+		            </a>
+	            </div>
 	        </div>
 		    <div class="slider__btn">
 		        <a href="#" class="prev" title="왼쪽이미지">〈</a>
@@ -124,6 +144,10 @@ document.querySelectorAll(".slider__dot .dot").forEach((dot, index) => {
     dot.addEventListener("click", () => {
         gotoSlider(index);
     });
+});
+
+$(".slider__dot").click(function(e) {
+	e.preventDefault();   
 });
 
 </script>
