@@ -207,16 +207,17 @@ public class CartDAO extends JdbcDAO{
 		
 	}
 	
-	//상품번호화 회원번호를 전달받아 상품검색
-	public String selectCheckCart(int productNum, int CNum) {
+	//상품번호와 회원번호를 전달받아 상품검색
+	public CartDTO selectCheckCart(int productNum, int CNum) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		String quantity =null;
+		CartDTO carts = null;
 		try {
 			con = getConnection();
 			
-			String sql= "select cart_quantity from cart where cart_product =? and cart_client_num = ?";
+			String sql= "select car_num,product_name, cart_quantity, cart_product, cart_client_num, "
+					+ "product_price, product_image from cart join product on cart_product=product_num  where cart_product = ? and cart_client_num=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, productNum);
 			pstmt.setInt(2, CNum);
@@ -224,15 +225,22 @@ public class CartDAO extends JdbcDAO{
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
-				quantity=rs.getString("cart_quantity");
+				carts = new CartDTO();
+				carts.setCarNum(rs.getString("car_num"));
+				carts.setCartProductName(rs.getString("product_name"));
+				carts.setCartQuantity(rs.getString("cart_quantity"));
+				carts.setCartProduct(rs.getString("cart_product"));
+				carts.setCartClientNum(rs.getString("cart_client_num"));
+				carts.setCartProductPrice(rs.getString("product_price"));
+				carts.setCartProductImages(rs.getString("product_image"));
 			}
 			
 		}catch (SQLException e) {
-			System.out.println("[에러]selectQuantityCart() 메소드의 SQL 오류 = "+e.getMessage());
+			System.out.println("[에러]selectCheckCart() 메소드의 SQL 오류 = "+e.getMessage());
 		}finally {
 			close(con, pstmt, rs);
 		}
-		return quantity;
+		return carts;
 	}
 	
 

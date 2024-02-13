@@ -43,7 +43,7 @@
 		System.out.println("정상삭제");
 	
   	}else if(choice.equals("2")){
-		System.out.println("여기가 값전달부분 시작----------");
+		//System.out.println("여기가 값전달부분 시작----------");
 		
 		
 		//전달받은 상품 번호
@@ -83,9 +83,9 @@
 		CartDAO.getDAO().updateOrderCartQuantity(proQunFinish, CNum, proNumFinish);
 		}
 		
+	request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=order&worker=order_main&proNum="+proNum+"&proQun="+proQun);
   	}
   	
-	request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=order&worker=order_main&proNum="+proNum+"&proQun="+proQun);
 %>
 
 

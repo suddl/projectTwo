@@ -1,3 +1,5 @@
+<%@page import="xyz.nailro.dao.CartDAO"%>
+<%@page import="xyz.nailro.dto.CartDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -195,18 +197,29 @@ System.out.println("전달값수량="+proQun);
     int CNum = loginClient.getClientNum();
   	//상품번호들
 	String proNum = request.getParameter("proNum");
-
-	System.out.println("전달값품번="+proNum);
+	//System.out.println("전달값품번="+proNum);
 	//System.out.println("전달값수량="+proQun);
 	
     
 		String[] proNumResult = proNum.split(",");
+		String[] proQunResult = proQun.split(",");
+		
+      //System.out.println("주소"+request.getContextPath());//주소/projectTwo
 
-      System.out.println("길이"+proNumResult.length);
+      String proQunFN = null;
   %>
   <tbody>
+    
+  
+  
       <%for(int i = 0; i<proNumResult.length; i++) { 
       //System.out.println("하나씩구분하여저장"+proNumResult[i]);
+      
+      //proNumResult의 i번쨰 숫자를 정수로 변환
+      int proNums = Integer.parseInt(proNumResult[i]); 
+      CartDTO cartDTO =  CartDAO.getDAO().selectCheckCart(proNums, CNum);
+      
+
       
       %>
     <tr>
@@ -214,13 +227,14 @@ System.out.println("전달값수량="+proQun);
       <input type="checkbox" name="product" >
       </th>
       <%--이미지 및 상품명 --%>
-      <td>이미지&nbsp;&nbsp; 상품명</td>
+      <td><img src="<%=request.getContextPath()%><%=cartDTO.getCartProductImages()%>" width="150" height="100">
+       <%=cartDTO.getCartProductName() %></td>
       <%--수량 --%>
       <td>
-      
+      <%=proQunResult[i] %> 개
       </td>
       <%--가격 --%>
-      <td>10,000 원</td>
+      <td><%=Integer.parseInt(cartDTO.getCartProductPrice())* Integer.parseInt(proQunResult[i]) %> 원</td>
       
     </tr>
     <% } %>
