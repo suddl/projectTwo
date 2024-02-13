@@ -1,17 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- 관리자로부터 상품글을 입력받기 위한 JSP 문서 --%>
-<%-- => 관리자만 요청 가능한 JSP 문서 --%>
-<%-- => [등록] 태그를 클릭한 경우 [/admin/product_add_action.jsp] 문서를 요청하여 페이지 
-이동 - 입력값(게시글) 전달 --%>
 <%@include file="/security/admin_check.jspf"%>
 <%
 	//전달값을 반환받아 저장 - 전달값이 없는 경우 변수에 초기값 저장
 	String pageNum="1", pageSize="10", search="", keyword="";
 %>
 <link href="<%=request.getContextPath()%>/css/product_add.css" type="text/css" rel="stylesheet">
+<style>
+input:invalid {
+	border-color: red;    /* 값이 유효하지 않다면, border색을 red로 지정한다 */
+	background-color: #ffefef;
+}
 
-<%-- 파일(리뷰 이미지)을 입력받아 전달하기 위해 form 태그의 enctype 속성값을 반드시 [multipart/form-date]로 설정 --%>
+input:valid {
+	border-color: #b8d8d8; /* 값이 유효하다면, border색을 #b8d8d8로 지정한다 */
+	background-color: #e9f0fd;
+}
+
+</style>
 <form action="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_add_action"
 	method="post" enctype="multipart/form-data" id="productForm">
 	<input type="hidden" name="pageNum" value="<%=pageNum %>">
@@ -25,60 +31,61 @@
 		<tr>
 			<th >상품명</th>
 			<td>
-				<input type="text" name="productName" id="productName" size="30">
+				<input type="text" name="productName" id="productName" size="30" required>
 			</td>					
 		</tr>	
 		<tr>
 			<th>가격</th>
 			<td>
-				<input type="text" name="productPrice" id="productPrice" size="30" 
-					 maxlength="10"> 원 
+				<input type="text" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" name="productPrice" id="productPrice" size="30" 
+					maxlength="10" required> 원 
 			</td>					
 		</tr>
 		<tr>
 			<th>카테고리</th>
 			<td>
-			<select name="productCategory" id="productCategory" onchange="productChange(this)">
-				<option value="">--선택--</option>
-				<option value="Nail">네일</option>
-				<option value="Pedi">페디</option>
-				<option value="CareTool">케어&툴</option>
-			</select>
+				<select name="productCategory" id="productCategory" onchange="productChange(this)">
+					<option value="">--선택--</option>
+					<option value="Nail">네일</option>
+					<option value="Pedi">페디</option>
+					<option value="CareTool">케어&툴</option>
+				</select>
 			</td>
 		</tr>			
 		<tr>
 			<th>세부사항</th>
 			<td>
 				<select name="productType" id="productType" >
-				<option value="">--선택--</option>
-			</select>
+					<option value="">--선택--</option>
+				</select>
 			</td>
 		</tr>
 		<tr>
 			<th>상품대표이미지</th>
 			<td>
-				<input type="file" name="productImage" id="productImage">
+				<input type="file" name="productImage" id="productImage" required>
 			</td>
 		</tr>
 		<tr>
 			<th>상품상세이미지1</th>
 			<td>
-				<input type="file" name="productImage2" id="productImage2">
+				<input type="file" name="productImage2" id="productImage2" required>
 			</td>
 		</tr>
 		<tr>
 			<th>상품상세이미지2</th>
 			<td>
-				<input type="file" name="productImage3" id="productImage3">
+				<input type="file" name="productImage3" id="productImage3" required>
 			</td>
 		</tr>
 	</table>
 	<div id="product_menu">
-	<button type="button" id="cancelBtn">취소</button>&nbsp;
-	<button type="submit">등록</button>
+		<button type="button" id="cancelBtn">취소</button>&nbsp;
+		<button type="submit">등록</button>
 	</div>
 </div>
 </form>
+
 <div id="message" style="color: red;"></div>
 
 <script type="text/javascript">
@@ -132,15 +139,16 @@ function productChange(e) {
 	target.options.length = 0;
 	
 	for (x in d) {
-	var opt = document.createElement("option");
-	opt.value = d[x];
-	opt.innerHTML = d[x];
-	target.appendChild(opt);
+		var opt = document.createElement("option");
+		opt.value = d[x];
+		opt.innerHTML = d[x];
+		target.appendChild(opt);
 	}
 }
 	
 $("#cancelBtn").click(function() {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_list"
+		+"&pageNum=<%=pageNum%>&pageSize=<%=pageSize%>&search=<%=search%>&keyword=<%=keyword%>";
 });
 
 </script>

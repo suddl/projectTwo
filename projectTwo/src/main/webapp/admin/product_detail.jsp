@@ -45,38 +45,40 @@
 		</tr>			
 		<tr>
 			<th>세부사항</th>
-			<td width="150"><% if(product.getProductType()==null) { %>
-			-
+			<td width="150">
+			<% if(product.getProductType()==null) { %>
+				-
 			<% } else { %>
-			<%=product.getProductType() %>
+				<%=product.getProductType() %>
 			<% } %>
 			</td>
 		</tr>
 		<tr>
 			<th>상품대표이미지</th>
 			<td>
-				<% if(product.getProductImage()!=null) { %>
+			<% if(product.getProductImage()!=null) { %>
 					<img src="<%=request.getContextPath()%><%=product.getProductImage()%>" width="200">
-				<% } %>
+			<% } %>
 			</td>
 		</tr>
 		<tr>
 			<th>상품상세이미지1</th>
 			<td>
-				<% if(product.getProductImage2()!=null) { %>
+			<% if(product.getProductImage2()!=null) { %>
 					<img src="<%=request.getContextPath()%><%=product.getProductImage2()%>" width="200">
-				<% } %>
+			<% } %>
 			</td>
 		</tr>
 		<tr>
 			<th>상품상세이미지2</th>
 			<td>
-				<% if(product.getProductImage3()!=null) { %>
+			<% if(product.getProductImage3()!=null) { %>
 					<img src="<%=request.getContextPath()%><%=product.getProductImage3()%>" width="200">
-				<% } %>
+			<% } %>
 			</td>
 		</tr>
 	</table>
+	
 	<div id="product_menu">
 		<button type="button" id="listBtn">목록</button>&nbsp;
 		<button type="button" id="modifyBtn">수정</button>

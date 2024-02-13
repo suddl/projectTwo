@@ -72,17 +72,13 @@
 	text-align: right;
 	margin-bottom: 5px;
 }
-
-#page_list a:hover {
-	font-size: 1.3em;
-}
 </style>
 
 <h1>상품관리</h1>
 <form name="productForm" id="productForm">
 <div id="product_list">
 	<%-- 검색된 게시글 총갯수 출력 --%>
-	<div id="product_title">Total : <%=totalProduct %>개의 상품</div>
+	<div id="product_title">상품목록(<%=totalProduct %>개)</div>
 	<div id="button">
 		<button type="button" id="removeBtn">삭제</button>&nbsp;
 		<button type="button" id="addBtn">등록</button>
