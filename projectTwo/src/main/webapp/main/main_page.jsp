@@ -46,15 +46,15 @@
 	<div class="slider__wrap">
 	    <div class="slider__img">
 	        <div class="slider__inner">
-	            <div class="slider s1"><img src="<%= request.getContextPath() %>/product_images/apricot_n.jpg" width="100%" height="100%" alt="이미지4"></div>
-	            <div class="slider s2"><img src="<%= request.getContextPath() %>/product_images/apricot_n2.jpg" width="100%" height="100%" alt="이미지10"></div>
-	            <div class="slider s3"><img src="<%= request.getContextPath() %>/product_images/apricot_n3.jpg" width="100%" height="100%" alt="이미지9"></div>
-	            <div class="slider s4"><img src="<%= request.getContextPath() %>/product_images/audrey_n.jpg" width="100%" height="100%" alt="이미지7"></div>
-	            <div class="slider s5"><img src="<%= request.getContextPath() %>/product_images/audrey_n2.jpg" width="100%" height="100%" alt="이미지3"></div>
+	            <div class="slider s1"><a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=101"><img src="<%= request.getContextPath() %>/product_images/baby_n.jpg" alt="틴트 베이비 네일" /></a></div>
+	            <div class="slider s2"><a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=100"><img src="<%= request.getContextPath() %>/product_images/basic_n.jpg" alt="베이직 네일" /></a></div>
+	            <div class="slider s3"><a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=94"><img src="<%= request.getContextPath() %>/product_images/creamfog_n.jpg" alt="크림 포그 네일" /></a></div>
+	            <div class="slider s4"><a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=96"><img src="<%= request.getContextPath() %>/product_images/audrey_n.jpg" alt="오드리 네일" /></a></div>
+	            <div class="slider s5"><a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=102"><img src="<%= request.getContextPath() %>/product_images/creamcheeze_n.jpg" alt="크림치즈 네일" /></a></div>
 	        </div>
 		    <div class="slider__btn">
-		        <a href="#" class="prev" title="왼쪽이미지">prev</a>
-		        <a href="#" class="next" title="다음이미지">next</a>
+		        <a href="#" class="prev" title="왼쪽이미지">〈</a>
+		        <a href="#" class="next" title="다음이미지">〉</a>
 		    </div>
 		    <div class="slider__dot">
 		    </div>
