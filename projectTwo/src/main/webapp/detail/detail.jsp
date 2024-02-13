@@ -8,6 +8,10 @@
 <% 
    int productNum = Integer.parseInt(request.getParameter("productNum"));
    ProductDTO product = ProductDAO.getDAO().selectProductByNum(productNum);
+   
+   
+   int productReview = Integer.parseInt(request.getParameter("productNum"));
+	List<ReviewDTO> reviewList = ReviewDAO.getDAO().selectProductReviewsForProduct(productReview);
 %>
 <head>
 <meta charset="UTF-8">
@@ -47,7 +51,6 @@
                  </div>
               </div>
            </div>
-
 		<div class="col-md-4">
 			<div class="card custom-card">
                  <div class="card-body">
@@ -108,23 +111,50 @@
  <ul class="proDetail" id="proDetail">
    <li class="item-1"><a class="protitle" href="#proDetail" id="pd">제품상세</a></li>
    <li class="item-1"><a class="proto" href="#proInfo" id="pd" style="color:white;">상품설명</a></li>
-   <li class="item-1"><a class="proto" href="#proReview" id="pd" style="color:white;">제품리뷰</a></li>
+   <li class="item-1"><a class="proto" href="review" id="pd" style="color:white;">제품리뷰</a></li>
 </ul>
 <img src="<%=request.getContextPath() %><%=product.getProductImage3() %>" class="img-fluid" id="dedatilimg1"> 
 <ul class="proInfo"  id="proInfo">
    <li class="item-2"><a class="proto" href="#proDetail" id="pd"  style="color:white;">제품상세</a></li>
    <li class="item-2"><a class="protitle" href="#proInfo" id="pd">상품설명</a></li>
-   <li class="item-2"><a class="proto" href="#proReview" id="pd" style="color:white;">제품리뷰</a></li>
+   <li class="item-2"><a class="proto" href="#review" id="pd" style="color:white;">제품리뷰</a></li>
 </ul>
 <img src="<%=request.getContextPath()%>/images/info.jpg" class="img-fluid" id="info">
 <ul class="proReview"  id="proReview">
    <li class="item-3"><a class="proto" href="#proDetail" id="pd" style="color:white;">제품상세</a></li>
    <li class="item-3"><a class="proto" href="#proInfo" id="pd" style="color:white;">상품설명</a></li>
-   <li class="item-3"><a class="protitle"  href="#proReview" id="pd">제품리뷰</a></li>
+   <li class="item-3"><a class="protitle"  href="#review" id="pd">제품리뷰</a></li>
 </ul>
  
-<%@include file="/review/review_list.jsp"%>
-
+<h2 id="review" >REVIEW</h2>
+<% if(reviewList != null && !reviewList.isEmpty()) { %>
+    <table class="review-table">
+        <% int count = 0; %>
+        <% for(ReviewDTO review : reviewList) { %>
+            <% count++; %>
+            <tbody <% if(count > 3) { %>class="additional-reviews" style="display: none;"<% } %>>
+                <tr id="ratingSubjectDate">
+                    <td class="rating">평점: <%= review.getReviewRating() %></td>
+                    <td class="subject">제목 : <%= review.getReviewSubject() %></td>
+                    <td class="date"><%= review.getReviewDate() %></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="review-content">
+                        <p><%= review.getReviewContent() %></p>
+                        <% if(review.getReviewImage() != null && !review.getReviewImage().isEmpty()) { %>
+                            <img src="<%= request.getContextPath() + "/" + review.getReviewImage() %>" alt="리뷰 이미지">
+                        <% } %>
+                    </td>
+                </tr>
+            </tbody>
+        <% } %>
+    </table>
+    <% if(count > 3) { %>
+        <button id="showMore">더보기</button>
+    <% } %>
+<% } else { %>
+    <p>이 제품에 대한 리뷰가 없습니다.</p>
+<% } %>
 <%-- 버튼 선택에 따라 글씨 색 변경--%>
 <script type="text/javascript">
 var count = 1; // 초기 수량
@@ -138,18 +168,13 @@ navLinks.forEach(link => {
         this.classList.add('active'); //클릭 요소만 실행
     });
 });
-
-
 //총상품금액 코드
 var unitPrice = <%=product.getProductPrice()%>; // 상품 단가
 document.getElementById("count1").innerText = count;//초기수량 출력
-
-
 function updateTotalPrice() {
     var totalPrice = unitPrice * count;
     document.getElementById("totalPrice").innerText = "총 상품 금액: " + new Intl.NumberFormat('en-US').format(totalPrice)+ "원";
 }
-
 function countUp() {
     count++;
     //화면에 나오는 출력값 변경
@@ -159,7 +184,6 @@ function countUp() {
     
     updateTotalPrice();
 }
-
 function countZero() {
     if (count > 1) {
         count--;
@@ -168,11 +192,9 @@ function countZero() {
         updateTotalPrice();
     }
 }
-
 window.onload = function() {
     updateTotalPrice(); // 페이지 로딩 시 초기 총 금액 설정
 }
-
 //topBtn관련 js
 $(function() {
    $(window).scroll(function() {
@@ -190,7 +212,14 @@ $(function() {
       return false;
    });
 });
-
+ //detail 하단 리뷰 더보기
+ document.getElementById("showMore").addEventListener("click", function() {
+       var additionalReviews = document.querySelectorAll(".additional-reviews");
+       for(var i = 0; i < additionalReviews.length; i++) {
+           additionalReviews[i].style.display = ""; // 추가 리뷰 보이기
+       }
+       this.style.display = "none"; // "더보기" 버튼 숨기기
+   });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
