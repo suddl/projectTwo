@@ -8,10 +8,16 @@
 
 .container {
 	text-align: center;
+	margin-bottom: 40px;
 }
 
-h2 {
+.new {
 	margin:30px;
+}
+#more{
+	margin-left: 20px;
+	border: 1px solid gray;
+	padding: 5px;
 }
 
 .sliderWrap {
@@ -23,7 +29,7 @@ h2 {
 }
 .sliderImg {  /* 이미지가 보이는 영역 */
     position: relative;
-    width: 1200px;
+    width: 1300px;
     height: 600px;
     overflow: hidden;
 }
@@ -35,11 +41,13 @@ h2 {
 }
 .imageSlider {   /* 개별적인 이미지 */
     position: relative;
-    width: 1200px;
+    width: 1300px;
     height: 600px;
 }
 
-
+#main {
+	margin-bottom: 50px;	
+}
 
 .slider__wrap {
     width: 100%;
@@ -50,7 +58,7 @@ h2 {
 }
 .slider__img {  /* 이미지가 보이는 영역 */
     position: relative;
-    width: 350px;
+    width: 1050px;
     height: 470px;
     overflow: hidden;
 }

@@ -19,20 +19,21 @@
         <div class="sliderInner">
             <div class="imageSlider s1">
 	            <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=new">
-	            	<img src="<%= request.getContextPath() %>/images/main_image.jpg" width="1100px" height="600px">
+	            	<img src="<%= request.getContextPath() %>/images/main_image.jpg" width="100%" height="600px">
 	            </a>
             </div>
             <div class="imageSlider s2">
             	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_terms">
-           			<img src="<%= request.getContextPath() %>/images/newJoin.png" width="1200px" height="600px">
+           			<img src="<%= request.getContextPath() %>/images/newJoin.png" width="100%" height="600px">
            		</a>
            	</div>
         </div>
     </div>
 </div>
 
-<div>
-	<h2>이달의 신상품</h2>
+<div class="new">
+	<h2 style="display:inline;">이달의 신상품</h2>
+	<div style="display:inline;" id="more"><a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=new">+ 더보기</a></div>
 </div>
 <div class="container">
 	<div class="prodList" id="prodList">
