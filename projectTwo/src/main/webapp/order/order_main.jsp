@@ -206,6 +206,7 @@ System.out.println("전달값수량="+proQun);
       //System.out.println("주소"+request.getContextPath());//주소/projectTwo
 
       String proQunFN = null;
+      int total = 0;
   %>
   <tbody>
   
@@ -228,7 +229,8 @@ System.out.println("전달값수량="+proQun);
       <%=proQunResult[i] %> 개
       </td>
       <%--가격 --%>
-      <td><%=Integer.parseInt(cartDTO.getCartProductPrice())* Integer.parseInt(proQunResult[i]) %> 원</td>
+      <% total +=  Integer.parseInt(cartDTO.getCartProductPrice()) * Integer.parseInt(proQunResult[i]); %>
+      <td id="EndCash"><%=  Integer.parseInt(cartDTO.getCartProductPrice())* Integer.parseInt(proQunResult[i]) %> 원</td>
       
       <td class><button type="button" class="bi bi-x-lg" style="background-color: white;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
   <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
@@ -236,14 +238,7 @@ System.out.println("전달값수량="+proQun);
     </tr>
     <% } %>
  
- 	<script type="text/javascript">
- 	$( document ).ready( function() {
- 		  $( ".bi").click( function() {
- 			  //closest메소드사용하여 가장 가까운 상위 tr을 삭제
- 		    $(this).closest('tr').remove();
- 		  });
- 		});
- 	</script>
+ 	
  
   </tbody>
 </table>
@@ -251,7 +246,7 @@ System.out.println("전달값수량="+proQun);
 
 <div style="border: 1px solid black; border-radius: 20px;  width: 100%; margin:0 auto; background-color: #DCDCDC; margin-top: 50px;
 padding: 30px;">
-<p class="money" > 총 상품금액 </p> <span class="NumMoney"> 20,000 원</span>
+<p class="money" > 총 상품금액 </p> <span class="NumMoney"> <%= String.format("%,d", total) %>원이다 </span>
  
 <p class="money" > 배송비</p><span class="NumMoney" > 3,000 원</span>
 <hr>
@@ -298,32 +293,14 @@ padding: 30px;">
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 
-
-const nonClick = document.querySelectorAll(".non-click");
-
-function handleClick(event) {
-  // div에서 모든 "click" 클래스 제거
-  nonClick.forEach((e) => {
-    e.classList.remove("click");
-  });
-  // 클릭한 div만 "click"클래스 추가
-  event.target.classList.add("click");
-}
-
-nonClick.forEach((e) => {
-  e.addEventListener("click", handleClick);
-});
+//x버튼 클릭시 해당 행 삭제
+	$( document ).ready( function() {
+		  $( ".bi").click( function() {
+			  //closest메소드사용하여 가장 가까운 상위 tr을 삭제
+		    $(this).closest('tr').remove();
+			  
+		  });
+		});
 
 
-
-
-
-$("#postSearch").click(function() {
-	new daum.Postcode({
-		oncomplete: function(data) {
-			$("#zipcode").val(data.zonecode);
-			$("#address1").val(data.address);
-		} 
-	}).open();
-});
 </script>
