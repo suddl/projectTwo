@@ -2,7 +2,11 @@ package xyz.nailro.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import xyz.nailro.dto.OrderDTO;
+import xyz.nailro.dto.ReviewDTO;
 
 public class OrderDAO extends JdbcDAO{
 	private static OrderDAO _dao;
@@ -47,7 +51,32 @@ public class OrderDAO extends JdbcDAO{
 	}
 	
 	
-	
+	//혜원추가)oderNum을 받아 order 테이블의 단일행을 검색하여 orderDTO 객체를 반환하는 메소드
+	public OrderDTO selectOrderByNum(int orderNum) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        OrderDTO order = null;
+        try {
+            con = getConnection();
+            String sql = "SELECT order_num, order_client_num, order_product_num FROM orders WHERE order_num = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, orderNum);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                order = new OrderDTO ();
+                order.setOrderNum(rs.getString("order_num"));
+                order.setOrderClientNum(rs.getString("order_client_num"));
+                order.setOrderProductNum(rs.getString("order_product_num"));
+            
+            }
+        } catch (SQLException e) {
+            System.out.println("[에러] selectReviewByNum() 메소드의 SQL 오류 = " + e.getMessage());
+        } finally {
+            close(con, pstmt, rs);
+        }
+        return order;
+    }
 	
 	
 	

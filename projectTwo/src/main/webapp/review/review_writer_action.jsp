@@ -1,3 +1,6 @@
+<%@page import="xyz.nailro.dao.ProductDAO"%>
+<%@page import="xyz.nailro.dao.OrderDAO"%>
+<%@page import="xyz.nailro.dto.OrderDTO"%>
 <%@page import="xyz.nailro.dto.ProductDTO"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
@@ -44,13 +47,23 @@
 	
 	String reviewIp=request.getRemoteAddr();
 
+	 /* 어떻게 orderNum과 product.Num을 가져올지 의문
+	 int orderReview = Integer.parseInt(request.getParameter("orderNum"));
+	  OrderDTO order = OrderDAO.getDAO().selectOrderByNum(orderReview);
+	   
+	  int productNum = Integer.parseInt(request.getParameter("productNum"));
+	   ProductDTO product = ProductDAO.getDAO().selectProductByNum(productNum);
+	*/
+	   
     ReviewDTO review = new ReviewDTO();
     review.setReviewSubject(reviewSubject);
     review.setReviewContent(reviewContent);
     review.setReviewRating(reviewRating);
-    review.setReviewOrderNum(43);  // 임시로 임의의값을 넣은 것임
+   // review.setReviewOrderNum(Integer.parseInt(order.getOrderNum()));  
+    review.setReviewOrderNum(73); // 임시로 임의의값을 넣은 것
     review.setReviewClientNum(loginClient.getClientNum());
-    review.setReviewProductNum(169);
+    //review.setReviewProductNum(product.getProductNum());
+    review.setReviewProductNum(58);
     review.setReviewImage(reviewImage);
 	System.out.println(reviewSubject);
 	System.out.println(reviewContent);
