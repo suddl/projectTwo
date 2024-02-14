@@ -9,6 +9,9 @@
 <%@include file="/security/login_url.jspf" %>
     
 <%
+
+
+		
 	//String saveDirectory=request.getServletContext().getRealPath("/images");
     
 	//MultipartRequest multipartRequest = new MultipartRequest(request, saveDirectory, 20*1024*1024,"utf-8", new DefaultFileRenamePolicy());

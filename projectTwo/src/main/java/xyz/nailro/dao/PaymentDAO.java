@@ -28,18 +28,19 @@ public class PaymentDAO extends JdbcDAO{
 	
 	
 	//회원번호를 전달받아 결제테이블의 행으로 삽입하고 삽입행의 갯수를 반환하는 메소드
-	public int insertPayment(String clientNum, String finalMoney, String checkedPayment ) {
+	public int insertPayment(int nextNum, String clientNum, String finalMoney, String checkedPayment ) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		int rows=0;
 		try {
 			con=getConnection();
 			
-			String sql="insert into payment values(payment_SEQ.nextval,?,?,?)";
+			String sql="insert into payment values(?,?,?,?)";
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, clientNum);
-			pstmt.setString(2, finalMoney);
-			pstmt.setString(3, checkedPayment);
+			pstmt.setInt(1, nextNum);
+			pstmt.setString(2, clientNum);
+			pstmt.setString(3, finalMoney);
+			pstmt.setString(4, checkedPayment);
 			
 			rows=pstmt.executeUpdate();
 		} catch (SQLException e) {

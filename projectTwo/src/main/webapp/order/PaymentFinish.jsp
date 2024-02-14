@@ -20,10 +20,12 @@ String finalMoney =  request.getParameter("finalMoney");
 String checkedPayment =  request.getParameter("checkedPayment");
 //System.out.println(checkedPayment);
 //------------------------------------------------
+//2.결제번호 시퀀스 다음값을 변수에 저장 o
+int nextNum = PaymentDAO.getDAO().selectPaymentNextNum(); 
 
 //결제테이블에 데이터 삽입
-//int rows = PaymentDAO.getDAO().insertPayment(clientNum, finalMoney, checkedPayment);
-//System.out.println(rows+"행 삽입완료");
+int rowss = PaymentDAO.getDAO().insertPayment(nextNum, clientNum, finalMoney, checkedPayment);
+//System.out.println(rowss+"행 결제 삽입완료");
 
 //주문테이블에 필요한것
 //주문번호(시퀀스),결제번호(결제테이블참조),회원번호(회원테이블참조),
@@ -33,8 +35,6 @@ String proNums = null;
 String proQuans = null;
 
 //1.주문번호 시퀀스
-//2.결제번호 시퀀스 다음값을 변수에 저장 o
-int nextNum = PaymentDAO.getDAO().selectPaymentNextNum(); 
 //3.회원번호 -> clientNum; o
 //4.주문상품번호 o
 String[] productNum = request.getParameterValues("productNum");
@@ -72,16 +72,10 @@ for(int i=0; i<proNumresult.length; i++){
 	//proNumresult[i];
 	//proQuanresult[i];
 }
-System.out.println(rows+"행 삽입완료");
-
-
-
-
+//System.out.println(rows+"행 삽입완료");
 
 //9.주문날짜 -> sysdate o
 //10.주문상태-> 1 o
-
-
 
 //회원이름
 String name =  request.getParameter("name");
@@ -93,10 +87,9 @@ String[] array = request.getParameterValues("productName");
 for(String productName : array){
 //System.out.println(arrays);
 
-
 }
 
 %>
 <h1> 결제가 완료되었습니다.</h1>
-<button>홈으로</button>
+<button><a href="<%=request.getContextPath()%>/index.jsp?group=main&worker=main_page">홈으로</a></button>
 <button>주문내역</button>
