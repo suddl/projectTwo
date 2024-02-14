@@ -1,3 +1,4 @@
+<%@page import="xyz.nailro.dto.ProductDTO"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -49,7 +50,7 @@
     review.setReviewRating(reviewRating);
     review.setReviewOrderNum(43);  // 임시로 임의의값을 넣은 것임
     review.setReviewClientNum(loginClient.getClientNum());
-    review.setReviewProductNum(56);
+    review.setReviewProductNum(169);
     review.setReviewImage(reviewImage);
 	System.out.println(reviewSubject);
 	System.out.println(reviewContent);

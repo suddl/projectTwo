@@ -5,6 +5,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="xyz.nailro.dao.ReviewDAO"%>
 <%@ page import="xyz.nailro.dto.ReviewDTO"%>
+<%@include file="/security/login_check.jspf" %> 
 
 
 <%
@@ -75,7 +76,15 @@ String currentDate=new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 // => 검색된 게시글의 총갯수가 91개인 경우 >> 1Page : 91, 2Page : 81, 3Page, 71
 int displayNum=totalReview-(pageNum-1)*pageSize;
 
+/*
+	ReviewDTO reviews=new ReviewDTO();
+	if(loginClient.getClientNum()==reviews.getReviewClientNum()) {
+		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=review&worker=review_list");
+		return;
+}
+	*/
 
+	
 
 %>
 

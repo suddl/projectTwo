@@ -105,11 +105,11 @@ td {
 		<% if(loginClient!=null && (loginClient.getClientNum()==review.getReviewClientNum())) { %>
 			<button type="button" id="modifyBtn">리뷰변경</button>
 			<button type="button" id="removeBtn">리뷰삭제</button>
-			<button type="button" id="listBtn">리뷰목록</button>
+			<button type="button" id="listBtn">리뷰목록</button>  
 		<% } %>
-		
-		
-		<button type="button" id="backBtn" onclick="history.back()">상품페이지로 이동</button>
+			
+				
+		<button type="button" id="backBtn" onclick="history.back()">이전페이지로 이동</button>
 		
 		<% if(loginClient!=null && (loginClient.getClientStatus()==9)) { %>
 			<button type="button" id="replyBtn">답글쓰기</button>
@@ -135,6 +135,12 @@ $("#listBtn").click(function() {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=review&worker=review_list"
 		+"&pageNum=<%=pageNum%>&pageSize=<%=pageSize%>&search=<%=search%>&keyword=<%=keyword%>";	
 });
+
+$("#mainBtn").click(function() {
+	location.href="<%=request.getContextPath()%>/index.jsp?group=product&worker=nail"
+		+"&pageNum=<%=pageNum%>&pageSize=<%=pageSize%>&search=<%=search%>&keyword=<%=keyword%>";	
+});
+
 
 </script>
 
