@@ -518,7 +518,7 @@ public class ProductDAO extends JdbcDAO	{
 		}
 		
 		//페이징 처리 관련 정보(네일, 페디, 케어 / 시작 행번호와 종료 행번호)
-		public List<ProductDTO> selectProductListByCategory(int startRow, int endRow, String productCategory, String sorted) {
+		public List<ProductDTO> selectProductListByCategory(int startRow, int endRow, String productCategory, String productType, String sorted) {
 			Connection con=null;
 			PreparedStatement pstmt=null;
 			ResultSet rs=null;
@@ -526,7 +526,7 @@ public class ProductDAO extends JdbcDAO	{
 			try {
 				con=getConnection();
 				
-			
+				if(productType==null ||  productType.equals("")) {
 					String sql="select * from (select rownum rn, temp.* from (select product_num, product_image, product_name, "
 						+ "product_price from product  where product_category=? order by "+sorted+") temp)"
 						+ " where rn between ? and ?";
@@ -534,8 +534,16 @@ public class ProductDAO extends JdbcDAO	{
 					pstmt.setString(1, productCategory);
 					pstmt.setInt(2, startRow);
 					pstmt.setInt(3, endRow);
+				} else {
+					String sql="select * from (select rownum rn, temp.* from (select product_num, product_image, product_name, "
+							+ "product_price from product  where product_type=? order by "+sorted+") temp)"
+							+ " where rn between ? and ?";
+					pstmt=con.prepareStatement(sql);
+					pstmt.setString(1, productType);
+					pstmt.setInt(2, startRow);
+					pstmt.setInt(3, endRow);
+				}
 
-				
 				
 				rs=pstmt.executeQuery();
 				

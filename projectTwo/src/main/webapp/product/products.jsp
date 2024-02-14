@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="java.awt.JobAttributes.DefaultSelectionType"%>
 <%@page import="xyz.nailro.dto.ProductDTO"%>
 <%@page import="java.util.List"%>
@@ -10,6 +11,9 @@
 	if(sorted!=null) {
 		sorted=request.getParameter("sorted");
 	}
+	
+	String type=request.getParameter("type");
+	
     int pageNum = 1;
     if (request.getParameter("pageNum") != null) {
         pageNum = Integer.parseInt(request.getParameter("pageNum"));
@@ -41,9 +45,7 @@
 		endRow=totalProduct;
 	}
 	
-	List<ProductDTO> productList=ProductDAO.getDAO().selectProductListByCategory(startRow, endRow, category, sorted); 
-	
-	ProductDTO prod= new ProductDTO();
+	List<ProductDTO> productList=ProductDAO.getDAO().selectProductListByCategory(startRow, endRow, category, type, sorted);  
 	
 	int displayNum=totalProduct-(pageNum-1)*pageSize;
 %>
@@ -62,19 +64,21 @@
 <div class="container">
 <div class="sorting">
     <p>
-       <a href="#" id="sortByRecent">신상품순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-       <a href="#" id="sortByName">이름순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-       <a href="#" id="sortByPriceAsc">낮은가격순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-       <a href="#" id="sortByPriceDesc">높은가격순</a>   
+       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_num desc" id="sortByRecent">신상품순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_name asc" id="sortByName">이름순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_price asc" id="sortByPriceAsc">낮은가격순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_price desc" id="sortByPriceDesc">높은가격순</a>   
    </p>
-</div>	<div class="filter-buttons" id="filterButtons">
-  		<button data-product-type="All">전체</button>
-  		<button data-product-type="Short">숏</button>
-  		<button data-product-type="Long">롱</button>
-  		<button data-product-type="Parts">파츠</button>
-  		<button data-product-type="FullColor">풀컬러</button>
+</div>	
+	<% if(category!=null && category.equals("Nail"))	{	 %>
+	<div class="filter-buttons" id="filterButtons">
+  		<a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=Nail&sorted=product_num desc">전체</a>
+  		<a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=Nail&sorted=product_num desc&type=Short">숏</a>
+  		<a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=Nail&sorted=product_num desc&type=Long">롱</a>
+  		<a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=Nail&sorted=product_num desc&type=Parts">파츠</a>
+  		<a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=Nail&sorted=product_num desc&type=FullColor">풀컬러</a>
 	</div>
-
+	<% } %>
   	<div class="prodList">
     <%-- 제품 이미지 클릭시 제품 상세 페이지로 넘길 값(productNum, productImage, productName, productPrice  --%>
         <% for (ProductDTO product : productList) { 
@@ -89,7 +93,7 @@
             <div class="prodName">
                 <a href="<%=url%>"><%=product.getProductName()%></a>
             </div>
-            <div class="prodPrice" id="prodPrice"><%=product.getProductPrice()%>원</div>
+            <div class="prodPrice" id="prodPrice"><%=DecimalFormat.getInstance().format(product.getProductPrice())%>원</div>
         </div>
         <% } %>
 	</div>
@@ -111,13 +115,11 @@
 		if(endPage>totalPage) {
 			endPage=totalPage;
 		}
-		
 	%>
 	
 	<div id="page_list">
 		<%
-			String responseUrl=request.getContextPath()+"/index.jsp?group=product&worker=nail"
-					+"&pageSize="+pageSize;
+		String responseUrl = request.getContextPath() + "/index.jsp?group=product&worker=products&category=" + category + "&pageSize=" + pageSize;
 		%>
 	
 		<%-- 이전 페이지블럭이 있는 경우에만 링크 제공 --%>
@@ -143,21 +145,5 @@
 			[다음]
 		<% } %>
 	</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-$("#sortByRecent").click(function()	{
-	location.href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_num desc";
-});
-
-$("#sortByName").click(function() {
-	location.href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_name asc";		
-});
-$("#sortByPriceAsc").click(function() {
-	location.href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_price asc";		
-});
-$("#sortByPriceDesc").click(function() {
-	location.href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_price desc";		
-});
-</script>
 </body>
 </html>

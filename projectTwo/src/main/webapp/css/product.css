@@ -100,4 +100,7 @@ p {
   font-weight: bold;
   text-align: center;
   margin-top: 60px;
+}
+#page_list {
+	margin-bottom: 20px;
 }	
