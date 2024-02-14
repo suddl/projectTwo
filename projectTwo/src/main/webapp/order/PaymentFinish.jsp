@@ -25,7 +25,7 @@ int nextNum = PaymentDAO.getDAO().selectPaymentNextNum();
 
 //결제테이블에 데이터 삽입
 int rowss = PaymentDAO.getDAO().insertPayment(nextNum, clientNum, finalMoney, checkedPayment);
-System.out.println(rowss+"행 결제 삽입완료");
+//System.out.println(rowss+"행 결제 삽입완료");
 
 //바로구매에서 접근 구별하기 위한 값
 String DirectComple = request.getParameter("DirectComple");
@@ -78,7 +78,7 @@ for(int i=0; i<proNumresult.length; i++){
 	rows += OrderDAO.getDAO().insertOrders(nextNum, clientNum, proNumresult[i], address1, address2, zipcode, proQuanresult[i]);
 	
 }
-System.out.println(rows+"행 주문삽입완료");
+//System.out.println(rows+"행 주문삽입완료");
 	}else{//바로구매로 구매페이지 이동시 실행
 	
 //4.주문상품번호 o
@@ -89,7 +89,7 @@ System.out.println(rows+"행 주문삽입완료");
 
 	rows += OrderDAO.getDAO().insertOrders(nextNum, clientNum, productNum, address1, address2, zipcode, productQuan);
 	
-System.out.println(rows+"행 주문삽입완료");
+//System.out.println(rows+"행 주문삽입완료");
 }
 
 

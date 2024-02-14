@@ -1,3 +1,4 @@
+<%-- 바로구매를 클릭시 이동하는 주문페이지 --%>
 <%@page import="java.util.List"%>
 <%@page import="xyz.nailro.dao.CartDAO"%>
 <%@page import="xyz.nailro.dto.CartDTO"%>
@@ -286,8 +287,8 @@ padding: 30px;">
   <input type="checkbox" id="method4" name="payments" onclick='checkOnlyOne(this)' value="네이버페이">&nbsp;&nbsp;네이버페이</input><br>
   <input type="checkbox" id="method5" name="payments" onclick='checkOnlyOne(this)' value="신용카드 결제">&nbsp;&nbsp;신용카드 결제</input><br>
   <input type="checkbox" id="method6" name="payments" onclick='checkOnlyOne(this)' value="가상계좌">&nbsp;&nbsp;가상계좌</input><br>
-  <input type="checkbox" id="method7" name="payments" onclick='checkOnlyOne(this)' value="휴대폰 결제">&nbsp;&nbsp;휴대폰결제</input><br>
-  <input type="hidden" id="checkedPayment" name="checkedPayment" value="">
+  <input type="checkbox" id="method7" name="payments" onclick='checkOnlyOne(this)' value="휴대폰 결제" checked>&nbsp;&nbsp;휴대폰결제</input><br>
+  <input type="hidden" id="checkedPayment" name="checkedPayment" value="휴대폰 결제">
   </div>
 	
 	<button type="submit" id="FinishCash">결제하기</button>
@@ -299,7 +300,6 @@ padding: 30px;">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
-
 
 //결제수단 체크하나만 될 수있도록
 function checkOnlyOne(element) {
