@@ -142,7 +142,6 @@ $("#productForm").submit(function() {
 		return false;
 	}
 	
-	var
 	if($("#productPrice").val()=="") {
 		$("#message").text("가격을 입력해 주세요.");
 		$("#productPrice").focus();

@@ -72,6 +72,10 @@
    text-align: right;
    margin-bottom: 5px;
 }
+
+#search {
+   margin-bottom: 30px;
+}
 </style>
 
 <h1>상품관리</h1>
@@ -99,7 +103,15 @@
    <% for(ProductDTO product : productList) { %>
    <tr align="center">
       <td class="p_check"><input type="checkbox" name="check" id="check" value="<%=product.getProductNum()%>"></td>
-      <td width="100"><%=product.getProductNum() %></td>
+      <td width="100">
+      	<% if(product.getProductCategory().equals("Nail")) { %>
+			<%=product.getProductCategory().substring(0, 1) %><%=product.getProductType().substring(0, 1) %><%=product.getProductNum() %>
+		<% } else if(product.getProductCategory().equals("Pedi")) { %>
+			<%=product.getProductCategory().substring(0, 1) %><%=product.getProductNum() %>
+		<% } else if(product.getProductCategory().equals("CareTool")) { %>
+			<%=product.getProductCategory().substring(0, 1) %><%=product.getProductNum() %>
+		<% } %>
+      </td>
       <td class="content">
       <% if(product.getProductImage()!=null) { %>
          <img src="<%=request.getContextPath() %><%= product.getProductImage()%>" width="170" height="100">
@@ -181,12 +193,14 @@
 
 <form action="<%=request.getContextPath() %>/index.jsp?group=admin&worker=product_list" method="post">
    <%-- select 태그를 사용하여 검색대상을 선택해 전달 - 전달값은 반드시 컬럼명으로 설정 --%>
+   <div id="search">
    <select name="search">
       <option value="product_name" <% if(search.equals("product_name")) { %>  selected <% } %>>&nbsp;상품명&nbsp;</option>
       <option value="product_category" <% if(search.equals("product_category")) { %>  selected <% } %>>&nbsp;카테고리&nbsp;</option>
    </select>
    <input type="text" name="keyword" value="<%=keyword%>" >
    <button type="submit">검색</button>
+   </div>
 </form>
 
 <script type="text/javascript">
