@@ -43,7 +43,7 @@
 			String returnUrl=(String)request.getAttribute("returnUrl");
 			if(returnUrl!=null) { 		
 				response.sendRedirect(returnUrl);
-				return;
+				return; 
 			}  
 		%>
 	</div>
