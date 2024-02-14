@@ -109,13 +109,6 @@ padding: 5px;
 </style>
 <%@include file="/security/login_url.jspf"%>
 <%
-/*
-	String proNum = request.getParameter("proNum");
-	String proQun = request.getParameter("proQun");
-	//String[] name = request.getParameterValues("selectedItems");
-System.out.println("전달값품번="+proNum);
-System.out.println("전달값수량="+proQun);
-*/
 //회원번호
 int Num = loginClient.getClientNum();
 //System.out.println("회원번호="+Num);
@@ -198,58 +191,48 @@ CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
     </tr>
   </thead>
   <%
+  	//상품명
+  	String DirproductName = request.getParameter("DirproductName");
   
-  	//상품수량들
-	String proQun = request.getParameter("proQun");
+  	//상품수량
+	String ReceiveCarQuantity = request.getParameter("ReceiveCarQuantity");
 	
-  	//상품번호들
-	String proNum = request.getParameter("proNum");
-	//System.out.println("전달값상품번호="+proNum);
-	//System.out.println("전달값수량="+proQun);
-	
-    
-		String[] proNumResult = proNum.split(",");
-		String[] proQunResult = proQun.split(",");
-		
-      //System.out.println("주소"+request.getContextPath());//주소/projectTwo
+  	//상품금액
+	String DirtotalPrice = request.getParameter("DirtotalPrice");
+  	
 
-      String proQunFN = null;
-      int total = 0;
-      
-      
+  	//상품사진
+	String DirImage = request.getParameter("DirImage");
+	
+  	//상품번호
+  	String productNum = request.getParameter("productNum");
+  	
+  	
+  	
+  	
   %>
   <tbody>
   
   
-      <%for(int i = 0; i<proNumResult.length; i++) { 
-      //System.out.println("하나씩구분하여저장"+proNumResult[i]);
-      
-      //proNumResult의 i번째 숫자를 정수로 변환
-      int proNums = Integer.parseInt(proNumResult[i]);
-      CartDTO cartDTO =  CartDAO.getDAO().selectCheckCart(proNums, Num);
-      
-      //itemTotal 변수에 수량과 상품가격을 곱해서 상품의 최종가격을 저장
-      int itemTotal = Integer.parseInt(cartDTO.getCartProductPrice()) * Integer.parseInt(proQunResult[i]);
-      
-      //각 상품의 최종가격을 변수에 더하여 저장하면 총 상품금액을 알 수 있다.
-      total += itemTotal;
-      %>
+    -
     <tr class="hang">
+      <input type="hidden" name="DirectComple" value="1"><%-- direct확인 --%>
+    
+    
       <%--이미지 및 상품명 --%>
-      <td><img src="<%=request.getContextPath()%><%=cartDTO.getCartProductImages()%>" width="150" height="100">
-       <%=cartDTO.getCartProductName() %></td>
-       
-       <%--<input type="hidden" name="productName" value="<%=cartDTO.getCartProductName() %>"> 상품명 --%>
-       <input type="hidden" name="productNum" value="<%=cartDTO.getCartProduct() %>"><%-- 상품번호 --%>
-       
+      <td><img src="<%= DirImage%>" width="150" height="100">
+      <%= DirproductName %>
+      
+      <%-- 상품번호 --%>
+      <input type="hidden" name="productNum" value="<%= productNum %>"><%-- 상품번호 --%>
+      
       <%--수량 --%>
       <td>
-      <%=proQunResult[i] %> 개
+      <%=ReceiveCarQuantity%> 개
       </td>
-       <input type="hidden" name="productQuan" value="<%=proQunResult[i] %>"><%-- 수량 --%>
-      
+       <input type="hidden" name="productQuan" value="<%=ReceiveCarQuantity%>"><%-- 수량 --%>
       <%--가격 --%>
-      <td id="EndCash"><%= String.format("%,d", itemTotal) %> 원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <td id="EndCash"><%= DirtotalPrice %> 원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       	<button type="button" class="delete-btn" style="background-color: white; border: none;" >
            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
  			 <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
@@ -257,7 +240,6 @@ CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
         </button> 
 	</td>
     </tr>
-    <% } %>
   </tbody>
 </table>
 
@@ -265,13 +247,19 @@ CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
 <div style="border: 1px solid black; border-radius: 20px;  width: 100%; margin:0 auto; background-color: #DCDCDC; margin-top: 50px;
 padding: 30px;">
 <p class="money" > 총 상품금액 </p>
- <span class="NumMoney" id="totalAmount"><%= String.format("%,d", total) %>원 </span>
+ <span class="NumMoney" id="totalAmount"><%=  DirtotalPrice %>원 </span>
  
  
 <p class="money" > 배송비</p>
 	<span class="NumMoney" id="delivery" >
 	<%--최초 화면출력시 배송비 출력 --%>
-	<% if(total>=50000){ %> 
+	<% 
+	
+	String newStringValue = DirtotalPrice.replaceAll("[@$,^]", "");
+	
+	int DirtotalPricess =Integer.parseInt(newStringValue); 
+	
+	if(DirtotalPricess>=50000){ %> 
 		0 원
 <% 	}else{ %>
 		3,000 원
@@ -279,8 +267,8 @@ padding: 30px;">
 	</span> 
 <hr>
 
-<p class="moneyALL" >총 결제 금액</p><span class="NumMoneyALL" id="totalpayment"><%= String.format("%,d", total) %>원 </span>
-<input type="hidden" name="finalMoney" id="finalMoney" value="<%= String.format("%,d", total) %>">
+<p class="moneyALL" >총 결제 금액</p><span class="NumMoneyALL" id="totalpayment"><%= DirtotalPrice %>원 </span>
+<input type="hidden" name="finalMoney" id="finalMoney" value="<%= DirtotalPrice %>">
   <%-- 결제방법 선택 --%>
 </div>
 <br>

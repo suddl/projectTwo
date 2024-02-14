@@ -15,11 +15,41 @@
 	List<ReviewDTO> reviewList = ReviewDAO.getDAO().selectProductReviewsForProduct(productReview);
 %>
 <head>
+<style>
+.review-table {
+	width: 80%;
+	margin: 0 auto;
+	border-collapse: collapse;
+}
+.review-table td,
+.review-table th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+.review-table .rating,
+.review-table .date {
+	width: 15%;
+}
+.review-table .subject {
+	width: 50%;
+	height: 20%
+}
+.review-table .review-content {
+	text-align: conter;
+}
+.review-table img {
+	max-width: 100px;
+	height: auto;
+}
+#ratingSubjectDate {
+	background-color: #E2E2E2;
+}
+</style>
 <meta charset="UTF-8">
 <title>상세페이지</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link href="<%=request.getContextPath()%>/css/detail.css" type="text/css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
 </head>
 <body>
@@ -36,6 +66,7 @@
                     <div class="carousel-inner">
                        <div class="carousel-item active">
                           <img src="<%=request.getContextPath() %><%=product.getProductImage() %>" alt="d_main" class="d-block w-100" alt="peach">
+							<input type="hidden" name="DirImage" value="<%=request.getContextPath() %><%=product.getProductImage() %>">                       
                        </div>
                        <div class="carousel-item">
                           <img src="<%=request.getContextPath() %><%=product.getProductImage2() %>" class="d-block w-100" alt="...">
@@ -55,7 +86,8 @@
 		<div class="col-md-4">
 			<div class="card custom-card">
                  <div class="card-body">
-                    <h5 class="card-title"><%=product.getProductName()%></h5>
+                    <h5 class="card-title" ><%=product.getProductName()%></h5>
+                    <input type="hidden" name="DirproductName" value="<%=product.getProductName()%>">
                     &nbsp;&nbsp;
                      <p class="price">가격 : <%=DecimalFormat.getInstance().format(product.getProductPrice())%>원</p>
                      <div class="di-line"></div>
@@ -71,6 +103,7 @@
 						</div>
                     </div>
                     <div id="totalPrice" class="totalPrice">&nbsp;&nbsp;총 상품 금액:</div> 
+                    <input type="hidden" id="DirtotalPrice" name="DirtotalPrice" value="<%=product.getProductPrice()%>">
    					&nbsp;&nbsp; &nbsp;&nbsp;
 					<div class="button-container d-flex justify-content-around mt-3">
 				    	<button type="submit" id="cartBtn" class="btn btn-secondary">장바구니 담기</button>
@@ -176,6 +209,8 @@ document.getElementById("count1").innerText = count;//초기수량 출력
 function updateTotalPrice() {
     var totalPrice = unitPrice * count;
     document.getElementById("totalPrice").innerText = "총 상품 금액: " + new Intl.NumberFormat('en-US').format(totalPrice)+ "원";
+    $("#DirtotalPrice").val(new Intl.NumberFormat('en-US').format(totalPrice));
+    
 }
 function countUp() {
     count++;
@@ -222,23 +257,6 @@ $(function() {
        }
        this.style.display = "none"; // "더보기" 버튼 숨기기
    });
- 
- 
-//클래스 이름이 "prodPrice"인 모든 요소를 가져옵니다.
- var price = document.querySelectorAll(".price");
-
- // 각 요소에 대해 반복합니다.
- price.forEach(function(priceElement) {
-     // 요소의 텍스트를 가져옵니다.
-     var priceText = priceElement.innerText;
-     
-     // 텍스트에서 숫자 부분을 추출하고 숫자로 변환합니다.
-     var price = parseFloat(priceText.replace(/[^0-9.-]+/g,""));
-     
-     // 숫자를 포맷하고 "원"을 추가하여 다시 텍스트로 설정합니다.
-     var formattedPrice = new Intl.NumberFormat('en-US').format(prodPrice) + "원";
-     priceElement.innerText = formattedPrice;
- });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

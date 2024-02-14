@@ -10,7 +10,10 @@
     
 <%
 
-
+	String directBuy = request.getParameter("directBuy");
+	//System.out.println(directBuy);
+	//장바구니에서 구매하기로 이동시
+	if(directBuy==null){
 		
 	//String saveDirectory=request.getServletContext().getRealPath("/images");
     
@@ -74,5 +77,66 @@
 	}
 	
     request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=cart&worker=cart_page&productNum="+productNum);
+	}else{//바로구매로 이동시
+		
+		
+		//상품명,수량, 가격 필요
+		
+		//상품명
+		String DirproductName = request.getParameter("DirproductName");
+	    //System.out.println("상품명="+DirproductName);
+	    
+	   String encodedProductName = URLEncoder.encode(DirproductName, "UTF-8");
+	    
+	    
+		
+
+	    //담긴 수량
+		String cot = request.getParameter("counting");
+	    int ReceiveCarQuantity = Integer.parseInt(cot);
+	    //System.out.println("수량="+ReceiveCarQuantity);
+		
+	    //상품금액
+		String DirtotalPrice = request.getParameter("DirtotalPrice");
+	    //int ReceiveDirtotalPrice = Integer.parseInt(DirtotalPrice);
+	   // System.out.println("금액="+DirtotalPrice);
+	   
+	   
+	   //상품사진
+		String DirImage = request.getParameter("DirImage");
+	   
+		
+
+	    //회원번호
+	    int Num = loginClient.getClientNum();
+	    //System.out.println("회원번호="+Num);
+		
+	    //상품번호
+      	String productNum = request.getParameter("productNum");
+
+		
+		
+		
+   request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=order&worker=order_DirectBuy&DirproductName="+encodedProductName+
+		   "&ReceiveCarQuantity="+ReceiveCarQuantity+"&DirtotalPrice="+DirtotalPrice+"&DirImage="+DirImage+"&productNum="+productNum);
+		
+	}
+    
+    
+    
     %>
 hi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
