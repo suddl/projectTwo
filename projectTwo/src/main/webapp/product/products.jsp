@@ -6,6 +6,10 @@
 <%  
 	String category=request.getParameter("category");
 	
+	String sorted="product_num asc";
+	if(sorted!=null) {
+		sorted=request.getParameter("sorted");
+	}
     int pageNum = 1;
     if (request.getParameter("pageNum") != null) {
         pageNum = Integer.parseInt(request.getParameter("pageNum"));
@@ -37,7 +41,7 @@
 		endRow=totalProduct;
 	}
 	
-	List<ProductDTO> productList=ProductDAO.getDAO().selectProductListByCategory(startRow, endRow, category); 
+	List<ProductDTO> productList=ProductDAO.getDAO().selectProductListByCategory(startRow, endRow, category, sorted); 
 	
 	ProductDTO prod= new ProductDTO();
 	
@@ -141,108 +145,19 @@
 	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-//클래스 이름이 "prodPrice"인 모든 요소를 가져옵니다.
-var prodPrices = document.querySelectorAll(".prodPrice");
-
-// 각 요소에 대해 반복합니다.
-prodPrices.forEach(function(prodPriceElement) {
-    // 요소의 텍스트를 가져옵니다.
-    var prodPriceText = prodPriceElement.innerText;
-    
-    // 텍스트에서 숫자 부분을 추출하고 숫자로 변환합니다.
-    var prodPrice = parseFloat(prodPriceText.replace(/[^0-9.-]+/g,""));
-    
-    // 숫자를 포맷하고 "원"을 추가하여 다시 텍스트로 설정합니다.
-    var formattedPrice = new Intl.NumberFormat('en-US').format(prodPrice) + "원";
-    prodPriceElement.innerText = formattedPrice;
+$("#sortByRecent").click(function()	{
+	location.href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_num desc";
 });
 
-var productList = document.getElementById()
-
-//최신순 정렬 함수
-document.getElementById('sortByRecent').addEventListener('click', function(event) {
-    event.preventDefault(); // 링크 기본 동작 방지
-    sortByRecent();
-    console.log("sortByRecent 호출됨");
+$("#sortByName").click(function() {
+	location.href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_name asc";		
 });
-
-// 이름순 정렬 함수
-document.getElementById('sortByName').addEventListener('click', function(event) {
-    event.preventDefault(); // 링크 기본 동작 방지
-    sortByName();
+$("#sortByPriceAsc").click(function() {
+	location.href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_price asc";		
 });
-
-// 낮은가격순 정렬 함수
-document.getElementById('sortByPriceAsc').addEventListener('click', function(event) {
-    event.preventDefault(); // 링크 기본 동작 방지
-    sortByPriceAsc();
+$("#sortByPriceDesc").click(function() {
+	location.href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_price desc";		
 });
-
-// 높은가격순 정렬 함수
-document.getElementById('sortByPriceDesc').addEventListener('click', function(event) {
-    event.preventDefault(); // 링크 기본 동작 방지
-    sortByPriceDesc();
-});
-
-//최신순 정렬 함수
-function sortByRecent() {
-    console.log("sortByRecent 호출됨");
-    productList.sort(function(a, b) {
-        return new Date(b.registerDate) - new Date(a.registerDate);
-    });
-    renderProductList(productList);
-}
-
-// 이름순 정렬 함수
-function sortByName() {
-    console.log("sortByName 호출됨");
-    productList.sort(function(a, b) {
-        return a.productName.localeCompare(b.productName);
-    });
-    renderProductList(productList);
-}
-
-// 낮은가격순 정렬 함수
-function sortByPriceAsc() {
-    console.log("sortByPriceAsc 호출됨");
-    productList.sort(function(a, b) {
-        return a.productPrice - b.productPrice;
-    });
-    renderProductList(productList);
-}
-
-// 높은가격순 정렬 함수
-function sortByPriceDesc() {
-    console.log("sortByPriceDesc 호출됨");
-    productList.sort(function(a, b) {
-        return b.productPrice - a.productPrice;
-    });
-    renderProductList(productList);
-}
-
-// 정렬된 결과를 페이지에 보여주는 함수
-function renderProductList(productList) {
-    // productList를 순회하며 각 제품 정보를 페이지에 출력
-    var prodListDiv = document.querySelector('.prodList');
-    prodListDiv.innerHTML = ''; // 이전에 출력된 내용 지우기
-    productList.forEach(function(product) {
-        // 올바른 URL 생성
-         var url = '/index.jsp?group=product&worker=products&category=' + category + '&productNum=' + product.productNum;
-        var productDiv = document.createElement('div');
-        productDiv.className = 'product';
-        productDiv.setAttribute('data-product-type', product.productType);
-        productDiv.innerHTML = `
-            <a href="${url}">
-                <img class="prodImage" src="${product.productImage}" alt="이미지 준비중">
-            </a>
-            <div class="prodName">
-                <a href="${url}">${product.productName}</a>
-            </div>
-            <div class="prodPrice">${product.productPrice}원</div>
-        `;
-        prodListDiv.appendChild(productDiv);
-    });
-}
 </script>
 </body>
 </html>

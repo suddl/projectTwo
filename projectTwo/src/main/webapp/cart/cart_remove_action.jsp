@@ -13,6 +13,7 @@
 	String proNum = null;
 	String proQun = null;
 	
+	//전달값이 1인 경우 삭제기능
   	if(choice.equals("1")){
 	int rows = 0;	
 
@@ -41,7 +42,7 @@
 	
 	request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=cart&worker=cart_page");
 		System.out.println("정상삭제");
-	
+	//전달값이 2인 경우 수량 변경 후 주문 페이지로 이동
   	}else if(choice.equals("2")){
 		//System.out.println("여기가 값전달부분 시작----------");
 		

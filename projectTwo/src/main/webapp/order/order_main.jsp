@@ -98,7 +98,6 @@ width: 500px;
 height: 50px;
 background-color: black;
 color: white;
-position: fixed;
 bottom: 0px;
 left: 35%;
 text-align: center;
@@ -130,18 +129,17 @@ CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
   <li>
     <input type="checkbox" id="usedAddress" name="useAddress" checked>
     <label for="usedAddress">기존 주소 사용</label>
-    <!-- ... (이전 코드) ... -->
   </li>
   <li>
     <input type="checkbox" id="newAddress" name="useAddress">
     <label for="newAddress">새로운 배송지</label>
-    <!-- ... (이전 코드) ... -->
   </li>
 </ul>
 
 <fieldset>
-<form action="<%=request.getContextPath() %>/index.jsp?group=order&worker=order_main"
+<form action="<%=request.getContextPath() %>/index.jsp?group=order&worker=PaymentFinish"
    method="post" id="orderForm" name="orderForm" >
+   <input type="hidden" name="clientNum" value="<%= Num %>">
 	<h3 style="text-align: center;">주문 고객 정보</h3>
 	<ul>
 		<li>
@@ -206,7 +204,7 @@ CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
     int CNum = loginClient.getClientNum();
   	//상품번호들
 	String proNum = request.getParameter("proNum");
-	//System.out.println("전달값품번="+proNum);
+	//System.out.println("전달값상품번호="+proNum);
 	//System.out.println("전달값수량="+proQun);
 	
     
@@ -225,10 +223,12 @@ CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
       //System.out.println("하나씩구분하여저장"+proNumResult[i]);
       
       //proNumResult의 i번쨰 숫자를 정수로 변환
-      int proNums = Integer.parseInt(proNumResult[i]); 
+      int proNums = Integer.parseInt(proNumResult[i]);
       CartDTO cartDTO =  CartDAO.getDAO().selectCheckCart(proNums, CNum);
+      
       //itemTotal 변수에 수량과 상품가격을 곱해서 상품의 최종가격을 저장
       int itemTotal = Integer.parseInt(cartDTO.getCartProductPrice()) * Integer.parseInt(proQunResult[i]);
+      
       //각 상품의 최종가격을 변수에 더하여 저장하면 총 상품금액을 알 수 있다.
       total += itemTotal;
       %>
@@ -236,10 +236,16 @@ CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
       <%--이미지 및 상품명 --%>
       <td><img src="<%=request.getContextPath()%><%=cartDTO.getCartProductImages()%>" width="150" height="100">
        <%=cartDTO.getCartProductName() %></td>
+       
+       <%--<input type="hidden" name="productName" value="<%=cartDTO.getCartProductName() %>"> 상품명 --%>
+       <input type="hidden" name="productNum" value="<%=cartDTO.getCartProduct() %>"><%-- 상품번호 --%>
+       
       <%--수량 --%>
       <td>
       <%=proQunResult[i] %> 개
       </td>
+       <input type="hidden" name="productQuan" value="<%=proQunResult[i] %>"><%-- 수량 --%>
+      
       <%--가격 --%>
       <td id="EndCash"><%= String.format("%,d", itemTotal) %> 원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       	<button type="button" class="delete-btn" style="background-color: white; border: none;" >
@@ -272,7 +278,7 @@ padding: 30px;">
 <hr>
 
 <p class="moneyALL" >총 결제 금액</p><span class="NumMoneyALL" id="totalpayment"><%= String.format("%,d", total) %>원 </span>
-
+<input type="hidden" name="finalMoney" id="finalMoney" value="<%= String.format("%,d", total) %>">
   <%-- 결제방법 선택 --%>
 </div>
 <br>
@@ -284,35 +290,47 @@ padding: 30px;">
   </div>
   
   <div id="cash">
-  <table style="width: 700px;" >
-  	<tr class="chas1">
-  		<td class="box non-click" id="first" style="border: 1px solid black; padding: 20px; text-align: center;" ><a >페이코</a></td>
-  		<td class="box non-click" id="second" style="border: 1px solid black; padding: 20px; text-align: center;">카카오페이</td>
-  	</tr>
-  	<tr class="chas1" onclick="backChange(this,2)">
-  		<td class="box non-click" style="border: 1px solid black; padding: 20px; text-align: center;">토스</td>
-  		<td class="box non-click" style="border: 1px solid black; padding: 20px; text-align: center;">신용카드 결제</td>
-  	</tr>
-  	<tr class="chas1">
-  		<td  class="box non-click" style="border: 1px solid black; padding: 20px; text-align: center;">네이버페이</td>
-  		<td class="box non-click" style="border: 1px solid black; padding: 20px; text-align: center;">가상계좌</td>
-  	</tr>
-  	<tr class="chas1">
-  		<td class="box non-click" style="border: 1px solid black; padding: 20px; text-align: center;">휴대폰 결제</td>
-  	</tr>
-  	
-  	
-  </table>
+  <input type="checkbox" id="method1" name="payments" onclick='checkOnlyOne(this)' value="페이코">&nbsp;&nbsp페이코</input><br>
+  <input type="checkbox" id="method2" name="payments" onclick='checkOnlyOne(this)' value="토스">&nbsp;&nbsp;토스</input><br>
+  <input type="checkbox" id="method3" name="payments" onclick='checkOnlyOne(this)' value="카카오페이">&nbsp;&nbsp;카카오페이</input><br>
+  <input type="checkbox" id="method4" name="payments" onclick='checkOnlyOne(this)' value="네이버페이">&nbsp;&nbsp;네이버페이</input><br>
+  <input type="checkbox" id="method5" name="payments" onclick='checkOnlyOne(this)' value="신용카드 결제">&nbsp;&nbsp;신용카드 결제</input><br>
+  <input type="checkbox" id="method6" name="payments" onclick='checkOnlyOne(this)' value="가상계좌">&nbsp;&nbsp;가상계좌</input><br>
+  <input type="checkbox" id="method7" name="payments" onclick='checkOnlyOne(this)' value="휴대폰 결제">&nbsp;&nbsp;휴대폰결제</input><br>
+  <input type="hidden" id="checkedPayment" name="checkedPayment" value="">
   </div>
 	
-	<div id="FinishCash">결제하기</div>
-	</fieldset>
+	<button type="submit" id="FinishCash">결제하기</button>
+	
 	</form>
+	</fieldset>
 	
 	
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
+
+
+//결제수단 체크하나만 될 수있도록
+function checkOnlyOne(element) {
+	  
+	  const checkboxes 
+	      = document.getElementsByName("payments");
+	  
+	  
+	  for (let i = 0; i < checkboxes.length; i++) {
+  			checkboxes[i].checked = false;
+		}
+	  
+	  element.checked = true;
+	  
+	  
+	 
+	  
+	  let result = element.checked ? element.value : "";
+	  $("#checkedPayment").val(result);
+	  
+	}
 
 $(document).ready(function() {
     // "기존주소" 체크박스 클릭 이벤트
@@ -352,6 +370,10 @@ $(document).ready(function() {
         $("#name, #zipcode, #address1, #address2, #mobile2, #email").val("");
       }
     });
+    
+    
+    
+    
   });
 
 
@@ -383,6 +405,7 @@ $(document).ready(function() {
               // 배송비 적용하여 결제금액 갱신
               var finalTotal = newTotal + shippingFee;
               $("#totalpayment").text(finalTotal.toLocaleString() + "원");
+              $("#finalMoney").val(finalTotal);
           });
       });
 
