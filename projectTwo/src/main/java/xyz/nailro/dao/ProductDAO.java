@@ -230,7 +230,7 @@ public class ProductDAO extends JdbcDAO	{
 	return rows;		
 }
 	
-	//상품번호(String)를 전달받아 PRODUCT 테이블에 저장된 행을 삭제하고 삭제행의 갯수(int)를 반환하는 메소드
+	//상품번호(int)를 전달받아 PRODUCT 테이블에 저장된 행을 삭제하고 삭제행의 갯수(int)를 반환하는 메소드
 	public int deleteProduct(String productNum) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -508,7 +508,7 @@ public class ProductDAO extends JdbcDAO	{
 		}
 		
 		//페이징 처리 관련 정보(네일, 페디, 케어 / 시작 행번호와 종료 행번호)
-		public List<ProductDTO> selectProductListByCategory(int startRow, int endRow, String productCategory, String sort) {
+		public List<ProductDTO> selectProductListByCategory(int startRow, int endRow, String productCategory) {
 			Connection con=null;
 			PreparedStatement pstmt=null;
 			ResultSet rs=null;
@@ -517,11 +517,11 @@ public class ProductDAO extends JdbcDAO	{
 				con=getConnection();
 				
 			
-					String sql="select * from (select rownum rn, temp.* from (select product_num, product_image, product_name, product_price from product  where product_category=? order by "+sort+") temp)"
+					String sql="select * from (select rownum rn, temp.* from (select product_num, product_image, product_name, "
+						+ "product_price from product  where product_category=? order by product_num desc) temp)"
 						+ " where rn between ? and ?";
 					pstmt=con.prepareStatement(sql);
 					pstmt.setString(1, productCategory);
-					pstmt.setString(2, sort);
 					pstmt.setInt(2, startRow);
 					pstmt.setInt(3, endRow);
 
