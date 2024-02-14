@@ -99,7 +99,7 @@ td {
                     <button type="reset" id="resetBtn">다시쓰기</button>
                 </th>
             </tr>
-        </table>
+        </table> 
     </form>
 </body>
 </html>
