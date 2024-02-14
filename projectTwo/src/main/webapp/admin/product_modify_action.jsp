@@ -13,7 +13,6 @@
 		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=error&worker=error_400");
 		return;
 	}
-
 	String saveDirectory=request.getServletContext().getRealPath("/product_images");
 	
 	MultipartRequest multipartRequest = new MultipartRequest(request, saveDirectory, 20*1024*1024,"utf-8", new DefaultFileRenamePolicy());
