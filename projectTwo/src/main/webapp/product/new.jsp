@@ -34,7 +34,7 @@
 	if(endRow>totalProduct) {
 		endRow=totalProduct;
 	}
-	
+	 
 	List<ProductDTO> productList=ProductDAO.getDAO().selectProductListByProductNum(startRow, endRow);
 	
 	int displayNum=totalProduct-(pageNum-1)*pageSize;
@@ -49,16 +49,16 @@
 </head>
 <body>
 
-<a href = "#">
-	<img class="logo" src="<%= request.getContextPath() %>/images/new_logo.jpg" alt="all"/>
-</a>
+<img class="logo" src="<%= request.getContextPath() %>/images/new_logo.jpg" alt="all"/>
+
 <div class="container">
 	<div class="sorting">   
-		<select name="정렬 방식">
-			<option value="신상품순" selected>&nbsp;신상품순&nbsp;</option>
-			<option value="이름순" >&nbsp;이름순&nbsp;</option>
-			<option value="가격순" >&nbsp;가격순&nbsp;</option>    	
-		</select>
+		<p>
+	       <a href="#" id="sortByRecent">신상품순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+	       <a href="#" id="sortByName">이름순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+	       <a href="#" id="sortByPriceAsc">낮은가격순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+	       <a href="#" id="sortByPriceDesc">높은가격순</a>   
+		</p>
 	</div>
 
 	<div class="prodList" id="prodList">

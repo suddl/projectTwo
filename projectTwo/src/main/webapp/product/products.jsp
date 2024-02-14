@@ -53,9 +53,8 @@
 </head>
 <body>
 
-<a href = "#">
-	<img class="logo" src="<%= request.getContextPath() %>/images/<%=category%>Logo.jpg"/>
-</a>
+<img class="logo" src="<%= request.getContextPath() %>/images/<%=category%>Logo.jpg"/>
+
 <div class="container">
 <div class="sorting">
     <p>
@@ -158,12 +157,13 @@ prodPrices.forEach(function(prodPriceElement) {
     prodPriceElement.innerText = formattedPrice;
 });
 
-var productList = document.getElementById('prodList');
+var productList = document.getElementById()
 
 //최신순 정렬 함수
 document.getElementById('sortByRecent').addEventListener('click', function(event) {
     event.preventDefault(); // 링크 기본 동작 방지
     sortByRecent();
+    console.log("sortByRecent 호출됨");
 });
 
 // 이름순 정렬 함수
