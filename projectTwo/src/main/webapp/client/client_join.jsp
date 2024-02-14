@@ -181,7 +181,7 @@ $("#join").submit(function() {
 		submitResult=false;
 	}
 
-	var mobile2Reg=/\d{3,4}/;
+	var mobile2Reg=/\d{4}/;
 	var mobile3Reg=/\d{4}/;
 	if($("#mobile2").val()=="" || $("#mobile3").val()=="") {
 		$("#mobileMsg").css("display","block");
