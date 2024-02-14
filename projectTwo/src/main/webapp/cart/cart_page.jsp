@@ -195,7 +195,7 @@ int total = 0;
 
 <div style="border: 1px solid black; border-radius: 20px;  width: 30%; margin:0 auto; background-color: #DCDCDC; margin-top:30px;
 padding: 30px;">
-<p class="money" >총 상품금액 </p> <span id="NumMoney">  <%=total %> 원</span><br>
+<p class="money" >총 상품금액 </p> <span id="NumMoney">  <%=String.format("%,d", total)%> 원</span><br>
  
 <p class="money" > 배송비</p> <span id="transMoney" >
  <% if(total>=50000){ %> 
@@ -220,11 +220,11 @@ padding: 30px;">
 
 <%-- 쇼핑계속하기 및 구매하기 버튼 출력 --%>
 
-<div style="margin:0 auto; text-align: center; margin-top: 30px">
-<a href="<%=request.getContextPath()%>/index.jsp?group=main&worker=main_page&productNum=" class="btn btn-success" id="purchase">
-쇼핑계속하기</a>&nbsp;&nbsp;&nbsp;
+<div style="text-align: center; margin: 0 auto;">
+<button type="button"><a href="<%=request.getContextPath()%>
+/index.jsp?group=main&worker=main_page&productNum="  >쇼핑계속하기</a></button>&nbsp;&nbsp;&nbsp;
 
-<button type="button" class="btn btn-success" id="GoOrder" style="margin-right: 1050px;" value="">구매하기</button>&nbsp;&nbsp;&nbsp;
+<button type="button" id="GoOrder" style="margint: 1050px;" value="">구매하기</button>&nbsp;&nbsp;&nbsp;
 
  <%-- 구매하기 버튼 클릭시 현재 수정된 제품의 수량을 장바구니 테이블에 다시 저장
  DAO는 update로 만들고 회원번호와 상품번호를 전달받아 수량을 수정 그리고 구매하기 --%>

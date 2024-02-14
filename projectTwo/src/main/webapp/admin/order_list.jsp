@@ -11,10 +11,25 @@
 	if(search==null) {//전달값이 없는 경우 - 게시글 검색 기능을 사용하지 않은 경우
 		search="";
 	}
-	
+	String keywords = "";
 	String keyword=request.getParameter("keyword");//검색단어
 	if(keyword==null) {//전달값이 없는 경우
 		keyword="";
+	}else if(keyword.equals("상품준비중")){
+		keyword= String.valueOf(1);
+		keywords = "상품준비중";
+	}else if(keyword.equals("배송준비중")){
+		keyword= String.valueOf(2);
+		keywords = "배송준비중";
+	}else if(keyword.equals("배송완료")){
+		keyword= String.valueOf(3);
+		keywords = "배송완료";
+	}else if(keyword.equals("배송중")){
+		keyword= String.valueOf(4);
+		keywords = "배송중";
+	}else if(keyword.equals("주문취소")){
+		keyword= String.valueOf(0);
+		keywords = "주문취소";
 	}
 
 	//페이징 처리에 필요한 전달값(페이지번호과 게시글갯수)을 반환받아 저장
@@ -180,7 +195,7 @@
 		<option value="pay_method" <% if(search.equals("pay_method")) { %>  selected <% } %>>&nbsp;결제방법&nbsp;</option>
 		<option value="order_status" <% if(search.equals("order_status")) { %>  selected <% } %>>&nbsp;주문처리상태&nbsp;</option>
 	</select>
-	<input type="text" name="keyword" value="<%=keyword%>" >
+	<input type="text" name="keyword" value="<%=keywords%>" >
 	<button type="submit">검색</button>
 </form>
 
