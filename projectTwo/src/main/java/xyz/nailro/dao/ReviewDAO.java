@@ -53,7 +53,7 @@ public class ReviewDAO extends JdbcDAO {
         return reviews;
     }
     // 검색정보(검색대상과 검색단어)를 전달받아 REVIEW 테이블에 저장된 게시글 중 검색대상의 컬럼에 검색단어가 포함된 게시글의 갯수를 검색하여 반환하는 메소드
-    public int selectTotalReview(String search, String keyword) {
+    public int selectTotalReview(String search, String keyword, int clientNum) {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -61,14 +61,17 @@ public class ReviewDAO extends JdbcDAO {
         try {
             con = getConnection();
             if (keyword.equals("")) {
-                String sql = "SELECT count(*) FROM review";
+                String sql = "SELECT count(*) FROM review where review_client_num =?";
                 pstmt = con.prepareStatement(sql);
+                pstmt.setInt(1, clientNum);
             } else {
-                String sql = "SELECT count(*) FROM review WHERE " + search + " LIKE '%' || ? || '%'";
+                String sql = "SELECT count(*) FROM review WHERE review_client_num =?" + search + " LIKE '%' || ? || '%'";
                 pstmt = con.prepareStatement(sql);
-                pstmt.setString(1, keyword);
+                pstmt.setInt(1, clientNum);
+                pstmt.setString(2, keyword);
             }
             rs = pstmt.executeQuery();
+            
             if (rs.next()) {
                 totalCount = rs.getInt(1);
             }
@@ -94,6 +97,10 @@ public class ReviewDAO extends JdbcDAO {
                 		+ "review.review_subject, review.review_content, review.review_date, review.review_image, "
                 		+ "review.review_re, review.review_rating, review.review_product_num "
                 		+ "FROM review INNER JOIN client ON review.review_client_num = client.client_num ORDER BY review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
+                pstmt = con.prepareStatement(sql);
+                pstmt.setInt(1, startRow);
+                pstmt.setInt(2, endRow);
+                rs = pstmt.executeQuery();
             } else {
                 sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num,"
                 		+ " client.client_name, review.review_subject, review.review_content, review.review_date, "
@@ -103,16 +110,8 @@ public class ReviewDAO extends JdbcDAO {
                 pstmt.setString(1, keyword);
                 pstmt.setInt(2, startRow);
                 pstmt.setInt(3, endRow);
-          
+                rs = pstmt.executeQuery();
             }
-            pstmt = con.prepareStatement(sql);
-            if (keyword.equals("")) {
-                pstmt.setInt(1, startRow);
-                pstmt.setInt(2, endRow);
-            } else {
-            	//중복되면 안됨. 기존 선생님과 동일하게 수정하였으나 에러 발생하여 연결 페이지 누락
-            }
-            rs = pstmt.executeQuery();
             while (rs.next()) {
                 ReviewDTO review = new ReviewDTO();
                 review.setReviewNum(rs.getInt("review_num"));

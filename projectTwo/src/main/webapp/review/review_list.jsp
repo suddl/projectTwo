@@ -31,10 +31,12 @@ if(request.getParameter("pageSize")!=null) {//전달값이 있는 경우
 	pageSize=Integer.parseInt(request.getParameter("pageSize"));
 }
 
+int loginClientNum = loginClient.getClientNum();
+
 //검색정보(검색대상과 검색단어)를 전달받아 REVIEW 테이블에 저장된 게시글 중 검색대상의 컬럼에
 //검색단어가 포함된 게시글의 갯수를 검색하여 반환하는 ReviewDAO 클래스의 메서드 호출
 // => 검색 기능을 사용하지 않을 경우 REVIEW 테이블에 저장된 모든 게시글의 갯수를 반환
-int totalReview=ReviewDAO.getDAO().selectTotalReview(search, keyword);//검색된 게시글의 총갯수
+int totalReview=ReviewDAO.getDAO().selectTotalReview(search, keyword,loginClientNum);//검색된 게시글의 총갯수
 
 //전체 페이지의 총갯수를 계산하여 저장
 //int totalPage=totalReview/pageSize+totalReview%pageSize==0?0:1;
