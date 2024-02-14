@@ -74,6 +74,9 @@ String currentDate=new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 //페이지에 출력될 게시글의 일련번호 시작값을 계산하여 저장
 // => 검색된 게시글의 총갯수가 91개인 경우 >> 1Page : 91, 2Page : 81, 3Page, 71
 int displayNum=totalReview-(pageNum-1)*pageSize;
+
+
+
 %>
 
 <html>
@@ -168,9 +171,6 @@ td {
 #page_list a:hover {
 	font-size: 1.3em;
 }
-
-
-
 
 </style>
 </head>

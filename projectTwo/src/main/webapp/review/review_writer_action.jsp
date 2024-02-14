@@ -6,7 +6,7 @@
 <%-- <%@include file="/security/login_check.jspf"%> --%> 
   
 
-<%	
+<%
 //JSP 문서를 GET 방식으로 요청한 경우에 대한 응답 처리 - 비정상적인 요청
 	if(request.getMethod().equals("GET")) {
 		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=error&worker=error_400");
@@ -23,7 +23,13 @@
 	MultipartRequest multipartRequest=new MultipartRequest(request, saveDirectory
 			, 20*1024*1024, "utf-8", new DefaultFileRenamePolicy());
 	
-
+	
+	
+	String pageNum=multipartRequest.getParameter("pageNum");
+	String pageSize=multipartRequest.getParameter("pageSize");
+	String search=multipartRequest.getParameter("search");
+	String keyword=multipartRequest.getParameter("keyword");
+	
     // 리뷰 데이터를 받아옵니다.
     String reviewSubject = multipartRequest.getParameter("review_subject");
     String reviewContent = multipartRequest.getParameter("review_content");
@@ -32,6 +38,10 @@
 	if(multipartRequest.getFilesystemName("review_image")!=null) {//업로드 파일이 있는 경우	
 		reviewImage="/review_images/"+multipartRequest.getFilesystemName("review_image");
 	}
+	
+	int nextNum=ReviewDAO.getDAO().selectReviewNextNum();
+	
+	String reviewIp=request.getRemoteAddr();
 
     ReviewDTO review = new ReviewDTO();
     review.setReviewSubject(reviewSubject);
@@ -45,18 +55,20 @@
 	System.out.println(reviewContent);
 	System.out.println(reviewRating);
 	
-    
-    
-    
-    
-    ReviewDAO dao = ReviewDAO.getDAO();
-    int result = dao.insertReview(review);
 
-    if (result > 0) {
-        // 리뷰 작성 성공
-        response.sendRedirect("review_list.jsp");
-    } else {
-        // 리뷰 작성 실패
-        out.println("<script>alert('리뷰 작성에 실패했습니다.'); history.back();</script>");
-    }
+    
+	  ReviewDAO dao = ReviewDAO.getDAO();
+	    int result = dao.insertReview(review);
+
+	    if (result > 0) {
+	        // 리뷰 작성 성공
+	    	request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=review&worker=review_list");
+	    } else {
+	        // 리뷰 작성 실패
+	        out.println("<script>alert('리뷰 작성에 실패했습니다.'); history.back();</script>");
+	    }
+
+
+	    
+    		
 %>

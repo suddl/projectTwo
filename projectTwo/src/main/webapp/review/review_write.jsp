@@ -54,6 +54,10 @@ td {
     text-align: center;
 }
 
+#starmessage {
+	font-size: 0.5em;
+}
+
 </style>
 </head>
 <body>
@@ -71,6 +75,7 @@ td {
                         <span class="star" onclick="setRating(3)">☆</span>
                         <span class="star" onclick="setRating(4)">☆</span>
                         <span class="star" onclick="setRating(5)">☆</span>
+                    	<div id="starmessage" style="color: red;">별점을 꼭 체크해주세요!</div>
                     </div> 
                     <input type="hidden" name="review_rating" id="ratingValue">
                 </td>
@@ -99,9 +104,19 @@ td {
 </body>
 </html>
 <script type="text/javascript">
+	$("#subjectForm").focus();
+
+	// 별점을 설정하는 함수
     function setRating(rating) {
         const stars = document.querySelectorAll('.star');
-        document.getElementById('ratingValue').value = rating;
+        let starsText = '';
+        for (let i = 0; i < rating; i++) {
+            starsText += '★';
+        }
+        // ★ 문자열을 숨겨진 필드에 저장
+        document.getElementById('ratingValue').value = starsText;
+
+        // 별 표시 업데이트
         stars.forEach((star, index) => {
             if (index < rating) {
                 star.textContent = '★'; 
@@ -113,12 +128,21 @@ td {
         });
     }
 
+    // 페이지 로드 시 별점 초기화
     document.addEventListener('DOMContentLoaded', function () {
-        setRating(0); 
+        const currentRating = document.getElementById('ratingValue').value.length; // ★ 문자열의 길이를 통해 현재 별점 계산
+        setRating(currentRating);
+    });
+
+    // 별 클릭 이벤트 처리
+    document.querySelectorAll('.star').forEach((star, index) => {
+        star.addEventListener('click', () => {
+            setRating(index + 1); // 클릭한 별에 해당하는 별점 설정
+        });
     });
 
     
     $("#saveBtn").change(function() {
-        location.href="<%=request.getContextPath()%>/index.jsp?group=review&worker=review_list"
+        location.href="<%=request.getContextPath()%>/index.jsp?=review&worker=review_list"
     });
 </script>
