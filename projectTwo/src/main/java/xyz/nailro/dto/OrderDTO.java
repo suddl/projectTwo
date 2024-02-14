@@ -1,8 +1,5 @@
 package xyz.nailro.dto;
 
-import xyz.nailro.dao.JdbcDAO;
-
-
 /**
 CREATE TABLE ORDERS(
 	ORDER_NUM NUMBER PRIMARY KEY, -주문번호(시퀀스)
@@ -27,6 +24,10 @@ public class OrderDTO {
 	private int OrderPayNum;//결제번호
 	private String OrderClientNum;
 	private String OrderProductNum;
+	private String OrderId; // 주문자
+	private String OrderPhone; // 주문자 핸드폰번호
+	private String OrderPayPrice; // 결제금액
+	private String OrderPayMethod; // 결제방법
 	private String OrderAddress1;
 	private String OrderAddress2;
 	private String OrderZipCode;
@@ -68,6 +69,38 @@ public class OrderDTO {
 
 	public void setOrderProductNum(String orderProductNum) {
 		OrderProductNum = orderProductNum;
+	}
+
+	public String getOrderId() {
+		return OrderId;
+	}
+
+	public void setOrderId(String orderId) {
+		OrderId = orderId;
+	}
+
+	public String getOrderPhone() {
+		return OrderPhone;
+	}
+
+	public void setOrderPhone(String orderPhone) {
+		OrderPhone = orderPhone;
+	}
+
+	public String getOrderPayPrice() {
+		return OrderPayPrice;
+	}
+
+	public void setOrderPayPrice(String orderPayPrice) {
+		OrderPayPrice = orderPayPrice;
+	}
+
+	public String getOrderPayMethod() {
+		return OrderPayMethod;
+	}
+
+	public void setOrderPayMethod(String orderPayMethod) {
+		OrderPayMethod = orderPayMethod;
 	}
 
 	public String getOrderAddress1() {
@@ -117,12 +150,5 @@ public class OrderDTO {
 	public void setOrderStatus(String orderStatus) {
 		OrderStatus = orderStatus;
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 }

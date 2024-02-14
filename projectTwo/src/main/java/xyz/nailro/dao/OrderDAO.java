@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import xyz.nailro.dto.OrderDTO;
 import xyz.nailro.dto.ReviewDTO;
@@ -78,11 +80,88 @@ public class OrderDAO extends JdbcDAO{
         return order;
     }
 	
-	
-	
-	
-	
-	
-	
+	//검색정보(검색대상과 검색단어)를 전달받아 Orders 테이블에 저장된 주문내역 중 검색대상의 
+		//컬럼에 검색단어가 포함된 주문내역의 갯수를 검색하여 반환하는 메소드
+			public int selectTotalOrder(String search, String keyword) {
+				Connection con=null;
+				PreparedStatement pstmt=null;
+				ResultSet rs=null;
+				int totalCount=0;
+				try {
+					con=getConnection();
+					
+					if(keyword.equals("")) {//검색 기능을 사용하지 않은 경우
+						String sql="select count(*) from orders";
+						pstmt=con.prepareStatement(sql);
+					} else {//검색 기능을 사용한 경우
+						String sql="select count(*) from orders where "+search+" like '%'||?||'%'";
+						pstmt=con.prepareStatement(sql);
+						pstmt.setString(1, keyword);
+					}
+					
+					rs=pstmt.executeQuery();
+					
+					if(rs.next()) {
+						totalCount=rs.getInt(1);
+					}
+				} catch (SQLException e) {
+					System.out.println("[에러]selectTotalOrder() 메소드의 SQL 오류 = "+e.getMessage());
+				} finally {
+					close(con, pstmt, rs);
+				}
+				return totalCount;
+			}
+		
+		//페이징 처리 관련 정보(시작 행번호와 종료 행번호)와 상품글 검색 기능 관련 정보(검색대상과
+		//검색단어)를 전달받아 Orders 테이블에 저장된 행을 검색하여 상품글 목록을 반환하는 메소드
+		public List<OrderDTO> selectOrderList(int startRow, int endRow, String search, String keyword) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			List<OrderDTO> orderList=new ArrayList<OrderDTO>();
+			
+			try {
+				con=getConnection();
+				
+				if(keyword.equals("")) {//검색 기능을 사용하지 않은 경우
+					String sql= "select * from (select rownum rn, temp.* from (select order_num, client_id"
+							+ ", client_phone, pay_price, pay_method, order_status, order_date from orders"
+							+ " left join client on order_client_num=client_num left join payment on order_client_num=pay_client_num"
+							+ " order by order_num desc) temp) where rn between ? and ?";
+					pstmt=con.prepareStatement(sql);
+					pstmt.setInt(1, startRow);
+					pstmt.setInt(2, endRow);
+				} else {//검색 기능을 사용한 경우
+					String sql ="select * from (select rownum rn, temp.* from (select order_num, client_id"
+							+ ", client_phone, pay_price, pay_method, order_status, order_date from orders"
+							+ " left join client on order_client_num=client_num left join payment on order_client_num=pay_client_num"
+							+ " where " + search + " like '%'||?||'%' order by order_num desc) temp)"
+							+ " where rn between ? and ?";
+					pstmt=con.prepareStatement(sql);
+					pstmt.setString(1, keyword);
+					pstmt.setInt(2, startRow);
+					pstmt.setInt(3, endRow);
+				}
+				
+				rs=pstmt.executeQuery();
+				
+				while(rs.next()) {
+					OrderDTO order=new OrderDTO();
+					order.setOrderNum(rs.getString("order_num"));
+					order.setOrderId(rs.getString("client_id"));
+					order.setOrderPhone(rs.getString("client_phone"));
+					order.setOrderPayPrice(rs.getString("pay_price"));
+					order.setOrderPayMethod(rs.getString("pay_method"));
+					order.setOrderDate(rs.getString("order_date"));
+					order.setOrderStatus(rs.getString("order_status"));
 
+					orderList.add(order);
+				}
+			} catch (SQLException e) {
+				System.out.println("[에러]selectOrderList() 메소드의 SQL 오류 = "+e.getMessage());
+			} finally {
+				close(con, pstmt, rs);
+			}
+			return orderList;
+		}
 }
