@@ -295,11 +295,11 @@ padding: 30px;">
   <input type="checkbox" id="method1" name="payments" onclick='checkOnlyOne(this)' value="페이코">&nbsp;&nbsp페이코</input><br>
   <input type="checkbox" id="method2" name="payments" onclick='checkOnlyOne(this)' value="토스">&nbsp;&nbsp;토스</input><br>
   <input type="checkbox" id="method3" name="payments" onclick='checkOnlyOne(this)' value="카카오페이">&nbsp;&nbsp;카카오페이</input><br>
-  <input type="checkbox" id="method4" name="payments" onclick='checkOnlyOne(this)' value="네이버페이">&nbsp;&nbsp;네이버페이</input><br>
+  <input type="checkbox" id="method4" name="payments" onclick='checkOnlyOne(this)' value="네이버페이" checked>&nbsp;&nbsp;네이버페이</input><br>
   <input type="checkbox" id="method5" name="payments" onclick='checkOnlyOne(this)' value="신용카드 결제">&nbsp;&nbsp;신용카드 결제</input><br>
   <input type="checkbox" id="method6" name="payments" onclick='checkOnlyOne(this)' value="가상계좌">&nbsp;&nbsp;가상계좌</input><br>
   <input type="checkbox" id="method7" name="payments" onclick='checkOnlyOne(this)' value="휴대폰 결제">&nbsp;&nbsp;휴대폰결제</input><br>
-  <input type="hidden" id="checkedPayment" name="checkedPayment" value="">
+  <input type="hidden" id="checkedPayment" name="checkedPayment" value="네이버페이">
   </div>
 	
 	<button type="submit" id="FinishCash">결제하기</button>
@@ -316,19 +316,20 @@ padding: 30px;">
 //결제수단 체크하나만 될 수있도록
 function checkOnlyOne(element) {
 	  
-	  const checkboxes 
-	      = document.getElementsByName("payments");
+	//변수에 체크박스들을 배열형식으로 저장한다.
+	  const checkboxes = document.getElementsByName("payments");
 	  
-	  
-	  for (let i = 0; i < checkboxes.length; i++) {
+	//저장된 체크박스의 갯수만큼 반복문 실행
+	  for (i = 0; i < checkboxes.length; i++) {
+			//모든 체크박스의 체크상태 해제
   			checkboxes[i].checked = false;
 		}
-	  
+	  //클릭한 체크박스의 상태만 체크되도록 저장
 	  element.checked = true;
 	  
-	  
-	 
-	  
+	  //선탞된 체크박스의 값만 전달하는 방법
+	  //클릭한 체크박스의 값이 참이면 클릭한 체크박스의값을 result에 저장
+	  //거짓이면 빈문자열저장
 	  let result = element.checked ? element.value : "";
 	  $("#checkedPayment").val(result);
 	  

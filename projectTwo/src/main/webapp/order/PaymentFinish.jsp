@@ -1,3 +1,4 @@
+<%@page import="xyz.nailro.dao.CartDAO"%>
 <%@page import="xyz.nailro.dao.OrderDAO"%>
 <%@page import="xyz.nailro.dao.PaymentDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -34,24 +35,23 @@ String DirectComple = request.getParameter("DirectComple");
 //주문번호(시퀀스),결제번호(결제테이블참조),회원번호(회원테이블참조),
 //주문 상품번호(상품테이블참조),주문상세주소1,
 //주문상세주소2,주문우편주소,주문수량,주문날짜,주문상태
-String proNums = null;
-String proQuans = null;
 int rows = 0;
+int delrows = 0;
 
 //1.주문번호 시퀀스
-//3.회원번호 -> clientNum; o
+//3.회원번호 -> clientNum; 
 
 
-//5.주문상세주소1o
+//5.주문상세주소1
 String address1 = request.getParameter("address1");
 //System.out.println(address1);
 
 
-//6.주문상세주소2o
+//6.주문상세주소2
 String address2 = request.getParameter("address2");
 //System.out.println(address2);
 
-//7.주문우편주소o
+//7.주문우편주소
 String zipcode = request.getParameter("zipcode");
 //System.out.println(zipcode);
 
@@ -59,25 +59,21 @@ String zipcode = request.getParameter("zipcode");
 //장바구니에서 구매페이지로 이동시 실행
 if(DirectComple==null){
 
-//4.주문상품번호 o
+//주문상품번호 
 String[] productNum = request.getParameterValues("productNum");
 
-for(String pro : productNum){
-	proNums=pro;
-}
-
-//8.주문수량 o
+//주문수량 
 String[] productQuan = request.getParameterValues("productQuan"); 
-for(String pros : productQuan){
-	proQuans=pros;
-}
 
-String[] proNumresult = proNums.split(",");
-String[] proQuanresult = proQuans.split(",");
-for(int i=0; i<proNumresult.length; i++){
-	rows += OrderDAO.getDAO().insertOrders(nextNum, clientNum, proNumresult[i], address1, address2, zipcode, proQuanresult[i]);
+
+for(int i=0; i<productNum.length; i++){
+	rows += OrderDAO.getDAO().insertOrders(nextNum, clientNum, productNum[i], address1, address2, zipcode, productQuan[i]);
+	
+	
+	delrows+=CartDAO.getDAO().deleteCartInProduct(Integer.parseInt(productNum[i]), Integer.parseInt(clientNum));
 	
 }
+//System.out.println(delrows+"행 장바구니삭제완료");
 //System.out.println(rows+"행 주문삽입완료");
 	}else{//바로구매로 구매페이지 이동시 실행
 	
@@ -87,8 +83,7 @@ for(int i=0; i<proNumresult.length; i++){
 	String productQuan = request.getParameter("productQuan");
 
 
-	rows += OrderDAO.getDAO().insertOrders(nextNum, clientNum, productNum, address1, address2, zipcode, productQuan);
-	
+	//--rows += OrderDAO.getDAO().insertOrders(nextNum, clientNum, productNum, address1, address2, zipcode, productQuan);
 //System.out.println(rows+"행 주문삽입완료");
 }
 

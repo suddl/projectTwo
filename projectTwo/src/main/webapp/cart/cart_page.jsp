@@ -75,10 +75,10 @@ int total = 0;
   
   	
   	<%-- 체크박스 --%>
-    <th width="10%"><input type="checkbox" name="productOne"  id="productOne" value="<%=cartDTOs.get(i).getCartProduct() %>" onclick="selectOnly(this)" checked></th>
+    <th ><input type="checkbox" name="productOne"  id="productOne" value="<%=cartDTOs.get(i).getCartProduct() %>" onclick="selectOnly(this)" checked></th>
     
   	<%-- 이미지 --%>
-     <th width="30%"><img src="<%=request.getContextPath()%><%=cartDTOs.get(i).getCartProductImages()%>"  width="150" height="100" > 
+     <th><img src="<%=request.getContextPath()%><%=cartDTOs.get(i).getCartProductImages()%>" width="150" height="100" > 
      <%=cartDTOs.get(i).getCartProductName() %></th>
   	<input type="hidden" id="productNum" name="productNum" value="<%=cartDTOs.get(i).getCartProduct() %>">
      
