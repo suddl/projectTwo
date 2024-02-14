@@ -18,7 +18,7 @@
 	if(!loginClient.getClientPasswd().equals(passwd)) {
 		session.setAttribute("message", "입력하신 비밀번호가 맞지 않습니다.");	
 		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=client&worker=password_confirm&action=modify");
-		//return;
+		//return; 
 	}
 %>
 <style type="text/css">
