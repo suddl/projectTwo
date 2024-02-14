@@ -103,15 +103,14 @@ public class ReviewDAO extends JdbcDAO {
                 pstmt.setString(1, keyword);
                 pstmt.setInt(2, startRow);
                 pstmt.setInt(3, endRow);
+          
             }
             pstmt = con.prepareStatement(sql);
             if (keyword.equals("")) {
                 pstmt.setInt(1, startRow);
                 pstmt.setInt(2, endRow);
             } else {
-                // 이 부분은 이미 위에서 처리하므로 중복되어서는 안됩니다.
-                // pstmt.setInt(2, startRow);
-                // pstmt.setInt(3, endRow);
+            	//중복되면 안됨. 기존 선생님과 동일하게 수정하였으나 에러 발생하여 연결 페이지 누락
             }
             rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -329,6 +328,7 @@ public class ReviewDAO extends JdbcDAO {
     }
     */
     
+
     //detail페이지에서 하단에 productNum으로 관련 review만 출력하는 dao
     public List<ReviewDTO> selectProductReviewsForProduct(int productNum) {
         Connection con = null;
@@ -369,6 +369,62 @@ public class ReviewDAO extends JdbcDAO {
         }
         return reviewList;
     }
-    
+
+    //review_list 페이지에서 내가 작성한 리뷰만 불러오는 dao
+    public List<ReviewDTO> selectReviewListByClientNum(int startRow, int endRow, String search, String keyword, int clientNum) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<ReviewDTO> reviewList = new ArrayList<ReviewDTO>();
+        try {
+            con = getConnection();
+            String sql = "";
+            if (keyword.equals("")) {
+                sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num, client.client_name, "
+                        + "review.review_subject, review.review_content, review.review_date, review.review_image, "
+                        + "review.review_re, review.review_rating, review.review_product_num "
+                        + "FROM review INNER JOIN client ON review.review_client_num = client.client_num WHERE review.review_client_num = ? "
+                        + "ORDER BY review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
+                pstmt = con.prepareStatement(sql);
+                pstmt.setInt(1, clientNum);
+                pstmt.setInt(2, startRow);
+                pstmt.setInt(3, endRow);
+            } else {
+                sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num,"
+                        + " client.client_name, review.review_subject, review.review_content, review.review_date, "
+                        + "review.review_image, review.review_re, review.review_rating, review.review_product_num "
+                        + "FROM review INNER JOIN client ON review.review_client_num = client.client_num "
+                        + "WHERE review.review_client_num = ? AND " + search + " LIKE '%' || ? || '%' "
+                        + "ORDER BY review.review_date DESC, review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
+                pstmt = con.prepareStatement(sql);
+                pstmt.setInt(1, clientNum);
+                pstmt.setString(2, keyword);
+                pstmt.setInt(3, startRow);
+                pstmt.setInt(4, endRow);
+            }
+            
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                ReviewDTO review = new ReviewDTO();
+                review.setReviewNum(rs.getInt("review_num"));
+                review.setReviewClientNum(rs.getInt("review_client_num"));
+                review.setReviewName(rs.getString("client_name")); // client_name 컬럼을 reviewName 필드에 설정
+                review.setReviewSubject(rs.getString("review_subject"));
+                review.setReviewContent(rs.getString("review_content"));
+                review.setReviewDate(rs.getString("review_date"));
+                review.setReviewImage(rs.getString("review_image"));
+                review.setReviewRe(rs.getString("review_re"));
+                review.setReviewRating(rs.getString("review_rating"));
+                review.setReviewProductNum(rs.getInt("review_product_num"));
+                reviewList.add(review);
+            }
+        } catch (SQLException e) {
+            System.out.println("[에러] selectReviewListByClientNum() 메소드의 SQL 오류 = " + e.getMessage());
+        } finally {
+            close(con, pstmt, rs);
+        }
+        return reviewList;
+    }
+
     
     }
