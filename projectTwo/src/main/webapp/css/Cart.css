@@ -1,0 +1,134 @@
+@charset "UTF-8";
+
+.table{
+width: 80%;
+margin: 0 auto;
+
+}
+
+h1{
+text-align : center; 
+margin-bottom: 50px;
+}
+
+#MinBtn{
+display: inline-block; 
+ width: 30px;
+ text-align: center; 
+ font-weight: bold;
+ border: 1px solid gray;
+ 
+}
+
+#PlusBtn{
+display: inline-block; 
+ width: 30px;
+ text-align: center; 
+ font-weight: bold;
+ border: 1px solid gray;
+ 
+}
+
+.money{
+display: inline-block;
+font-size: 17px;
+font-weight: normal;
+}
+
+.NumMoney{
+ text-align: right;
+ display: inline-block;
+ width: 100%; 
+ font-size: 17px;
+font-weight: normal;
+}
+
+.moneyALL{
+display: inline-block;
+font-size: 17px;
+font-weight: bold;
+} 
+
+.NumMoneyALL{
+ text-align: right;
+ display: inline-block;
+ width: 100%; 
+ font-size: 17px;
+font-weight: 800;
+}
+
+table{
+border: 1px solid #DCDCDC;
+}
+
+#GoRemove {
+	margin-right: 1150px;
+	border-radius: 10px;
+	background-color: white;
+	padding:5px;
+	margin-top: 10px;
+   
+}
+
+#ProductList{
+	width: 60%;
+}
+
+#ChoiceBtn{
+	margin-top: 100px;
+	margin-bottom: 50px;
+	
+}
+
+.shoppingBuy{
+	width: 200px;
+	height: 50px;
+	border-radius: 10px;
+	font-size: 20px;
+	
+	
+}
+
+#GoOrder{
+	background-color: black;
+	color: white;
+	
+	
+}
+#shoppingBuyOne{
+	color: black;
+	background-color: #f3f3f3;
+}
+.minusBtn{
+	width:30px;
+	background-color: white;
+	
+}
+
+.plusBtn{
+	width:30px;
+	font-weight: bold;
+	background-color: white;
+	
+}
+.cartQuantity{
+width:30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

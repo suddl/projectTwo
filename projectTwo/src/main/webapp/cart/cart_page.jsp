@@ -7,87 +7,6 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<style> 
-.table{
-width: 80%;
-margin: 0 auto;
-
-}
-
-h1{
-text-align : center; 
-margin-bottom: 50px;
-}
-
-#MinBtn{
-display: inline-block; 
- width: 30px;
- text-align: center; 
- font-weight: bold;
- border: 1px solid gray;
- 
-}
-
-#PlusBtn{
-display: inline-block; 
- width: 30px;
- text-align: center; 
- font-weight: bold;
- border: 1px solid gray;
- 
-}
-
-.money{
-display: inline-block;
-font-size: 17px;
-font-weight: normal;
-}
-
-.NumMoney{
- text-align: right;
- display: inline-block;
- width: 100%; 
- font-size: 17px;
-font-weight: normal;
-}
-
-.moneyALL{
-display: inline-block;
-font-size: 17px;
-font-weight: bold;
-} 
-
-.NumMoneyALL{
- text-align: right;
- display: inline-block;
- width: 100%; 
- font-size: 17px;
-font-weight: 800;
-}
-
-table{
-border: 1px solid #DCDCDC;
-}
-
-#BuyBtn {
-   margin: 0 auto;
-   padding: 5px;
-   width: 200px;
-   background-color: black;
-   color: white;
-   font-size: 20px;
-   cursor: pointer;
-   font-weight: bold;
-   border-radius: 10px;
-   
-}
-
-#ProductList{
-	width: 60%;
-}
-
-</style>
-
 <%@include file="/security/login_url.jspf"%>
 
 <%
@@ -97,7 +16,6 @@ int Num = loginClient.getClientNum();
 
 List<CartDTO> cartDTOs = CartDAO.getDAO().selectCartList(Num);
 //System.out.println("dto객체="+cartDTOs.size());
-
 
 String productNum = request.getParameter("productNum");
 
@@ -123,6 +41,7 @@ int total = 0;
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/Cart.css" type="text/css" rel="stylesheet">
 
 </head>
 <body>
@@ -146,7 +65,9 @@ int total = 0;
   </thead>
   
   <%-- 상품목록 출력 --%>
-  <%for(int i=0; i<cartDTOs.size();i++) { %>
+  <% if (cartDTOs != null && !cartDTOs.isEmpty()) {
+  	for(int i=0; i<cartDTOs.size();i++) { 
+  %>
        <input type="hidden" name="selectedItemsInput" id="selectedItemsInput"  />
        <input type="hidden" name="selectedItemsInputQuan" id="selectedItemsInputQuan"  />
   <tr class="hang" id="hang("+<%=i %>+")" >
@@ -163,8 +84,8 @@ int total = 0;
      
      <%-- 수량 --%>
      <th >
-     <button type="button" class="minusBtn" onclick="countDown(<%=i%>);">-</button>&nbsp;&nbsp;
-    <input type="text" id="cartQuantity<%=i%>" name="cartQuantity" style="width:30px;" readonly="readonly" value="<%=cartDTOs.get(i).getCartQuantity()%>"> 개
+     <button type="button" class="minusBtn" onclick="countDown(<%=i%>);">-</button>
+    <input type="text"  id="cartQuantity<%=i%>" class="cartQuantity" name="cartQuantity"  readonly="readonly" value="<%=cartDTOs.get(i).getCartQuantity()%>">
     <button type="button" class="plusBtn" onclick="countUp(<%=i%>);">+</button>
      
      </th>
@@ -182,14 +103,25 @@ int total = 0;
      
      
   </tr>
-  <% } %>
+  <%
+  	}
+  } else {
+  		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=cart&worker=CartNULL_page");
+return;
+  }
+  	%>
+  
 </table>
 
 </div>
 </form>
 
 <%-- 선택삭제버튼--------------------------------------------------------------------------- --%>
-<button type="button" id="GoRemove" style="margin-right: 1050px;" value="">선택삭제</button>
+<button type="button" id="GoRemove"  value="">
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="20" fill="currentColor" class="bi bi-bag-x" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M6.146 8.146a.5.5 0 0 1 .708 0L8 9.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 10l1.147 1.146a.5.5 0 0 1-.708.708L8 10.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 10 6.146 8.854a.5.5 0 0 1 0-.708z"/>
+  <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
+</svg>선택삭제</button>
 
 <%-- 선택삭제버튼--------------------------------------------------------------------------- --%>
 
@@ -220,11 +152,11 @@ padding: 30px;">
 
 <%-- 쇼핑계속하기 및 구매하기 버튼 출력 --%>
 
-<div style="text-align: center; margin: 0 auto;">
-<button type="button"><a href="<%=request.getContextPath()%>
-/index.jsp?group=main&worker=main_page&productNum="  >쇼핑계속하기</a></button>&nbsp;&nbsp;&nbsp;
+<div id="ChoiceBtn" >
+<a href="<%=request.getContextPath()%>/index.jsp?group=main&worker=main_page&productNum"  ><button type="button" id="shoppingBuyOne" class="shoppingBuy">
+쇼핑계속하기</button></a>&nbsp;&nbsp;&nbsp;
 
-<button type="button" id="GoOrder" style="margint: 1050px;" value="">구매하기</button>&nbsp;&nbsp;&nbsp;
+<button type="button" id="GoOrder" class="shoppingBuy" value="">구매하기</button>&nbsp;&nbsp;&nbsp;
 
  <%-- 구매하기 버튼 클릭시 현재 수정된 제품의 수량을 장바구니 테이블에 다시 저장
  DAO는 update로 만들고 회원번호와 상품번호를 전달받아 수량을 수정 그리고 구매하기 --%>
