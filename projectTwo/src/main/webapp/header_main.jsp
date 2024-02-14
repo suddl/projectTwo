@@ -12,7 +12,6 @@
 	<% } else { %>
 		<span style="font-weight: bold;">[<%=loginClient.getClientName()%>]</span>님, 환영합니다. 
 	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_logout_action">로그아웃</a>&nbsp;&nbsp;
-	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_mypage">내정보</a>&nbsp;&nbsp;
 	<% if(loginClient.getClientStatus()==9) {//로그인 사용자가 관리자인 경우 %>
 		<a href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=admin_main">관리자</a>&nbsp;&nbsp;
 		<% } %>
