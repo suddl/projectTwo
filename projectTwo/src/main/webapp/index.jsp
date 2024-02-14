@@ -20,7 +20,7 @@
 	if(group.equals("admin")) {
 		headerFilePath="/header_admin.jsp";
 	} 
-%>
+%> 
  
 <!DOCTYPE html>
 <html>
