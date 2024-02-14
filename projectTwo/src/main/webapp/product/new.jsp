@@ -52,15 +52,6 @@
 <img class="logo" src="<%= request.getContextPath() %>/images/new_logo.jpg" alt="all"/>
 
 <div class="container">
-	<div class="sorting">   
-		<p>
-	       <a href="#" id="sortByRecent">신상품순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-	       <a href="#" id="sortByName">이름순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-	       <a href="#" id="sortByPriceAsc">낮은가격순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-	       <a href="#" id="sortByPriceDesc">높은가격순</a>   
-		</p>
-	</div>
-
 	<div class="prodList" id="prodList">
 		<% for (ProductDTO product : productList) { 
 		    String url = request.getContextPath() + "/index.jsp?group=detail&worker=detail&productNum=" + product.getProductNum();    
