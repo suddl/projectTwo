@@ -110,9 +110,11 @@ $("#replyBtn").click(function() {
 });
 
 $("#replyRemoveBtn").click(function() {
-	location.href="<%=request.getContextPath()%>/index.jsp?group=moon&worker=moon_reremove"
-		+"&moonNum=<%=moon.getMoonNum()%>&pageNum=<%=pageNum%>"
-		+"&pageSize=<%=pageSize%>&search=<%=search%>&keyword=<%=keyword%>";	
+	if(confirm("게시글을 정말로 삭제 하시겠습니까?")) {
+		location.href="<%=request.getContextPath()%>/index.jsp?group=moon&worker=moon_reremove"
+			+"&moonNum=<%=moon.getMoonNum()%>&pageNum=<%=pageNum%>"
+			+"&pageSize=<%=pageSize%>&search=<%=search%>&keyword=<%=keyword%>";	
+	}
 });
 
 $("#replyModifyBtn").click(function() {
