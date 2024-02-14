@@ -238,4 +238,4 @@ $(document).ready(function() {
 	$("#productForm").submit();
 	});
 });
-	</script>
+</script>

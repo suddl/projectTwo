@@ -1,13 +1,13 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@100;500&display=swap');
 
-#moon_list, #faq_list, #product_list {
+#moon_list, #faq_list, #product_list, #order_list {
 	width: 1000px;
 	margin: 0 auto;
 	text-align: center;
 }
 
-#moon_title, #faq_title, #product_title {
+#moon_title, #faq_title, #product_title, #order_title {
 	font-size: 25px;
 }
 
@@ -38,7 +38,7 @@ td {
 	text-overflow: ellipsis;
 }
 
-#moon_list a:hover, #faq_list a:hover, #product_list a:hover {
+#moon_list a:hover, #faq_list a:hover, #product_list a:hover, #order_list a:hover {
 	text-decoration: none; 
 	color: rgb(255, 221, 238);
 	font-weight: bold;

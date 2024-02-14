@@ -64,49 +64,12 @@
 	//int displayNum=totalOrder-(pageNum-1)*pageSize;
 %>
 
-<link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/list.css" type="text/css" rel="stylesheet">
 <style>
-#order_list {
-	width: 1000px;
-	margin: 0 auto;
-	text-align: center;
-}
-
-#order_title {
-	font-size: 25px;
-}
-
-th {
-	background: #FFDCE1;
-	color: black;
-	font-size: 18px;
-	height: 45px;
-}
-
-td {
-	border-bottom: 1px solid lightgray;
-	text-align: center;	
-	height: 40px;
-}
-
-#order_list a:hover {
-	text-decoration: none; 
-	color: rgb(255, 221, 238);
-	font-weight: bold;
-}
 
 #button {
 	text-align: right;
 	margin-bottom: 5px;
-}
-
-#page_list {
-	font-size: 1.1em;
-	margin: 10px;
-}
-
-#page_list a:hover {
-	font-size: 1.3em;
 }
 </style>
 
@@ -120,7 +83,7 @@ td {
 	</div>
 <table>
 	<tr>
-		<th width="50"><input type="checkbox" id="allCheck"></th>
+		<th width="50"><input type="checkbox" name="allcheck" id="allCheck" onclick="allCheck()"></th>
 		<th width="100">주문번호</th>
 		<th width="120">아이디</th>
 		<th width="250">전화번호</th>
@@ -130,7 +93,7 @@ td {
 		<th width="150">주문일</th>
 	</tr>
 	<tr align="center">
-		<td class="p_check"><input type="checkbox" name="checkp" value="" class="check"></td>
+		<td class="p_check"><input type="checkbox" name="check" id="check" value=""></td>
 		<td width="100">3000</td>
 		<td width="120">abc123</td>
 		<td width="250">010-1234-5678</td>
@@ -179,6 +142,7 @@ td {
 	</tr>
 </table>
 </div>
+
 <%-- 페이지번호 출력 및 링크 제공 - 블럭화 처리 --%>
 	<%
 		//하나의 페이지블럭에 출력될 페이지번호의 갯수 설정
@@ -235,8 +199,8 @@ td {
 <form action="<%=request.getContextPath() %>/index.jsp?group=admin&worker=order_list" method="post">
 	<%-- select 태그를 사용하여 검색대상을 선택해 전달 - 전달값은 반드시 컬럼명으로 설정 --%>
 	<select name="search">
-		<option value="order_id" <% if(search.equals("order_id")) { %>  selected <% } %>>&nbsp;아이디&nbsp;</option>
-		<option value="order_payment" <% if(search.equals("order_payment")) { %>  selected <% } %>>&nbsp;결제방법&nbsp;</option>
+		<option value="order_id" <% if(search.equals("order_client_num")) { %>  selected <% } %>>&nbsp;아이디&nbsp;</option>
+		<option value="order_payment" <% if(search.equals("order_pay_num")) { %>  selected <% } %>>&nbsp;결제방법&nbsp;</option>
 		<option value="order_status" <% if(search.equals("order_status")) { %>  selected <% } %>>&nbsp;주문처리상태&nbsp;</option>
 	</select>
 	<input type="text" name="keyword" value="<%=keyword%>" >
@@ -251,28 +215,41 @@ $("#orderCount").change(function() {
 		+"&search=<%=search%>&keyword=<%=keyword%>";
 });
 
-<%--제품선택--%>
-$("#allCheck").change(function() {
-	if($(this).is(":checked")) {
-		$(".check").prop("checked",true);
-	} else {
-		$(".check").prop("checked",false);
-	}
-});
-<%--선택적용--%>
-$("#modifyBtn").click(function() {
-	if($(".check").filter(":checked").length==0) {
-		$("#message").text("선택된 글이 하나도 없습니다.");
-		return;
-	}
-	if(confirm("주문처리상태를 변경 하시겠습니까?")) {
-		location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=order_modify_action"
-	} else {
-		return false;
-	}		
-	
-	$("#orderForm").attr("action", "<%=request.getContextPath()%>/index.jsp?group=admin&worker=order_modify_action");
-	$("#orderForm").attr("method","post");
-});
+$(document).ready(function() {
+	$("#allCheck").click(function() {
+		if($("#allCheck").prop("checked")) {
+			$("input[name=check]").prop("checked",true);
+		} else { 
+			$("input[name=check]").prop("checked",false);
+		}
+	});
 
+	$("input[name=check]").click(function() {
+		var total=$("input[name=check]").length;
+		var checked=$("input[name=check]:checked").length;
+
+		if(total!=checked) { 
+			$("#allCheck").prop("checked",false);
+		} else {
+			$("#allCheck").prop("checked",true);
+		}
+	});
+	
+	$("#modifyBtn").click(function() {
+		if($("input[name=check]").filter(":checked").length==0) {
+			alert("변경할 주문내역을 선택하세요.");
+			return;
+		}
+		
+		if(confirm("주문처리상태를 변경 하시겠습니까?")) {
+			location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=order_modify_action"
+		} else {
+			return false;
+		}		
+		
+		$("#orderForm").attr("action", "<%=request.getContextPath()%>/index.jsp?group=admin&worker=order_modify_action");
+		$("#orderForm").attr("method","post");
+		$("#orderForm").submit();
+	});
+});
 </script>
