@@ -26,10 +26,10 @@
 	<div class="menu">
 		<ul>
 			<li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=new">new</a></li>
-			<li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=nail">nail</a></li>
-			<li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=pedi">pedi</a></li>
-			<li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=care">care&tool</a></li>
-			<li><a href="<%=request.getContextPath() %>/index.jsp?group=faq&worker=faq_list">FAQ</a></li>
+	        <li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=products&category=Nail">nail</a></li>
+	        <li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=products&category=Pedi">pedi</a></li>
+	        <li><a href="<%=request.getContextPath() %>/index.jsp?group=product&worker=products&category=CareTool">care&tool</a></li>
+	        <li><a href="<%=request.getContextPath() %>/index.jsp?group=faq&worker=faq_list">FAQ</a></li>
 		</ul>
 	</div>
 	<div class="menu2">

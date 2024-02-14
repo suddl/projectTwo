@@ -44,7 +44,7 @@ input:valid {
 		<tr>
 			<th>카테고리</th>
 			<td>
-				<select name="productCategory" id="productCategory" onchange="productChange(this)">
+				<select name="productCategory" id="productCategory" onchange="productChange(this)" required>
 					<option value="">--선택--</option>
 					<option value="Nail">네일</option>
 					<option value="Pedi">페디</option>
@@ -55,7 +55,7 @@ input:valid {
 		<tr>
 			<th>세부사항</th>
 			<td>
-				<select name="productType" id="productType" >
+				<select name="productType" id="productType" required>
 					<option value="">--선택--</option>
 				</select>
 			</td>

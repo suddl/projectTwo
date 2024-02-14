@@ -230,7 +230,7 @@ public class ProductDAO extends JdbcDAO	{
 	return rows;		
 }
 	
-	//상품번호(int)를 전달받아 PRODUCT 테이블에 저장된 행을 삭제하고 삭제행의 갯수(int)를 반환하는 메소드
+	//상품번호(String)를 전달받아 PRODUCT 테이블에 저장된 행을 삭제하고 삭제행의 갯수(int)를 반환하는 메소드
 	public int deleteProduct(String productNum) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
