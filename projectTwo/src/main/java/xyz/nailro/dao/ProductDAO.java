@@ -251,21 +251,29 @@ public class ProductDAO extends JdbcDAO	{
 		return rows;
 	}
 	
-	public List<ProductDTO> searchProduct(String keyword) {
+	public List<ProductDTO> searchProduct(int startRow, int endRow, String keyword) {
 	    Connection con = null;
 	    PreparedStatement pstmt = null;
 	    ResultSet rs = null;
-	    List<ProductDTO> searchProductList = new ArrayList<>();
+	    List<ProductDTO> searchProductList = new ArrayList<ProductDTO>();
 
 	    try {
 	        con = getConnection();
-	        String sql = "SELECT product_num, product_name, product_image, product_price FROM product " +
-	                     "WHERE product_name LIKE ? OR product_category LIKE ? OR product_type LIKE ?";
+	        
+	        String sql="select * from (select rownum rn, temp.* from (select product_num, product_image, product_name, "
+					+ "product_price from product where product_category like ? or product_type like ?"
+					+ "or product_name like ? order by product_num desc) temp)"
+					+ " where rn between ? and ?";
+	        
 	        pstmt = con.prepareStatement(sql);
 	        String keywd = "%" + keyword + "%";
 	        pstmt.setString(1, keywd);
 	        pstmt.setString(2, keywd);
 	        pstmt.setString(3, keywd);
+	        pstmt.setInt(4, startRow);
+	        pstmt.setInt(5, endRow);
+	        
+	        
 	        rs = pstmt.executeQuery();
 
 	        while (rs.next()) {
@@ -320,35 +328,37 @@ public class ProductDAO extends JdbcDAO	{
 	}	
 
 	//상품 검색 결과 개수
-	public int selectTotalSearchProduct(String search, String keyword)	{
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		int totalCount=0;
-		try	{
-			con=getConnection();
-			if(keyword.equals(""))	{
-				System.out.println("검색어를 입력해주세요");
-			} else	{
-				String sql="select count(*) from product where"+search+"like '%'||?||'%'";
-				
-				pstmt=con.prepareStatement(sql);
-				pstmt.setString(1, keyword);
-			}
-			
-			rs=pstmt.executeQuery();
-			
-			if(rs.next())	{
-				totalCount=rs.getInt(1);
-			}
-		}	catch (SQLException e)	{
-			System.out.println("[에러]selectTotalSearchProduct() 메소드의 오류 = "+e.getMessage());
-		}	finally	{
-			close(con, pstmt, rs);
-		}
-		return totalCount;
+	public int selectTotalSearchProduct(String keyword) {
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    int totalCount = 0;
+	    try {
+	        con = getConnection();
+	        if (keyword.equals("")) {
+	            System.out.println("검색어를 입력해주세요");
+	            return totalCount; // 검색어가 비어 있을 경우 0을 반환하고 메소드 종료
+	        } else {
+	            String sql = "SELECT COUNT(*) FROM product WHERE product_name LIKE ? "
+	                    + "OR product_category LIKE ? OR product_type LIKE ?";
+	            pstmt = con.prepareStatement(sql);
+	            String keywd = "%" + keyword + "%";
+	            pstmt.setString(1, keywd);
+	            pstmt.setString(2, keywd);
+	            pstmt.setString(3, keywd);
+	            rs = pstmt.executeQuery();
+
+	            if (rs.next()) {
+	                totalCount = rs.getInt(1);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("[에러]selectTotalSearchProduct() 메소드의 오류 = " + e.getMessage());
+	    } finally {
+	        close(con, pstmt, rs);
+	    }
+	    return totalCount;
 	}
-	
 	//상품 페이지(new)
 	public List<ProductDTO> selectNewProductList()	{
 		Connection con=null;
