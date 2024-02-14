@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@ page import="java.util.List" %>
 <%@ page import="xyz.nailro.dto.ProductDTO" %>
 <%@ page import="xyz.nailro.dao.ProductDAO" %>
@@ -10,6 +11,16 @@
 <link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/product.css" type="text/css" rel="stylesheet">
 <%	
+	String category=request.getParameter("productCategory");
+	
+	String sorted="product_num asc";
+	if(sorted!="") {
+		sorted=request.getParameter("sorted");
+	}
+	
+	String type=request.getParameter("type");
+	
+
 	String keyword=request.getParameter("keyword");
 	if(keyword==null)	{
 		keyword="";
@@ -45,30 +56,38 @@
 	if(endRow>totalProduct) {
 		endRow=totalProduct;
 	}
-
+    List<ProductDTO> searchResults = ProductDAO.getDAO().searchProduct(startRow, endRow, keyword, sorted);
 %>   
 </head>
 <body>
     <div class="container">
         <h2>검색 결과</h2>
-    	<div class="sorting">
-    	<select name="정렬 방식">
-    		<option value="신상품순" selected>&nbsp;신상품순&nbsp;</option>
-    		<option value="이름순" >&nbsp;이름순&nbsp;</option>
-    		<option value="가격순" >&nbsp;가격순&nbsp;</option>    	
-    	</select>
-    	</div>
-    	
+	<div class="sorting">
+	    <p>
+	       <%if(type!=null) { %>
+	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=product_num desc&type=<%=type%>" id="sortByRecent">신상품순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=product_name asc&type=<%=type%>" id="sortByName">이름순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=product_price asc&type=<%=type%>" id="sortByPriceAsc">낮은가격순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=product_price desc&type=<%=type%>" id="sortByPriceDesc">높은가격순</a>   
+	       <% } else { %>
+	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=product_num desc" id="sortByRecent">신상품순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=product_name asc" id="sortByName">이름순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=product_price asc" id="sortByPriceAsc">낮은가격순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=product_price desc" id="sortByPriceDesc">높은가격순</a>   
+		   <% } %>
+	   </p>
+	</div>	    	
+<% if ("Nail".equals(category) || keyword.equals("네일")) { %>
 		<div class="filter-buttons" id="filterButtons">
-    		<button data-product-type="short">숏</button>
-    		<button data-product-type="long">롱</button>
-    		<button data-product-type="parts">파츠</button>
-    		<button data-product-type="fullColor">풀컬러</button>
-    		<button data-product-type="all">전체</button>
+		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=<%=sorted%>">전체</a>
+		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=<%=sorted%>&type=Short">숏</a>
+		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=<%=sorted%>&type=Long">롱</a>
+		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=<%=sorted%>&type=Parts">파츠</a>
+		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=<%=sorted%>&type=FullColor">풀컬러</a>
 		</div>
+		<% } %>
         <div class="prodList">
             <%
-                List<ProductDTO> searchResults = ProductDAO.getDAO().searchProduct(startRow, endRow, keyword);
                 if (searchResults.isEmpty()) { 
             %>
          	<p>검색 결과가 없습니다.</p>
@@ -78,15 +97,15 @@
                          String url = request.getContextPath() + "/index.jsp?group=detail&worker=detail"
                                  + "&productNum=" + product.getProductNum();
             %>
-                         <div class="product">
-                             <a href="<%=url%>">
-                                 <img class="prodImage" src="<%=request.getContextPath() %>/<%=product.getProductImage()%>" alt="Product Image">
-                             </a>
-                             <div class="prodName">
-                                 <a href="<%=url%>"><%=product.getProductName()%></a>
-                             </div>
-                             <div class="prodPrice" id="prodPrice"><%=product.getProductPrice()%>원</div>
-                         </div>
+        <div class="product" data-product-type="<%=product.getProductType()%>">
+            <a href="<%=url%>">
+                <img class="prodImage" src="<%=request.getContextPath() %>/<%=product.getProductImage()%>" alt="이미지 준비중">
+            </a>
+            <div class="prodName">
+                <a href="<%=url%>"><%=product.getProductName()%></a>
+            </div>
+            <div class="prodPrice" id="prodPrice"><%=DecimalFormat.getInstance().format(product.getProductPrice())%>원</div>
+        </div>
              <%
                      }
                  }
@@ -115,7 +134,7 @@
 	
 	<div id="page_list">
 		<%
-			String responseUrl=request.getContextPath()+"/index.jsp?group=product&worker=nail"
+			String responseUrl=request.getContextPath()+"/index.jsp?group=product&worker=searchProduct"
 					+"&pageSize="+pageSize;
 		%>
 	
@@ -141,23 +160,6 @@
 		<% } else { %>	
 			[다음]
 		<% } %>
-	</div>
- <script>
-//클래스 이름이 "prodPrice"인 모든 요소를 가져옵니다.
- var prodPrices = document.querySelectorAll(".prodPrice");
-
- // 각 요소에 대해 반복합니다.
- prodPrices.forEach(function(prodPriceElement) {
-     // 요소의 텍스트를 가져옵니다.
-     var prodPriceText = prodPriceElement.innerText;
-     
-     // 텍스트에서 숫자 부분을 추출하고 숫자로 변환합니다.
-     var prodPrice = parseFloat(prodPriceText.replace(/[^0-9.-]+/g,""));
-     
-     // 숫자를 포맷하고 "원"을 추가하여 다시 텍스트로 설정합니다.
-     var formattedPrice = new Intl.NumberFormat('en-US').format(prodPrice) + "원";
-     prodPriceElement.innerText = formattedPrice;
- });
-</script>
+	</div> 
 </body>
 </html>

@@ -251,7 +251,7 @@ public class ProductDAO extends JdbcDAO	{
 		return rows;
 	}
 	
-	public List<ProductDTO> searchProduct(int startRow, int endRow, String keyword) {
+	public List<ProductDTO> searchProduct(int startRow, int endRow, String keyword, String sorted) {
 	    Connection con = null;
 	    PreparedStatement pstmt = null;
 	    ResultSet rs = null;
@@ -260,10 +260,10 @@ public class ProductDAO extends JdbcDAO	{
 	    try {
 	        con = getConnection();
 	        
-	        String sql="select * from (select rownum rn, temp.* from (select product_num, product_image, product_name, "
-					+ "product_price from product where product_category like ? or product_type like ?"
-					+ "or product_name like ? order by product_num desc) temp)"
-					+ " where rn between ? and ?";
+	        String sql = "select * from (select rownum rn, temp.* from (select product_num, product_image, product_name, "
+	                + "product_price, product_category from product where product_category like ? or product_type like ?"
+	                + "or product_name like ? order by " + sorted + ") temp)"
+	                + " where rn between ? and ?";
 	        
 	        pstmt = con.prepareStatement(sql);
 	        String keywd = "%" + keyword + "%";
@@ -282,6 +282,7 @@ public class ProductDAO extends JdbcDAO	{
 	            product.setProductName(rs.getString("product_name"));
 	            product.setProductImage(rs.getString("product_image"));
 	            product.setProductPrice(rs.getInt("product_price"));
+	            product.setProductCategory(rs.getString("product_category"));
 	            searchProductList.add(product);
 	        }
 
