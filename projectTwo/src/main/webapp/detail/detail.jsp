@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="xyz.nailro.dao.ProductDAO"%>
 <%@page import="xyz.nailro.dto.ProductDTO"%>
 <%@page import="xyz.nailro.dto.ReviewDTO"%>
@@ -14,41 +15,11 @@
 	List<ReviewDTO> reviewList = ReviewDAO.getDAO().selectProductReviewsForProduct(productReview);
 %>
 <head>
-<style>
-.review-table {
-	width: 80%;
-	margin: 0 auto;
-	border-collapse: collapse;
-}
-.review-table td,
-.review-table th {
-	border: 1px solid #ddd;
-	padding: 8px;
-}
-.review-table .rating,
-.review-table .date {
-	width: 15%;
-}
-.review-table .subject {
-	width: 50%;
-	height: 20%
-}
-.review-table .review-content {
-	text-align: conter;
-}
-.review-table img {
-	max-width: 100px;
-	height: auto;
-}
-#ratingSubjectDate {
-	background-color: #E2E2E2;
-}
-</style>
 <meta charset="UTF-8">
 <title>상세페이지</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<link href="<%=request.getContextPath()%>/css/detail.css" type="text/css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link href="<%=request.getContextPath()%>/css/detail.css" type="text/css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
 </head>
 <body>
@@ -86,7 +57,7 @@
                  <div class="card-body">
                     <h5 class="card-title"><%=product.getProductName()%></h5>
                     &nbsp;&nbsp;
-                     <p class="price">가격 : <%=product.getProductPrice()%>원</p>
+                     <p class="price">가격 : <%=DecimalFormat.getInstance().format(product.getProductPrice())%>원</p>
                      <div class="di-line"></div>
                      <div class="priceCount">
 						<div class="col-auto">
@@ -251,6 +222,23 @@ $(function() {
        }
        this.style.display = "none"; // "더보기" 버튼 숨기기
    });
+ 
+ 
+//클래스 이름이 "prodPrice"인 모든 요소를 가져옵니다.
+ var price = document.querySelectorAll(".price");
+
+ // 각 요소에 대해 반복합니다.
+ price.forEach(function(priceElement) {
+     // 요소의 텍스트를 가져옵니다.
+     var priceText = priceElement.innerText;
+     
+     // 텍스트에서 숫자 부분을 추출하고 숫자로 변환합니다.
+     var price = parseFloat(priceText.replace(/[^0-9.-]+/g,""));
+     
+     // 숫자를 포맷하고 "원"을 추가하여 다시 텍스트로 설정합니다.
+     var formattedPrice = new Intl.NumberFormat('en-US').format(prodPrice) + "원";
+     priceElement.innerText = formattedPrice;
+ });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

@@ -107,10 +107,6 @@ div {
 
 }
 
-.totalPrice {
-	text-align: center;
-}
-
 .di-line {
 	border-top: 1px dotted #444444;
 	margin: 30px auto;
@@ -191,5 +187,46 @@ div {
 
 h5 {
 	margin-top: 20px;
+}
+
+#productNum {
+	color: red;
+	
+}
+
+.review-table {
+	width: 80%;
+	margin: 0 auto;
+	border-collapse: collapse;
+}
+.review-table td,
+.review-table th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+.review-table .rating,
+.review-table .date {
+	width: 15%;
+}
+.review-table .subject {
+	width: 50%;
+	height: 20%
+}
+.review-table .review-content {
+	text-align: conter;
+}
+.review-table img {
+	max-width: 100px;
+	height: auto;
+}
+#ratingSubjectDate {
+	background-color: #E2E2E2;
+}
+
+.totalPrice {
+	text-align: center;
+	color: red;
+	font-size: 1.2em;
+
 }
 
