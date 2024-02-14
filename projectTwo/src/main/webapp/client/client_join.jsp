@@ -103,7 +103,7 @@ legend {
 			- <input type="text" name="mobile2" id="mobile2" size="4" maxlength="4">
 			- <input type="text" name="mobile3" id="mobile3" size="4" maxlength="4">
 			<div id="mobileMsg" class="error">전화번호를 입력해 입력해 주세요.</div>
-			<div id="mobileRegMsg" class="error">전화번호는 3~4 자리의 숫자로만 입력해 주세요.</div>
+			<div id="mobileRegMsg" class="error">전화번호는 4 자리의 숫자로만 입력해 주세요.</div>
 		</li>
 		<li>
 			<label>우편번호</label>
