@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="xyz.nailro.dao.ProductDAO"%>
 <%@page import="java.util.List"%>
 <%@page import="xyz.nailro.dto.ProductDTO"%>
@@ -48,7 +49,7 @@
 		        <div class="prodName">
 		            <a href="<%=productUrl%>"><%=product.getProductName()%></a>
 		        </div>
-		        <div class="prodPrice"><%=product.getProductPrice() %></div>
+		        <div class="prodPrice"><%=DecimalFormat.getInstance().format(product.getProductPrice())%>원</div>
 		    </div>
 	    <% } %>
 	</div> 
