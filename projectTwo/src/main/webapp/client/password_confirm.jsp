@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- 회원정보변경 또는 회원탈퇴를 위해 사용자로부터 비밀번호를 입력받기 위한 JSP 문서 --%>
-<%-- => 로그인 상태의 사용자만 요청 가능한 JSP 문서 --%>
-<%-- <%@include file="/security/login_check.jspf" %> --%>   
+<%@include file="/security/login_check.jspf" %>  
 <%
 	String action=request.getParameter("action");
 
