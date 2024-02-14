@@ -34,7 +34,7 @@
 	if(endRow>totalProduct) {
 		endRow=totalProduct;
 	}
-	
+	 
 	List<ProductDTO> productList=ProductDAO.getDAO().selectProductListByProductNum(startRow, endRow);
 	
 	int displayNum=totalProduct-(pageNum-1)*pageSize;
