@@ -1,3 +1,4 @@
+
 <%@page import="xyz.nailro.dao.ProductDAO"%>
 <%@page import="xyz.nailro.dao.OrderDAO"%>
 <%@page import="xyz.nailro.dto.OrderDTO"%>
@@ -47,7 +48,8 @@
 	
 	String reviewIp=request.getRemoteAddr();
 
-	 /* 어떻게 orderNum과 product.Num을 가져올지 의문
+	/*
+	 // 어떻게 orderNum과 product.Num을 가져올지 의문
 	 int orderReview = Integer.parseInt(request.getParameter("orderNum"));
 	  OrderDTO order = OrderDAO.getDAO().selectOrderByNum(orderReview);
 	   
@@ -59,7 +61,7 @@
     review.setReviewSubject(reviewSubject);
     review.setReviewContent(reviewContent);
     review.setReviewRating(reviewRating);
-   // review.setReviewOrderNum(Integer.parseInt(order.getOrderNum()));  
+    //review.setReviewOrderNum(Integer.parseInt(order.getOrderNum()));  
     review.setReviewOrderNum(73); // 임시로 임의의값을 넣은 것
     review.setReviewClientNum(loginClient.getClientNum());
     //review.setReviewProductNum(product.getProductNum());

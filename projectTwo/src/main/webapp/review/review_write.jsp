@@ -1,3 +1,8 @@
+<%@page import="xyz.nailro.dao.ProductDAO"%>
+<%@page import="xyz.nailro.dto.ProductDTO"%>
+<%@page import="xyz.nailro.dao.OrderDAO"%>
+<%@page import="xyz.nailro.dto.OrderDTO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>   
 <%@include file="/security/login_check.jspf"%>
@@ -60,11 +65,24 @@ td {
 
 </style>
 </head>
+<%--
+//상세페이지에서 히든으로 상품아이디 값을 받아오기
+
+	int orderReview = Integer.parseInt(request.getParameter("orderNum"));
+	OrderDTO order = OrderDAO.getDAO().selectOrderByNum(orderReview);
+	   
+	int productNum = Integer.parseInt(request.getParameter("productNum"));
+	ProductDTO product = ProductDAO.getDAO().selectProductByNum(productNum);
+
+
+--%> 
 <body>
     <h1 id="review_subject">REVIEW</h1>
     <form
         action="<%=request.getContextPath()%>/index.jsp?group=review&worker=review_writer_action"
         method="post" enctype="multipart/form-data" id="reviewForm">
+       <%--  <input type="hidden" id="orderNum" name="orderNum" value="<%=order.getOrderNum()%>"> --%>
+       <%-- <input type="hidden" id="ProductNum" name="ProductNum" value="<%=product.getProductNum()%>"> --%>
         <table>
             <tr>
                 <td>별점:</td>
@@ -100,6 +118,7 @@ td {
                 </th>
             </tr>
         </table> 
+    </form>
     </form>
 </body>
 </html> 
