@@ -13,10 +13,7 @@
 	}
 	
 	String type=request.getParameter("type");
-	if(type==null)	{
-		
-	}
-	
+
     int pageNum = 1;
     if (request.getParameter("pageNum") != null) {
         pageNum = Integer.parseInt(request.getParameter("pageNum"));
@@ -67,10 +64,17 @@
 <div class="container">
 <div class="sorting">
     <p>
+       <%if(type!=null) { %>
        <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_num desc&type=<%=type%>" id="sortByRecent">신상품순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
        <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_name asc&type=<%=type%>" id="sortByName">이름순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
        <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_price asc&type=<%=type%>" id="sortByPriceAsc">낮은가격순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
        <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_price desc&type=<%=type%>" id="sortByPriceDesc">높은가격순</a>   
+       <% } else { %>
+       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_num desc" id="sortByRecent">신상품순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_name asc" id="sortByName">이름순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_price asc" id="sortByPriceAsc">낮은가격순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=products&category=<%=category%>&sorted=product_price desc" id="sortByPriceDesc">높은가격순</a>   
+	   <% } %>
    </p>
 </div>	
 	<% if(category!=null && category.equals("Nail"))	{	 %>
