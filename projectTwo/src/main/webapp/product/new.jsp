@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="java.awt.JobAttributes.DefaultSelectionType"%>
 <%@page import="xyz.nailro.dto.ProductDTO"%>
 <%@page import="java.util.List"%>
@@ -63,7 +64,7 @@
 		        <div class="prodName">
 		            <a href="<%=url%>"><%=product.getProductName()%></a>
 		        </div>
-            <div class="prodPrice" id="prodPrice"><%=product.getProductPrice()%>원</div>
+            <div class="prodPrice" id="prodPrice"><%=DecimalFormat.getInstance().format(product.getProductPrice())%>원</div>
 		    </div>
 	    <% } %>
 	</div>
@@ -117,22 +118,5 @@
 			[다음]
 		<% } %>
 	</div>
-<script>
-//클래스 이름이 "prodPrice"인 모든 요소를 가져옵니다.
-var prodPrices = document.querySelectorAll(".prodPrice");
-
-// 각 요소에 대해 반복합니다.
-prodPrices.forEach(function(prodPriceElement) {
-    // 요소의 텍스트를 가져옵니다.
-    var prodPriceText = prodPriceElement.innerText;
-    
-    // 텍스트에서 숫자 부분을 추출하고 숫자로 변환합니다.
-    var prodPrice = parseFloat(prodPriceText.replace(/[^0-9.-]+/g,""));
-    
-    // 숫자를 포맷하고 "원"을 추가하여 다시 텍스트로 설정합니다.
-    var formattedPrice = new Intl.NumberFormat('en-US').format(prodPrice) + "원";
-    prodPriceElement.innerText = formattedPrice;
-});
-</script>
 </body>
 </html>
