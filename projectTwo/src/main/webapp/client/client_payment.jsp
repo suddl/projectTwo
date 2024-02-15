@@ -6,6 +6,8 @@
 <%@page import="xyz.nailro.dao.OrderDAO"%>
 <%@page import="xyz.nailro.dto.ClientDTO"%>
 <%@page import="xyz.nailro.dao.ClientDAO"%>
+<%@page import="xyz.nailro.dto.ProductDTO"%>
+<%@page import="xyz.nailro.dao.ProductDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%  
@@ -14,9 +16,11 @@
 	int endRow = 10; 
 	String search = "order_date"; 
 	String keyword = ""; 
-
+	
+	//주문내역 조회 
 	List<OrderDTO> orderList=OrderDAO.getDAO().selectOrderList(startRow, endRow, search, keyword);
     request.setAttribute("orderList", orderList);
+    
   //session 객체에 저장된 권한 관련 속성값을 반환받아 저장
  // => 로그인 상태의 사용자에게만 글쓰기 권한 제공
  // => 게시글이 비밀글인 경우 로그인 상태의 사용자가 게시글 작성자이거나 관리자인 경우에만 권한 제공
@@ -121,7 +125,7 @@ border: 1px solid #DCDCDC;
              <% for(OrderDTO order : orderList) { %>
                 <tr>
                   <td><%=order.getOrderNum()%></td>
-                <td><%=order.getOrderProductNum()%></td>
+                <td><%=order.getOrderProductName()%></td>
                     <td><%=order.getOrderPayPrice()%></td>
                     <td><%=order.getOrderDate()%></td>
                     <td>
