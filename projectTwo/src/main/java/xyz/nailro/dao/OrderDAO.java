@@ -165,4 +165,57 @@ public class OrderDAO extends JdbcDAO{
 			}
 			return orderList;
 		}
+		
+		
+		//주문내역 클릭시 생기는 주문내역 확인 list (주문내역에서 쓸)
+		public List<OrderDTO> selectOrderReviewList(int startRow, int endRow, String search, String keyword) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			List<OrderDTO> orderReviewList=new ArrayList<OrderDTO>();
+			
+			try {
+				con=getConnection();
+				
+				if(keyword.equals("")) {//검색 기능을 사용하지 않은 경우
+					String sql= "select * from (select rownum rn, temp.* from (select order_num, order_pay_num"
+							+ " ,order_client_num, order_product_num, order_date from orders"
+							+ " left join client on order_client_num=client_num left join product on order_product_num=product_num"
+							+ " order by order_num desc) temp) where rn between ? and ?";
+					pstmt=con.prepareStatement(sql);
+					pstmt.setInt(1, startRow);
+					pstmt.setInt(2, endRow);
+				} else {//검색 기능을 사용한 경우
+					String sql ="select * from (select rownum rn, temp.* from (select order_num, order_pay_num"
+							+ ", order_client_num, order_product_num, order_date from orders"
+							+ " left join client on order_client_num=client_num left join product on order_product_num=product_num"
+							+ " where " + search + " like '%'||?||'%' order by order_num desc) temp)"
+							+ " where rn between ? and ?";
+					pstmt=con.prepareStatement(sql);
+					pstmt.setString(1, keyword);
+					pstmt.setInt(2, startRow);
+					pstmt.setInt(3, endRow);
+				}
+				
+				rs=pstmt.executeQuery();
+				
+				while(rs.next()) {
+					OrderDTO order=new OrderDTO();
+					order.setOrderNum(rs.getString("order_num"));
+					order.setOrderPayNum(rs.getInt("orderPayNum"));
+					order.setOrderClientNum(rs.getString("orderClientNum"));
+					order.setOrderProductNum(rs.getString("order_product_num"));
+					order.setOrderDate(rs.getString("order_date"));
+
+					orderReviewList.add(order);
+				}
+			} catch (SQLException e) {
+				System.out.println("[에러]selectOrderList() 메소드의 SQL 오류 = "+e.getMessage());
+			} finally {
+				close(con, pstmt, rs);
+			}
+			return orderReviewList;
+		}
+		
+		
 }
