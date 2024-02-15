@@ -7,7 +7,7 @@
 <%@ page import="xyz.nailro.dto.ReviewDTO"%>
 <%@include file="/security/login_check.jspf" %> 
 
-
+<link href="<%=request.getContextPath()%>/css/list.css" type="text/css" rel="stylesheet">
 <%
 //게시글 검색 기능에 필요한 전달값(검색대상과 검색단어)을 반환받아 저장
 String search=request.getParameter("search");//검색대상
@@ -89,105 +89,9 @@ List<ReviewDTO> reviewList = ReviewDAO.getDAO().selectReviewListByClientNum(star
 
 %>
 
-<html>
-<head>
-<title>리뷰 목록</title>
-<style type="text/css">
-.center-align {
-    text-align: center;
-    margin: auto;
-    width: 60%; /* 혹은 적절한 너비를 설정하세요 */
-}
-
-.form-container, #page_list {
-    margin: 20px 0;
-    display: flex;
-    justify-content: center;
-}
-
-table {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-th, td {
-    border: 1px solid ;
-    text-align: center;    
-}
-
-#review_list {
-	width: 1000px;
-	margin: 0 auto;
-	text-align: center;
-}
-
-#review_title {
-	font-size:2em;
-	font-weight: bold;
-	color: pink;
-}
-
-table {
-	margin: 5px auto;
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-
-th {
-	border: 1px solid black;
-	background-color: pink ;
-	font: black;
-	text-align: center;
-}
-
-td {
-	border: 1px solid black;
-	text-align: center;	
-}
-
-.subject {
-	text-align: left;
-	padding: 5px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-#review_list a:hover {
-	text-decoration: none; 
-	color: blue;
-	font-weight: bold;
-}
-
-.subject_hidden {
-	background: black;
-	color: white;
-	font-size: 14px;
-	border: 1px solid black;
-	border-radius: 4px;
-}
-
-#page_list {
-    display: flex;
-    justify-content: center; /* 중앙 정렬 */
-    flex-wrap: wrap; /* 내용이 넘칠 경우 다음 줄로 */
-    margin: 20px 0;
-}
-
-#page_list a, #page_list span {
-    margin: 0 5px; /* 좌우 여백 */
-}
-
-#page_list a:hover {
-	font-size: 1.3em;
-}
-
-</style>
-</head>
-<body>
 <form action="<%=request.getContextPath() %>/index.jsp?group=review&worker=review_writer_action" method="post" id="reviewForm" name="review">
 <div id="review_list">
-    <div id="review_title">REVIEW(<%=totalReview %>)</div>
+    <h1>REVIEW(<%=totalReview %>)</h1>
     <div style="text-align: right;">
 		게시글갯수 : 
 		<select id="reviewCount">
@@ -200,7 +104,7 @@ td {
 	
 	<%-- 게시글 목록 출력 --%>
 	</div>
-    <table>
+    <table class="review_list">
         <tr>
             <th width="100">글번호</th>
             <th width="500">제목</th>
@@ -216,34 +120,34 @@ td {
 			</tr>
 	
         <% } else { %>
-        <% for(ReviewDTO review : reviewList) { %>
-        <tr>
-            <td><%=displayNum %></td>
-            <% displayNum--; %>
-            
-            <td class="subject">
-            <%
-            String url=request.getContextPath()+"/index.jsp?group=review&worker=review_detail"
-               +"&reviewNum="+review.getReviewNum()+"&pageNum="+pageNum+"&pageSize="+pageSize
-               +"&search="+search+"&keyword="+keyword;
-         %>
-         <a href="<%=url%>"><%=review.getReviewSubject() %></a>
-            </td>
-            <td><%=review.getReviewName()%></td>
-            <td><%=review.getReviewRating()%></td>
-            <td>
-                <% if(currentDate.equals(review.getReviewDate().substring(0, 10))) { %>
-                    <%=review.getReviewDate().substring(11)%>
-                <% } else { %>
-                    <%=review.getReviewDate()%>
-                <% } %>
-            </td>
-        </tr>
-        <% } %>
+	        <% for(ReviewDTO review : reviewList) { %>
+	        <tr>
+	            <td><%=displayNum %></td>
+	            <% displayNum--; %>
+	            
+	            <td class="subject">
+	            <%
+	            String url=request.getContextPath()+"/index.jsp?group=review&worker=review_detail"
+	               +"&reviewNum="+review.getReviewNum()+"&pageNum="+pageNum+"&pageSize="+pageSize
+	               +"&search="+search+"&keyword="+keyword;
+	         %>
+	         <a href="<%=url%>"><%=review.getReviewSubject() %></a>
+	            </td>
+	            <td><%=review.getReviewName()%></td>
+	            <td><%=review.getReviewRating()%></td>
+	            <td>
+	                <% if(currentDate.equals(review.getReviewDate().substring(0, 10))) { %>
+	                    <%=review.getReviewDate().substring(11)%>
+	                <% } else { %>
+	                    <%=review.getReviewDate()%>
+	                <% } %>
+	            </td>
+	        </tr>
+	        <% } %>
         <% } %>
 	</table>
-	</div>
-	</form>
+</div>
+</form>
 
 	
 	<%-- 페이지번호 출력 및 링크 제공 - 블럭화 처리 --%>
@@ -301,9 +205,9 @@ td {
 	<form action="<%=request.getContextPath() %>/index.jsp?group=review&worker=review_list" method="post">
 		<%-- select 태그를 사용하여 검색대상을 선택해 전달 - 전달값은 반드시 컬럼명으로 설정 --%>
 		<select name="search">
-			<option value="name" <% if(search.equals("name")) { %>  selected <% } %>>&nbsp;작성자&nbsp;</option>
-			<option value="review_subject" <% if(search.equals("review_subject")) { %>  selected <% } %>>&nbsp;제목&nbsp;</option>
-			<option value="review_content" <% if(search.equals("review_content")) { %>  selected <% } %>>&nbsp;내용&nbsp;</option>
+			<option value="client_name" <% if(search.equals("name")) { %>  selected <% } %>>&nbsp;작성자&nbsp;</option>
+			<option value="review_title" <% if(search.equals("review_subject")) { %>  selected <% } %>>&nbsp;제목&nbsp;</option>
+			<option value=review_content <% if(search.equals("review_content")) { %>  selected <% } %>>&nbsp;내용&nbsp;</option>
 		</select>
 		<input type="text" name="keyword" value="<%=keyword%>">
 		<button type="submit">검색</button>
@@ -321,4 +225,3 @@ $("#reviewCount").change(function() {
 
 
 </script>
-</html>

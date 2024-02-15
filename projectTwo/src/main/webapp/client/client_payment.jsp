@@ -1,4 +1,3 @@
-
 <%@page import="java.util.List"%>
 <%@page import="xyz.nailro.dto.CartDTO"%>
 <%@page import="xyz.nailro.dao.CartDAO"%>
@@ -8,154 +7,93 @@
 <%@page import="xyz.nailro.dao.ClientDAO"%>
 <%@page import="xyz.nailro.dto.ProductDTO"%>
 <%@page import="xyz.nailro.dao.ProductDAO"%>
-<%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@include file="/security/login_url.jspf"%>
 <%  
-	//session 객체에 저장된 권한 관련 속성값을 반환받아 저장
- 	// => 로그인 상태의 사용자에게만 글쓰기 권한 제공
- 	// => 게시글이 비밀글인 경우 로그인 상태의 사용자가 게시글 작성자이거나 관리자인 경우에만 권한 제공
- 	ClientDTO loginClient=(ClientDTO)session.getAttribute("loginClient");
+	String search=request.getParameter("search");
+	if(search==null) {
+		search="";
+	}
 	
- 	if (loginClient == null) {
-        // 로그인되어 있지 않으면 로그인 페이지로 이동하거나 다른 처리를 하도록 구현할 수 있습니다.
-        response.sendRedirect("login.jsp");
-    }
- 	
-  	//로그인한 사용자의 회원번호 확인
-  	String clientNum = null;
-    if (loginClient != null) {
-        clientNum = String.valueOf(loginClient.getClientNum());
-    }
-
-  	
- 	
- 	//주문내역 조회
-	String ClientNum = "ClientNum"; 
-	int startRow = 1; 
-	int endRow = 10; 
-	String search = "order_date"; 
-	String keyword = ""; 
+	String keyword=request.getParameter("keyword");
+	if(keyword==null) {
+		keyword="";
+	}
+	
+	// 페이지 번호
+	int pageNum=1;
+	if(request.getParameter("pageNum")!=null) {
+		pageNum=Integer.parseInt(request.getParameter("pageNum"));
+	}
+	
+	// 게시글 갯수
+	int pageSize=10;
+	if(request.getParameter("pageSize")!=null) {
+		pageSize=Integer.parseInt(request.getParameter("pageSize"));
+	}
+	
+	int loginClientNum = loginClient.getClientNum();
+	
+	int totalrPayReview=0;
+	
+	totalrPayReview=OrderDAO.getDAO().selectTotalOrderReview(search, keyword, loginClientNum);
+	
+	int totalPage=(int)Math.ceil((double)totalrPayReview/pageSize);
+	
+	if(pageNum<=0 || pageNum>totalPage) {
+		pageNum=1;
+	}
+	
+	int startRow=(pageNum-1)*pageSize+1;
+	
+	int endRow=pageNum*pageSize;
+	
+	if(endRow>totalrPayReview) {
+		endRow=totalrPayReview;
+	}
 	
 	//주문내역 조회 
-	List<OrderDTO> orderList=OrderDAO.getDAO().selectOrderList(startRow, endRow, search, keyword);
-    request.setAttribute("orderList", orderList);
+	List<OrderDTO> orderList=OrderDAO.getDAO().selectOrderReviewList(startRow, endRow, search, keyword);
     
-  
- 	
- 	
+    int displayNum=totalrPayReview-(pageNum-1)*pageSize;
+    
 %>
-    <!DOCTYPE html>
-<html>
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<style> 
-.table{
-width: 80%;
-margin: 0 auto;
-
-}
-
-h1{
-text-align : center; 
-margin-bottom: 50px;
-}
-
-#MinBtn{
-display: inline-block; 
- width: 30px;
- text-align: center; 
- font-weight: bold;
- border: 1px solid gray;
- 
-}
-
-#PlusBtn{
-display: inline-block; 
- width: 30px;
- text-align: center; 
- font-weight: bold;
- border: 1px solid gray;
- 
-}
-
-.money{
-display: inline-block;
-font-size: 17px;
-font-weight: normal;
-}
-
-.NumMoney{
- text-align: right;
- display: inline-block;
- width: 100%; 
- font-size: 17px;
-font-weight: normal;
-}
-
-.moneyALL{
-display: inline-block;
-font-size: 17px;
-font-weight: bold;
-} 
-
-.NumMoneyALL{
- text-align: right;
- display: inline-block;
- width: 100%; 
- font-size: 17px;
-font-weight: 800;
-}
-
-table{
-border: 1px solid #DCDCDC;
-}
-
-#BuyBtn {
-   margin: 0 auto;
-   width: 200px;
-   background-color: black;
-   color: white;
-   font-size: 20px;
-   cursor: pointer;
-   font-weight: bold;
-   border-radius: 10px;
-   
-}
-
-#ProductList{
-	width: 60%;
-}
-</style>
+<link href="<%=request.getContextPath()%>/css/clientPayment.css" type="text/css" rel="stylesheet">
 <div class="clientpayment">
     <h2>주문내역</h2>
 	
-    <table class="table" style="margin: 0 auto; width: 80%;">
-        <thead>
-            <tr>
-                <th width="100">주문번호</th>
-                <th width="500">상품명</th>
-                <th width="100">총금액</th>
-                <th width="200">주문일</th>
-                <th width="100">리뷰 작성</th>
-            </tr>
-        </thead>
-        <tbody>
-             <% for(OrderDTO order : orderList) { %>
-                <tr>
-                  <td><%=order.getOrderNum()%></td>
-                <td><%=order.getOrderProductName()%></td>
-                    <td><%=order.getOrderPayPrice()%></td>
-                    <td><%=order.getOrderDate()%></td>
-                    <td>
-                 <form action="review/review_write.jsp" method="POST">
-    	<input type="hidden" name="orderNum" value="${order.orderNum}" />
-    	<input type="hidden" name="orderProductNum" value="${order.orderProductNum}" />
-    	<button type="submit">리뷰 작성</button>
-				</form>
-                    </td>
-                </tr>
-            <% } %>
-        </tbody>
-    </table>
+	    <table class="table" style="margin: 0 auto; width: 80%;">
+	        <thead>
+	            <tr>
+	                <th width="100">주문번호</th>
+	                <th width="500">상품명</th>
+	                <th width="100">총금액</th>
+	                <th width="200">주문일</th>
+	                <th width="100">리뷰 작성</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	             <% for(OrderDTO order : orderList) { %>
+	                <tr>
+						<td><%=order.getOrderNum()%></td>
+						<td><%=order.getOrderProductName()%></td>
+						<td><%=order.getOrderPayPrice()%></td>
+						<td><%=order.getOrderDate()%></td>
+						<td>
+						    <button type="button" onclick="writeReview(<%=order.getOrderProductNum()%>,<%=order.getOrderNum()%>);">리뷰 작성</button>
+	                    </td>
+	                </tr>
+	            <% } %>
+	        </tbody>
+	    </table>
 </div>
+
+
+<script type="text/javascript">
+function writeReview(productNum, orderNum) {
+	location.href="<%=request.getContextPath()%>/index.jsp?group=review&worker=review_write"
+		+"&productNum="+productNum+"&orderNum="+orderNum+"&pageNum=<%=pageNum%>"
+		+"&pageSize=<%=pageSize%>&keyword=<%=keyword%>";	
+} 
+</script>

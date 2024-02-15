@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+.table{
+width: 80%;
+margin: 0 auto;
+
+}
+
+h1{
+text-align : center; 
+margin-bottom: 50px;
+}
+
+#MinBtn{
+display: inline-block; 
+ width: 30px;
+ text-align: center; 
+ font-weight: bold;
+ border: 1px solid gray;
+ 
+}
+
+#PlusBtn{
+display: inline-block; 
+ width: 30px;
+ text-align: center; 
+ font-weight: bold;
+ border: 1px solid gray;
+ 
+}
+
+.money{
+display: inline-block;
+font-size: 17px;
+font-weight: normal;
+}
+
+.NumMoney{
+ text-align: right;
+ display: inline-block;
+ width: 100%; 
+ font-size: 17px;
+font-weight: normal;
+}
+
+.moneyALL{
+display: inline-block;
+font-size: 17px;
+font-weight: bold;
+} 
+
+.NumMoneyALL{
+ text-align: right;
+ display: inline-block;
+ width: 100%; 
+ font-size: 17px;
+font-weight: 800;
+}
+
+table{
+border: 1px solid #DCDCDC;
+}
+
+#BuyBtn {
+   margin: 0 auto;
+   width: 200px;
+   background-color: black;
+   color: white;
+   font-size: 20px;
+   cursor: pointer;
+   font-weight: bold;
+   border-radius: 10px;
+   
+}
+
+#ProductList{
+	width: 60%;
+}
