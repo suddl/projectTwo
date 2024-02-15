@@ -93,11 +93,8 @@
 	</div>
 <table>
 	<tr>
-		<th width="50"><input type="checkbox" name="allcheck" id="allCheck" onclick="allCheck()"></th>
 		<th width="100">주문번호</th>
-		<th width="120">주문코드</th>
-		<th width="250">주문자코드</th>
-		<th width="200">상품코드</th>
+		<th width="200">상품명</th>
 		<th width="150">주문일</th>
 		<th width="150">리뷰작성하러가기</th>
 	</tr>
@@ -108,13 +105,7 @@
 		<%=order.getOrderNum() %>
 		</td>
 		<td width="120">
-		<%=order.getOrderPayNum() %>
-		</td>
-		<td width="250">
-		<%=order.getOrderClientNum() %>
-		</td>
-		<td width="200">
-		<%=order.getOrderProductNum() %>
+		<%=order.getOrderProductName() %>
 		</td>
 		<td width="150">
 		<%=order.getOrderDate() %>

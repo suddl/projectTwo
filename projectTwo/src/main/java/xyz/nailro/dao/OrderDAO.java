@@ -181,7 +181,7 @@ public class OrderDAO extends JdbcDAO{
 				con=getConnection();
 				
 				if(keyword.equals("")) {//검색 기능을 사용하지 않은 경우
-					String sql= "select * from (select rownum rn, temp.* from (select order_num, order_pay_num"
+					String sql= "select * from (select rownum rn, temp.* from (select order_num, order_pay_num, product_name"
 							+ " ,order_client_num, order_product_num, order_date from orders"
 							+ " left join client on order_client_num=client_num left join product on order_product_num=product_num"
 							+ " order by order_num desc) temp) where rn between ? and ?";
@@ -205,8 +205,9 @@ public class OrderDAO extends JdbcDAO{
 				while(rs.next()) {
 					OrderDTO order=new OrderDTO();
 					order.setOrderNum(rs.getString("order_num"));
-					order.setOrderPayNum(rs.getInt("orderPayNum"));
-					order.setOrderClientNum(rs.getString("orderClientNum"));
+					order.setOrderPayNum(rs.getInt("order_pay_num"));
+					order.setOrderProductName(rs.getString("product_name"));
+					order.setOrderClientNum(rs.getString("order_client_num"));
 					order.setOrderProductNum(rs.getString("order_product_num"));
 					order.setOrderDate(rs.getString("order_date"));
 
