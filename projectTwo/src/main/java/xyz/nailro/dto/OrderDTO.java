@@ -25,6 +25,7 @@ public class OrderDTO {
 	private String OrderClientNum;
 	private String OrderProductNum;
 	private String OrderId; // 주문자
+	private String OrderProductName; // 주문상품명
 	private String OrderPhone; // 주문자 핸드폰번호
 	private String OrderPayPrice; // 결제금액
 	private String OrderPayMethod; // 결제방법
@@ -77,6 +78,14 @@ public class OrderDTO {
 
 	public void setOrderId(String orderId) {
 		OrderId = orderId;
+	}
+
+	public String getOrderProductName() {
+		return OrderProductName;
+	}
+
+	public void setOrderProductName(String orderProductName) {
+		OrderProductName = orderProductName;
 	}
 
 	public String getOrderPhone() {
@@ -150,5 +159,6 @@ public class OrderDTO {
 	public void setOrderStatus(String orderStatus) {
 		OrderStatus = orderStatus;
 	}
+
 	
 }

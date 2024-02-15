@@ -77,10 +77,21 @@
 <link href="<%=request.getContextPath()%>/css/list.css" type="text/css" rel="stylesheet">
 <style>
 
+#order_list {
+	width: 1200px;
+	margin: 0 auto;
+	text-align: center;
+}
+
 #button {
 	text-align: right;
 	margin-bottom: 5px;
 }
+
+#search {
+	margin-bottom: 30px;
+}
+
 </style>
 
 <h1>주문관리</h1>
@@ -96,7 +107,9 @@
 		<th width="50"><input type="checkbox" name="allcheck" id="allCheck" onclick="allCheck()"></th>
 		<th width="100">주문번호</th>
 		<th width="120">아이디</th>
-		<th width="250">전화번호</th>
+		<th width="120">결제번호</th> 
+		<th width="450">상품명</th> 
+		<th width="200">전화번호</th>
 		<th width="200">결제방법</th>
 		<th width="150">결제금액</th>
 		<th width="150">주문처리상태</th>
@@ -111,7 +124,13 @@
 		<td width="120">
 		<%=order.getOrderId() %>
 		</td>
-		<td width="250">
+		<td width="120">
+		<%=order.getOrderPayNum() %>
+		</td>
+		<td width="450">
+		<%=order.getOrderProductName() %>
+		</td>
+		<td width="200">
 		<%=order.getOrderPhone() %>
 		</td>
 		<td width="200">
@@ -151,9 +170,9 @@
 		int endPage=startPage+blockSize-1;
 		
 		//종료 페이지번호가 페이지 총갯수보다 큰 경우 종료 페이지번호 변경 
-		//if(endPage>totalPage) {
-		//	endPage=totalPage;
-		//}
+		if(endPage>totalPage) {
+			endPage=totalPage;
+		}
 		
 	%>
 	
@@ -190,6 +209,7 @@
 
 <form action="<%=request.getContextPath() %>/index.jsp?group=admin&worker=order_list" method="post">
 	<%-- select 태그를 사용하여 검색대상을 선택해 전달 - 전달값은 반드시 컬럼명으로 설정 --%>
+	<div id="search">
 	<select name="search">
 		<option value="client_id" <% if(search.equals("clinet_id")) { %>  selected <% } %>>&nbsp;아이디&nbsp;</option>
 		<option value="pay_method" <% if(search.equals("pay_method")) { %>  selected <% } %>>&nbsp;결제방법&nbsp;</option>
@@ -197,6 +217,7 @@
 	</select>
 	<input type="text" name="keyword" value="<%=keywords%>" >
 	<button type="submit">검색</button>
+	</div>
 </form>
 
 <script type="text/javascript">

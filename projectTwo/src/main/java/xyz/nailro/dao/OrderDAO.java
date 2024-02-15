@@ -126,16 +126,17 @@ public class OrderDAO extends JdbcDAO{
 				
 				if(keyword.equals("")) {//검색 기능을 사용하지 않은 경우
 					String sql= "select * from (select rownum rn, temp.* from (select order_num, client_id"
-							+ ", client_phone, pay_price, pay_method, order_status, order_date from orders"
-							+ " left join client on order_client_num=client_num left join payment on order_client_num=pay_client_num"
-							+ " order by order_num desc) temp) where rn between ? and ?";
+							+ ", pay_num, product_name, client_phone, pay_price, pay_method, order_status, order_date from orders"
+							+ " join payment on order_pay_num=pay_num join client on order_client_num=client_num join"
+							+ " product on order_product_num=product_num order by order_num desc) temp) where rn between ? and ?";
 					pstmt=con.prepareStatement(sql);
 					pstmt.setInt(1, startRow);
 					pstmt.setInt(2, endRow);
 				} else {//검색 기능을 사용한 경우
 					String sql ="select * from (select rownum rn, temp.* from (select order_num, client_id"
-							+ ", client_phone, pay_price, pay_method, order_status, order_date from orders"
-							+ " left join client on order_client_num=client_num left join payment on order_client_num=pay_client_num"
+							+ ", pay_num, product_name, client_phone, pay_price, pay_method, order_status, order_date from orders"
+							+ " join payment on order_pay_num=pay_num join client on order_client_num=client_num join"
+							+ " product on order_product_num=product_num"
 							+ " where " + search + " like '%'||?||'%' order by order_num desc) temp)"
 							+ " where rn between ? and ?";
 					pstmt=con.prepareStatement(sql);
@@ -150,6 +151,8 @@ public class OrderDAO extends JdbcDAO{
 					OrderDTO order=new OrderDTO();
 					order.setOrderNum(rs.getString("order_num"));
 					order.setOrderId(rs.getString("client_id"));
+					order.setOrderPayNum(rs.getInt("pay_num"));
+					order.setOrderProductName(rs.getString("product_name"));
 					order.setOrderPhone(rs.getString("client_phone"));
 					order.setOrderPayPrice(rs.getString("pay_price"));
 					order.setOrderPayMethod(rs.getString("pay_method"));
