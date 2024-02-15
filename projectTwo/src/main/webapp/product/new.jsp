@@ -86,7 +86,6 @@
 		if(endPage>totalPage) {
 			endPage=totalPage;
 		}
-		
 	%>
 	
 	<div id="page_list">

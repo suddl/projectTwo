@@ -66,31 +66,30 @@
 	<div class="sorting">
 	    <p>
 	       <%if(type!=null) { %>
-	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_num desc&type=<%=type%>" id="sortByRecent">신상품순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_name asc&type=<%=type%>" id="sortByName">이름순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_price asc&type=<%=type%>" id="sortByPriceAsc">낮은가격순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_price desc&type=<%=type%>" id="sortByPriceDesc">높은가격순</a>   
-	       <% } else { %>
-	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_num desc" id="sortByRecent">신상품순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_name asc" id="sortByName">이름순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_price asc" id="sortByPriceAsc">낮은가격순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_price desc" id="sortByPriceDesc">높은가격순</a>   
-		   <% } %>
+		       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_num desc&type=<%=type%>" id="sortByRecent">신상품순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+		       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_name asc&type=<%=type%>" id="sortByName">이름순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+		       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_price asc&type=<%=type%>" id="sortByPriceAsc">낮은가격순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+		       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_price desc&type=<%=type%>" id="sortByPriceDesc">높은가격순</a>   
+	       	<% } else { %>
+		       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_num desc" id="sortByRecent">신상품순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+		       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_name asc" id="sortByName">이름순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+		       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_price asc" id="sortByPriceAsc">낮은가격순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+		       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_price desc" id="sortByPriceDesc">높은가격순</a>   
+		   	<% } %>
 	   </p>
 	</div>	    	
-<% if ("Nail".equals(category) || keyword.equals("네일")) { %>
-		<div class="filter-buttons" id="filterButtons">
-		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=<%=sorted%>">전체</a>
-		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=<%=sorted%>&type=Short">숏</a>
-		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=<%=sorted%>&type=Long">롱</a>
-		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=<%=sorted%>&type=Parts">파츠</a>
-		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=<%=sorted%>&type=FullColor">풀컬러</a>
-		</div>
-		<% } %>
+		   <% if ("Nail".equals(category) || keyword.equals("네일")) { %>
+			<div class="filter-buttons" id="filterButtons">
+			    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=<%=sorted%>">전체</a>
+			    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=<%=sorted%>&type=Short">숏</a>
+			    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=<%=sorted%>&type=Long">롱</a>
+			    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=<%=sorted%>&type=Parts">파츠</a>
+			    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=<%=sorted%>&type=FullColor">풀컬러</a>
+			</div>
+			<% } %>
         <div class="prodList">
             <%
-                if (searchResults.isEmpty()) { 
-            %>
+              if (searchResults.isEmpty()) { %>
          	<p>검색 결과가 없습니다.</p>
             <%
                 } else {
@@ -129,8 +128,7 @@
 		//종료 페이지번호가 페이지 총갯수보다 큰 경우 종료 페이지번호 변경 
 		if(endPage>totalPage) {
 			endPage=totalPage;
-		}
-		
+		}	
 	%>
 	
 	<div id="page_list">
