@@ -52,7 +52,7 @@ tr, td {
 <div id="mypageMenu">
 	<table class="mypageTable">
 		<tr>
-			<td><a href="<%=request.getContextPath()%>/index.jsp?group=moon&worker=moon_list">주문내역</a></td>
+			<td><a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_payment">주문내역</a></td>
 			<td><a href="<%=request.getContextPath()%>/index.jsp?group=cart&worker=cart_page">장바구니</a></td>
 		</tr>
 		<tr>
