@@ -206,7 +206,7 @@ document.getElementsByName('productOne').forEach(function (checkbox, index) {
 
 function updateTotalPrice(index) {
 	//수량 변수에 저장
-	var countInput = document.getElementById("cartQuantity" + index);
+	var countInput = document.getElementsById("cartQuantity" + index);
 	//상품가격 변수에 저장
     var unitPriceElement = document.getElementById("Cash2" + index);
     
@@ -257,7 +257,9 @@ function updateTotalPurchaseAmount() {
 	    
 	    for (var i = 0; i < checkboxes.length; i++) {
 	        if (checkboxes[i].checked) {
-	            var countInput = document.getElementById("cartQuantity" + i);
+	        	var num=$(this).val()
+	        	
+	            var countInput = document.getElementById("cartQuantity" + num);
 	            var unitPriceElement = document.getElementById("Cash2" + i);
 	            
 	            var count = parseInt(countInput.value);
