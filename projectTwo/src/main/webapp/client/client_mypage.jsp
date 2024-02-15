@@ -56,7 +56,7 @@ tr, td {
 			<td><a href="<%=request.getContextPath()%>/index.jsp?group=cart&worker=cart_page">장바구니</a></td>
 		</tr>
 		<tr>
-			<td><a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_modify">회원정보 수정</a></td>
+			<td><a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=password_confirm&action=modify">회원정보 수정</a></td>
 			<td><a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=password_confirm&action=remove">회원탈퇴</a></td>
 		</tr>
 		<tr>
