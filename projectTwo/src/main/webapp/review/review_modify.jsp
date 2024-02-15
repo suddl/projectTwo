@@ -49,7 +49,7 @@
         }
         th {
             width: 100px;
-            font-weight: bold;
+   			font-weight: bold; 
         }
         td {
             text-align: left;
@@ -58,12 +58,32 @@
             cursor: pointer;
         }
         .checked {
-            color: black;
+            color: yellow;
         }
+        .star-rating {
+    		font-size: 30px;
+   		 	color: black;
+    		cursor: pointer;
+		}
+        #reviewSubject {
+        	width: 382px;
+        }
+        #modifyBtn,#resetBtn {
+        	font-size: 20px;
+    		border-radius: 5px;
+    		background-color: pink;
+    		margin-left: 10px;
+    		padding: 10px 15px;
+    		width: 120px;
+        }
+        #starmessage {
+			font-size: 0.5em;
+		}
+        
     </style>
 </head>
 <body>
-    <h1>게시글변경</h1>
+    <h1>리뷰변경</h1>
     <%-- 파일(리뷰 이미지)을 입력받아 전달하기 위해 form 태그의 enctype 속성값을 반드시 [multipart/form-data]로 설정 --%>
     <form action="<%=request.getContextPath()%>/index.jsp?group=review&worker=review_modify_action"
         method="post" enctype="multipart/form-data" id="reviewForm">
@@ -73,15 +93,8 @@
         <input type="hidden" name="search" value="<%=search %>">
         <input type="hidden" name="keyword" value="<%=keyword %>">
         <table>
-            <tr>
-                <th>제목</th>
-                <td>
-                    <input type="text" name="reviewSubject" id="reviewSubject" size="40" 
-                        value="<%=review.getReviewSubject()%>">
-                </td>                   
-            </tr>   
-            <tr>
-                <th>별점</th>
+        	 <tr>
+                <td>별점</td>
                 <td>
                     <div class="star-rating">
                         <span class="star" onclick="setRating(1)">☆</span>
@@ -89,19 +102,26 @@
                         <span class="star" onclick="setRating(3)">☆</span>
                         <span class="star" onclick="setRating(4)">☆</span>
                         <span class="star" onclick="setRating(5)">☆</span>
-                    	<div style="color: red;">별점을 다시 체크해주세요!</div>
+                    	<div id="starmessage" style="color: red;">별점을 다시 체크해주세요!</div>
                     </div> 
                     <input type="hidden" name="reviewRating" id="ratingValue">
                 </td>
             </tr>
             <tr>
-                <th>내용</th>
+                <td>제목</td>
+                <td>
+                    <input type="text" name="reviewSubject" id="reviewSubject" size="40" 
+                        value="<%=review.getReviewSubject()%>">
+                </td>                   
+            </tr>   
+            <tr>
+                <td>내용</td>
                 <td>
                     <textarea rows="7" cols="60" name="reviewContent" id="reviewContent"><%=review.getReviewContent() %></textarea>
                 </td>
             </tr>           
             <tr>
-                <th>이미지파일</th>
+                <td>이미지파일</td>
                 <td>
                     <input type="file" name="reviewImage"><br><br>
                     <% if(review.getReviewImage()!=null) { %>
@@ -112,7 +132,7 @@
             </tr>
             <tr>
                 <th colspan="2">
-                    <button type="submit">글변경</button>
+                    <button type="submit" id="modifyBtn">글변경</button>
                     <button type="reset" id="resetBtn">다시쓰기</button>
                 </th>
             </tr>

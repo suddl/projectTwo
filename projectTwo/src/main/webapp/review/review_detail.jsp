@@ -28,29 +28,29 @@
 	
 %>
 <style type="text/css">
-#moon_detail {
-	width: 500px;
+#review_detail {
+	width: 800px;
 	margin: 0 auto;
 }
 
 table {
-	border: 1px solid black;
 	border-collapse: collapse;
 }
 
 th, td {
-	border: 1px solid black;
-	padding: 5px;	
+	border: 1px solid lightgray;
+	padding: 5px;
 }
 
 th {
-	width: 100px;
-	background: pink;
+	width: 150px;
+	background: #FFDCE1;
 	color: black;
+	font-size: 18px;
 }
 
 td {
-	width: 400px;
+	width: 650px;
 }
 
 .subject, .content {
@@ -60,13 +60,10 @@ td {
 .content {
 	height: 300px;
 	vertical-align: middle;
+	padding-left: 15px;
 	
 }
 
-#moon_menu {
-	text-align: right;
-	margin: 5px;
-}
 
 #review_title {
 	font-size:2em;
@@ -74,8 +71,8 @@ td {
 	color: pink;
 }
 </style>
-<div id="moon_detail">
-	<h1 id="review_title">REVIEW</h1>
+<div id="review_detail">
+	<h1>REVIEW</h1>
 	<table>
 		<tr>
 			<th>제목</th>
