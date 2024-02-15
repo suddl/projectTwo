@@ -107,7 +107,7 @@
    					&nbsp;&nbsp; &nbsp;&nbsp;
 					<div class="button-container d-flex justify-content-around mt-3">
 				    	<button type="submit" id="cartBtn" class="btn btn-secondary">장바구니 담기</button>
-				    	<button type="submit" id="cartBtn" name="directBuy" class="btn btn-secondary" value="1" >바로구매</button>
+				    	<button type="submit" id="cartBtn" name="directBuy" class="btn btn-secondary" value="1" style="width:119.3px;">바로구매</button>
 				    	<%-- <a href="<%=request.getContextPath()%>/index.jsp?group=order&worker=order_main" class="btn btn-success" id="purchase">바로구매</a>--%>
 					</div>
 		    		&nbsp;&nbsp;

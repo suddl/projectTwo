@@ -8,7 +8,7 @@
 }
 
 .custom-card {
-	width: 20rem;
+	width: 400px;
 	/* 카드의 폭 조절 */
 	margin-left: 15px;
 	/* 이미지와 카드 사이의 간격 조절 */
@@ -189,11 +189,6 @@ h5 {
 	margin-top: 20px;
 }
 
-#productNum {
-	color: red;
-	
-}
-
 .review-table {
 	width: 80%;
 	margin: 0 auto;
@@ -225,7 +220,6 @@ h5 {
 
 .totalPrice {
 	text-align: center;
-	color: red;
 	font-size: 1.2em;
 
 }
