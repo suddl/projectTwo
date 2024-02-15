@@ -26,7 +26,7 @@
 		return;
 	}
 %>
-<link href="<%=request.getContextPath()%>/css/product_add.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/adminProduct.css" type="text/css" rel="stylesheet">
 
 <div id="product_detail">
 	<h1>상품정보</h1>

@@ -100,12 +100,12 @@
 	<div id="order_title">주문목록(<%=totalOrder %>개)</div>
 <table>
 	<tr>
-		<th width="100">주문번호</th>
-		<th width="120">아이디</th>
-		<th width="120">결제번호</th> 
-		<th width="300">상품명</th> 
-		<th width="180">구매수량</th> 
-		<th width="200">전화번호</th>
+		<th width="150">주문번호</th>
+		<th width="100">아이디</th>
+		<th width="150">결제번호</th> 
+		<th width="250">상품명</th> 
+		<th width="150">구매수량</th> 
+		<th width="150">전화번호</th>
 		<th width="200">결제방법</th>
 		<th width="150">결제금액</th>
 		<th width="150">주문처리상태</th>
@@ -113,19 +113,19 @@
 	</tr>
 	<% for(OrderDTO order : orderList) { %>
 	<tr align="center">
-		<td width="100">
+		<td width="150">
 		<%=order.getOrderNum() %>
 		</td>
-		<td width="120">
+		<td width="100">
 		<%=order.getOrderId() %>
 		</td>
-		<td width="120">
+		<td width="150">
 		<%=order.getOrderPayNum() %>
 		</td>
-		<td width="300">
+		<td width="250">
 		<%=order.getOrderProductName() %>
 		</td>
-		<td width="180">
+		<td width="150">
 		<%=order.getOrderQuntity() %>개
 		</td>
 		<td width="200">

@@ -5,7 +5,7 @@
 	//전달값을 반환받아 저장 - 전달값이 없는 경우 변수에 초기값 저장
 	String pageNum="1", pageSize="10", search="", keyword="";
 %>
-<link href="<%=request.getContextPath()%>/css/product_add.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/adminProduct.css" type="text/css" rel="stylesheet">
 <style>
 input:invalid {
 	border-color: red;    /* 값이 유효하지 않다면, border색을 red로 지정한다 */

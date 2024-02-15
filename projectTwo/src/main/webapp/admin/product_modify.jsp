@@ -20,12 +20,8 @@
 	}	
 %>
 
-<link href="<%=request.getContextPath()%>/css/product_add.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/adminProduct.css" type="text/css" rel="stylesheet">
 <style>
-#product_me {
-	text-align: right;
-	margin: 5px;
-}
 
 input:invalid {
 	border-color: red;    /* 값이 유효하지 않다면, border색을 red로 지정한다 */
@@ -38,6 +34,7 @@ input:valid {
 }
 
 </style>
+
 <form action="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_modify_action"
 	method="post" enctype="multipart/form-data" id="productForm">
 	<input type="hidden" name="productNum" value="<%=productNum %>">
@@ -122,7 +119,7 @@ input:valid {
 			</td>
 		</tr>
 	</table>
-	<div id="product_me">
+	<div id="product_menu">
 		<button type="button" id="listBtn">목록</button>&nbsp;
 		<button type="button" id="cancelBtn">취소</button>&nbsp;
 		<button type="submit">수정</button>
