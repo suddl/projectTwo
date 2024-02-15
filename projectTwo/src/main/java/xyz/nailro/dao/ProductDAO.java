@@ -542,4 +542,37 @@ public class ProductDAO extends JdbcDAO	{
 			}
 			return productList;
 		}
+		
+		//상품 페이지(new)
+		public List<ProductDTO> selectNewProductList()	{
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			List<ProductDTO> newProductList=new ArrayList<ProductDTO>();
+			try	{
+				con=getConnection();
+				
+				String sql="select product_num, product_image, product_name, product_price from product order by product_num desc";
+				pstmt=con.prepareStatement(sql);
+				
+				rs=pstmt.executeQuery();
+				
+			while(rs.next())	{
+				ProductDTO product = new ProductDTO();
+				product.setProductNum(rs.getInt("product_num"));
+				product.setProductImage(rs.getString("product_image"));
+				product.setProductName(rs.getString("product_name"));
+				product.setProductPrice(rs.getInt("product_price"));
+				
+				newProductList.add(product);
+				}
+			}	catch (SQLException e) {
+				System.out.println("[에러t]selectProductList() 메소드의 오류 =");
+			}	finally	{
+				close(con, pstmt, rs);
+			}
+			return newProductList;  
+		}	
+
 }
+
