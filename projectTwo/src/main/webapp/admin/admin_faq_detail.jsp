@@ -55,6 +55,7 @@
 	<div id="faq_menu">
 		<%
 		if(loginClient.getClientStatus()==9)	{ %>
+			<button type="button" id="listBtn">글목록</button>
 			<button type="button" id="modifyBtn">글변경</button>
 			<button type="button" id="removeBtn">글삭제</button>			
 		<% }%>
@@ -62,6 +63,11 @@
 </div>
 
 <script type="text/javascript">
+$("#listBtn").click(function() {
+	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=admin_faq_list"
+		+"&pageNum=<%=pageNum%>&pageSize=<%=pageSize%>&keyword=<%=keyword%>";	
+});
+
 $("#modifyBtn").click(function() {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=faq_modify"
 		+"&faqNum=<%=faq.getFaqNum()%>&pageNum=<%=pageNum%>"

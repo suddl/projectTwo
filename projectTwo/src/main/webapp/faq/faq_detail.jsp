@@ -52,9 +52,16 @@
 		</tr>
 	</table>
 	
+	<div id="faq_menu">
+			<button type="button" id="listBtn">글목록</button>
+	</div>
 </div>
 
 <script type="text/javascript">
+$("#listBtn").click(function() {
+	location.href="<%=request.getContextPath()%>/index.jsp?group=faq&worker=faq_list"
+		+"&pageNum=<%=pageNum%>&pageSize=<%=pageSize%>&keyword=<%=keyword%>";	
+});
 $("#modifyBtn").click(function() {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=faq_modify"
 		+"&faqNum=<%=faq.getFaqNum()%>&pageNum=<%=pageNum%>"

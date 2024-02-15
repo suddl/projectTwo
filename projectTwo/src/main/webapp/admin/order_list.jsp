@@ -72,20 +72,18 @@
 	//페이지에 출력될 게시글의 일련번호 시작값을 계산하여 저장
 	// => 검색된 게시글의 총갯수가 91개인 경우 >> 1Page : 91, 2Page : 81, 3Page, 71
 	int displayNum=totalOrder-(pageNum-1)*pageSize;
+	
+	
 %>
 
 <link href="<%=request.getContextPath()%>/css/list.css" type="text/css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style>
 
 #order_list {
 	width: 1200px;
 	margin: 0 auto;
 	text-align: center;
-}
-
-#button {
-	text-align: right;
-	margin-bottom: 5px;
 }
 
 #search {
@@ -100,12 +98,8 @@
 <div id="order_list">
 	<%-- 검색된 게시글 총갯수 출력 --%>
 	<div id="order_title">주문목록(<%=totalOrder %>개)</div>
-	<div id="button">
-		<button type="button" id="modifyBtn">적용</button>
-	</div>
 <table>
 	<tr>
-		<th width="50"><input type="checkbox" name="allcheck" id="allCheck" onclick="allCheck()"></th>
 		<th width="100">주문번호</th>
 		<th width="120">아이디</th>
 		<th width="120">결제번호</th> 
@@ -117,9 +111,8 @@
 		<th width="150">주문처리상태</th>
 		<th width="150">주문일</th>
 	</tr>
-	 <% for(OrderDTO order : orderList) { %>
+	<% for(OrderDTO order : orderList) { %>
 	<tr align="center">
-		<td class="p_check"><input type="checkbox" name="check" id="check" value="<%=order.getOrderNum()%>"></td>
 		<td width="100">
 		<%=order.getOrderNum() %>
 		</td>
@@ -145,7 +138,7 @@
 		<%=order.getOrderPayPrice() %>원
 		</td>
 		<td width="150">
-			<select name="orderStatus_<%=order.getOrderNum()%>">
+			<select name="orderStatus_<%=order.getOrderNum()%>" onchange="updateOrderStatus('<%=order.getOrderNum()%>', this.value)">
 				  <option value="1" <% if (order.getOrderStatus().equals("1")) { %> selected <% } %>>&nbsp;상품준비중&nbsp;</option>
                   <option value="2" <% if (order.getOrderStatus().equals("2")) { %> selected <% } %>>&nbsp;배송준비중&nbsp;</option>
                   <option value="3" <% if (order.getOrderStatus().equals("3")) { %> selected <% } %>>&nbsp;배송중&nbsp;</option>
@@ -233,45 +226,28 @@ $("#orderCount").change(function() {
 		+"&search=<%=search%>&keyword=<%=keyword%>";
 });
 
-$(document).ready(function() {
-	$("#allCheck").click(function() {
-		if($("#allCheck").prop("checked")) {
-			$("input[name=check]").prop("checked",true);
-		} else { 
-			$("input[name=check]").prop("checked",false);
-		}
-	});
-
-	$("input[name=check]").click(function() {
-		var total=$("input[name=check]").length;
-		var checked=$("input[name=check]:checked").length;
-
-		if(total!=checked) { 
-			$("#allCheck").prop("checked",false);
-		} else {
-			$("#allCheck").prop("checked",true);
-		}
-	});
+// AJAX를 사용하여 주문 상태를 업데이트하는 함수
+function updateOrderStatus(orderNum, orderStatus) {
 	
-	$("#modifyBtn").click(function() {
-		var selectedOrders = [];
-		$("input[name=check]:checked").each(function() {
-			 selectedOrders.push($(this).val());
-        });
-			
-		 if(selectedOrders.length == 0) {
-            alert("변경할 주문내역을 선택하세요.");
-            return;
+    $.ajax({
+        type: 'POST',
+        url: '<%=request.getContextPath()%>/admin/order_modify_action.jsp', // 상태 변경을 처리할 JSP 파일 경로
+        data: {
+            orderNum: orderNum,
+            orderStatus: orderStatus
+        },
+        success: function(response) {
+        	// 성공적으로 처리된 경우, 필요한 작업을 수행합니다.
+            alert('주문 상태가 성공적으로 변경되었습니다.');
+            // 예를 들어, 페이지 새로고침이나 UI 업데이트 등을 수행할 수 있습니다.
+        },
+        error: function(xhr) {
+            // 오류 발생 시 처리합니다.
+            alert("에러 = "+xhr.status);
+            // 오류 메시지를 표시하거나 기타 작업을 수행할 수 있습니다.
         }
-		
-		if(confirm("주문처리상태를 변경 하시겠습니까?")) {
-			// 주문번호 배열을 문자열로 변환하여 hidden 필드에 담아 전송
-            $("#selectedOrders").val(selectedOrders.join(","));
-            $("#orderForm").submit();
-        } else {
-            return false;
-        }        
     });
-});
+}
+
 
 </script>
