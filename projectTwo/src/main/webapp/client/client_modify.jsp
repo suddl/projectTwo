@@ -11,8 +11,13 @@
 <%-- => [회원변경] 태그를 클릭한 경우 [/member/member_modify_action.jsp] 문서를 요청하여 페이지 이동 - 입력값 전달 --%>
 <%@include file="/security/login_check.jspf" %>  
 <%
+	if(request.getMethod().equals("GET")) {
+		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=error&worker=error_400");
+		return;
+	}		
+
 	//전달값을 반환받아 저장
-	String passwd=request.getParameter("passwd");
+	String passwd=Utility.encrypt(request.getParameter("passwd"));
 	
 	//로그인 상태의 사용자 비밀번호와 전달받은 비밀번호를 비교하여 같지 않은 경우에 대한 응답 처리
 	if(!loginClient.getClientPasswd().equals(passwd)) {
@@ -30,6 +35,7 @@ fieldset {
 
 legend {
 	font-size: 1.2em;
+	margin-left: 150px;
 }
 
 #join label {
@@ -67,6 +73,10 @@ legend {
 #idCheck:hover, #postSearch:hover {
 	background: black;
 	color: white;
+}
+
+#client_name, #client_email, #phone3, #postSearch{
+	margin-right: 500px;
 }
 </style>
 <form id="join" action="<%=request.getContextPath() %>/index.jsp?group=client&worker=client_modify_action" method="post">
