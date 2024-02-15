@@ -47,7 +47,7 @@
 			<tr>
 			<th>내용</th>
 			<td class = "content">
-			<%=faq.getFaqContent() %>
+			<%=faq.getFaqContent().replace("\n", "<br>") %>
 			</td>
 		</tr>
 	</table>
