@@ -40,7 +40,7 @@
 			</td>
 		</tr>
 		<tr>				
-			<th colspan="2">
+			<th id="button" colspan="2">
 				<button type="submit">글저장</button>
 				<button type="reset" id="resetBtn">다시쓰기</button>
 			</th>
