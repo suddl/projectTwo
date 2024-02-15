@@ -117,7 +117,7 @@ for(String productName : array){
 </svg>
 <h1> 결제 완료!</h1>
 <a href="<%=request.getContextPath()%>/index.jsp?group=main&worker=main_page"><button class="PayBtn">홈으로</button></a>
-<button class="PayBtn OrderBtn">주문내역</button>
+<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_payment"><button class="PayBtn OrderBtn">주문내역</button></a>
 
 
 
