@@ -251,7 +251,7 @@ public class ProductDAO extends JdbcDAO	{
 		return rows;
 	}
 	
-	public List<ProductDTO> searchProduct(int startRow, int endRow, String keyword, String sorted) {
+	public List<ProductDTO> searchProduct(int startRow, int endRow, String keyword, String sorted, String productType) {
 	    Connection con = null;
 	    PreparedStatement pstmt = null;
 	    ResultSet rs = null;
@@ -259,11 +259,11 @@ public class ProductDAO extends JdbcDAO	{
 
 	    try {
 	        con = getConnection();
-	        
-	        String sql = "select * from (select rownum rn, temp.* from (select product_num, product_image, product_name, "
-	                + "product_price, product_category from product where product_category like ? or product_type like ?"
-	                + "or product_name like ? order by " + sorted + ") temp)"
-	                + " where rn between ? and ?";
+	        if(productType==null || productType.equals(""))	{
+	        String sql="select * from (select rownum rn, temp.* from (select product_num, product_image, product_name, "
+					+ "product_price from product where product_category like ? or product_type like ?"
+					+ "or product_name like ? order by " + sorted + " ) temp)"
+					+ " where rn between ? and ?";
 	        
 	        pstmt = con.prepareStatement(sql);
 	        String keywd = "%" + keyword + "%";
@@ -273,6 +273,21 @@ public class ProductDAO extends JdbcDAO	{
 	        pstmt.setInt(4, startRow);
 	        pstmt.setInt(5, endRow);
 	        
+	        } else {
+	        String sql="select * from (select rownum rn, temp.* from (select product_num, product_image, product_name, product_type, "
+					+ "product_price from product where product_category like ? or product_type like ?"						
+	        		+ "or product_name like ?) temp  where product_type=?)"					
+					+ " where rn between ? and ? order by " + sorted;     
+		        pstmt = con.prepareStatement(sql);
+		        String keywd = "%" + keyword + "%";
+		        pstmt.setString(1, keywd);
+		        pstmt.setString(2, keywd);
+		        pstmt.setString(3, keywd);
+		        pstmt.setString(4, productType);
+		        pstmt.setInt(5, startRow);
+		        pstmt.setInt(6, endRow);	 
+	        	
+	        }
 	        
 	        rs = pstmt.executeQuery();
 
@@ -282,7 +297,7 @@ public class ProductDAO extends JdbcDAO	{
 	            product.setProductName(rs.getString("product_name"));
 	            product.setProductImage(rs.getString("product_image"));
 	            product.setProductPrice(rs.getInt("product_price"));
-	            product.setProductCategory(rs.getString("product_category"));
+	 
 	            searchProductList.add(product);
 	        }
 
@@ -329,7 +344,7 @@ public class ProductDAO extends JdbcDAO	{
 	}	
 
 	//상품 검색 결과 개수
-	public int selectTotalSearchProduct(String keyword) {
+	public int selectTotalSearchProduct(String keyword, String productType) {
 	    Connection con = null;
 	    PreparedStatement pstmt = null;
 	    ResultSet rs = null;
@@ -337,20 +352,36 @@ public class ProductDAO extends JdbcDAO	{
 	    try {
 	        con = getConnection();
 	        if (keyword.equals("")) {
-	            System.out.println("검색어를 입력해주세요");
-	            return totalCount; // 검색어가 비어 있을 경우 0을 반환하고 메소드 종료
+	            String sql = "SELECT COUNT(*) FROM product";
+	            pstmt = con.prepareStatement(sql);
 	        } else {
 	            String sql = "SELECT COUNT(*) FROM product WHERE product_name LIKE ? "
 	                    + "OR product_category LIKE ? OR product_type LIKE ?";
+	            // 첫 번째 PreparedStatement 객체
 	            pstmt = con.prepareStatement(sql);
 	            String keywd = "%" + keyword + "%";
 	            pstmt.setString(1, keywd);
 	            pstmt.setString(2, keywd);
 	            pstmt.setString(3, keywd);
 	            rs = pstmt.executeQuery();
-
-	            if (rs.next()) {
-	                totalCount = rs.getInt(1);
+	            
+	            if(productType != null) {
+	                String sql2 = "SELECT COUNT(*) FROM product WHERE (product_name LIKE ? "
+	                        + "OR product_category LIKE ? OR product_type LIKE ?)AND product_type = ?";
+	                PreparedStatement pstmt2 = con.prepareStatement(sql2);
+	                pstmt2.setString(1, keywd);
+	                pstmt2.setString(2, keywd);
+	                pstmt2.setString(3, keywd);
+	                pstmt2.setString(4, productType);
+	                ResultSet rs2 = pstmt2.executeQuery(); // 새로운 ResultSet 사용
+	                if (rs2.next()) {
+	                    totalCount = rs2.getInt(1); // 결과를 totalCount에 저장
+	                }
+	                rs2.close(); // rs2를 닫음
+	            } else {
+	                if (rs.next()) {
+	                    totalCount = rs.getInt(1);
+	                }
 	            }
 	        }
 	    } catch (SQLException e) {

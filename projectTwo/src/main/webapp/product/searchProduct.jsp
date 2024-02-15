@@ -13,8 +13,8 @@
 <%	
 	String category=request.getParameter("productCategory");
 	
-	String sorted="product_num asc";
-	if(sorted!="") {
+	String sorted="product_num desc";
+	if(sorted!=null || sorted.equals("")) {
 		sorted=request.getParameter("sorted");
 	}
 	
@@ -22,7 +22,7 @@
 	
 
 	String keyword=request.getParameter("keyword");
-	if(keyword==null)	{
+	if(keyword==null) {
 		keyword="";
 	}
     int pageNum = 1;
@@ -35,7 +35,10 @@
         pageSize = Integer.parseInt(request.getParameter("pageSize"));
     }
     
-    int totalProduct=ProductDAO.getDAO().selectTotalSearchProduct(keyword);
+    int totalProduct=ProductDAO.getDAO().selectTotalSearchProduct(keyword, type); 
+    
+    System.out.println("totalProduct = "+totalProduct);
+    
     
     int totalPage=(int)Math.ceil((double)totalProduct/pageSize);
 
@@ -43,6 +46,7 @@
 	if(pageNum<=0 || pageNum>totalPage) {
 		pageNum=1;
 	}
+    System.out.println("totalPage = "+totalPage);
 	
 	//페이지번호에 대한 게시글의 시작 행번호를 계산하여 저장
 	//ex) 1Page : 1, 2Page : 11, 3Page : 21, 4Page : 31, ...
@@ -52,11 +56,22 @@
 	//ex) 1Page : 10, 2Page : 20, 3Page : 30, 4Page : 40, ...
 	int endRow=pageNum*pageSize;
 	
+	
 	//마지막 페이지의 게시글의 종료 행번호가 게시글의 총갯수보다 많은 경우 종료 행번호 변경
 	if(endRow>totalProduct) {
 		endRow=totalProduct;
 	}
-    List<ProductDTO> searchResults = ProductDAO.getDAO().searchProduct(startRow, endRow, keyword, sorted);
+   
+	
+    System.out.println("startRow = "+startRow);
+    System.out.println("endRow = "+endRow);
+	
+    List<ProductDTO> searchResults = ProductDAO.getDAO().searchProduct(startRow, endRow, keyword, sorted, type);
+    System.out.println("keyword = "+keyword);
+    System.out.println("sorted = "+sorted);
+    System.out.println("type = "+type);
+    
+    
 %>   
 </head>
 <body>
@@ -65,25 +80,25 @@
 	<div class="sorting">
 	    <p>
 	       <%if(type!=null) { %>
-	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=product_num desc&type=<%=type%>" id="sortByRecent">신상품순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=product_name asc&type=<%=type%>" id="sortByName">이름순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=product_price asc&type=<%=type%>" id="sortByPriceAsc">낮은가격순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=product_price desc&type=<%=type%>" id="sortByPriceDesc">높은가격순</a>   
+	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_num desc&type=<%=type%>" id="sortByRecent">신상품순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_name asc&type=<%=type%>" id="sortByName">이름순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_price asc&type=<%=type%>" id="sortByPriceAsc">낮은가격순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_price desc&type=<%=type%>" id="sortByPriceDesc">높은가격순</a>   
 	       <% } else { %>
-	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=product_num desc" id="sortByRecent">신상품순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=product_name asc" id="sortByName">이름순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=product_price asc" id="sortByPriceAsc">낮은가격순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=product_price desc" id="sortByPriceDesc">높은가격순</a>   
+	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_num desc" id="sortByRecent">신상품순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_name asc" id="sortByName">이름순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_price asc" id="sortByPriceAsc">낮은가격순</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+	       <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=product_price desc" id="sortByPriceDesc">높은가격순</a>   
 		   <% } %>
 	   </p>
 	</div>	    	
 <% if ("Nail".equals(category) || keyword.equals("네일")) { %>
 		<div class="filter-buttons" id="filterButtons">
-		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=<%=sorted%>">전체</a>
-		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=<%=sorted%>&type=Short">숏</a>
-		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=<%=sorted%>&type=Long">롱</a>
-		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=<%=sorted%>&type=Parts">파츠</a>
-		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&sorted=<%=sorted%>&type=FullColor">풀컬러</a>
+		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=<%=sorted%>">전체</a>
+		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=<%=sorted%>&type=Short">숏</a>
+		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=<%=sorted%>&type=Long">롱</a>
+		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=<%=sorted%>&type=Parts">파츠</a>
+		    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=<%=sorted%>&type=FullColor">풀컬러</a>
 		</div>
 		<% } %>
         <div class="prodList">
@@ -134,8 +149,8 @@
 	
 	<div id="page_list">
 		<%
-			String responseUrl=request.getContextPath()+"/index.jsp?group=product&worker=searchProduct"
-					+"&pageSize="+pageSize;
+			String responseUrl=request.getContextPath()+"/index.jsp?group=product&worker=searchProduct"+"&keyword="+keyword
+					+"&sorted="+sorted+"&type="+type+"&pageSize="+pageSize;
 		%>
 	
 		<%-- 이전 페이지블럭이 있는 경우에만 링크 제공 --%>

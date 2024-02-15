@@ -7,8 +7,8 @@
 <%  
 	String category=request.getParameter("category");
 	
-	String sorted="product_num asc";
-	if(sorted!=null) {
+	String sorted="product_num desc";
+	if(sorted!=null || sorted.equals("")) {
 		sorted=request.getParameter("sorted");
 	}
 	
@@ -126,7 +126,7 @@
 	
 	<div id="page_list">
 		<%
-		String responseUrl = request.getContextPath() + "/index.jsp?group=product&worker=products&category=" + category + "&pageSize=" + pageSize;
+		String responseUrl = request.getContextPath() + "/index.jsp?group=product&worker=products&category="+category+"&sorted="+sorted+"&type="+type+"&pageSize="+pageSize;
 		%>
 	
 		<%-- 이전 페이지블럭이 있는 경우에만 링크 제공 --%>
