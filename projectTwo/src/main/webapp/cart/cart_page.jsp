@@ -54,7 +54,7 @@ int total = 0;
    
    
 <div width="60%">
-<table class="table table-hover" id="ProductList">
+<table class="table table-hover" style="margin:0 auto; width: 60%;">
   <thead>
     <tr>
       <th ><input type="checkbox" name="productAll" id="selectAllCheckbox" onclick='selectAll(this)' checked>  전체선택</th> 
@@ -75,15 +75,15 @@ int total = 0;
   
   	
   	<%-- 체크박스 --%>
-    <th ><input type="checkbox" name="productOne"  id="productOne" value="<%=cartDTOs.get(i).getCartProduct() %>" onclick="selectOnly(this)" checked></th>
+    <th width=10%><input type="checkbox" name="productOne"  id="productOne" value="<%=cartDTOs.get(i).getCartProduct() %>" onclick="selectOnly(this)" checked></th>
     
   	<%-- 이미지 --%>
-     <th><img src="<%=request.getContextPath()%><%=cartDTOs.get(i).getCartProductImages()%>" width="150" height="100" > 
+     <th style="text-align: justify;"><img src="<%=request.getContextPath()%><%=cartDTOs.get(i).getCartProductImages()%>" width="150" height="100" >&nbsp;&nbsp; 
      <%=cartDTOs.get(i).getCartProductName() %></th>
   	<input type="hidden" id="productNum" name="productNum" value="<%=cartDTOs.get(i).getCartProduct() %>">
      
      <%-- 수량 --%>
-     <th >
+     <th class="rowMiddle">
      <button type="button" class="minusBtn" onclick="countDown(<%=i%>);">-</button>
     <input type="text"  id="cartQuantity<%=i%>" class="cartQuantity" name="cartQuantity"  readonly="readonly" value="<%=cartDTOs.get(i).getCartQuantity()%>">
     <button type="button" class="plusBtn" onclick="countUp(<%=i%>);">+</button>
@@ -93,19 +93,16 @@ int total = 0;
      
      <%
      total += Integer.parseInt(cartDTOs.get(i).getCartProductPrice()) * Integer.parseInt(cartDTOs.get(i).getCartQuantity());
-     
 	String priceP = String.format("%,d",Integer.parseInt(cartDTOs.get(i).getCartProductPrice()) * Integer.parseInt(cartDTOs.get(i).getCartQuantity())); 
       %>
 		     
 		<input type="hidden" id="Cash2<%=i%>" name="" value="<%= cartDTOs.get(i).getCartProductPrice()%>">
-     <th id="Cash<%=i%>"><%=priceP %>원</th>
-  
-     
-     
+     <th id="Cash<%=i%>" class="rowMiddle"><%=priceP %>원</th>
   </tr>
   <%
   	}
   } else {
+	  	//장바구니 페이지가 비어있다면 비어있는 화면 출력
   		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?group=cart&worker=CartNULL_page");
 return;
   }
@@ -188,7 +185,7 @@ document.getElementsByName('productOne').forEach(function (checkbox, index) {
         
      // 각 상품의 가격 업데이트
         updateTotalPrice(index);
-
+	
         var totalAmountElement = document.getElementById("NumMoney");
         totalAmountElement.innerText = new Intl.NumberFormat('en-US').format(totalAmount) + "원";
 

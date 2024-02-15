@@ -6,122 +6,14 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
-<style type="text/css">
-fieldset {
-	text-align: left;
-	margin: 10px auto;
-	width: 1100px;
-}
+<link href="<%=request.getContextPath()%>/css/Order.css" type="text/css" rel="stylesheet">
 
-legend {
-	font-size: 1.2em; 
-}
-
- label {
-	width: 150px;
-	text-align: right;
-	float: left;
-	margin-right: 10px;
-}
-
-ul li {
-	list-style-type: none;
-	margin: 15px 0;
-}
-
-
-.error {
-	color: red;
-	position: relative;
-	left: 160px;
-	display: none;
-}
-
-#idCheck, #postSearch {
-	font-size: 12px;
-	font-weight: bold;
-	cursor: pointer;
-	margin-left: 10px;
-	padding: 2px 10px;
-	border: 1px solid black;
-}
-
-#idCheck:hover, #postSearch:hover {
-	background: black;
-	color: white;
-}
-
-.money{
-display: inline-block;
-font-size: 17px;
-font-weight: normal;
-}
-
-.NumMoney{
- text-align: right;
- display: inline-block;
- width: 100%; 
- font-size: 17px;
-font-weight: normal;
-}
-
-.moneyALL{
-display: inline-block;
-font-size: 17px;
-font-weight: bold;
-} 
-
-.NumMoneyALL{
- text-align: right;
- display: inline-block;
- width: 100%; 
- font-size: 17px;
-font-weight: 800;
-}
-
-.selected-td {
-   background-color: black; /* 변경할 배경색 */
-   color: white;
- }
- 
- .non-click {
-  background-color: white;
-}
-
-.click {
-  background-color: black;
-  color: white;
-}
-
-#FinishCash{
-width: 500px;
-height: 50px;
-background-color: black;
-color: white;
-bottom: 0px;
-left: 35%;
-text-align: center;
-vertical-align: middle;
-font-size: x-large;
-padding: 5px;
-}
-
-</style>
 <%@include file="/security/login_url.jspf"%>
 <%
-/*
-	String proNum = request.getParameter("proNum");
-	String proQun = request.getParameter("proQun");
-	//String[] name = request.getParameterValues("selectedItems");
-System.out.println("전달값품번="+proNum);
-System.out.println("전달값수량="+proQun);
-*/
 //회원번호
 int Num = loginClient.getClientNum();
-//System.out.println("회원번호="+Num);
 
 CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
-//System.out.println("dto객체="+cartDTOs.size());
 	
 
 %>
@@ -167,7 +59,7 @@ CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
 			<label for="mobile2">전화번호</label>
 			<input type="text" name="mobile2" id="mobile2" size="13" maxlength="13" value="<%=cartDTOs.getClientPhone()%>">
 			<div id="mobileMsg" class="error">전화번호를 입력해 입력해 주세요.</div>
-			<div id="mobileRegMsg" class="error">전화번호는 3~4 자리의 숫자로만 입력해 주세요.</div>
+			<div id="mobileRegMsg" class="error">전화번호는 11 자리의 숫자로만 입력해 주세요.</div>
 		</li>
 		<li>
 			<label for="email">이메일</label>
@@ -204,15 +96,10 @@ CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
 	
   	//상품번호들
 	String proNum = request.getParameter("proNum");
-	//System.out.println("전달값상품번호="+proNum);
-	//System.out.println("전달값수량="+proQun);
-	
     
 		String[] proNumResult = proNum.split(",");
 		String[] proQunResult = proQun.split(",");
 		
-      //System.out.println("주소"+request.getContextPath());//주소/projectTwo
-
       String proQunFN = null;
       int total = 0;
       
@@ -222,7 +109,6 @@ CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
   
   
       <%for(int i = 0; i<proNumResult.length; i++) { 
-      //System.out.println("하나씩구분하여저장"+proNumResult[i]);
       
       //proNumResult의 i번째 숫자를 정수로 변환
       int proNums = Integer.parseInt(proNumResult[i]);
@@ -236,20 +122,20 @@ CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
       %>
     <tr class="hang">
       <%--이미지 및 상품명 --%>
-      <td><img src="<%=request.getContextPath()%><%=cartDTO.getCartProductImages()%>" width="150" height="100">
+      <td><img src="<%=request.getContextPath()%><%=cartDTO.getCartProductImages()%>" width="150" height="100">&nbsp;&nbsp;
        <%=cartDTO.getCartProductName() %></td>
        
        <%--<input type="hidden" name="productName" value="<%=cartDTO.getCartProductName() %>"> 상품명 --%>
        <input type="hidden" name="productNum" value="<%=cartDTO.getCartProduct() %>"><%-- 상품번호 --%>
        
       <%--수량 --%>
-      <td>
+      <td class="orderRow">
       <%=proQunResult[i] %> 개
       </td>
        <input type="hidden" name="productQuan" value="<%=proQunResult[i] %>"><%-- 수량 --%>
       
       <%--가격 --%>
-      <td id="EndCash"><%= String.format("%,d", itemTotal) %> 원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <td id="EndCash" class="orderRow"><%= String.format("%,d", itemTotal) %> 원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       	<button type="button" class="delete-btn" style="background-color: white; border: none;" >
            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
  			 <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
@@ -302,7 +188,7 @@ padding: 30px;">
   <input type="hidden" id="checkedPayment" name="checkedPayment" value="네이버페이">
   </div>
 	
-	<button type="submit" id="FinishCash">결제하기</button>
+	<button type="submit" id="FinishCash" style="margin-left: 300px; ">결제하기</button>
 	
 	</form>
 	</fieldset>
@@ -332,7 +218,6 @@ function checkOnlyOne(element) {
 	  //거짓이면 빈문자열저장
 	  let result = element.checked ? element.value : "";
 	  $("#checkedPayment").val(result);
-	  
 	}
 
 $(document).ready(function() {
@@ -373,13 +258,7 @@ $(document).ready(function() {
         $("#name, #zipcode, #address1, #address2, #mobile2, #email").val("");
       }
     });
-    
-    
-    
-    
   });
-
-
 
 //x버튼 클릭시 해당 행 삭제
 	  $(document).ready(function() {

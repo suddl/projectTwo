@@ -62,7 +62,7 @@ border: 1px solid #DCDCDC;
 }
 
 #GoRemove {
-	margin-right: 1150px;
+	margin-right: 1030px;
 	border-radius: 10px;
 	background-color: white;
 	padding:5px;
@@ -115,8 +115,9 @@ border: 1px solid #DCDCDC;
 width:30px;
 }
 
-
-
+.rowMiddle{
+vertical-align: middle;
+}
 
 
 

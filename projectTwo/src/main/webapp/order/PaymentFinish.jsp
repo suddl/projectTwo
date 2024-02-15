@@ -3,6 +3,8 @@
 <%@page import="xyz.nailro.dao.PaymentDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<link href="<%=request.getContextPath()%>/css/Payment.css" type="text/css" rel="stylesheet">
+    
 <%
 
 
@@ -26,7 +28,7 @@ int nextNum = PaymentDAO.getDAO().selectPaymentNextNum();
 
 //결제테이블에 데이터 삽입
 int rowss = PaymentDAO.getDAO().insertPayment(nextNum, clientNum, finalMoney, checkedPayment);
-//System.out.println(rowss+"행 결제 삽입완료");
+//System.out.println(rowss+"행 바로결제 삽입완료");
 
 //바로구매에서 접근 구별하기 위한 값
 String DirectComple = request.getParameter("DirectComple");
@@ -83,7 +85,8 @@ for(int i=0; i<productNum.length; i++){
 	String productQuan = request.getParameter("productQuan");
 
 
-	//--rows += OrderDAO.getDAO().insertOrders(nextNum, clientNum, productNum, address1, address2, zipcode, productQuan);
+	rows += OrderDAO.getDAO().insertOrders(nextNum, clientNum, productNum, address1, address2, zipcode, productQuan);
+//System.out.println(rows+"행 바로주문삽입완료");
 //System.out.println(rows+"행 주문삽입완료");
 }
 
@@ -108,6 +111,24 @@ for(String productName : array){
 
 
 %>
-<h1> 결제가 완료되었습니다.</h1>
-<button><a href="<%=request.getContextPath()%>/index.jsp?group=main&worker=main_page">홈으로</a></button>
-<button>주문내역</button>
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" fill="currentColor" class="bi bi-bag-check" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M10.854 8.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+  <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
+</svg>
+<h1> 결제 완료!</h1>
+<a href="<%=request.getContextPath()%>/index.jsp?group=main&worker=main_page"><button class="PayBtn">홈으로</button></a>
+<button class="PayBtn OrderBtn">주문내역</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

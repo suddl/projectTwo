@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+fieldset {
+	text-align: left;
+	margin: 10px auto;
+	width: 1100px;
+}
+
+legend {
+	font-size: 1.2em; 
+}
+
+ label {
+	width: 150px;
+	text-align: right;
+	float: left;
+	margin-right: 10px;
+}
+
+ul li {
+	list-style-type: none;
+	margin: 15px 0;
+}
+
+
+.error {
+	color: red;
+	position: relative;
+	left: 160px;
+	display: none;
+}
+
+#idCheck, #postSearch {
+	font-size: 12px;
+	font-weight: bold;
+	cursor: pointer;
+	margin-left: 10px;
+	padding: 2px 10px;
+	border: 1px solid black;
+}
+
+#idCheck:hover, #postSearch:hover {
+	background: black;
+	color: white;
+}
+
+.money{
+display: inline-block;
+font-size: 17px;
+font-weight: normal;
+}
+
+.NumMoney{
+ text-align: right;
+ display: inline-block;
+ width: 100%; 
+ font-size: 17px;
+font-weight: normal;
+}
+
+.moneyALL{
+display: inline-block;
+font-size: 17px;
+font-weight: bold;
+} 
+
+.NumMoneyALL{
+ text-align: right;
+ display: inline-block;
+ width: 100%; 
+ font-size: 17px;
+font-weight: 800;
+}
+
+.selected-td {
+   background-color: black; /* 변경할 배경색 */
+   color: white;
+ }
+ 
+ .non-click {
+  background-color: white;
+}
+
+.click {
+  background-color: black;
+  color: white;
+}
+
+#FinishCash{
+width: 500px;
+height: 50px;
+background-color: black;
+color: white;
+bottom: 0px;
+left: 35%;
+text-align: center;
+vertical-align: middle;
+font-size: x-large;
+padding: 5px;
+}
+
+.orderRow{
+	vertical-align: middle;
+	
+}
+
+
+
