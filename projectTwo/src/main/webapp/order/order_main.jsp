@@ -190,14 +190,14 @@ padding: 30px;">
   </div>
   
   <div id="cash">
-  <input type="checkbox" id="method1" name="payments" onclick='checkOnlyOne(this)' value="페이코">&nbsp;&nbsp페이코</input><br>
+  <input type="checkbox" id="method1" name="payments" onclick='checkOnlyOne(this)' value="페이코" checked>&nbsp;&nbsp페이코</input><br>
   <input type="checkbox" id="method2" name="payments" onclick='checkOnlyOne(this)' value="토스">&nbsp;&nbsp;토스</input><br>
   <input type="checkbox" id="method3" name="payments" onclick='checkOnlyOne(this)' value="카카오페이">&nbsp;&nbsp;카카오페이</input><br>
-  <input type="checkbox" id="method4" name="payments" onclick='checkOnlyOne(this)' value="네이버페이" checked>&nbsp;&nbsp;네이버페이</input><br>
+  <input type="checkbox" id="method4" name="payments" onclick='checkOnlyOne(this)' value="네이버페이" >&nbsp;&nbsp;네이버페이</input><br>
   <input type="checkbox" id="method5" name="payments" onclick='checkOnlyOne(this)' value="신용카드 결제">&nbsp;&nbsp;신용카드 결제</input><br>
   <input type="checkbox" id="method6" name="payments" onclick='checkOnlyOne(this)' value="가상계좌">&nbsp;&nbsp;가상계좌</input><br>
   <input type="checkbox" id="method7" name="payments" onclick='checkOnlyOne(this)' value="휴대폰 결제">&nbsp;&nbsp;휴대폰결제</input><br>
-  <input type="hidden" id="checkedPayment" name="checkedPayment" value="네이버페이">
+  <input type="hidden" id="checkedPayment" name="checkedPayment" value="페이코">
   </div>
 	
 	<button type="submit" id="FinishCash" style="margin-left: 300px; ">결제하기</button>
