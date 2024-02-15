@@ -35,10 +35,7 @@
         pageSize = Integer.parseInt(request.getParameter("pageSize"));
     }
     
-    int totalProduct=ProductDAO.getDAO().selectTotalSearchProduct(keyword, type); 
-    
-    System.out.println("totalProduct = "+totalProduct);
-    
+    int totalProduct=ProductDAO.getDAO().selectTotalSearchProduct(keyword, type);  
     
     int totalPage=(int)Math.ceil((double)totalProduct/pageSize);
 
@@ -46,7 +43,6 @@
 	if(pageNum<=0 || pageNum>totalPage) {
 		pageNum=1;
 	}
-    System.out.println("totalPage = "+totalPage);
 	
 	//페이지번호에 대한 게시글의 시작 행번호를 계산하여 저장
 	//ex) 1Page : 1, 2Page : 11, 3Page : 21, 4Page : 31, ...
@@ -60,18 +56,8 @@
 	//마지막 페이지의 게시글의 종료 행번호가 게시글의 총갯수보다 많은 경우 종료 행번호 변경
 	if(endRow>totalProduct) {
 		endRow=totalProduct;
-	}
-   
-	
-    System.out.println("startRow = "+startRow);
-    System.out.println("endRow = "+endRow);
-	
-    List<ProductDTO> searchResults = ProductDAO.getDAO().searchProduct(startRow, endRow, keyword, sorted, type);
-    System.out.println("keyword = "+keyword);
-    System.out.println("sorted = "+sorted);
-    System.out.println("type = "+type);
-    
-    
+	}	
+    List<ProductDTO> searchResults = ProductDAO.getDAO().searchProduct(startRow, endRow, keyword, sorted, type);   
 %>   
 </head>
 <body>
