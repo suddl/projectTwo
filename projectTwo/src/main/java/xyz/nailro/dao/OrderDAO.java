@@ -255,5 +255,25 @@ public class OrderDAO extends JdbcDAO{
 		}
 		return totalCount;
 	}
+	public int updateOrderStatus(String orderNum, String orderStatus) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		int rows=0;
+		try {
+			con=getConnection();
+			
+			String sql="update orders set order_status=? where order_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, orderStatus);
+			pstmt.setString(2, orderNum);
+			
+			rows=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("[에러]updateOrderStatus() 메소드의 SQL 오류 = "+e.getMessage());
+		} finally {
+			close(con, pstmt);
+		}
+		return rows;
+	}
 		
 }
