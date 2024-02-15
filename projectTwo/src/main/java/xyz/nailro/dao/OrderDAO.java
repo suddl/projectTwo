@@ -125,20 +125,24 @@ public class OrderDAO extends JdbcDAO{
 			con=getConnection();
 			
 			if(keyword.equals("")) {//검색 기능을 사용하지 않은 경우
-				String sql= "select * from (select rownum rn, temp.* from (select order_num, order_pay_num, product_name,"
-						+ "order_client_num, order_product_num, order_date,"
-						+ " pay_price from orders join product on order_product_num=product_num  join payment on order_pay_num=pay_num "
-						+ "order by order_num desc) temp) where rn between ? and ?";
+				String sql= "select * from (select rownum rn, temp.* from (select order_num, order_pay_num"
+						+ ", order_client_num, order_product_num, client_id, product_name"
+						+ ", order_quntity, client_phone, pay_price, pay_method, order_status, order_date from orders"
+						+ " join client on order_client_num=client_num join product on order_product_num=product_num"
+						+ " join payment on order_pay_num=pay_num order by order_num desc) temp)"
+						+ " where rn between ? and ?";
+				
 				pstmt=con.prepareStatement(sql);
 				pstmt.setInt(1, startRow);
 				pstmt.setInt(2, endRow);
 			} else {//검색 기능을 사용한 경우
-				String sql ="select * from (select rownum rn, temp.* from (select order_num, client_id"
-						+ ", pay_num, product_name, order_quntity, client_phone, pay_price, pay_method, order_status, order_date from orders"
-						+ " join payment on order_pay_num=pay_num join client on order_client_num=client_num join"
-						+ " product on order_product_num=product_num"
-						+ " where " + search + " like '%'||?||'%' order by order_num desc) temp)"
+				String sql ="select * from (select rownum rn, temp.* from (select order_num, order_pay_num"
+						+ ", order_client_num, order_product_num, client_id, product_name"
+						+ ", order_quntity, client_phone, pay_price, pay_method, order_status, order_date from orders"
+						+ " join client on order_client_num=client_num join product on order_product_num=product_num"
+						+ " join payment on order_pay_num=pay_num where " + search + " like '%'||?||'%' order by order_num desc) temp)"
 						+ " where rn between ? and ?";
+				
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1, keyword);
 				pstmt.setInt(2, startRow);
@@ -151,8 +155,10 @@ public class OrderDAO extends JdbcDAO{
 				OrderDTO order=new OrderDTO();
 				order.setOrderNum(rs.getString("order_num"));
 				order.setOrderId(rs.getString("client_id"));
-				order.setOrderPayNum(rs.getInt("pay_num"));
+				order.setOrderPayNum(rs.getInt("order_pay_num"));
 				order.setOrderProductName(rs.getString("product_name"));
+				order.setOrderClientNum(rs.getString("order_client_num"));
+				order.setOrderProductNum(rs.getString("order_product_num"));
 				order.setOrderQuntity(rs.getString("order_quntity"));
 				order.setOrderPhone(rs.getString("client_phone"));
 				order.setOrderPayPrice(rs.getString("pay_price"));
