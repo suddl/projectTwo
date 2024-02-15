@@ -231,7 +231,7 @@ public class ProductDAO extends JdbcDAO	{
 }
 	
 	//상품번호(int)를 전달받아 PRODUCT 테이블에 저장된 행을 삭제하고 삭제행의 갯수(int)를 반환하는 메소드
-	public int deleteProduct(String productNum) {
+	public int deleteProduct(int productNum) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		int rows=0;
@@ -240,7 +240,7 @@ public class ProductDAO extends JdbcDAO	{
 			
 			String sql="delete from product where product_num=?";
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, productNum);
+			pstmt.setInt(1, productNum);
 			
 			rows=pstmt.executeUpdate();
 		} catch (SQLException e) {

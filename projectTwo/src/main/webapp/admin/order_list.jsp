@@ -95,7 +95,8 @@
 </style>
 
 <h1>주문관리</h1>
-<form name="orderForm" id="orderForm">
+<form action="<%=request.getContextPath()%>/index.jsp?group=admin&worker=order_modify_action"
+	method="post"  name="orderFrom" id="orderForm">
 <div id="order_list">
 	<%-- 검색된 게시글 총갯수 출력 --%>
 	<div id="order_title">주문목록(<%=totalOrder %>개)</div>
@@ -235,7 +236,7 @@ $(document).ready(function() {
 		} else { 
 			$("input[name=check]").prop("checked",false);
 		}
-	});토스
+	});
 
 	$("input[name=check]").click(function() {
 		var total=$("input[name=check]").length;

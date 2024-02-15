@@ -13,10 +13,13 @@
 	}	
 
 	//전달값을 반환받아 저장
-	String[] check=request.getParameterValues("check");
-	
-	for(String productNum:check) {
-		ProductDAO.getDAO().deleteProduct(productNum);
+	String[] check = request.getParameterValues("check");
+
+	if (check != null) {
+   	 	for (String productNumStr : check) {
+        	int productNum = Integer.parseInt(productNumStr);
+        	ProductDAO.getDAO().deleteProduct(productNum);
+   		}
 	}
 	
 	//페이지 이동 - 검색 및 페이징 처리 관련 값 전달
