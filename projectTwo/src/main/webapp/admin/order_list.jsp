@@ -109,7 +109,8 @@
 		<th width="100">주문번호</th>
 		<th width="120">아이디</th>
 		<th width="120">결제번호</th> 
-		<th width="450">상품명</th> 
+		<th width="300">상품명</th> 
+		<th width="180">구매수량</th> 
 		<th width="200">전화번호</th>
 		<th width="200">결제방법</th>
 		<th width="150">결제금액</th>
@@ -128,8 +129,11 @@
 		<td width="120">
 		<%=order.getOrderPayNum() %>
 		</td>
-		<td width="450">
+		<td width="300">
 		<%=order.getOrderProductName() %>
+		</td>
+		<td width="180">
+		<%=order.getOrderQuntity() %>개
 		</td>
 		<td width="200">
 		<%=order.getOrderPhone() %>
@@ -138,15 +142,15 @@
 		<%=order.getOrderPayMethod() %>
 		</td>
 		<td width="150">
-		<%=order.getOrderPayPrice() %>
+		<%=order.getOrderPayPrice() %>원
 		</td>
 		<td width="150">
-			<select name="orderStatus">
-				<option value="1" <%=order.getOrderStatus()%>>&nbsp;상품준비중&nbsp;</option>
-				<option value="2" <%=order.getOrderStatus()%>>&nbsp;배송준비중&nbsp;</option>
-				<option value="3" <%=order.getOrderStatus()%>>&nbsp;배송중&nbsp;</option>
-				<option value="4" <%=order.getOrderStatus()%>>&nbsp;배송완료&nbsp;</option>
-				<option value="0" <%=order.getOrderStatus()%>>&nbsp;주문취소&nbsp;</option>
+			<select name="orderStatus_<%=order.getOrderNum()%>">
+				  <option value="1" <% if (order.getOrderStatus().equals("1")) { %> selected <% } %>>&nbsp;상품준비중&nbsp;</option>
+                  <option value="2" <% if (order.getOrderStatus().equals("2")) { %> selected <% } %>>&nbsp;배송준비중&nbsp;</option>
+                  <option value="3" <% if (order.getOrderStatus().equals("3")) { %> selected <% } %>>&nbsp;배송중&nbsp;</option>
+                  <option value="4" <% if (order.getOrderStatus().equals("4")) { %> selected <% } %>>&nbsp;배송완료&nbsp;</option>
+                  <option value="0" <% if (order.getOrderStatus().equals("0")) { %> selected <% } %>>&nbsp;주문취소&nbsp;</option>
 			</select>
 		</td>
 		<td width="150">
@@ -250,20 +254,24 @@ $(document).ready(function() {
 	});
 	
 	$("#modifyBtn").click(function() {
-		if($("input[name=check]").filter(":checked").length==0) {
-			alert("변경할 주문내역을 선택하세요.");
-			return;
-		}
+		var selectedOrders = [];
+		$("input[name=check]:checked").each(function() {
+			 selectedOrders.push($(this).val());
+        });
+			
+		 if(selectedOrders.length == 0) {
+            alert("변경할 주문내역을 선택하세요.");
+            return;
+        }
 		
 		if(confirm("주문처리상태를 변경 하시겠습니까?")) {
-			location.href="<%=request.getContextPath()%>/index.jsp?group=admin&worker=order_modify_action"
-		} else {
-			return false;
-		}		
-		
-		$("#orderForm").attr("action", "<%=request.getContextPath()%>/index.jsp?group=admin&worker=order_modify_action");
-		$("#orderForm").attr("method","post");
-		$("#orderForm").submit();
-	});
+			// 주문번호 배열을 문자열로 변환하여 hidden 필드에 담아 전송
+            $("#selectedOrders").val(selectedOrders.join(","));
+            $("#orderForm").submit();
+        } else {
+            return false;
+        }        
+    });
 });
+
 </script>

@@ -126,7 +126,7 @@ public class OrderDAO extends JdbcDAO{
 				
 				if(keyword.equals("")) {//검색 기능을 사용하지 않은 경우
 					String sql= "select * from (select rownum rn, temp.* from (select order_num, client_id"
-							+ ", pay_num, product_name, client_phone, pay_price, pay_method, order_status, order_date from orders"
+							+ ", pay_num, product_name, order_quntity, client_phone, pay_price, pay_method, order_status, order_date from orders"
 							+ " join payment on order_pay_num=pay_num join client on order_client_num=client_num join"
 							+ " product on order_product_num=product_num order by order_num desc) temp) where rn between ? and ?";
 					pstmt=con.prepareStatement(sql);
@@ -134,7 +134,7 @@ public class OrderDAO extends JdbcDAO{
 					pstmt.setInt(2, endRow);
 				} else {//검색 기능을 사용한 경우
 					String sql ="select * from (select rownum rn, temp.* from (select order_num, client_id"
-							+ ", pay_num, product_name, client_phone, pay_price, pay_method, order_status, order_date from orders"
+							+ ", pay_num, product_name, order_quntity, client_phone, pay_price, pay_method, order_status, order_date from orders"
 							+ " join payment on order_pay_num=pay_num join client on order_client_num=client_num join"
 							+ " product on order_product_num=product_num"
 							+ " where " + search + " like '%'||?||'%' order by order_num desc) temp)"
@@ -153,6 +153,7 @@ public class OrderDAO extends JdbcDAO{
 					order.setOrderId(rs.getString("client_id"));
 					order.setOrderPayNum(rs.getInt("pay_num"));
 					order.setOrderProductName(rs.getString("product_name"));
+					order.setOrderQuntity(rs.getString("order_quntity"));
 					order.setOrderPhone(rs.getString("client_phone"));
 					order.setOrderPayPrice(rs.getString("pay_price"));
 					order.setOrderPayMethod(rs.getString("pay_method"));
@@ -181,7 +182,7 @@ public class OrderDAO extends JdbcDAO{
 				con=getConnection();
 				
 				if(keyword.equals("")) {//검색 기능을 사용하지 않은 경우
-					String sql= "select * from (select rownum rn, temp.* from (select order_num, order_pay_num, product_name"
+					String sql= "select * from (select rownum rn, temp.* from (select order_num, order_pay_num"
 							+ " ,order_client_num, order_product_num, order_date from orders"
 							+ " left join client on order_client_num=client_num left join product on order_product_num=product_num"
 							+ " order by order_num desc) temp) where rn between ? and ?";
@@ -205,21 +206,41 @@ public class OrderDAO extends JdbcDAO{
 				while(rs.next()) {
 					OrderDTO order=new OrderDTO();
 					order.setOrderNum(rs.getString("order_num"));
-					order.setOrderPayNum(rs.getInt("order_pay_num"));
-					order.setOrderProductName(rs.getString("product_name"));
-					order.setOrderClientNum(rs.getString("order_client_num"));
+					order.setOrderPayNum(rs.getInt("orderPayNum"));
+					order.setOrderClientNum(rs.getString("orderClientNum"));
 					order.setOrderProductNum(rs.getString("order_product_num"));
 					order.setOrderDate(rs.getString("order_date"));
 
 					orderReviewList.add(order);
 				}
 			} catch (SQLException e) {
-				System.out.println("[에러]selectOrderList() 메소드의 SQL 오류 = "+e.getMessage());
+				System.out.println("[에러]selectOrderReviewList() 메소드의 SQL 오류 = "+e.getMessage());
 			} finally {
 				close(con, pstmt, rs);
 			}
 			return orderReviewList;
 		}
 		
+		//주문정보를 전달받아 ORDERS 테이블에 저장된 행의 주문처리상태를 변경하고 변경행의 갯수(int)를 반환하는 메소드
+		public int updateOrderStatus(OrderDTO order) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			int rows=0;
+			try {
+				con=getConnection();
+				
+				String sql="update orders set order_status=? where order_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, order.getOrderStatus());
+				pstmt.setString(2, order.getOrderNum());
+				
+				rows=pstmt.executeUpdate();
+			} catch (SQLException e) {
+				System.out.println("[에러]updateOrderStatus() 메소드의 SQL 오류 = "+e.getMessage());
+			} finally {
+				close(con, pstmt);
+			}
+			return rows;
+		}
 		
 }
