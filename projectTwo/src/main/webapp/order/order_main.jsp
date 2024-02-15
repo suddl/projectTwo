@@ -105,6 +105,7 @@ CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
   
   	//상품수량들
 	String proQun = request.getParameter("proQun");
+  //System.out.println(proQun+"장바구니에서 넘어온 수량");
 	
   	//상품번호들
 	String proNum = request.getParameter("proNum");
@@ -339,7 +340,7 @@ $(document).ready(function() {
 				submitResult=false;
 			}
 
-			var mobile2Reg=/^[0-9]{11,14}/;
+			var mobile2Reg=/^[-0-9]{1,15}/;
 			if($("#mobile2").val()=="") {
 				$("#mobileMsg").css("display","block");
 				submitResult=false;

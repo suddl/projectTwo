@@ -75,20 +75,20 @@ int total = 0;
   
   	
   	<%-- 체크박스 --%>
-    <th width=10%><input type="checkbox" name="productOne"  id="productOne" value="<%=cartDTOs.get(i).getCartProduct() %>" onclick="selectOnly(this)" checked></th>
+    <td width=10%><input type="checkbox" name="productOne"  id="productOne" value="<%=cartDTOs.get(i).getCartProduct() %>" onclick="selectOnly(this)" checked></td>
     
   	<%-- 이미지 --%>
-     <th style="text-align: justify;"><img src="<%=request.getContextPath()%><%=cartDTOs.get(i).getCartProductImages()%>" width="150" height="100" >&nbsp;&nbsp; 
-     <%=cartDTOs.get(i).getCartProductName() %></th>
+     <td style="text-align: justify;"><img src="<%=request.getContextPath()%><%=cartDTOs.get(i).getCartProductImages()%>" width="150" height="100" >&nbsp;&nbsp; 
+     <%=cartDTOs.get(i).getCartProductName() %></td>
   	<input type="hidden" id="productNum" name="productNum" value="<%=cartDTOs.get(i).getCartProduct() %>">
      
      <%-- 수량 --%>
-     <th class="rowMiddle">
-     <button type="button" class="minusBtn" onclick="countDown(<%=i%>);">-</button>
-    <input type="text"  id="cartQuantity<%=i%>" class="cartQuantity" name="cartQuantity"  readonly="readonly" value="<%=cartDTOs.get(i).getCartQuantity()%>">
-    <button type="button" class="plusBtn" onclick="countUp(<%=i%>);">+</button>
+     <td class="rowMiddle">
+     <button type="button" class="minusBtn" onclick="countDown(<%=cartDTOs.get(i).getCartProduct() %>);">-</button>
+    <input type="text"  id="cartQuantity<%=cartDTOs.get(i).getCartProduct() %>" class="cartQuantity" name="cartQuantity"  readonly="readonly" value="<%=cartDTOs.get(i).getCartQuantity()%>">
+    <button type="button" class="plusBtn" onclick="countUp(<%=cartDTOs.get(i).getCartProduct() %>);">+</button>
      
-     </th>
+     </td>
      
      
      <%
@@ -97,7 +97,7 @@ int total = 0;
       %>
 		     
 		<input type="hidden" id="Cash2<%=i%>" name="" value="<%= cartDTOs.get(i).getCartProductPrice()%>">
-     <th id="Cash<%=i%>" class="rowMiddle"><%=priceP %>원</th>
+     <td id="Cash<%=i%>" class="rowMiddle"><%=priceP %>원</td>
   </tr>
   <%
   	}
@@ -368,23 +368,20 @@ $("#GoRemove").click(function () {
 $("#GoOrder").click(function () {
 	//배열변수를 선언
 	
-          var quantities = [];
-	 var selectedItems = [];
+	     var quantities = [];
+		 var selectedItems = [];
 	 
-		//id로 선택된 체크박스중 체크된것은 this를 통해 그 태그의 val을
-		//배열인 selectedItems 변수에 each 함수를 통해 반복해서 넣는다. 
-	    $("#productOne:checked").each(function() {
-	        selectedItems.push($(this).val( ));
+		 // id로 선택된 체크박스 중 체크된 것은 this를 통해 그 태그의 val을
+	    // 배열인 selectedItems 변수에 each 함수를 통해 반복해서 넣는다.
+	    $("#productOne:checked").each(function() {//체크박스에 상품번호가 저장되어있어 상품번호를 배열로 저장
+	    	var num=$(this).val()
+	        selectedItems.push(num);
+	    
+	        // 해당 상품의 수량을 가져와 quantities 배열에 추가
+	        var quantity = $("#cartQuantity" + num).val();
+	        quantities.push(quantity);
 	    });
 		
-		for(i=0; i<selectedItems.length; i++){
-
-            // 해당 상품의 수량을 가져와 quantities 배열에 추가
-
-            var quantity = $("#cartQuantity" + i).val();
-            quantities.push(quantity);
-	        
-		}
 	    // 수집한 값이 있는지 확인 후 처리
 	    if (selectedItems.length > 0) {
 	        // 선택된 상품 목록을 hidden 필드에 저장
