@@ -146,10 +146,10 @@ public class OrderDAO extends JdbcDAO{
 			}
 			
 			rs=pstmt.executeQuery();
-			
+			  
 			while(rs.next()) {
 				OrderDTO order=new OrderDTO();
-				order.setOrderNum(rs.getString("order_num"));
+				order.setOrderNum(rs.getString("order_num"));  
 				order.setOrderId(rs.getString("client_id"));
 				order.setOrderPayNum(rs.getInt("pay_num"));
 				order.setOrderProductName(rs.getString("product_name"));
