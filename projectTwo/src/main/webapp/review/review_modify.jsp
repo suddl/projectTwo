@@ -68,13 +68,14 @@
         #reviewSubject {
         	width: 382px;
         }
-        #modifyBtn,#resetBtn {
+        #saveBtn,#resetBtn {
         	font-size: 20px;
     		border-radius: 5px;
     		background-color: pink;
     		margin-left: 10px;
     		padding: 10px 15px;
     		width: 120px;
+    		border: none;
         }
         #starmessage {
 			font-size: 0.5em;
@@ -102,7 +103,7 @@
                         <span class="star" onclick="setRating(3)">☆</span>
                         <span class="star" onclick="setRating(4)">☆</span>
                         <span class="star" onclick="setRating(5)">☆</span>
-                    	<div id="starmessage" style="color: red;">별점을 다시 체크해주세요!</div>
+                    	<div id="starmessage" style="color: red;">별점을 다시 체크하셔야 변경이 완료됩니다!</div>
                     </div> 
                     <input type="hidden" name="reviewRating" id="ratingValue">
                 </td>
@@ -132,7 +133,7 @@
             </tr>
             <tr>
                 <th colspan="2">
-                    <button type="submit" id="modifyBtn">글변경</button>
+                    <button type="submit" id="saveBtn" disabled>글변경</button>
                     <button type="reset" id="resetBtn">다시쓰기</button>
                 </th>
             </tr>
@@ -141,42 +142,49 @@
     <div id="message" style="color: red;"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript">
-        $("#reviewSubject").focus();
+    $("#reviewSubject").focus();
         
-        // 별점을 설정하는 함수
-        function setRating(rating) {
-            const stars = document.querySelectorAll('.star');
-            let starsText = '';
-            for (let i = 0; i < rating; i++) {
-                starsText += '★';
-            }
-            // ★ 문자열을 숨겨진 필드에 저장
-            document.getElementById('ratingValue').value = starsText;
-
-            // 별 표시 업데이트
-            stars.forEach((star, index) => {
-                if (index < rating) {
-                    star.textContent = '★'; 
-                    star.classList.add('checked');
-                } else {
-                    star.textContent = '☆';
-                    star.classList.remove('checked');
-                }
-            });
+    //별점작성
+    function setRating(rating) {
+    	const stars = document.querySelectorAll('.star');
+        let starsText = '';
+        for (let i = 0; i < rating; i++) {
+            starsText += '★';
         }
+        // ★ 문자열을 숨겨진 필드에 저장
+        document.getElementById('ratingValue').value = starsText;
 
-        // 페이지 로드 시 별점 초기화
+        // 별 표시 업데이트
+        stars.forEach((star, index) => {
+           if (index < rating) {
+              star.textContent = '★'; 
+              star.classList.add('checked');
+            } else {
+               star.textContent = '☆';
+               star.classList.remove('checked');
+            }
+         });
+
+        //별점선택되면버튼 실행
+        const saveBtn = document.getElementById('saveBtn');
+        if (rating > 0) {
+           saveBtn.disabled = false; 
+           document.getElementById('starmessage').style.display = 'none'; // 메시지 숨김
+         } else {
+           saveBtn.disabled = true; //버튼 비활성화
+           document.getElementById('starmessage').style.display = 'block'; // 메시지 표시
+         }
+       }
+
+        // 페이지 로드 시 별점 초기화 및 별점 선택 이벤트 설정
         document.addEventListener('DOMContentLoaded', function () {
-            const currentRating = document.getElementById('ratingValue').value.length; // ★ 문자열의 길이를 통해 현재 별점 계산
-            setRating(currentRating);
-        });
-
-        // 별 클릭 이벤트 처리
-        document.querySelectorAll('.star').forEach((star, index) => {
-            star.addEventListener('click', () => {
-                setRating(index + 1); // 클릭한 별에 해당하는 별점 설정
+            document.querySelectorAll('.star').forEach((star, index) => {
+                star.addEventListener('click', () => {
+                    setRating(index + 1); // 클릭한 별에 해당하는 별점 설정
+                });
             });
         });
+
 
         // 폼 제출 전 유효성 검사
         $("#reviewForm").submit(function() {
