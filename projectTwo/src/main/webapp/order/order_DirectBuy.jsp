@@ -40,39 +40,55 @@ CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
 	<ul>
 		<li>
 			<label for="name">이름</label>
-			<input type="text" name="name" id="name" value="<%=cartDTOs.getClientName()%>">
+			<input type="text" name="name" id="name" readonly="readonly" value="<%=cartDTOs.getClientName()%>">
 			<div id="nameMsg" class="error">이름을 입력해 주세요.</div>
 		</li>
+	</ul>
+	<ul>
+		<li>
+			<label for="mobile2">전화번호</label>
+			<input type="text" name="mobile2" id="mobile2" size="13" maxlength="13" readonly="readonly" value="<%=cartDTOs.getClientPhone()%>">
+			<div id="mobileMsg" class="error">전화번호를 입력해 입력해 주세요.</div>
+			<div id="mobileRegMsg" class="error">전화번호는 11 자리의 숫자와 - 기호만 사용가능합니다.</div>
+		</li>
+	</ul>
+	
+	<ul>
+		<li>
+			<label for="email">이메일</label>
+			<input type="text" name="email" id="email" readonly="readonly" value="<%=cartDTOs.getClientEmail()%>">
+			<div id="emailMsg" class="error">이메일을 입력해 주세요.</div>
+			<div id="emailRegMsg" class="error">입력한 이메일이 형식에 맞지 않습니다.</div>
+		</li>
+	</ul>
+	
+	<ul>
 		<li>
 			<label>우편번호</label>
 			<input type="text" name="zipcode" id="zipcode" size="7" readonly="readonly" value="<%=cartDTOs.getClientZipCode()%>">
 			<span id="postSearch">우편번호 검색</span>
 			<div id="zipcodeMsg" class="error">우편번호를 입력해 주세요.</div>
 		</li>
+	</ul>
+	
+	<ul>
 		<li>
 			<label for="address1">기본주소</label>
 			<input type="text" name="address1" id="address1" size="50" readonly="readonly" value="<%=cartDTOs.getClientAddress1()%>">
 			<div id="address1Msg" class="error">기본주소를 입력해 주세요.</div>
 		</li>
+	</ul>
+	
+	<ul>
 		<li>
 			<label for="address2">상세주소</label>
-			<input type="text" name="address2" id="address2" size="50" value="<%=cartDTOs.getClientAddress2()%>">
+			<input type="text" name="address2" id="address2" size="50" readonly="readonly" value="<%=cartDTOs.getClientAddress2()%>">
 			<div id="address2Msg" class="error">상세주소를 입력해 주세요.</div>
-		</li>
-		<li>
-			<label for="mobile2">전화번호</label>
-			<input type="text" name="mobile2" id="mobile2" size="13" maxlength="13" value="<%=cartDTOs.getClientPhone()%>">
-			<div id="mobileMsg" class="error">전화번호를 입력해 입력해 주세요.</div>
-			<div id="mobileRegMsg" class="error">전화번호는 3~4 자리의 숫자로만 입력해 주세요.</div>
-		</li>
-		<li>
-			<label for="email">이메일</label>
-			<input type="text" name="email" id="email" value="<%=cartDTOs.getClientEmail()%>">
-			<div id="emailMsg" class="error">이메일을 입력해 주세요.</div>
-			<div id="emailRegMsg" class="error">입력한 이메일이 형식에 맞지 않습니다.</div>
 		</li>
 	</ul>
 	
+
+	<ul>
 	<label>배송요청사항</label>
 	<select name="CustomOrder" style="width: 500px; margin-bottom: 30px;">
 			<option value="1" selected>&nbsp;부재 시 경비실에 맡겨주세요.&nbsp;</option>
@@ -81,6 +97,7 @@ CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
 			<option value="4">&nbsp;빠른배송부탁드립니다.&nbsp;</option>
 			<option value="5">&nbsp;택배함에 보관해주세요&nbsp;</option>
 	</select>
+	<ul>
 	<hr>
 	<h3 style="text-align: center; margin-bottom: 30px; margin-top: 30px;">주문 상품</h3>
 	
@@ -189,7 +206,7 @@ padding: 30px;">
   <input type="hidden" id="checkedPayment" name="checkedPayment" value="네이버페이">
   </div>
 	
-	<button type="submit" id="FinishCash" >결제하기</button>
+	<button type="submit" id="FinishCash2" >결제하기</button>
 	
 	</form>
 	</fieldset>
@@ -236,12 +253,12 @@ $(document).ready(function() {
           $("#newAddress").prop("checked", false);
     	  
         // 체크되었을 때 기존 주소 정보를 입력 폼에 설정
-        $("#name").val("<%=cartDTOs.getClientName()%>");
-        $("#zipcode").val("<%=cartDTOs.getClientZipCode()%>");
-        $("#address1").val("<%=cartDTOs.getClientAddress1()%>");
-        $("#address2").val("<%=cartDTOs.getClientAddress2()%>");
-        $("#mobile2").val("<%=cartDTOs.getClientPhone()%>");
-        $("#email").val("<%=cartDTOs.getClientEmail()%>");
+          $("#name").val("<%=cartDTOs.getClientName()%>").attr("readonly","readonly");
+          $("#zipcode").val("<%=cartDTOs.getClientZipCode()%>").attr("readonly","readonly");
+          $("#address1").val("<%=cartDTOs.getClientAddress1()%>").attr("readonly","readonly");
+          $("#address2").val("<%=cartDTOs.getClientAddress2()%>").attr("readonly","readonly");
+          $("#mobile2").val("<%=cartDTOs.getClientPhone()%>").attr("readonly","readonly");
+          $("#email").val("<%=cartDTOs.getClientEmail()%>").attr("readonly","readonly");
       } else {
         // 체크가 해제되었을 때 입력 폼 초기화
         $("#name, #zipcode, #address1, #address2, #mobile2, #email").val("");
@@ -255,7 +272,9 @@ $(document).ready(function() {
     	//"기존 주소" 체크 해제
           $("#usedAddress").prop("checked", false);
         // 체크되었을 때 입력 폼 초기화
-        $("#name, #zipcode, #address1, #address2, #mobile2, #email").val("");
+          $("#name, #address1, #address2, #mobile2, #email").val("").removeAttr("readonly");
+          //우편번호는 수기입력 불가 오직 우편번호 검색으로만 값 입력 가능
+          $("#zipcode").val("");
       }
     });
     
@@ -296,5 +315,76 @@ $(document).ready(function() {
               $("#finalMoney").val(finalTotal);
           });
       });
+      
+      
+	  $("#orderForm").submit(function() {
+			var submitResult=true;
+			
+			$(".error").css("display","none");//"display","none"요소를 렌더링하지 않는다. 즉 안보이게 한다
 
+			var idReg=/^[a-zA-Z]\w{5,19}$/g;
+			if($("#id").val()=="") {
+				$("#idMsg").css("display","block");
+				submitResult=false;
+			} else if(!idReg.test($("#id").val())) {
+				$("#idRegMsg").css("display","block");
+				submitResult=false;
+			} else if($("#idCheckResult").val()=="0") {
+				$("#idCheckMsg").css("display","block");
+				submitResult=false;
+			}
+				
+			
+			if($("#name").val()=="") {
+				$("#nameMsg").css("display","block");
+				submitResult=false;
+			}
+			
+			var emailReg=/^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+(\.[-a-zA-Z0-9]+)+)*$/g;
+			if($("#email").val()=="") {
+				$("#emailMsg").css("display","block");
+				submitResult=false;
+			} else if(!emailReg.test($("#email").val())) {
+				$("#emailRegMsg").css("display","block");
+				submitResult=false;
+			}
+
+			var mobile2Reg=/^[0-9-]{11,14}/;
+			if($("#mobile2").val()=="") {
+				$("#mobileMsg").css("display","block");
+				submitResult=false;
+			} else if(!mobile2Reg.test($("#mobile2").val())){
+				$("#mobileRegMsg").css("display","block");
+				submitResult=false;
+			}
+			
+			if($("#zipcode").val()=="") {
+				$("#zipcodeMsg").css("display","block");
+				submitResult=false;
+			}
+			
+			if($("#address1").val()=="") {
+				$("#address1Msg").css("display","block");
+				submitResult=false;
+			}
+			
+			if($("#address2").val()=="") {
+				$("#address2Msg").css("display","block");
+				submitResult=false;
+			}
+			
+			return submitResult;//false 이벤트 취소
+		});
+      
+      
+
+      
+	  $("#postSearch").click(function() {
+			new daum.Postcode({
+				oncomplete: function(data) {
+					$("#zipcode").val(data.zonecode);
+					$("#address1").val(data.address);
+				} 
+			}).open();
+		});
 </script>

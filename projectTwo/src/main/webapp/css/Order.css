@@ -17,12 +17,6 @@ legend {
 	margin-right: 10px;
 }
 
-ul li {
-	list-style-type: none;
-	margin: 15px 0;
-}
-
-
 .error {
 	color: red;
 	position: relative;
@@ -104,5 +98,8 @@ padding: 5px;
 	
 }
 
-
+#orderForm ul li {
+	list-style-type: none;
+	margin: 5px 0px;
+}
 

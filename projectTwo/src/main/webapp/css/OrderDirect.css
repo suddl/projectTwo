@@ -19,7 +19,7 @@ legend {
 
 ul li {
 	list-style-type: none;
-	margin: 15px 0;
+	margin: 5px 0px;
 }
 
 
@@ -86,17 +86,15 @@ font-weight: 800;
   color: white;
 }
 
-#FinishCash{
+#FinishCash2{
 width: 500px;
 height: 50px;
 background-color: black;
 color: white;
-bottom: 0px;
-left: 35%;
-text-align: center;
-vertical-align: middle;
 font-size: x-large;
 padding: 5px;
+margin-left: 300px;
+margin-top: 100px;
 }
 
 .orderRow{
