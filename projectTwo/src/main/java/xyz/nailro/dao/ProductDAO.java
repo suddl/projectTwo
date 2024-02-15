@@ -251,6 +251,7 @@ public class ProductDAO extends JdbcDAO	{
 		return rows;
 	}
 	
+	//검색 결과
 	public List<ProductDTO> searchProduct(int startRow, int endRow, String keyword, String sorted, String productType) {
 	    Connection con = null;
 	    PreparedStatement pstmt = null;
@@ -313,36 +314,6 @@ public class ProductDAO extends JdbcDAO	{
 
 	    return searchProductList;
 	}
-	// 검색어를 전달받아 해당 검색어가 상품 카테고리에 포함된 상품들을 검색
-	public List<ProductDTO> searchProductByCategory(String keyword) {
-	    Connection con = null;
-	    PreparedStatement pstmt = null;
-	    ResultSet rs = null;
-	    List<ProductDTO> searchProductList = new ArrayList<>();
-
-	    try {
-	        con = getConnection();
-	        String sql = "SELECT product_num, product_name, product_image, product_price FROM product WHERE product_category LIKE ?";
-	        pstmt = con.prepareStatement(sql);
-	        pstmt.setString(1, "%" + keyword + "%");
-	        rs = pstmt.executeQuery();
-
-	        while (rs.next()) {
-	            ProductDTO product = new ProductDTO();
-	            product.setProductNum(rs.getInt("product_num"));
-	            product.setProductName(rs.getString("product_name"));
-	            product.setProductImage(rs.getString("product_image"));
-	            product.setProductPrice(rs.getInt("product_price"));
-	            searchProductList.add(product);
-	        }
-	    } catch (SQLException e) {
-	        System.out.println("[에러]searchProductByCategory() 메소드의 SQL 오류 = " + e.getMessage());
-	    } finally {
-	        close(con, pstmt, rs);
-	    }
-	    return searchProductList;
-	}	
-
 	//상품 검색 결과 개수
 	public int selectTotalSearchProduct(String keyword, String productType) {
 	    Connection con = null;
@@ -391,71 +362,6 @@ public class ProductDAO extends JdbcDAO	{
 	    }
 	    return totalCount;
 	}
-	//상품 페이지(new)
-	public List<ProductDTO> selectNewProductList()	{
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		List<ProductDTO> newProductList=new ArrayList<ProductDTO>();
-		try	{
-			con=getConnection();
-			
-			String sql="select product_num, product_image, product_name, product_price from product order by product_num desc";
-			pstmt=con.prepareStatement(sql);
-			
-			rs=pstmt.executeQuery();
-			
-		while(rs.next())	{
-			ProductDTO product = new ProductDTO();
-			product.setProductNum(rs.getInt("product_num"));
-			product.setProductImage(rs.getString("product_image"));
-			product.setProductName(rs.getString("product_name"));
-			product.setProductPrice(rs.getInt("product_price"));
-			
-			newProductList.add(product);
-			}
-		}	catch (SQLException e) {
-			System.out.println("[에러t]selectProductList() 메소드의 오류 =");
-		}	finally	{
-			close(con, pstmt, rs);
-		}
-		return newProductList;  
-	}	
-	
-	// 상품 페이지(네일, 페디, 케어)
-	public List<ProductDTO> selectProductByCategory(String productCategory) {
-	    Connection con = null;
-	    PreparedStatement pstmt = null;
-	    ResultSet rs = null;
-	    List<ProductDTO> productList = new ArrayList<ProductDTO>();
-
-	    try {
-	        con = getConnection();
-
-	        String sql = "SELECT product_num, product_image, product_name, product_price FROM product WHERE product_category = ? ORDER BY product_num DESC";
-	        pstmt = con.prepareStatement(sql);
-	        pstmt.setString(1, productCategory);
-
-	        rs = pstmt.executeQuery();
-
-	        while (rs.next()) {
-	            ProductDTO product = new ProductDTO();
-	            // product_num 필드에 대한 설정 추가
-	            product.setProductNum(rs.getInt("product_num"));
-	            product.setProductImage(rs.getString("product_image"));
-	            product.setProductName(rs.getString("product_name"));
-	            product.setProductPrice(rs.getInt("product_price"));
-
-	            productList.add(product);
-	        }
-	    } catch (SQLException e) {
-	        System.out.println("[에러] selectProductByCategory() 메소드의 오류: " + e.getMessage());
-	    } finally {
-	        close(con, pstmt, rs);
-	    }
-	    return productList;
-	}
-	
 	
 	//detail에서 각각의 사진을 받아오는 DAO
 		public List<ProductDTO> selectProductDetail(int productNum) {
@@ -496,6 +402,7 @@ public class ProductDAO extends JdbcDAO	{
 			    }
 			    return productList;
 	}
+		
 		//상품 페이지(네일, 페디, 케어 페이징 처리)
 		public int selectTotalProductByCategory(String productCategory) {
 			Connection con=null;
