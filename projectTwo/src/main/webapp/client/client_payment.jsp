@@ -8,10 +8,30 @@
 <%@page import="xyz.nailro.dao.ClientDAO"%>
 <%@page import="xyz.nailro.dto.ProductDTO"%>
 <%@page import="xyz.nailro.dao.ProductDAO"%>
+<%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%  
-	String clientNum = "ClientNum"; 
+	//session 객체에 저장된 권한 관련 속성값을 반환받아 저장
+ 	// => 로그인 상태의 사용자에게만 글쓰기 권한 제공
+ 	// => 게시글이 비밀글인 경우 로그인 상태의 사용자가 게시글 작성자이거나 관리자인 경우에만 권한 제공
+ 	ClientDTO loginClient=(ClientDTO)session.getAttribute("loginClient");
+	
+ 	if (loginClient == null) {
+        // 로그인되어 있지 않으면 로그인 페이지로 이동하거나 다른 처리를 하도록 구현할 수 있습니다.
+        response.sendRedirect("login.jsp");
+    }
+ 	
+  	//로그인한 사용자의 회원번호 확인
+  	String clientNum = null;
+    if (loginClient != null) {
+        clientNum = String.valueOf(loginClient.getClientNum());
+    }
+
+  	
+ 	
+ 	//주문내역 조회
+	String ClientNum = "ClientNum"; 
 	int startRow = 1; 
 	int endRow = 10; 
 	String search = "order_date"; 
@@ -21,10 +41,9 @@
 	List<OrderDTO> orderList=OrderDAO.getDAO().selectOrderList(startRow, endRow, search, keyword);
     request.setAttribute("orderList", orderList);
     
-  //session 객체에 저장된 권한 관련 속성값을 반환받아 저장
- // => 로그인 상태의 사용자에게만 글쓰기 권한 제공
- // => 게시글이 비밀글인 경우 로그인 상태의 사용자가 게시글 작성자이거나 관리자인 경우에만 권한 제공
- ClientDTO loginmember=(ClientDTO)session.getAttribute("loginClient");
+  
+ 	
+ 	
 %>
     <!DOCTYPE html>
 <html>
@@ -129,7 +148,7 @@ border: 1px solid #DCDCDC;
                     <td><%=order.getOrderPayPrice()%></td>
                     <td><%=order.getOrderDate()%></td>
                     <td>
-                 <form action="review_write.jsp" method="POST">
+                 <form action="review/review_write.jsp" method="POST">
     	<input type="hidden" name="orderNum" value="${order.orderNum}" />
     	<input type="hidden" name="orderProductNum" value="${order.orderProductNum}" />
     	<button type="submit">리뷰 작성</button>
