@@ -314,6 +314,33 @@ public class ReviewDAO extends JdbcDAO {
         }
         return reviewList;
     }
+    
+    //회원번호와 주문번호를 전달받아 리뷰테이블에 리뷰작성상태를 전달받는 메소드
+    public int selectReviewFind(int clientNum, int OrderNum) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int totalCount = 0;
+        try {
+            con = getConnection();
+                String sql = "select review_status from review where review_client_num =? and review_order_num=?";
+                pstmt = con.prepareStatement(sql);
+                pstmt.setInt(1, clientNum);
+                pstmt.setInt(2, OrderNum);
+            rs = pstmt.executeQuery();
+            
+            if(rs.next()) {
+                totalCount = rs.getInt(1);
+            }
+            
+            
+        } catch (SQLException e) {
+            System.out.println("[에러] selectReviewFind() 메소드의 SQL 오류 = " + e.getMessage());
+        } finally {
+            close(con, pstmt, rs);
+        }
+        return totalCount;
+    }
   
 
     

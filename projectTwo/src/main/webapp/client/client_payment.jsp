@@ -1,3 +1,4 @@
+<%@page import="xyz.nailro.dao.ReviewDAO"%>
 <%@page import="java.util.List"%>
 <%@page import="xyz.nailro.dto.CartDTO"%>
 <%@page import="xyz.nailro.dao.CartDAO"%>
@@ -53,6 +54,8 @@
 		endRow=totalrPayReview;
 	}
 	
+	
+	
 	//주문내역 조회 
 	List<OrderDTO> orderList=OrderDAO.getDAO().selectOrderReviewList(startRow, endRow, search, keywords);
     
@@ -80,18 +83,17 @@
 					<td><%=order.getOrderNum()%></td>
 					<td><%=order.getOrderProductName()%></td>
 					<td><%=order.getOrderQuntity() %></td>
-					<%  //System.out.println("order.getOrderQuntity() = " + order.getOrderQuntity()); %>
 					<td><%=order.getOrderPayPrice()%></td>
 					<td><%=order.getOrderDate()%></td>
+					<td><%=order.getOrderStatus()%></td>
 					<td>
-						<% if (order.getOrderStatus().equals("1"))%>상품준비중
-						<% if (order.getOrderStatus().equals("2"))%>배송준비중
-						<% if (order.getOrderStatus().equals("3"))%>배송중
-						<% if (order.getOrderStatus().equals("4"))%>배송완료
-						<% if (order.getOrderStatus().equals("0"))%>주문취소
-					</td>
-					<td>
+					<% int ra =  ReviewDAO.getDAO().selectReviewFind(loginClientNum, Integer.parseInt(order.getOrderNum())); %>
+					<% if(ra>0){ %>
+					<label>리뷰 작성 완료</label>
+					<% } else { %>
 					    <button type="button" onclick="writeReview(<%=order.getOrderProductNum()%>,<%=order.getOrderNum()%>);">리뷰 작성</button>
+					<% }  %>					
+					
                     </td>
                 </tr>
             <% } %>
