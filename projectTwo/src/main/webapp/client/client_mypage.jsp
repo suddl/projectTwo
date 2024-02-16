@@ -4,7 +4,7 @@
 
 <style>
 .welcomeBox {
-	background-image: url("/projectTwo/images/mypage_back.png");
+	background-image: url("<%=request.getContextPath() %>/images/mypage_back.png");
 	width:100%;
 	height: 400px;
 	background-repeat: no-repeat;
