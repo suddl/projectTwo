@@ -16,9 +16,9 @@
 		search="";
 	}
 	
-	String keyword=request.getParameter("keyword");
-	if(keyword==null) {
-		keyword="";
+	String keywords=request.getParameter("keywords");
+	if(keywords==null) {
+		keywords="";
 	}
 	
 	// 페이지 번호
@@ -37,7 +37,7 @@
 	
 	int totalrPayReview=0;
 	
-	totalrPayReview=OrderDAO.getDAO().selectTotalOrderReview(search, keyword, loginClientNum);
+	totalrPayReview=OrderDAO.getDAO().selectTotalOrderReview(search, keywords, loginClientNum);
 	
 	int totalPage=(int)Math.ceil((double)totalrPayReview/pageSize);
 	
@@ -54,7 +54,7 @@
 	}
 	
 	//주문내역 조회 
-	List<OrderDTO> orderList=OrderDAO.getDAO().selectOrderReviewList(startRow, endRow, search, keyword);
+	List<OrderDTO> orderList=OrderDAO.getDAO().selectOrderReviewList(startRow, endRow, search, keywords);
     
     int displayNum=totalrPayReview-(pageNum-1)*pageSize;
     
@@ -113,7 +113,7 @@
 	<div id="page_list">
 		<%
 			String responseUrl=request.getContextPath()+"/index.jsp?group=client&worker=client_payment"
-					+"&pageSize="+pageSize+"&search="+search+"&keyword="+keyword;
+					+"&pageSize="+pageSize+"&search="+search+"&keywords="+keywords;
 		%>
 	
 		<%-- 이전 페이지블럭이 있는 경우에만 링크 제공 --%>
@@ -143,7 +143,7 @@
 		<select name="search">
 			<option value="product_name" <% if(search.equals("product_name")) { %>  selected <% } %>>&nbsp;상품명&nbsp;</option>
 		</select>
-		<input type="text" name="keyword" value="<%=keyword%>">
+		<input type="text" name="keywords" value="<%=keywords%>">
 		<button type="submit">검색</button>
 	</form>
 </div>
@@ -153,6 +153,6 @@
 function writeReview(productNum, orderNum) {
 	location.href="<%=request.getContextPath()%>/index.jsp?group=review&worker=review_write"
 		+"&productNum="+productNum+"&orderNum="+orderNum+"&pageNum=<%=pageNum%>"
-		+"&pageSize=<%=pageSize%>&keyword=<%=keyword%>";	
+		+"&pageSize=<%=pageSize%>&keywords=<%=keywords%>";	
 } 
 </script>
