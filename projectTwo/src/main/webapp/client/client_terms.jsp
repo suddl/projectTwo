@@ -272,6 +272,8 @@ name="form" method="post">
    <br><br>
    <input type="checkbox" id="req"> 개인정보 수집 및 이용에 동의합니다.
    <br>
+   <br>
+   <br>
    <hr>
    </td>
   </tr>
@@ -280,7 +282,7 @@ name="form" method="post">
 </form>
 <form action="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_join" 
 name="form" id="form" method="post">
-   <td align="center" valign="top">
+   <td align="center"  valign="top">
     <input type="button" onclick="chk()" value="동의합니다"/>&nbsp;&nbsp;&nbsp;
     <input type="button" onclick="nochk();return false;" value="동의하지 않습니다"/>    
    </td>
