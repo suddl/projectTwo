@@ -95,8 +95,8 @@ a :hover {
 	         		%>
 	            <a href="<%=url%>">
 					<%=order.getOrderProductName()%>
-					
 					</td>
+					
 					<td><%=order.getOrderQuntity() %></td>
 					<td><%=order.getOrderPayPrice()%></td>
 					<td><%=order.getOrderDate()%></td>

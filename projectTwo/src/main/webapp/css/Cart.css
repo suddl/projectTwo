@@ -121,7 +121,12 @@ vertical-align: middle;
 
 
 
-
+.subject a:hover{
+	text-decoration: underline; 
+	color: pink;
+	font-weight: bold;
+	
+}
 
 
 

@@ -78,7 +78,12 @@ int total = 0;
     <td width=10%><input type="checkbox" name="productOne"  id="productOne" value="<%=cartDTOs.get(i).getCartProduct() %>" onclick="selectOnly(this)" checked></td>
     
   	<%-- 이미지 --%>
-     <td style="text-align: justify;"><img src="<%=request.getContextPath()%><%=cartDTOs.get(i).getCartProductImages()%>" width="150" height="100" >&nbsp;&nbsp; 
+     <td style="text-align: justify;" class="subject"><img src="<%=request.getContextPath()%><%=cartDTOs.get(i).getCartProductImages()%>" width="150" height="100" >&nbsp;&nbsp; 
+     <%
+		String url = request.getContextPath()+"/index.jsp?group=detail&worker=detail"
+   		+"&productNum="+cartDTOs.get(i).getCartProduct();
+		%>
+	<a href="<%=url%>">
      <%=cartDTOs.get(i).getCartProductName() %></td>
   	<input type="hidden" id="productNum" name="productNum" value="<%=cartDTOs.get(i).getCartProduct() %>">
      
