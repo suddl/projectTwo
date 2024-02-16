@@ -10,7 +10,7 @@
 <title>Nailro - Search Product</title>
 <link href="<%=request.getContextPath()%>/css/header.css" type="text/css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/product.css" type="text/css" rel="stylesheet">
-<%	
+<%
 	String category=request.getParameter("productCategory");
 	
 	String sorted="product_num desc";
@@ -63,6 +63,7 @@
 <body>
     <div class="container">
         <h2>검색 결과</h2>
+	       <%if(searchResults==null) { %>
 	<div class="sorting">
 	    <p>
 	       <%if(type!=null) { %>
@@ -87,10 +88,11 @@
 			    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keyword%>&sorted=<%=sorted%>&type=FullColor">풀컬러</a>
 			</div>
 			<% } %>
+			<% } %>
         <div class="prodList">
             <%
               if (searchResults.isEmpty()) { %>
-         	<p>검색 결과가 없습니다.</p>
+         	<h1>검색 결과가 없습니다.</h1>
             <%
                 } else {
                      for (ProductDTO product : searchResults) {
@@ -136,7 +138,7 @@
 			String responseUrl=request.getContextPath()+"/index.jsp?group=product&worker=searchProduct"+"&keyword="+keyword
 					+"&sorted="+sorted+"&type="+type+"&pageSize="+pageSize;
 		%>
-	
+		<% if(searchResults != null && !searchResults.isEmpty()) { %>
 		<%-- 이전 페이지블럭이 있는 경우에만 링크 제공 --%>
 		<% if(startPage>blockSize) { %>
 			<a href="<%=responseUrl%>&pageNum=<%=startPage-blockSize%>">[이전]</a>
@@ -159,6 +161,8 @@
 		<% } else { %>	
 			[다음]
 		<% } %>
+		<% } %>
+		
 	</div> 
 </body>
 </html>
