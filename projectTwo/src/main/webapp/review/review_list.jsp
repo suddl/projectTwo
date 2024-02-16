@@ -146,7 +146,7 @@ List<ReviewDTO> reviewList = ReviewDAO.getDAO().selectReviewListByClientNum(star
 	                <% } %>
 	            </td>
 	        </tr>
-	        <% } %>
+	        <% } %> 
         <% } %>
 	</table>
 </div>
