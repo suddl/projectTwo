@@ -58,7 +58,7 @@
             cursor: pointer;
         }
         .checked {
-            color: yellow;
+            color: pink;
         }
         .star-rating {
     		font-size: 30px;

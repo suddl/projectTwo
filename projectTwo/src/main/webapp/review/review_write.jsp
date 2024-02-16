@@ -69,7 +69,7 @@ td {
 	font-size: 0.5em;
 }
 .checked {
-            color: yellow;
+            color: pink;
         }
 
 </style>
@@ -157,6 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
 
 
 </script>

@@ -8,6 +8,12 @@
 <%@include file="/security/login_check.jspf" %> 
 
 <link href="<%=request.getContextPath()%>/css/list.css" type="text/css" rel="stylesheet">
+<style>
+#starRating {
+	color: pink;
+}
+
+</style>
 <%
 //게시글 검색 기능에 필요한 전달값(검색대상과 검색단어)을 반환받아 저장
 String search=request.getParameter("search");//검색대상
@@ -137,7 +143,7 @@ List<ReviewDTO> reviewList = ReviewDAO.getDAO().selectReviewListByClientNum(star
 	            </td>
 	            <td><%=review.getReviewProductName()%></td>
 	            <td><%=review.getReviewName()%></td>
-	            <td><%=review.getReviewRating()%></td>
+	            <td id="starRating"><%=review.getReviewRating()%></td>
 	            <td>
 	                <% if(currentDate.equals(review.getReviewDate().substring(0, 10))) { %>
 	                    <%=review.getReviewDate().substring(11)%>
