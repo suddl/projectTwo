@@ -96,8 +96,8 @@ int total = 0;
 	String priceP = String.format("%,d",Integer.parseInt(cartDTOs.get(i).getCartProductPrice()) * Integer.parseInt(cartDTOs.get(i).getCartQuantity())); 
       %>
 		     
-		<input type="hidden" id="Cash2<%=i%>" name="" value="<%= cartDTOs.get(i).getCartProductPrice()%>">
-     <td id="Cash<%=i%>" class="rowMiddle"><%=priceP %>원</td>
+		<input type="hidden" id="Cash2<%=cartDTOs.get(i).getCartProduct() %>" name="" value="<%= cartDTOs.get(i).getCartProductPrice()%>">
+     <td id="Cash<%=cartDTOs.get(i).getCartProduct() %>" class="rowMiddle"><%=priceP %>원</td>
   </tr>
   <%
   	}
@@ -171,6 +171,7 @@ var totalAmount = 0;
 //체크박스 클릭 이벤트 핸들러
 document.getElementsByName('productOne').forEach(function (checkbox, index) {
     checkbox.addEventListener('click', function () {
+    	
         var countInput = document.getElementById("cartQuantity" + index);
         var unitPriceElement = document.getElementById("Cash2" + index);
 
@@ -205,26 +206,47 @@ document.getElementsByName('productOne').forEach(function (checkbox, index) {
 
 
 function updateTotalPrice(index) {
-	//수량 변수에 저장
-	var countInput = document.getElementsById("cartQuantity" + index);
-	//상품가격 변수에 저장
-    var unitPriceElement = document.getElementById("Cash2" + index);
-    
-    // 수량 입력 필드와 상품 가격 엘리먼트가 존재하는지 확인
-    if (countInput && unitPriceElement) {
-	
-	//문자열인 수량을 정수로 변환하여 저장
-	var count = parseInt(countInput.value);
-	//정규표현식을 통해 숫자를 제외한 나머지를 빈문자열''을 통해제거
-	var unitPrice = parseInt(unitPriceElement.value.replace(/[^\d]/g, ''));
-    
-    var totalPrice = unitPrice * count;
-    document.getElementById("Cash"+index).innerText = new Intl.NumberFormat('en-US').format(totalPrice) + "원";
-    //unitPriceElement.innerText = new Intl.NumberFormat('en-US').format(totalPrice) + "원";
-    updateTotalPurchaseAmount(); // 총 결제 금액을 업데이트하는 함수 호출
-	
+    var checkboxes = document.getElementsByName("productOne");
+    var selectedItems = []; // 선택된 상품의 번호를 저장할 배열
+    var quantities = []; // 각 상품의 수량을 저장할 배열
+
+    // 각 체크박스에 대한 처리
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            selectedItems.push(checkboxes[i].value);
+            var quantityInput = document.getElementById("cartQuantity" + checkboxes[i].value);
+            quantities.push(quantityInput.value);
+        }
     }
+
+    // 선택된 상품이 없으면 함수 종료
+    if (selectedItems.length === 0) {
+        return;
+    }
+
+    // 선택된 상품들에 대한 처리
+    for (var j = 0; j < selectedItems.length; j++) {
+        var countInput = document.getElementById("cartQuantity" + selectedItems[j]);
+        var unitPriceElement = document.getElementById("Cash2" + selectedItems[j]);
+
+        // 수량 입력 필드와 상품 가격 엘리먼트가 존재하는지 확인
+        if (countInput && unitPriceElement) {
+            // 문자열인 수량을 정수로 변환하여 저장
+            var count = parseInt(countInput.value);
+            // 정규표현식을 통해 숫자를 제외한 나머지를 빈문자열''을 통해 제거
+            var unitPrice = parseInt(unitPriceElement.value.replace(/[^\d]/g, ''));
+
+            var totalPrice = unitPrice * count;
+            document.getElementById("Cash" + selectedItems[j]).innerText = new Intl.NumberFormat('en-US').format(totalPrice) + "원";
+        }
+    }
+
+    updateTotalPurchaseAmount(); // 총 결제 금액을 업데이트하는 함수 호출
 }
+
+
+
+
 
 function countUp(index) {
 	//i번째 수량을 변수에 저장
@@ -251,16 +273,16 @@ function countDown(index) {
 
 function updateTotalPurchaseAmount() {
 	   totalAmount = 0;
-	    var checkboxes = document.getElementsByName('productOne');
+	    var checkboxes = document.getElementsByName("productOne");
 	    
 	    
 	    
 	    for (var i = 0; i < checkboxes.length; i++) {
 	        if (checkboxes[i].checked) {
-	        	var num=$(this).val()
+	        	var num=checkboxes[i].value;
 	        	
 	            var countInput = document.getElementById("cartQuantity" + num);
-	            var unitPriceElement = document.getElementById("Cash2" + i);
+	            var unitPriceElement = document.getElementById("Cash2" + num);
 	            
 	            var count = parseInt(countInput.value);
 	            var unitPrice = parseInt(unitPriceElement.value.replace(/[^\d]/g, ''));
