@@ -12,7 +12,7 @@ REVIEW_CONTENT     NOT NULL VARCHAR2(3000)
 REVIEW_ORDER_NUM            NUMBER         
 REVIEW_DATE                 DATE           
 REVIEW_IMAGE                VARCHAR2(50)   
-REVIEW_RE                   VARCHAR2(4000) 
+REVIEW_STATUS               NUMBER 
 REVIEW_RATING               VARCHAR2(20)   
 REVIEW_PRODUCT_NUM          NUMBER   
 */
@@ -24,7 +24,7 @@ REVIEW_PRODUCT_NUM          NUMBER
 		private int reviewOrderNum;
 		private String reviewDate;
 		private String reviewImage;
-		private String reviewRe; //답글
+		private int reviewStatus; // 리뷰 상태 - 0 : 리뷰 미작성, 1 : 리뷰 작성 완료
 		private String reviewRating;
 		private int reviewProductNum;
 
@@ -96,12 +96,12 @@ REVIEW_PRODUCT_NUM          NUMBER
 			this.reviewImage = reviewImage;
 		}
 
-		public String getReviewRe() {
-			return reviewRe;
+		public int getReviewStatus() {
+			return reviewStatus;
 		}
-
-		public void setReviewRe(String reviewRe) {
-			this.reviewRe = reviewRe;
+		
+		public void setReviewStatus(int reviewStatus) {
+			this.reviewStatus = reviewStatus;
 		}
 
 		public String getReviewRating() {

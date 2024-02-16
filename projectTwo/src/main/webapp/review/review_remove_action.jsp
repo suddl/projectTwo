@@ -41,7 +41,7 @@
 	
 
 	// 리뷰삭제 DAO 호출
-	ReviewDAO.getDAO().DeleteReviewByNum(reviewNum);
+	ReviewDAO.getDAO().deleteReviewByNum(reviewNum);
 	if (review.getReviewImage() != null) {// 리뷰 이미지 파일이 있는 경우
 		// 서버 디렉토리에서 삭제 처리될 게시글의 리뷰 이미지 파일을 삭제 처리
 		new File(request.getServletContext().getRealPath(review.getReviewImage())).delete();

@@ -26,7 +26,7 @@ public class ReviewDAO extends JdbcDAO {
         try {
             con = getConnection();
             String sql = "SELECT review_num, review_client_num, review_subject, review_content, review_order_num, review_date,"
-            		+ " review_image, review_re, review_rating,review_product_num FROM review WHERE review_order_num = ?";
+            		+ " review_image, review_status, review_rating,review_product_num FROM review WHERE review_order_num = ?";
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, productId);
             rs = pstmt.executeQuery();
@@ -39,7 +39,7 @@ public class ReviewDAO extends JdbcDAO {
                 review.setReviewOrderNum(rs.getInt("review_order_num"));
                 review.setReviewDate(rs.getString("review_date"));
                 review.setReviewImage(rs.getString("review_image"));
-                review.setReviewRe(rs.getString("review_re"));
+                review.setReviewStatus(rs.getInt("review_status"));
                 review.setReviewRating(rs.getString("review_rating")); // 새로 추가된 필드 설정
                 review.setReviewProductNum(rs.getInt("review_product_num"));
                 
@@ -82,58 +82,6 @@ public class ReviewDAO extends JdbcDAO {
         }
         return totalCount;
     }
-    // 페이징 처리 관련 정보(시작 행번호와 종료 행번호)와 게시글 검색 기능 관련 정보(검색대상과 검색단어)를 전달받아 REVIEW 테이블에 저장된 행을 검색하여 게시글 목록을 반환하는 메소드
-   
-    public List<ReviewDTO> selectReviewList(int startRow, int endRow, String search, String keyword) {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        List<ReviewDTO> reviewList = new ArrayList<ReviewDTO>();
-        try {
-            con = getConnection();
-            String sql = "";
-            if (keyword.equals("")) {
-                sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num, client.client_name, "
-                		+ "review.review_subject, review.review_content, review.review_date, review.review_image, "
-                		+ "review.review_re, review.review_rating, review.review_product_num "
-                		+ "FROM review INNER JOIN client ON review.review_client_num = client.client_num ORDER BY review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
-                pstmt = con.prepareStatement(sql);
-                pstmt.setInt(1, startRow);
-                pstmt.setInt(2, endRow);
-                rs = pstmt.executeQuery();
-            } else {
-                sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num,"
-                		+ " client.client_name, review.review_subject, review.review_content, review.review_date, "
-                		+ "review.review_image, review.review_re, review.review_rating, review.review_product_num "
-                		+ "FROM review INNER JOIN client ON review.review_client_num = client.client_num WHERE " + search + " LIKE '%' || ? || '%' ORDER BY review.review_date DESC, review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
-                pstmt = con.prepareStatement(sql);
-                pstmt.setString(1, keyword);
-                pstmt.setInt(2, startRow);
-                pstmt.setInt(3, endRow);
-                rs = pstmt.executeQuery();
-            }
-            while (rs.next()) {
-                ReviewDTO review = new ReviewDTO();
-                review.setReviewNum(rs.getInt("review_num"));
-                review.setReviewClientNum(rs.getInt("review_client_num"));
-                review.setReviewName(rs.getString("client_name")); // client_name 컬럼을 reviewName 필드에 설정
-                review.setReviewSubject(rs.getString("review_subject"));
-                review.setReviewContent(rs.getString("review_content"));
-                review.setReviewDate(rs.getString("review_date"));
-                review.setReviewImage(rs.getString("review_image"));
-                review.setReviewRe(rs.getString("review_re"));
-                review.setReviewRating(rs.getString("review_rating"));
-                review.setReviewProductNum(rs.getInt("review_product_num"));
-                reviewList.add(review);
-            }
-        } catch (SQLException e) {
-            System.out.println("[에러] selectReviewList() 메소드의 SQL 오류 = " + e.getMessage());
-        } finally {
-            close(con, pstmt, rs);
-        }
-        return reviewList;
-    }
-    
     
     // REVIEW_SEQ 시퀸스의 다음값(정수값)을 검색하여 반환하는 메소드
     public int selectReviewNextNum() {
@@ -163,17 +111,15 @@ public class ReviewDAO extends JdbcDAO {
         int rows = 0;
         try {
             con = getConnection();
-            String sql = "INSERT INTO review (review_num, review_client_num, review_subject, review_content, review_order_num, review_date,"
-            		+ " review_image, review_re, review_rating, review_product_num) VALUES (review_seq.nextval, ?, ?, ?, ?, SYSDATE, ?, ?, ?,?)";
+            String sql = "INSERT INTO review VALUES (review_seq.nextval, ?, ?, ?, ?, SYSDATE, ?, 1, ?,?)";
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, review.getReviewClientNum());
             pstmt.setString(2, review.getReviewSubject());
             pstmt.setString(3, review.getReviewContent());
             pstmt.setInt(4, review.getReviewOrderNum());
             pstmt.setString(5, review.getReviewImage());
-            pstmt.setString(6, review.getReviewRe());
-            pstmt.setString(7, review.getReviewRating());
-            pstmt.setInt(8, review.getReviewProductNum());
+            pstmt.setString(6, review.getReviewRating());
+            pstmt.setInt(7, review.getReviewProductNum());
             rows = pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("[에러] insertReview() 메소드의 SQL 오류 = " + e.getMessage());
@@ -191,7 +137,7 @@ public class ReviewDAO extends JdbcDAO {
         try {
             con = getConnection();
             String sql = "SELECT review_num, review_client_num, review_subject, review_content, review_order_num, review_date, review_image, "
-            		+ "review_re, review_rating,review_product_num FROM review WHERE review_num = ?";
+            		+ "review_status, review_rating,review_product_num FROM review WHERE review_num = ?";
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, reviewNum);
             rs = pstmt.executeQuery();
@@ -204,7 +150,7 @@ public class ReviewDAO extends JdbcDAO {
                 review.setReviewOrderNum(rs.getInt("review_order_num"));
                 review.setReviewDate(rs.getString("review_date"));
                 review.setReviewImage(rs.getString("review_image"));
-                review.setReviewRe(rs.getString("review_re"));
+                review.setReviewStatus(rs.getInt("review_status"));
                 review.setReviewRating(rs.getString("review_rating")); // 새로 추가된 필드 설정
                 review.setReviewProductNum(rs.getInt("review_product_num"));
             }
@@ -250,7 +196,7 @@ public class ReviewDAO extends JdbcDAO {
     
     
     //리뷰삭제 DAO
-    public int DeleteReviewByNum (int reviewNum) {
+    public int deleteReviewByNum (int reviewNum) {
         Connection con = null;
         PreparedStatement pstmt = null;
         int rows = 0;
@@ -269,65 +215,6 @@ public class ReviewDAO extends JdbcDAO {
         return rows;
     }
     
-    /*
-    //detail 페이지에서 상품코드로 조인하여 관련된 리뷰만 불러오는 DAO
-    public List<ReviewDTO> selectProductRevie(int startRow, int endRow, String search, String keyword, int productNum) {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        List<ReviewDTO> reviewList = new ArrayList<ReviewDTO>();
-        try {
-            con = getConnection();
-            String sql = "";
-            if (keyword.equals("")) {
-                sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num, client.client_name, "
-                		+ "review.review_subject, review.review_content, review.review_date, review.review_image, "
-                		+ "review.review_re, review.review_rating, review.review_product_num "
-                		+ "FROM review INNER JOIN client ON review.review_client_num = client.client_num ORDER BY review.review_num DESC) r) WHERE review_product_num = ? and rn BETWEEN ? AND ?";
-                pstmt = con.prepareStatement(sql);
-                pstmt.setInt(1, productNum);
-                pstmt.setInt(2, startRow);
-                pstmt.setInt(3, endRow);
-            
-          
-            } else {
-                sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num,"
-                		+ " client.client_name, review.review_subject, review.review_content, review.review_date, "
-                		+ "review.review_image, review.review_re, review.review_rating, review.review_product_num "
-                		+ "FROM review INNER JOIN client ON review.review_client_num = client.client_num WHERE review_product_num = ? and " + search + " LIKE '%' || ? || '%' ORDER BY review.review_date DESC, review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
-                
-            pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, productNum);
-            pstmt.setString(2, keyword);
-            pstmt.setInt(3, startRow);
-            pstmt.setInt(4, endRow);
-            
-            }
-            rs = pstmt.executeQuery();
-            while (rs.next()) {
-                ReviewDTO review = new ReviewDTO();
-                review.setReviewNum(rs.getInt("review_num"));
-                review.setReviewClientNum(rs.getInt("review_client_num"));
-                review.setReviewName(rs.getString("client_name")); // client_name 컬럼을 reviewName 필드에 설정
-                review.setReviewSubject(rs.getString("review_subject"));
-                review.setReviewContent(rs.getString("review_content"));
-                review.setReviewDate(rs.getString("review_date"));
-                review.setReviewImage(rs.getString("review_image"));
-                review.setReviewRe(rs.getString("review_re"));
-                review.setReviewRating(rs.getString("review_rating"));
-                review.setReviewProductNum(rs.getInt("review_product_num"));
-                reviewList.add(review);
-            } 
-        } catch (SQLException e) {
-            System.out.println("[에러] selectReviewList() 메소드의 SQL 오류 = " + e.getMessage());
-        } finally {
-            close(con, pstmt, rs);
-        }
-        return reviewList;
-    }
-    */
-    
-
     //detail페이지에서 하단에 productNum으로 관련 review만 출력하는 dao
     public List<ReviewDTO> selectProductReviewsForProduct(int productNum) {
         Connection con = null;
@@ -338,7 +225,7 @@ public class ReviewDAO extends JdbcDAO {
             con = getConnection();
             String sql = "SELECT review.review_num, review.review_client_num, client.client_name, " +
                         "review.review_subject, review.review_content, review.review_date, review.review_image, " +
-                        "review.review_re, review.review_rating, review.review_product_num " +
+                        "review.review_status, review.review_rating, review.review_product_num " +
                         "FROM review INNER JOIN client ON review.review_client_num = client.client_num " +
                         "WHERE review.review_product_num = ? " +
                         "ORDER BY review.review_num DESC";
@@ -356,7 +243,7 @@ public class ReviewDAO extends JdbcDAO {
                 review.setReviewContent(rs.getString("review_content"));
                 review.setReviewDate(rs.getString("review_date"));
                 review.setReviewImage(rs.getString("review_image"));
-                review.setReviewRe(rs.getString("review_re"));
+                review.setReviewStatus(rs.getInt("review_status"));
                 review.setReviewRating(rs.getString("review_rating"));
                 review.setReviewProductNum(rs.getInt("review_product_num"));
                 reviewList.add(review);
@@ -381,7 +268,7 @@ public class ReviewDAO extends JdbcDAO {
             if (keyword.equals("")) {
                 sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num, client.client_name, "
                         + "review.review_subject, review.review_content, review.review_date, review.review_image, "
-                        + "review.review_re, review.review_rating, review.review_product_num "
+                        + "review.review_status, review.review_rating, review.review_product_num "
                         + "FROM review INNER JOIN client ON review.review_client_num = client.client_num WHERE review.review_client_num = ? "
                         + "ORDER BY review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
                 pstmt = con.prepareStatement(sql);
@@ -391,7 +278,7 @@ public class ReviewDAO extends JdbcDAO {
             } else {
                 sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num,"
                         + " client.client_name, review.review_subject, review.review_content, review.review_date, "
-                        + "review.review_image, review.review_re, review.review_rating, review.review_product_num "
+                        + "review.review_image, review.review_status, review.review_rating, review.review_product_num "
                         + "FROM review INNER JOIN client ON review.review_client_num = client.client_num "
                         + "WHERE review.review_client_num = ? AND " + search + " LIKE '%' || ? || '%' "
                         + "ORDER BY review.review_date DESC, review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
@@ -412,7 +299,7 @@ public class ReviewDAO extends JdbcDAO {
                 review.setReviewContent(rs.getString("review_content"));
                 review.setReviewDate(rs.getString("review_date"));
                 review.setReviewImage(rs.getString("review_image"));
-                review.setReviewRe(rs.getString("review_re"));
+                review.setReviewStatus(rs.getInt("review_status"));
                 review.setReviewRating(rs.getString("review_rating"));
                 review.setReviewProductNum(rs.getInt("review_product_num"));
                 reviewList.add(review);
