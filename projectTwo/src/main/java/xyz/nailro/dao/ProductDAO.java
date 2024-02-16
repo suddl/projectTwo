@@ -302,10 +302,6 @@ public class ProductDAO extends JdbcDAO	{
 	            searchProductList.add(product);
 	        }
 
-	        // 검색 결과가 없는 경우
-	        if (searchProductList.isEmpty()) {
-	            System.out.println("검색 결과가 없습니다");
-	        }
 	    } catch (SQLException e) {
 	        System.out.println("[에러]searchProduct() 메소드의 SQL 오류 = " + e.getMessage());
 	    } finally {
