@@ -67,7 +67,7 @@
 	            	</a>
 	            </div>
 	            <div class="slider s2">
-		            <a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=100">
+		            <a href="<%=request.getContextPath()%>/index.jsp?group=detail&worker=detail&productNum=103">
 		            	<img src="<%= request.getContextPath() %>/product_images/basic_n.jpg" alt="베이직 네일" width="350px" height="470px" />
 		            </a>
 	            </div>
