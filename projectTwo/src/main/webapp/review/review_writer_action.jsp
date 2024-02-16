@@ -35,9 +35,7 @@
 	}
 	
 	int orderNum = Integer.parseInt(multipartRequest.getParameter("orderNum"));
-	System.out.println("orderNum =" + orderNum);
 	int productNum = Integer.parseInt(multipartRequest.getParameter("productNum"));
-	System.out.println("productNum =" + productNum);
 	   
     ReviewDTO review = new ReviewDTO();
     review.setReviewOrderNum(orderNum);  

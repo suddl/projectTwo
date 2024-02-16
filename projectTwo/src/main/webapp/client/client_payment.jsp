@@ -62,31 +62,88 @@
 <link href="<%=request.getContextPath()%>/css/clientPayment.css" type="text/css" rel="stylesheet">
 <div class="clientpayment">
     <h2>주문내역</h2>
+    <table class="table" style="margin: 0 auto; width: 80%;">
+        <thead>
+            <tr>
+                <th width="100">주문번호</th>
+                <th width="400">상품명</th>
+                <th width="100">수량</th>
+                <th width="100">총금액</th>
+                <th width="200">주문일</th>
+                <th width="100">리뷰 작성</th>
+            </tr>
+        </thead>
+        <tbody>
+             <% for(OrderDTO order : orderList) { %>
+                <tr>
+					<td><%=order.getOrderNum()%></td>
+					<td><%=order.getOrderProductName()%></td>
+					<td><%=order.getOrderQuntity() %></td>
+					<%  //System.out.println("order.getOrderQuntity() = " + order.getOrderQuntity()); %>
+					<td><%=order.getOrderPayPrice()%></td>
+					<td><%=order.getOrderDate()%></td>
+					<td>
+					    <button type="button" onclick="writeReview(<%=order.getOrderProductNum()%>,<%=order.getOrderNum()%>);">리뷰 작성</button>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+	    
+	<%
+		//하나의 페이지블럭에 출력될 페이지번호의 갯수 설정
+		int blockSize=5;
 	
-	    <table class="table" style="margin: 0 auto; width: 80%;">
-	        <thead>
-	            <tr>
-	                <th width="100">주문번호</th>
-	                <th width="500">상품명</th>
-	                <th width="100">총금액</th>
-	                <th width="200">주문일</th>
-	                <th width="100">리뷰 작성</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	             <% for(OrderDTO order : orderList) { %>
-	                <tr>
-						<td><%=order.getOrderNum()%></td>
-						<td><%=order.getOrderProductName()%></td>
-						<td><%=order.getOrderPayPrice()%></td>
-						<td><%=order.getOrderDate()%></td>
-						<td>
-						    <button type="button" onclick="writeReview(<%=order.getOrderProductNum()%>,<%=order.getOrderNum()%>);">리뷰 작성</button>
-	                    </td>
-	                </tr>
-	            <% } %>
-	        </tbody>
-	    </table>
+		//페이지블럭에 출력될 시작 페이지번호를 계산하여 저장
+		//ex)1Block : 1, 2Block : 6, 3Block : 11, 4Block : 16,...
+		int startPage=(pageNum-1)/blockSize*blockSize+1;
+		        
+		//페이지블럭에 출력될 종료 페이지번호를 계산하여 저장
+		//ex)1Block : 5, 2Block : 10, 3Block : 15, 4Block : 20,...
+		int endPage=startPage+blockSize-1;
+		
+		//종료 페이지번호가 페이지 총갯수보다 큰 경우 종료 페이지번호 변경 
+		if(endPage>totalPage) {
+			endPage=totalPage;
+		}
+	%>
+	
+	<div id="page_list">
+		<%
+			String responseUrl=request.getContextPath()+"/index.jsp?group=client&worker=client_payment"
+					+"&pageSize="+pageSize+"&search="+search+"&keyword="+keyword;
+		%>
+	
+		<%-- 이전 페이지블럭이 있는 경우에만 링크 제공 --%>
+		<% if(startPage>blockSize) { %>
+			<a href="<%=responseUrl%>&pageNum=<%=startPage-blockSize%>">[이전]</a>
+		<% } else { %>	
+			[이전]
+		<% } %>
+		
+		<% for(int i=startPage;i<=endPage;i++) { %>
+			<%-- 요청 페이지번호와 출력된 페이지번호가 같지 않은 경우에만 링크 제공 --%>
+			<% if(pageNum != i) { %>
+				<a href="<%=responseUrl%>&pageNum=<%=i%>">[<%=i %>]</a>
+			<% } else { %>
+				[<%=i %>]
+			<% } %>
+		<% } %>
+		
+		<%-- 다음 페이지블럭이 있는 경우에만 링크 제공 --%>
+		<% if(endPage!=totalPage) { %>
+			<a href="<%=responseUrl%>&pageNum=<%=startPage+blockSize%>">[다음]</a>
+		<% } else { %>	
+			[다음]
+		<% } %>
+	</div>
+	<form action="<%=request.getContextPath() %>/index.jsp?group=client&worker=client_payment" method="post">
+		<select name="search">
+			<option value="product_name" <% if(search.equals("product_name")) { %>  selected <% } %>>&nbsp;상품명&nbsp;</option>
+		</select>
+		<input type="text" name="keyword" value="<%=keyword%>">
+		<button type="submit">검색</button>
+	</form>
 </div>
 
 
