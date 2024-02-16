@@ -190,16 +190,16 @@ document.getElementsByName('productOne').forEach(function (checkbox) {
         updateTotalPrice(checkbox.value);
 
         var totalAmountElement = document.getElementById("NumMoney");
-        totalAmountElement.innerText = new Intl.NumberFormat('en-US').format(totalAmount) + "원";
+        totalAmountElement.innerText = new Intl.NumberFormat('ko-KR').format(totalAmount) + "원";
 
         if (totalAmount > 50000) {
             document.getElementById("transMoney").innerHTML = "0";
             var AlltotalMoney = document.getElementById("NumMoneyALL");
-            AlltotalMoney.innerText = new Intl.NumberFormat('en-US').format(totalAmount) + "원";
+            AlltotalMoney.innerText = new Intl.NumberFormat('ko-KR').format(totalAmount) + "원";
         } else {
             document.getElementById("transMoney").innerHTML = "3,000";
             var AlltotalMoney = document.getElementById("NumMoneyALL");
-            AlltotalMoney.innerText = new Intl.NumberFormat('en-US').format(totalAmount + 3000) + "원";
+            AlltotalMoney.innerText = new Intl.NumberFormat('ko-KR').format(totalAmount + 3000) + "원";
         }
     });
 });
@@ -214,24 +214,25 @@ function updateTotalPrice() {
     var quantities = []; // 각 상품의 수량을 저장할 배열
 
     // 선택된 상품들에 대한 처리
-    for (var i = 0; i < checkboxes.length; i++) {
-        var countInput = document.getElementById("cartQuantity" + checkboxes[i].value);
-        var unitPriceElement = document.getElementById("Cash2" + checkboxes[i].value);
+    for (var j = 0; j < checkboxes.length; j++) {
+        var countInput = document.getElementById("cartQuantity" + checkboxes[j].value);
+        var unitPriceElement = document.getElementById("Cash2" + checkboxes[j].value);
 
         // 수량 입력 필드와 상품 가격 엘리먼트가 존재하는지 확인
         if (countInput && unitPriceElement) {
             // 문자열인 수량을 정수로 변환하여 저장
             var count = parseInt(countInput.value);
-            // 정규표현식을 통해 숫자를 제외한 나머지를 빈문자열''을 통해 제거
-            var unitPrice = parseInt(unitPriceElement.value.replace(/[^\d]/g, ''));
+            // 정규표현식을 통해 숫자를 제외한 나머지를 빈문자열""을 통해 제거
+            var unitPrice = parseInt(unitPriceElement.value.replace(/[^\d]/g, ""));
 
             var totalPrice = unitPrice * count;
-            document.getElementById("Cash" + checkboxes[i].value).innerText = new Intl.NumberFormat('en-US').format(totalPrice) + "원";
+            document.getElementById("Cash" + checkboxes[j].value).innerText = new Intl.NumberFormat('ko-KR').format(totalPrice) + "원";
         }
     }
 
     updateTotalPurchaseAmount(); // 총 결제 금액을 업데이트하는 함수 호출
 }
+
 
 
 
@@ -280,17 +281,17 @@ function updateTotalPurchaseAmount() {
 	    }
 	    
 	    var totalAmountElement = document.getElementById("NumMoney");
-	    totalAmountElement.innerText = new Intl.NumberFormat('en-US').format(totalAmount) + "원";
+	    totalAmountElement.innerText = new Intl.NumberFormat('ko-KR').format(totalAmount) + "원";
 	    
 	    
 	    if(totalAmount>50000 || totalAmount===0){
 			 document.getElementById("transMoney").innerHTML = "0";
 			 var AlltotalMoney = document.getElementById("NumMoneyALL");
-			 AlltotalMoney.innerText = new Intl.NumberFormat('en-US').format(totalAmount) + "원";
+			 AlltotalMoney.innerText = new Intl.NumberFormat('ko-KR').format(totalAmount) + "원";
 		}else{
 			 document.getElementById("transMoney").innerHTML = "3,000";
 			 var AlltotalMoney = document.getElementById("NumMoneyALL");
-			 AlltotalMoney.innerText = new Intl.NumberFormat('en-US').format(totalAmount+3000) + "원";
+			 AlltotalMoney.innerText = new Intl.NumberFormat('ko-KR').format(totalAmount+3000) + "원";
 		}
 	    
 	    
