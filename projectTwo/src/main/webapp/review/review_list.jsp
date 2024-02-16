@@ -130,6 +130,7 @@ List<ReviewDTO> reviewList = ReviewDAO.getDAO().selectReviewListByClientNum(star
         <% } else { %>
 	        <% for(ReviewDTO review : reviewList) { %>
 	        <tr>
+	        
 	            <td><%=displayNum %></td>
 	            <% displayNum--; %>
 	            
@@ -141,7 +142,16 @@ List<ReviewDTO> reviewList = ReviewDAO.getDAO().selectReviewListByClientNum(star
 	         %>
 	         <a href="<%=url%>"><%=review.getReviewSubject() %></a>
 	            </td>
-	            <td><%=review.getReviewProductName()%></td>
+	            
+	            <td>
+	             <%
+	            String url2=request.getContextPath()+"/index.jsp?group=detail&worker=detail"
+	               +"&productNum="+review.getReviewProductNum();
+	         	%>
+	            <a href="<%=url2%>"><%=review.getReviewProductName()%></a>
+	            </td>
+	            
+	            
 	            <td><%=review.getReviewName()%></td>
 	            <td id="starRating"><%=review.getReviewRating()%></td>
 	            <td>
