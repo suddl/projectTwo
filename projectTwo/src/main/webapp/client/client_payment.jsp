@@ -147,13 +147,7 @@
 			[다음]
 		<% } %>
 	</div>
-	<form action="<%=request.getContextPath() %>/index.jsp?group=client&worker=client_payment" method="post">
-		<select name="search">
-			<option value="product_name" <% if(search.equals("product_name")) { %>  selected <% } %>>&nbsp;상품명&nbsp;</option>
-		</select>
-		<input type="text" name="keywords" value="<%=keywords%>">
-		<button type="submit">검색</button>
-	</form>
+	
 </div>
 
 

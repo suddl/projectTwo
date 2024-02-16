@@ -124,7 +124,7 @@ return;
 
 <div style="border: 1px solid black; border-radius: 20px;  width: 30%; margin:0 auto; background-color: #DCDCDC; margin-top:30px;
 padding: 30px;">
-<p class="money" >총 상품금액 </p> <span id="NumMoney">  <%=String.format("%,d", total)%> 원</span><br>
+<p class="money" style="font-size: 23px; ">총 상품금액 </p>&nbsp;&nbsp;&nbsp; <span id="NumMoney" >  <%=String.format("%,d", total)%> 원</span><br>
  
 <p class="money" > 배송비</p> <span id="transMoney" >
  <% if(total>=50000){ %> 
@@ -134,6 +134,8 @@ padding: 30px;">
 	<% } %>
  
  </span> 원
+<br><br><br>
+<div style="font-size: 15px;">50,000원 이상 결제시 배송비 무료</div> 
 <hr>
 
 <%-- 결제금액 출력 --%>
