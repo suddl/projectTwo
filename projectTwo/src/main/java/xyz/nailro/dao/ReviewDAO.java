@@ -256,7 +256,8 @@ public class ReviewDAO extends JdbcDAO {
         return reviewList;
     }
 
-    //review_list 페이지에서 내가 작성한 리뷰만 불러오는 dao
+
+  //review_list에 출력
     public List<ReviewDTO> selectReviewListByClientNum(int startRow, int endRow, String search, String keyword, int clientNum) {
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -268,18 +269,19 @@ public class ReviewDAO extends JdbcDAO {
             if (keyword.equals("")) {
                 sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num, client.client_name, "
                         + "review.review_subject, review.review_content, review.review_date, review.review_image, "
-                        + "review.review_status, review.review_rating, review.review_product_num "
-                        + "FROM review INNER JOIN client ON review.review_client_num = client.client_num WHERE review.review_client_num = ? "
+                        + "review.review_status, review.review_rating, review.review_product_num, product.product_name "
+                        + "FROM review INNER JOIN client ON review.review_client_num = client.client_num inner join product on review.review_product_num=product.product_num "
+                        + "WHERE review.review_client_num = ? "
                         + "ORDER BY review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
                 pstmt = con.prepareStatement(sql);
                 pstmt.setInt(1, clientNum);
                 pstmt.setInt(2, startRow);
                 pstmt.setInt(3, endRow);
             } else {
-                sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num,"
-                        + " client.client_name, review.review_subject, review.review_content, review.review_date, "
-                        + "review.review_image, review.review_status, review.review_rating, review.review_product_num "
-                        + "FROM review INNER JOIN client ON review.review_client_num = client.client_num "
+                sql = "SELECT * FROM (SELECT ROWNUM rn, r.* FROM (SELECT review.review_num, review.review_client_num, client.client_name, "
+                        + "review.review_subject, review.review_content, review.review_date, review.review_image, "
+                        + "review.review_status, review.review_rating, review.review_product_num, product.product_name "
+                        + "FROM review INNER JOIN client ON review.review_client_num = client.client_num inner join product on review.review_product_num=product.product_num "
                         + "WHERE review.review_client_num = ? AND " + search + " LIKE '%' || ? || '%' "
                         + "ORDER BY review.review_date DESC, review.review_num DESC) r) WHERE rn BETWEEN ? AND ?";
                 pstmt = con.prepareStatement(sql);
@@ -302,6 +304,7 @@ public class ReviewDAO extends JdbcDAO {
                 review.setReviewStatus(rs.getInt("review_status"));
                 review.setReviewRating(rs.getString("review_rating"));
                 review.setReviewProductNum(rs.getInt("review_product_num"));
+                review.setReviewProductName(rs.getString("product_name"));
                 reviewList.add(review);
             }
         } catch (SQLException e) {
@@ -311,6 +314,7 @@ public class ReviewDAO extends JdbcDAO {
         }
         return reviewList;
     }
+  
 
     
     }

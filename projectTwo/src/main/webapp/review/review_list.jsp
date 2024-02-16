@@ -92,6 +92,7 @@ List<ReviewDTO> reviewList = ReviewDAO.getDAO().selectReviewListByClientNum(star
 <form action="<%=request.getContextPath() %>/index.jsp?group=review&worker=review_writer_action" method="post" id="reviewForm" name="review">
 <div id="review_list">
     <h1>REVIEW(<%=totalReview %>)</h1>
+    <h6>제목을 클릭하시면 작성한 리뷰를 확인하실 수 있습니다.</h6>
     <div style="text-align: right;">
 		게시글갯수 : 
 		<select id="reviewCount">
@@ -107,7 +108,8 @@ List<ReviewDTO> reviewList = ReviewDAO.getDAO().selectReviewListByClientNum(star
     <table class="review_list">
         <tr>
             <th width="100">글번호</th>
-            <th width="500">제목</th>
+            <th width="300">제목</th>
+            <th width="300">상품명</th>
             <th width="100">작성자</th>
             <th width="100">평점</th>
             <th width="200">작성일</th>
@@ -133,6 +135,7 @@ List<ReviewDTO> reviewList = ReviewDAO.getDAO().selectReviewListByClientNum(star
 	         %>
 	         <a href="<%=url%>"><%=review.getReviewSubject() %></a>
 	            </td>
+	            <td><%=review.getReviewProductName()%></td>
 	            <td><%=review.getReviewName()%></td>
 	            <td><%=review.getReviewRating()%></td>
 	            <td>

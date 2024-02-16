@@ -19,6 +19,7 @@ REVIEW_PRODUCT_NUM          NUMBER
 		private int reviewNum;
 		private int reviewClientNum;
 		private String reviewName; //client 테이블의 회원이름(NAME 컬럼)을 저장하기 위한 필드 - 작성자이름
+		private String reviewProductName; //product 테이블의 상품명을 저장하기 위한 필드
 		private String reviewSubject;
 		private String reviewContent;
 		private int reviewOrderNum;
@@ -54,6 +55,14 @@ REVIEW_PRODUCT_NUM          NUMBER
 
 		public void setReviewName(String reviewName) {
 			this.reviewName = reviewName;
+		}
+
+		public String getReviewProductName() {
+			return reviewProductName;
+		}
+
+		public void setReviewProductName(String reviewProductName) {
+			this.reviewProductName = reviewProductName;
 		}
 
 		public String getReviewSubject() {
@@ -99,7 +108,7 @@ REVIEW_PRODUCT_NUM          NUMBER
 		public int getReviewStatus() {
 			return reviewStatus;
 		}
-		
+
 		public void setReviewStatus(int reviewStatus) {
 			this.reviewStatus = reviewStatus;
 		}
@@ -119,6 +128,6 @@ REVIEW_PRODUCT_NUM          NUMBER
 		public void setReviewProductNum(int reviewProductNum) {
 			this.reviewProductNum = reviewProductNum;
 		}
-
+		
 		
 }
