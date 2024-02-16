@@ -21,12 +21,12 @@
 	}else if(keyword.equals("배송준비중")){
 		keyword= String.valueOf(2);
 		keywords = "배송준비중";
-	}else if(keyword.equals("배송완료")){
-		keyword= String.valueOf(3);
-		keywords = "배송완료";
 	}else if(keyword.equals("배송중")){
-		keyword= String.valueOf(4);
+		keyword= String.valueOf(3);
 		keywords = "배송중";
+	}else if(keyword.equals("배송완료")){
+		keyword= String.valueOf(4);
+		keywords = "배송완료";
 	}else if(keyword.equals("주문취소")){
 		keyword= String.valueOf(0);
 		keywords = "주문취소";
@@ -103,13 +103,13 @@
 		<th width="150">주문번호</th>
 		<th width="100">아이디</th>
 		<th width="150">결제번호</th> 
-		<th width="250">상품명</th> 
+		<th width="280">상품명</th> 
 		<th width="150">구매수량</th> 
-		<th width="150">전화번호</th>
+		<th width="250">전화번호</th>
 		<th width="200">결제방법</th>
-		<th width="150">결제금액</th>
+		<th width="200">결제금액</th>
 		<th width="150">주문처리상태</th>
-		<th width="150">주문일</th>
+		<th width="200">주문일</th>
 	</tr>
 	<% for(OrderDTO order : orderList) { %>
 	<tr align="center">
@@ -122,19 +122,19 @@
 		<td width="150">
 		<%=order.getOrderPayNum() %>
 		</td>
-		<td width="250">
+		<td width="280">
 		<%=order.getOrderProductName() %>
 		</td>
 		<td width="150">
 		<%=order.getOrderQuntity() %>개
 		</td>
-		<td width="200">
+		<td width="250">
 		<%=order.getOrderPhone() %>
 		</td>
 		<td width="200">
 		<%=order.getOrderPayMethod() %>
 		</td>
-		<td width="150">
+		<td width="200">
 		<%=order.getOrderPayPrice() %>원
 		</td>
 		<td width="150">
@@ -146,13 +146,12 @@
                   <option value="0" <% if (order.getOrderStatus().equals("0")) { %> selected <% } %>>&nbsp;주문취소&nbsp;</option>
 			</select>
 		</td>
-		<td width="150">
+		<td width="200">
 		<%=order.getOrderDate() %>
 		</td>
 	</tr>
 	<% } %>
 </table>
-</div>
 
 <%-- 페이지번호 출력 및 링크 제공 - 블럭화 처리 --%>
 	<%
@@ -203,6 +202,7 @@
 			[다음]
 		<% } %>
 	</div>
+</div>	
 </form>
 
 <form action="<%=request.getContextPath() %>/index.jsp?group=admin&worker=order_list" method="post">
