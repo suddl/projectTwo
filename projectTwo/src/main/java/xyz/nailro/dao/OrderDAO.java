@@ -94,8 +94,9 @@ public class OrderDAO extends JdbcDAO{
 				String sql="select count(*) from orders";
 				pstmt=con.prepareStatement(sql);
 			} else {//검색 기능을 사용한 경우
-				String sql="select count(*) from orders left join client on order_client_num=client_num"
-						+ " left join payment on order_client_num=pay_client_num where "+search+" like '%'||?||'%'";
+				String sql="select count(*) from orders join client on order_client_num=client_num"
+						+ " join payment on order_pay_num=pay_num where "+search+" like '%'||?||'%'";
+				
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1, keyword);
 			}
