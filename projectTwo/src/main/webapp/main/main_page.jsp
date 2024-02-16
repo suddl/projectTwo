@@ -24,7 +24,7 @@
 	            </a>
             </div>
             <div class="imageSlider s2">
-            	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_terms">
+            	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_login">
            			<img src="<%= request.getContextPath() %>/images/newJoin.png" width="100%" height="600px">
            		</a>
            	</div>

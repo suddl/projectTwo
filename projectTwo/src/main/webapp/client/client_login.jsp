@@ -69,7 +69,7 @@
 	font-weight: bold;
 }
 
-a:hover {
+#search a:hover {
 	color: blue;
 	text-decoration: underline;
 }
@@ -91,7 +91,7 @@ a:hover {
 	<div id="login_btn">로그인</div>
 </form>
 <div id="search">
-	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=search_id">아이디 찾기</a>
+	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=search_id" >아이디 찾기</a>
 </div>
 <div id="message"><%=message %></div>
 

@@ -13,9 +13,8 @@
 	}
 	
 	String type=request.getParameter("type");
-	if(type==null) {
-		type="";
-	}
+
+	
 
     int pageNum = 1;
     if (request.getParameter("pageNum") != null) {
@@ -128,10 +127,17 @@
 	%>
 	
 	<div id="page_list">
-		<%
-		String responseUrl = request.getContextPath() + "/index.jsp?group=product&worker=products&category="+category+"&sorted="+sorted+"&type="+type+"&pageSize="+pageSize;
-		%>
-	
+		<%	
+		String responseUrl = null;
+		if(type!=null)	{
+			responseUrl=request.getContextPath()+"/index.jsp?group=product&worker=products"
+					+"&category="+category+"&sorted="+sorted+"&type="+type+"&pageSize="+pageSize;
+		} else {
+			responseUrl=request.getContextPath()+"/index.jsp?group=product&worker=products"
+					+"&category="+category+"&sorted="+sorted+"&pageSize="+pageSize;
+		}
+	%>
+
 		<%-- 이전 페이지블럭이 있는 경우에만 링크 제공 --%>
 		<% if(startPage>blockSize) { %>
 			<a href="<%=responseUrl%>&pageNum=<%=startPage-blockSize%>">[이전]</a>
