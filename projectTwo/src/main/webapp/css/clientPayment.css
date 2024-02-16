@@ -1,5 +1,23 @@
 @charset "UTF-8";
 
+.subject {
+	text-align: left;
+	padding: 5px;
+	padding-left: 15px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+
+.subject a:hover{
+	text-decoration: underline; 
+	color: pink;
+	font-weight: bold;
+	
+}
+
+
 .table{
 width: 80%;
 margin: 0 auto;

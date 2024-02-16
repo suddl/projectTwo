@@ -39,7 +39,7 @@ td {
 }
 
 #moon_list a:hover, #faq_list a:hover, #product_list a:hover, #order_list a:hover, #review_list a:hover {
-	text-decoration: none; 
+	text-decoration: underline; 
 	color: rgb(255, 221, 238);
 	font-weight: bold;
 }

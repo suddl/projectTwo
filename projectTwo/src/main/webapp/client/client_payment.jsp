@@ -11,6 +11,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="/security/login_url.jspf"%>
+<style>
+a :hover {
+	text-decoration: none; 
+	color: rgb(255, 221, 238);
+	font-weight: bold;
+}
+</style>
 <%  
 	String search=request.getParameter("search");
 	if(search==null) {
@@ -81,7 +88,15 @@
              <% for(OrderDTO order : orderList) { %>
                 <tr>
 					<td><%=order.getOrderNum()%></td>
-					<td><%=order.getOrderProductName()%></td>
+					<td class="subject">
+					 <%
+	           		 String url = request.getContextPath()+"/index.jsp?group=detail&worker=detail"
+	               +"&productNum="+order.getOrderProductNum();
+	         		%>
+	            <a href="<%=url%>">
+					<%=order.getOrderProductName()%>
+					
+					</td>
 					<td><%=order.getOrderQuntity() %></td>
 					<td><%=order.getOrderPayPrice()%></td>
 					<td><%=order.getOrderDate()%></td>
