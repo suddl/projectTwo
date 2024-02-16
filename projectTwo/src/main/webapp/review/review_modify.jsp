@@ -74,7 +74,7 @@
     		background-color: pink;
     		margin-left: 10px;
     		padding: 10px 15px;
-    		width: 120px;
+    		width: 200px;
     		border: none;
         }
         #starmessage {
@@ -134,7 +134,7 @@
             <tr>
                 <th colspan="2">
                     <button type="submit" id="saveBtn" disabled>글변경</button>
-                    <button type="reset" id="resetBtn">다시쓰기</button>
+                    <button type="reset" id="resetBtn">기존리뷰 다시보기</button>
                 </th>
             </tr>
         </table>
@@ -186,15 +186,18 @@
         });
 
 
-        // 폼 제출 전 유효성 검사
+        //폼 제출전 유효성검사, 이전폼 유지
         $("#reviewForm").submit(function() {
-            // 이전 유효성 검사 코드 유지...
         });
         
         $("#resetBtn").click(function() {
+            $("#reviewSubject").val("");
+            $("#reviewContent").val("");
             $("#reviewSubject").focus();
-            $("#message").text("");
         });
+        
+        
+   
     </script>
 </body>
 </html>
