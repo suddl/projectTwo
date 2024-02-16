@@ -169,24 +169,26 @@ var totalAmount = 0;
 
 
 //체크박스 클릭 이벤트 핸들러
-document.getElementsByName('productOne').forEach(function (checkbox, index) {
+//매개변수로 받는 checkbox는 forEach가 실행되면서 생긴 각 checkbox의 요소
+//document.getElementsByName('productOne')에 있는 각 체크박스에 대해 한 번씩 실행,
+//각 실행에서 현재 처리 중인 체크박스 요소가 checkbox 매개변수로 전달
+document.getElementsByName('productOne').forEach(function (checkbox) {
     checkbox.addEventListener('click', function () {
-    	
-        var countInput = document.getElementById("cartQuantity" + index);
-        var unitPriceElement = document.getElementById("Cash2" + index);
+        var countInput = document.getElementById("cartQuantity" + checkbox.value);
+        var unitPriceElement = document.getElementById("Cash2" + checkbox.value);
 
         var count = parseInt(countInput.value);
         var unitPrice = parseInt(unitPriceElement.value.replace(/[^\d]/g, ''));
-        
+
         if (checkbox.checked) {
             totalAmount += unitPrice * count;
         } else {
             totalAmount -= unitPrice * count;
         }
-        
-     // 각 상품의 가격 업데이트
-        updateTotalPrice(index);
-	
+
+        // 각 상품의 가격 업데이트
+        updateTotalPrice(checkbox.value);
+
         var totalAmountElement = document.getElementById("NumMoney");
         totalAmountElement.innerText = new Intl.NumberFormat('en-US').format(totalAmount) + "원";
 
@@ -205,29 +207,16 @@ document.getElementsByName('productOne').forEach(function (checkbox, index) {
 
 
 
-function updateTotalPrice(index) {
+
+function updateTotalPrice() {
     var checkboxes = document.getElementsByName("productOne");
     var selectedItems = []; // 선택된 상품의 번호를 저장할 배열
     var quantities = []; // 각 상품의 수량을 저장할 배열
 
-    // 각 체크박스에 대한 처리
-    for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-            selectedItems.push(checkboxes[i].value);
-            var quantityInput = document.getElementById("cartQuantity" + checkboxes[i].value);
-            quantities.push(quantityInput.value);
-        }
-    }
-
-    // 선택된 상품이 없으면 함수 종료
-    if (selectedItems.length === 0) {
-        return;
-    }
-
     // 선택된 상품들에 대한 처리
-    for (var j = 0; j < selectedItems.length; j++) {
-        var countInput = document.getElementById("cartQuantity" + selectedItems[j]);
-        var unitPriceElement = document.getElementById("Cash2" + selectedItems[j]);
+    for (var i = 0; i < checkboxes.length; i++) {
+        var countInput = document.getElementById("cartQuantity" + checkboxes[i].value);
+        var unitPriceElement = document.getElementById("Cash2" + checkboxes[i].value);
 
         // 수량 입력 필드와 상품 가격 엘리먼트가 존재하는지 확인
         if (countInput && unitPriceElement) {
@@ -237,13 +226,12 @@ function updateTotalPrice(index) {
             var unitPrice = parseInt(unitPriceElement.value.replace(/[^\d]/g, ''));
 
             var totalPrice = unitPrice * count;
-            document.getElementById("Cash" + selectedItems[j]).innerText = new Intl.NumberFormat('en-US').format(totalPrice) + "원";
+            document.getElementById("Cash" + checkboxes[i].value).innerText = new Intl.NumberFormat('en-US').format(totalPrice) + "원";
         }
     }
 
     updateTotalPurchaseAmount(); // 총 결제 금액을 업데이트하는 함수 호출
 }
-
 
 
 
