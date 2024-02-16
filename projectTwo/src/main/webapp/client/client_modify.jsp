@@ -75,7 +75,7 @@ legend {
 	color: white;
 }
 
-#client_name, #client_email, #phone3, #postSearch{
+#name, #email, #mobile3, #postSearch{
 	margin-right: 500px;
 }
 </style>

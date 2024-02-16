@@ -13,6 +13,7 @@ fieldset {
 
 legend {
 	font-size: 1.2em;
+	margin-left: 150px;
 }
 
 #join label {
@@ -50,6 +51,10 @@ legend {
 #idCheck:hover, #postSearch:hover {
 	background: black;
 	color: white;
+}
+
+#idCheck, #passwd, #name, #email, #mobile3, #postSearch{
+	margin-right: 500px;
 }
 </style>
 <form id="join" action="<%=request.getContextPath() %>/index.jsp?group=client&worker=client_join_action" method="post">
