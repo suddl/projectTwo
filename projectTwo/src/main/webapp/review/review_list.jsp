@@ -203,21 +203,6 @@ List<ReviewDTO> reviewList = ReviewDAO.getDAO().selectReviewListByClientNum(star
 		<% } %>
 		</div>
 	
-	<%-- 사용자로부터 검색 관련 정보를 입력받기 위한 태그 출력 --%>
-
-	<form action="<%=request.getContextPath() %>/index.jsp?group=review&worker=review_list" method="post">
-		<%-- select 태그를 사용하여 검색대상을 선택해 전달 - 전달값은 반드시 컬럼명으로 설정 --%>
-		<select name="search">
-			<option value="client_name" <% if(search.equals("name")) { %>  selected <% } %>>&nbsp;작성자&nbsp;</option>
-			<option value="review_title" <% if(search.equals("review_subject")) { %>  selected <% } %>>&nbsp;제목&nbsp;</option>
-			<option value=review_content <% if(search.equals("review_content")) { %>  selected <% } %>>&nbsp;내용&nbsp;</option>
-		</select>
-		<input type="text" name="keyword" value="<%=keyword%>">
-		<button type="submit">검색</button>
-	</form>
-	</div>
-	
-
 <script type="text/javascript">
 $("#reviewCount").change(function() {
 	//alert($("#reviewCount").val());
