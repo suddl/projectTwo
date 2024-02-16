@@ -85,7 +85,8 @@
 <body>
     <div class="container">
         <h2>검색 결과</h2>
-	       <%if(searchResults==null) { %>
+          <% if(searchResults == null || searchResults.equals("") || searchResults.isEmpty()) { %>
+   				<% } else { %>
 	<div class="sorting">
 	    <p>
 	       <%if(type!=null) { %>
@@ -101,7 +102,8 @@
 		   	<% } %>
 	   </p>
 	</div>	    	
-		   <% if ("Nail".equals(category) || keyword.equals("네일")) { %>
+		  <% } %>
+		   <% if ("Nail".equals(category) || keyword.equals("네일") || keyword.equals("Nail")) { %>
 			<div class="filter-buttons" id="filterButtons">
 			    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keywords%>&sorted=<%=sorted%>">전체</a>
 			    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keywords%>&sorted=<%=sorted%>&type=Short">숏</a>
@@ -109,7 +111,6 @@
 			    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keywords%>&sorted=<%=sorted%>&type=Parts">파츠</a>
 			    <a href="<%=request.getContextPath()%>/index.jsp?group=product&worker=searchProduct&keyword=<%=keywords%>&sorted=<%=sorted%>&type=FullColor">풀컬러</a>
 			</div>
-			<% } %>
 			<% } %>
         <div class="prodList">
             <%
