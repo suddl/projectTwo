@@ -103,12 +103,12 @@
 		<th width="150">주문번호</th>
 		<th width="100">아이디</th>
 		<th width="150">결제번호</th> 
-		<th width="280">상품명</th> 
-		<th width="150">구매수량</th> 
+		<th width="280">상품</th> 
+		<th width="150">수량</th> 
 		<th width="250">전화번호</th>
 		<th width="200">결제방법</th>
 		<th width="200">결제금액</th>
-		<th width="150">주문처리상태</th>
+		<th width="150">배송상태</th>
 		<th width="200">주문일</th>
 	</tr>
 	<% for(OrderDTO order : orderList) { %>

@@ -66,10 +66,11 @@
         <thead>
             <tr>
                 <th width="100">주문번호</th>
-                <th width="400">상품명</th>
+                <th width="400">상품</th>
                 <th width="100">수량</th>
-                <th width="100">총금액</th>
+                <th width="100">주문총금액</th>
                 <th width="200">주문일</th>
+                <th width="200">배송상태</th>
                 <th width="100">리뷰 작성</th>
             </tr>
         </thead>
@@ -82,6 +83,7 @@
 					<%  //System.out.println("order.getOrderQuntity() = " + order.getOrderQuntity()); %>
 					<td><%=order.getOrderPayPrice()%></td>
 					<td><%=order.getOrderDate()%></td>
+					<td><%=order.getOrderStatus()%></td>
 					<td>
 					    <button type="button" onclick="writeReview(<%=order.getOrderProductNum()%>,<%=order.getOrderNum()%>);">리뷰 작성</button>
                     </td>

@@ -181,29 +181,31 @@ public class ClientDAO extends JdbcDAO{
 
       //회원정보를 전달받아 Client 테이블에 저장된 행을 변경하고 변경행의 갯수를 반환하는 메소드
       public int updateClient(ClientDTO client) {
-         Connection con=null;
-         PreparedStatement pstmt=null;
-         int rows=0;
-         try {
-            con=getConnection();
-            
-            String sql="update client set client_passwd=?,client_name=?,client_email=?,client_phone=?,client_zipcode=?"
-                  + ",client_address1=?,client_address2=? where client_num=?";
-            pstmt=con.prepareStatement(sql);
-            pstmt.setString(1, client.getClientPasswd());
-            pstmt.setString(2, client.getClientName());
-            pstmt.setString(4, client.getClientPhone());
-            pstmt.setString(6, client.getClientAddress1());
-            pstmt.setString(7, client.getClientAddress2());
-            pstmt.setInt(8, client.getClientNum());
-            
-            rows=pstmt.executeUpdate();
-         } catch (SQLException e) {
-            System.out.println("[에러]updateClient() 메소드의 SQL 오류 = "+e.getMessage());
-         } finally {
-            close(con, pstmt);
-         }
-         return rows;
-      }
+          Connection con=null;
+          PreparedStatement pstmt=null;
+          int rows=0;
+          try {
+             con=getConnection();
+             
+             String sql="update client set client_passwd=?,client_name=?,client_email=?,client_phone=?,client_zipcode=?"
+                   + ",client_address1=?,client_address2=? where client_num=?";
+             pstmt=con.prepareStatement(sql);
+             pstmt.setString(1, client.getClientPasswd());
+             pstmt.setString(2, client.getClientName()); 
+             pstmt.setString(3, client.getClientEmail());
+             pstmt.setString(4, client.getClientPhone());
+             pstmt.setString(5, client.getClientZipcode());
+             pstmt.setString(6, client.getClientAddress1());
+             pstmt.setString(7, client.getClientAddress2());
+             pstmt.setInt(8, client.getClientNum());
+             
+             rows=pstmt.executeUpdate();
+          } catch (SQLException e) {
+             System.out.println("[에러]updateClient() 메소드의 SQL 오류 = "+e.getMessage());
+          } finally {
+             close(con, pstmt);
+          }
+          return rows;
+       }
    }
     
