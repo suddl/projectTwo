@@ -12,9 +12,19 @@
       search="";
    }
    
+   String keywords = "";
    String keyword=request.getParameter("keyword");//검색단어
    if(keyword==null) {//전달값이 없는 경우
       keyword="";
+   }else if(keyword.equals("네일")){
+	   keyword= String.valueOf("Nail");
+	   keywords = "네일";
+   }else if(keyword.equals("페디")){
+	   keyword= String.valueOf("Pedi");
+	   keywords = "페디";
+   }else if(keyword.equals("케어")){
+   	   keyword= String.valueOf("CareTool");
+	   keywords = "케어";
    }
 
    //페이징 처리에 필요한 전달값(페이지번호과 게시글갯수)을 반환받아 저장
@@ -198,7 +208,7 @@
       <option value="product_name" <% if(search.equals("product_name")) { %>  selected <% } %>>&nbsp;상품명&nbsp;</option>
       <option value="product_category" <% if(search.equals("product_category")) { %>  selected <% } %>>&nbsp;카테고리&nbsp;</option>
    </select>
-   <input type="text" name="keyword" value="<%=keyword%>" >
+   <input type="text" name="keyword" value="<%=keywords%>" >
    <button type="submit">검색</button>
    </div>
 </form>
