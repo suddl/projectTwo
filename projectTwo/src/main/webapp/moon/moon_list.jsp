@@ -183,7 +183,6 @@
 	</div>
 	<form action="<%=request.getContextPath() %>/index.jsp?group=moon&worker=moon_list" method="post">
 		<select name="search">
-			<option value="client_name" <% if(search.equals("client_name")) { %>  selected <% } %>>&nbsp;작성자&nbsp;</option>
 			<option value="moon_title" <% if(search.equals("moon_title")) { %>  selected <% } %>>&nbsp;제목&nbsp;</option>
 			<option value="moon_content" <% if(search.equals("moon_content")) { %>  selected <% } %>>&nbsp;내용&nbsp;</option>
 		</select>
