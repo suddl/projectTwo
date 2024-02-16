@@ -83,7 +83,13 @@
 					<%  //System.out.println("order.getOrderQuntity() = " + order.getOrderQuntity()); %>
 					<td><%=order.getOrderPayPrice()%></td>
 					<td><%=order.getOrderDate()%></td>
-					<td><%=order.getOrderStatus()%></td>
+					<td>
+						<% if (order.getOrderStatus().equals("1"))%>상품준비중
+						<% if (order.getOrderStatus().equals("2"))%>배송준비중
+						<% if (order.getOrderStatus().equals("3"))%>배송중
+						<% if (order.getOrderStatus().equals("4"))%>배송완료
+						<% if (order.getOrderStatus().equals("0"))%>주문취소
+					</td>
 					<td>
 					    <button type="button" onclick="writeReview(<%=order.getOrderProductNum()%>,<%=order.getOrderNum()%>);">리뷰 작성</button>
                     </td>
