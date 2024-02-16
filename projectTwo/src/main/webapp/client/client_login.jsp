@@ -49,14 +49,15 @@
 
 #login_btn {
 	margin: 0 auto;
-	padding: 5px;
+	padding: 10px;
 	width: 300px;
-	background-color: black;
+	background-color: #FFDCE1;
 	color: white;
 	font-size: 1.2em;
 	cursor: pointer;
-	letter-spacing: 20px;
+	letter-spacing: 10px;
 	font-weight: bold;
+	height: 50px;
 }
 
 #search {
@@ -91,7 +92,8 @@
 	<div id="login_btn">로그인</div>
 </form>
 <div id="search">
-	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=search_id" >아이디 찾기</a>
+	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=search_id" >아이디 찾기 | </a>
+	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=search_passwd" >비밀번호 찾기</a>
 </div>
 <div id="message"><%=message %></div>
 

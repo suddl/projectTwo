@@ -207,5 +207,26 @@ public class ClientDAO extends JdbcDAO{
           }
           return rows;
        }
+      
+      public int updateClientPassword(ClientDTO client) {
+          Connection con=null;
+          PreparedStatement pstmt=null;
+          int rows=0;
+          try {
+             con=getConnection();
+             
+             String sql="update client set client_passwd=? where client_id=?";
+             pstmt=con.prepareStatement(sql);
+             pstmt.setString(1, client.getClientPasswd());
+             pstmt.setString(2, client.getClientId()); 
+             
+             rows=pstmt.executeUpdate();
+          } catch (SQLException e) {
+             System.out.println("[에러]updateClientPassword() 메소드의 SQL 오류 = "+e.getMessage());
+          } finally {
+             close(con, pstmt);
+          }
+          return rows;
+       }
    }
     
