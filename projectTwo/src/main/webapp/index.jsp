@@ -18,7 +18,7 @@
 	
 	String headerFilePath="/header_main.jsp";
 	if(group.equals("admin")) {
-		headerFilePath="/header_admin.jsp";
+		headerFilePath="/header_admin.jsp"; 
 	} 
 %> 
  
