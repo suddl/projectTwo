@@ -1,3 +1,4 @@
+<%@page import="xyz.nailro.dto.ClientDTO"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="xyz.nailro.dao.ProductDAO"%>
 <%@page import="java.util.List"%>
@@ -6,12 +7,15 @@
     pageEncoding="UTF-8"%>
 <%
 	String url = request.getParameter("url");
+	
 
 	if(url!=null){
 		request.setAttribute("returnUrl", request.getContextPath()+"/index.jsp?"+url);
 	}
 	
 	List<ProductDTO> productList = ProductDAO.getDAO().selectNewProductList();
+	
+	ClientDTO loginClient=(ClientDTO)session.getAttribute("loginClient");
 	
 %>
 <link href="<%=request.getContextPath()%>/css/main.css" type="text/css" rel="stylesheet">
@@ -23,10 +27,21 @@
 	            	<img src="<%= request.getContextPath() %>/images/main_image.jpg" width="100%" height="600px">
 	            </a>
             </div>
+            
             <div class="imageSlider s2">
-            	<a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_login">
-           			<img src="<%= request.getContextPath() %>/images/newJoin.png" width="100%" height="600px">
-           		</a>
+           		<% 
+                    if (loginClient == null) { // 로그인한 사용자가 아닌 경우
+                %>
+                    <a href="<%=request.getContextPath()%>/index.jsp?group=client&worker=client_login">
+                        <img src="<%= request.getContextPath() %>/images/newJoin.png" width="100%" height="600px">
+                    </a>
+                <% 
+                    } else { // 로그인한 사용자인 경우
+                %>
+                    <img src="<%= request.getContextPath() %>/images/newJoin.png" width="100%" height="600px">
+                <% 
+                    } 
+                %>
            	</div>
         </div>
     </div>
