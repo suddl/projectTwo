@@ -408,7 +408,7 @@ $("#GoOrder").click(function () {
 	        $("#hangForm").submit();
 	        
  } else {
-     alert("삭제할 상품을 선택하세요.");
+     alert("구매할 상품은 1개 이상이어야 합니다.");
  }
 	    
 	    
