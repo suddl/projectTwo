@@ -178,7 +178,15 @@ padding: 30px;">
 	</span> 
 <hr>
 
-<p class="moneyALL" >총 결제 금액</p><span class="NumMoneyALL" id="totalpayment"><%= String.format("%,d", total) %>원 </span>
+<p class="moneyALL" >총 결제 금액</p>
+<span class="NumMoneyALL" id="totalpayment">
+	<% if(total>=50000){ %> 
+<%= String.format("%,d", total) %>원 
+<% 	}else{ %>
+<%= String.format("%,d", total+3000) %>원 
+	<% } %>
+
+</span>
 <input type="hidden" name="finalMoney" id="finalMoney" value="<%= String.format("%,d", total) %>">
   <%-- 결제방법 선택 --%>
 </div>
