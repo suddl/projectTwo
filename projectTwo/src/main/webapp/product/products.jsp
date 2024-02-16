@@ -7,12 +7,15 @@
 <%  
 	String category=request.getParameter("category");
 	
-	String sorted="product_num desc";
-	if(sorted!=null || sorted.equals("")) {
-		sorted=request.getParameter("sorted");
+	String sorted=request.getParameter("sorted");
+	if(sorted==null || sorted.equals("")) {
+		sorted="product_num desc";
 	}
 	
 	String type=request.getParameter("type");
+	if(type==null) {
+		type="";
+	}
 
     int pageNum = 1;
     if (request.getParameter("pageNum") != null) {
