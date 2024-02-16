@@ -57,7 +57,7 @@
 	
 	
 	//주문내역 조회 
-	List<OrderDTO> orderList=OrderDAO.getDAO().selectOrderReviewList(startRow, endRow, search, keywords);
+	List<OrderDTO> orderList=OrderDAO.getDAO().selectOrderReviewList(startRow, endRow, search, keywords, loginClientNum);
     
     int displayNum=totalrPayReview-(pageNum-1)*pageSize;
     

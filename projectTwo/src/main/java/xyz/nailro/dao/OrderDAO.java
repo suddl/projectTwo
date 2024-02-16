@@ -178,7 +178,7 @@ public class OrderDAO extends JdbcDAO{
 	}
 
 
-	public List<OrderDTO> selectOrderReviewList(int startRow, int endRow, String search, String keyword) {
+	public List<OrderDTO> selectOrderReviewList(int startRow, int endRow, String search, String keyword, int loginClientNum) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -191,10 +191,11 @@ public class OrderDAO extends JdbcDAO{
 				String sql= "select * from (select rownum rn, temp.* from (select order_num, order_status,order_pay_num, product_name,"
 						+ "order_client_num, order_product_num, order_date, pay_price, order_quntity from orders "
 						+ "join product on order_product_num=product_num  join payment on order_pay_num=pay_num "
-						+ "order by order_num desc) temp) where rn between ? and ?";
+						+ " where order_client_num = ? order by order_num desc) temp) where rn between ? and ?";
 				pstmt=con.prepareStatement(sql);
-				pstmt.setInt(1, startRow);
-				pstmt.setInt(2, endRow);
+				pstmt.setInt(1, loginClientNum);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
 			} else {//검색 기능을 사용한 경우
 				String sql ="select * from (select rownum rn, temp.* from (select order_num, order_pay_num,"
 						+ "order_client_num, order_product_num, order_date, pay_price, "
