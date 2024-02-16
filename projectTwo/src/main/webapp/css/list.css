@@ -11,7 +11,7 @@
 	font-size: 25px;
 }
 
-.moon_list,.review_list {
+.moon_list, .order_list, .review_list {
 	margin: 5px auto;
 	border-collapse: collapse;
 }

@@ -98,7 +98,7 @@
 <div id="order_list">
 	<%-- 검색된 게시글 총갯수 출력 --%>
 	<div id="order_title">주문목록(<%=totalOrder %>개)</div>
-<table>
+<table class="order_list">
 	<tr>
 		<th width="150">주문번호</th>
 		<th width="100">아이디</th>
