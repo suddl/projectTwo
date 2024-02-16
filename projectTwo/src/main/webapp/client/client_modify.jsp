@@ -1,6 +1,6 @@
 <%@page import="xyz.nailro.util.Utility"%>
-<%@page import="xyz.nailro.dto.ClientDTO"%>
-<%@page import="xyz.nailro.dao.ClientDAO"%>
+<%--@page import="xyz.nailro.dto.ClientDTO"--%>
+<%--@page import="xyz.nailro.dao.ClientDAO"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%-- 비밀번호를 전달받아 MEMBER 테이블에 저장된 회원정보의 비밀번호와 비교하여 같은 경우 회원정보를
@@ -86,41 +86,41 @@ legend {
 	<legend>회원정보</legend>
 	<ul>
 		<li>
-			<label for="client_id">아이디</label>
-			<input type="text" name="client_id" id="client_id" value="<%=loginClient.getClientId() %>" readonly="readonly">
+			<label for="id">아이디</label>
+			<input type="text" name="id" id="id" value="<%=loginClient.getClientId() %>" readonly="readonly">
 		</li>
 		<li>
-			<label for="client_passwd">비밀번호</label>
-			<input type="password" name="client_passwd" id="client_passwd">
+			<label for="passwd">비밀번호</label>
+			<input type="password" name="passwd" id="passwd">
 			<span style="color: red;">비밀번호를 변경하지 않을 경우 입력하지 마세요.</span>
 			<div id="passwdRegMsg" class="error">비밀번호는 영문자,숫자,특수문자가 반드시 하나이상 포함된 6~20 범위의 문자로만 작성 가능합니다.</div>
 		</li>
 		<li>
-			<label for="client_name">이름</label>
-			<input type="text" name="client_name" id="client_name"  value="<%=loginClient.getClientName()%>">
+			<label for="name">이름</label>
+			<input type="text" name="name" id="name"  value="<%=loginClient.getClientName()%>">
 			<div id="nameMsg" class="error">이름을 입력해 주세요.</div>
 		</li>
 		<li>
-			<label for="client_email">이메일</label>
-			<input type="text" name="client_email" id="client_email" value="<%=loginClient.getClientEmail()%>">
+			<label for="email">이메일</label>
+			<input type="text" name="email" id="email" value="<%=loginClient.getClientEmail()%>">
 			<div id="emailMsg" class="error">이메일을 입력해 주세요.</div>
 			<div id="emailRegMsg" class="error">입력한 이메일이 형식에 맞지 않습니다.</div>
 		</li>
 		<li>
-			<% String[] phone=loginClient.getClientPhone().split("-"); %>
-			<label for="client_phone">전화번호</label>
+			<% String[] mobile=loginClient.getClientPhone().split("-"); %>
+			<label for="mobile">전화번호</label>
 			<select name="mobile1">
-				<option value="010" <% if(phone[0].equals("010")) { %> selected <% } %>>&nbsp;010&nbsp;</option>
-				<option value="011" <% if(phone[0].equals("011")) { %> selected <% } %>>&nbsp;011&nbsp;</option>
-				<option value="016" <% if(phone[0].equals("016")) { %> selected <% } %>>&nbsp;016&nbsp;</option>
-				<option value="017" <% if(phone[0].equals("017")) { %> selected <% } %>>&nbsp;017&nbsp;</option>
-				<option value="018" <% if(phone[0].equals("018")) { %> selected <% } %>>&nbsp;018&nbsp;</option>
-				<option value="019" <% if(phone[0].equals("019")) { %> selected <% } %>>&nbsp;019&nbsp;</option>
+				<option value="010" <% if(mobile[0].equals("010")) { %> selected <% } %>>&nbsp;010&nbsp;</option>
+				<option value="011" <% if(mobile[0].equals("011")) { %> selected <% } %>>&nbsp;011&nbsp;</option>
+				<option value="016" <% if(mobile[0].equals("016")) { %> selected <% } %>>&nbsp;016&nbsp;</option>
+				<option value="017" <% if(mobile[0].equals("017")) { %> selected <% } %>>&nbsp;017&nbsp;</option>
+				<option value="018" <% if(mobile[0].equals("018")) { %> selected <% } %>>&nbsp;018&nbsp;</option>
+				<option value="019" <% if(mobile[0].equals("019")) { %> selected <% } %>>&nbsp;019&nbsp;</option>
 			</select>
-			- <input type="text" name="phone2" id="phone2" value="<%=phone[1]%>" size="4" maxlength="4">
-			- <input type="text" name="phone3" id="phone3" value="<%=phone[2]%>" size="4" maxlength="4">
-			<div id="phoneMsg" class="error">전화번호를 입력해 입력해 주세요.</div>
-			<div id="phoneRegMsg" class="error">전화번호는 3~4 자리의 숫자로만 입력해 주세요.</div>
+			- <input type="text" name="mobile2" id="mobile2" value="<%=mobile[1]%>" size="4" maxlength="4">
+			- <input type="text" name="mobile3" id="mobile3" value="<%=mobile[2]%>" size="4" maxlength="4">
+			<div id="mobileMsg" class="error">전화번호를 입력해 입력해 주세요.</div>
+			<div id="mobileRegMsg" class="error">전화번호는 3~4 자리의 숫자로만 입력해 주세요.</div>
 		</li>
 		<li>
 			<label>우편번호</label>

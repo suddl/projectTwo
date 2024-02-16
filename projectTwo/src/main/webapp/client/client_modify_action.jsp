@@ -16,8 +16,8 @@
 
 	//전달값을 반환받아 저장
 	int ClientNum=Integer.parseInt(request.getParameter("ClientNum"));
-	String id=request.getParameter("client_id");
-	String passwd=request.getParameter("client_passwd");
+	String id=request.getParameter("id");
+	String passwd=request.getParameter("passwd");
 	if(passwd==null || passwd.equals("")) {//전달값(비밀번호)이 없는 경우
 		//현재 로그인 사용자의 비밀번호를 변수에 저장 - 기존 비밀번호 유지
 		passwd=loginClient.getClientPasswd();
@@ -25,10 +25,10 @@
 		//전달값을 암호화 처리하여 변수에 저장 - 전달된 비밀번호로 변경
 		passwd=Utility.encrypt(passwd);
 	}
-	String name=request.getParameter("client_name");
-	String email=request.getParameter("client_email");
-	String phone=request.getParameter("client_phone1")+"-"+request.getParameter("phone2")
-		+"-"+request.getParameter("phone3");
+	String name=request.getParameter("name");
+	String email=request.getParameter("email");
+	String mobile=request.getParameter("mobile1")+"-"+request.getParameter("mobile2")
+		+"-"+request.getParameter("mobile3");
 	String zipcode=request.getParameter("zipcode");
 	String address1=request.getParameter("address1");
 	String address2=request.getParameter("address2");
@@ -41,7 +41,7 @@
 	client.setClientId(id);
 	client.setClientPasswd(passwd);
 	client.setClientName(name);
-	client.setClientPhone(phone);
+	client.setClientPhone(mobile);
 	client.setClientEmail(email);
 	client.setClientAddress1(address1);
 	client.setClientAddress2(address2);
