@@ -124,7 +124,7 @@ return;
 
 <div style="border: 1px solid black; border-radius: 20px;  width: 30%; margin:0 auto; background-color: #DCDCDC; margin-top:30px;
 padding: 30px;">
-<p class="money" style="font-size: 23px; ">총 상품금액 </p>&nbsp;&nbsp;&nbsp; <span id="NumMoney" >  <%=String.format("%,d", total)%> 원</span><br>
+<p class="money" >총 상품금액  : </p>&nbsp;&nbsp;&nbsp; <span id="NumMoney" >  <%=String.format("%,d", total)%> 원</span><br>
  
 <p class="money" > 배송비</p> <span id="transMoney" >
  <% if(total>=50000){ %> 
@@ -139,7 +139,7 @@ padding: 30px;">
 <hr>
 
 <%-- 결제금액 출력 --%>
-<p class="moneyALL" id="moneyALL">총 결제 금액</p><span id="NumMoneyALL" >
+<p class="moneyALL" id="moneyALL" style="font-size: 23px; font-weight: bold;">총 결제 금액 : &nbsp;&nbsp;</p><span id="NumMoneyALL" style="font-size: 23px; font-weight: bold;" >
 <% if(total>=50000){ %>
 		<%=String.format("%,d", total)%> 원
 <% 	}else{ %>
