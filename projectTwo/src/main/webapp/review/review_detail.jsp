@@ -106,7 +106,7 @@ td {
 		<% } %>
 			
 				
-		<button type="button" id="backBtn" onclick="history.back()">이전페이지로 이동</button>
+		<button type="button" id="backBtn" onclick="history.back()">뒤로가기</button>
 		
 		<% if(loginClient!=null && (loginClient.getClientStatus()==9)) { %>
 			<button type="button" id="replyBtn">답글쓰기</button>
