@@ -7,15 +7,6 @@
 %>
 <link href="<%=request.getContextPath()%>/css/adminProduct.css" type="text/css" rel="stylesheet">
 <style>
-input:invalid {
-	border-color: red;    /* 값이 유효하지 않다면, border색을 red로 지정한다 */
-	background-color: #ffefef;
-}
-
-input:valid {
-	border-color: #b8d8d8; /* 값이 유효하다면, border색을 #b8d8d8로 지정한다 */
-	background-color: #e9f0fd;
-}
 
 </style>
 <form action="<%=request.getContextPath()%>/index.jsp?group=admin&worker=product_add_action"
