@@ -211,7 +211,7 @@
 	<select name="search">
 		<option value="client_id" <% if(search.equals("clinet_id")) { %>  selected <% } %>>&nbsp;아이디&nbsp;</option>
 		<option value="pay_method" <% if(search.equals("pay_method")) { %>  selected <% } %>>&nbsp;결제방법&nbsp;</option>
-		<option value="order_status" <% if(search.equals("order_status")) { %>  selected <% } %>>&nbsp;주문처리상태&nbsp;</option>
+		<option value="order_status" <% if(search.equals("order_status")) { %>  selected <% } %>>&nbsp;배송상태&nbsp;</option>
 	</select>
 	<input type="text" name="keyword" value="<%=keywords%>" >
 	<button type="submit">검색</button>
@@ -238,7 +238,7 @@ function updateOrderStatus(orderNum, orderStatus) {
         },
         success: function(response) {
         	// 성공적으로 처리된 경우, 필요한 작업을 수행합니다.
-            alert('주문 상태가 성공적으로 변경되었습니다.');
+            alert('배송상태가 성공적으로 변경되었습니다.');
             // 예를 들어, 페이지 새로고침이나 UI 업데이트 등을 수행할 수 있습니다.
         },
         error: function(xhr) {
