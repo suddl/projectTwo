@@ -151,13 +151,6 @@
 		<% } %>
 	</div> 
 	
-	<%-- 사용자로부터 검색 관련 정보를 입력받기 위한 태그 출력 --%>
-	<form action="<%=request.getContextPath() %>/index.jsp?group=admin&worker=faq_list" method="post">
-		<%-- select 태그를 사용하여 검색대상을 선택해 전달 - 전달값은 반드시 컬럼명으로 설정 --%>
-		<input type="text" name="keyword" value="<%=keyword%>">
-		<button type="submit">검색</button>
-	</form>
-
 
 <script type="text/javascript">
 
