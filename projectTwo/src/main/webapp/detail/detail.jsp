@@ -192,6 +192,13 @@
 <% } %>
 <%-- 버튼 선택에 따라 글씨 색 변경--%>
 <script type="text/javascript">
+
+$("#cartBtn").click(function(){   
+	   if(confirm("장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?") == false){ 
+		event.preventDefault();	     
+		return;
+	}});
+
 var count = 1; // 초기 수량
 //제품상세,제품리뷰 바에서 클릭시 색상 변경되는 코드
 // 모든 nav-link 요소를 가져옵니다.

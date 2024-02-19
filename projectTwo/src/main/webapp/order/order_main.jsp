@@ -295,8 +295,8 @@ $(document).ready(function() {
           $(document).on("click", ".delete-btn", function() {
               // 현재 버튼이 속한 가장 가까운 tr 행을 찾아서 
               var row = $(this).closest("tr");
-              //삭제
               
+              //삭제
               if($(".hang").length===1){
             	  alert("최소 한개이상은 구매해야 합니다.");
             	  return;
@@ -359,7 +359,7 @@ $(document).ready(function() {
 				submitResult=false;
 			}
 
-			var mobile2Reg=/^[-0-9]{1,15}/;
+			var mobile2Reg=/^[0-9-]{1,15}$/;
 			if($("#mobile2").val()=="") {
 				$("#mobileMsg").css("display","block");
 				submitResult=false;
