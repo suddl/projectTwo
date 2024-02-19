@@ -195,8 +195,11 @@
 
 $("#cartBtn").click(function(){   
 	   if(confirm("장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?") == false){ 
+		$("#cartBtn").submit;
 		event.preventDefault();	     
 		return;
+	}else{
+		$("#cartBtn").submit;
 	}});
 
 var count = 1; // 초기 수량
