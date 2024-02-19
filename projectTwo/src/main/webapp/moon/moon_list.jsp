@@ -87,7 +87,7 @@
 			<th width="500">제목</th>
 			<th width="100">작성자</th>
 			<th width="200">작성일</th>
-			<th width="100">작성여부</th>
+			<th width="100">답변여부</th>
 		</tr>
 		
 		<% if(totalMoon==0) { %>

@@ -163,7 +163,7 @@ public class MoonDAO extends JdbcDAO {
 				String sql ="select * from (select rownum rn, temp.* from (select moon_num"
 						+ ", moon_client_num,client_name, moon_title,moon_content, moon_date, moon_re, moon_image, moon_status from moon"
 						+ " join client on  moon_client_num=client_num "
-						+ " where " + search + " like '%'||?||'%' and moon_status =1 order by moon_num) temp)"
+						+ " where " + search + " like '%'||?||'%' and moon_status =1 order by moon_date desc) temp)"
 						+ " where rn between ? and ?";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1, keyword);
