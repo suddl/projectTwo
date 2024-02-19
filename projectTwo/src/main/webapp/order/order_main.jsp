@@ -133,6 +133,9 @@ CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
       //각 상품의 최종가격을 변수에 더하여 저장하면 총 상품금액을 알 수 있다.
       total += itemTotal;
       %>
+      
+      
+    
     <tr class="hang">
       <%--이미지 및 상품명 --%>
       <td><img src="<%=request.getContextPath()%><%=cartDTO.getCartProductImages()%>" width="150" height="100">&nbsp;&nbsp;
@@ -156,7 +159,9 @@ CartDTO cartDTOs = CartDAO.getDAO().selectClientInfo(Num);
         </button> 
 	</td>
     </tr>
+    
     <% } %>
+    
   </tbody>
 </table>
 
@@ -291,7 +296,13 @@ $(document).ready(function() {
               // 현재 버튼이 속한 가장 가까운 tr 행을 찾아서 
               var row = $(this).closest("tr");
               //삭제
+              
+              if($(".hang").length===1){
+            	  alert("최소 한개이상은 구매해야 합니다.");
+            	  return;
+              }
               row.remove();
+            	  
               
             // 삭제된 상품 가격을 차감
             //id가 EndCash인 행을 찾아 0~9까지를 제외한 나머지를 빈문자열로 대체하여 숫자를
