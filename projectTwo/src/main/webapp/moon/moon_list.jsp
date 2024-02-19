@@ -14,9 +14,9 @@
 		search="";
 	}
 	
-	String keyword=request.getParameter("keyword");
-	if(keyword==null) {
-		keyword="";
+	String keywordd=request.getParameter("keywordd");
+	if(keywordd==null) {
+		keywordd="";
 	}
 	
 	// 페이지 번호
@@ -37,9 +37,9 @@
 	int totalMoon=0;
 	
 	if(loginClient.getClientStatus()==9) {
-		totalMoon=MoonDAO.getDAO().selectTotalAllMoon(search, keyword);
+		totalMoon=MoonDAO.getDAO().selectTotalAllMoon(search, keywordd);
 	} else {
-		totalMoon=MoonDAO.getDAO().selectTotalMoon(search, keyword, loginClientNum);
+		totalMoon=MoonDAO.getDAO().selectTotalMoon(search, keywordd, loginClientNum);
 	}
 	
 	int totalPage=(int)Math.ceil((double)totalMoon/pageSize);
@@ -59,9 +59,9 @@
 	List<MoonDTO> moonList=null;
 	
 	if(loginClient.getClientStatus()==9) {
-		moonList=MoonDAO.getDAO().selectAllMoonList(startRow, endRow, search, keyword);
+		moonList=MoonDAO.getDAO().selectAllMoonList(startRow, endRow, search, keywordd);
 	} else {
-		moonList=MoonDAO.getDAO().selectMoonList(startRow, endRow, search, keyword,loginClientNum);
+		moonList=MoonDAO.getDAO().selectMoonList(startRow, endRow, search, keywordd,loginClientNum);
 	}
 	
 
@@ -103,7 +103,7 @@
 				<td class="subject">
 					<%
 						String url=request.getContextPath()+"/index.jsp?group=moon&worker=moon_detail&moonNum="+moon.getMoonNum()
-						+"&pageNum="+pageNum+"&pageSize="+pageSize +"&search="+search+"&keyword="+keyword;
+						+"&pageNum="+pageNum+"&pageSize="+pageSize +"&search="+search+"&keyword="+keywordd;
 					%>
 					<% if(moon.getMoonStatus()==1){ %>
 					<a href="<%=url %>"><%= moon.getMoonTitle() %></a>
@@ -155,7 +155,7 @@
 	<div id="page_list">
 		<%
 			String responseUrl=request.getContextPath()+"/index.jsp?group=moon&worker=moon_list"
-					+"&pageSize="+pageSize+"&search="+search+"&keyword="+keyword;
+					+"&pageSize="+pageSize+"&search="+search+"&keywordd="+keywordd;
 		%>
 	
 		<%-- 이전 페이지블럭이 있는 경우에만 링크 제공 --%>
@@ -186,7 +186,7 @@
 			<option value="moon_title" <% if(search.equals("moon_title")) { %>  selected <% } %>>&nbsp;제목&nbsp;</option>
 			<option value="moon_content" <% if(search.equals("moon_content")) { %>  selected <% } %>>&nbsp;내용&nbsp;</option>
 		</select>
-		<input type="text" name="keyword" value="<%=keyword%>">
+		<input type="text" name="keywordd" value="<%=keywordd%>">
 		<button type="submit">검색</button>
 	</form>
 </div>
